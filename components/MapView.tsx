@@ -330,8 +330,10 @@ export default function MapView({ all }: Props) {
     const bbox = computeBbox(feat.geometry);
     if (!bbox) return;
     const sp = typeof window !== "undefined" && window.innerWidth < 768;
+    // SP は compact シート(~72px)を想定した余白。シート拡大時はモーダルで地図を覆うため、
+    // 拡大状態を前提に padding を取らず、compact 基準で広く地図を見せる。
     const padding = sp
-      ? { top: 100, bottom: 360, left: 24, right: 24 }
+      ? { top: 100, bottom: 100, left: 24, right: 24 }
       : { top: 80, bottom: 60, left: 60, right: 420 };
     // 区を選択した時は最低 z=11 まで寄せて区レイヤーが見える状態に
     const minZoom = wardFeat ? WARDS_MIN_ZOOM : 0;
