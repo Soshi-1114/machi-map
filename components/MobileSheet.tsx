@@ -13,10 +13,12 @@ type Props = {
   onClose: () => void;
 };
 
+// iOS safe-area 分を上乗せ。CSS 側で padding-bottom: env(safe-area-inset-bottom)
+// を入れてあるので、コンテンツは safe-area の上に乗る。
 const STAGE_HEIGHTS: Record<Stage, string> = {
-  compact: "72px",
-  half: "360px",
-  full: "82vh",
+  compact: "calc(80px + env(safe-area-inset-bottom))",
+  half: "calc(360px + env(safe-area-inset-bottom))",
+  full: "calc(82vh + env(safe-area-inset-bottom))",
 };
 
 // half/full は背景 scrim を出して「読みに集中する」モードに切替

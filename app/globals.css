@@ -503,6 +503,8 @@ button { font-family: inherit; }
   flex-direction: column;
   overflow: hidden;
   transition: height .3s cubic-bezier(0.16, 1, 0.3, 1);
+  /* iOS のホームインジケータ領域分を確保し、コンテンツが隠れないように */
+  padding-bottom: env(safe-area-inset-bottom);
 }
 .sheet-stage-compact {
   /* compact 時は影を軽めに、地図と一体感 */
