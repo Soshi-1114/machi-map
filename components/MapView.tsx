@@ -10,8 +10,9 @@ import MobileSheet from "./MobileSheet";
 
 type Props = { municipalities: Municipality[] };
 
-// 同一originプロキシ（GSIは CORS 不在のため WebGL テクスチャ化に必要）
-const TILE_URL = "/api/tile/{z}/{x}/{y}";
+// OpenFreeMap の Positron スタイル（Mapbox Light 相当の軽量モノクロ基盤）
+// CORS 対応、トークン不要、Apache-2.0
+const BASEMAP_STYLE = "https://tiles.openfreemap.org/styles/positron";
 const SAITAMA_BBOX: [number, number, number, number] = [138.71, 35.74, 139.91, 36.29];
 
 export default function MapView({ municipalities }: Props) {
@@ -44,33 +45,7 @@ export default function MapView({ municipalities }: Props) {
     if (!containerRef.current || mapRef.current) return;
     const map = new maplibregl.Map({
       container: containerRef.current,
-      style: {
-        version: 8,
-        sources: {
-          gsi: {
-            type: "raster",
-            tiles: [TILE_URL],
-            tileSize: 256,
-            maxzoom: 18,
-            attribution: '<a href="https://maps.gsi.go.jp/development/ichiran.html" target="_blank" rel="noopener noreferrer">国土地理院</a>',
-          },
-        },
-        layers: [
-          { id: "bg", type: "background", paint: { "background-color": "#f5f8fc" } },
-          {
-            id: "gsi-tiles",
-            type: "raster",
-            source: "gsi",
-            paint: {
-              "raster-opacity": 0.55,
-              "raster-saturation": -0.6,
-              "raster-brightness-min": 0.55,
-              "raster-brightness-max": 1.0,
-              "raster-contrast": -0.05,
-            },
-          },
-        ],
-      },
+      style: BASEMAP_STYLE,
       center: [139.31, 36.015],
       zoom: 8.5,
       attributionControl: { compact: true },
@@ -95,9 +70,26 @@ export default function MapView({ municipalities }: Props) {
       }
       geoCacheRef.current = geo;
 
+      // ラベルを日本語優先に書き換え（OSMの name:ja があれば優先、無ければ name）
+      const allLayers = map.getStyle().layers ?? [];
+      for (const layer of allLayers) {
+        if (layer.type !== "symbol") continue;
+        const layout = (layer as { layout?: { "text-field"?: unknown } }).layout;
+        if (!layout?.["text-field"]) continue;
+        map.setLayoutProperty(layer.id, "text-field", [
+          "coalesce",
+          ["get", "name:ja"],
+          ["get", "name:latin"],
+          ["get", "name"],
+        ]);
+      }
+
       map.addSource("muni", { type: "geojson", data: geo, promoteId: "code" });
 
-      // 家賃コロプレス（ベース）
+      // 地名ラベル等の symbol レイヤーより下にコロプレスを差し込む
+      const firstSymbolId = allLayers.find((l) => l.type === "symbol")?.id;
+
+      // 家賃コロプレス（透過強め、地図が透ける）
       map.addLayer({
         id: "muni-fill",
         type: "fill",
@@ -106,37 +98,37 @@ export default function MapView({ municipalities }: Props) {
           "fill-color": rentStepExpression() as maplibregl.DataDrivenPropertyValueSpecification<string>,
           "fill-opacity": [
             "case",
-            ["boolean", ["feature-state", "selected"], false], 0.92,
-            ["boolean", ["feature-state", "hover"], false], 0.88,
-            0.72,
+            ["boolean", ["feature-state", "selected"], false], 0.62,
+            ["boolean", ["feature-state", "hover"], false], 0.52,
+            0.32,
           ],
         },
-      });
-      // 災害リスク オーバーレイ（コロプレスより上で境界線より下）
+      }, firstSymbolId);
+      // 災害リスク オーバーレイ（さらに弱く）
       map.addLayer({
         id: "muni-hazard",
         type: "fill",
         source: "muni",
         filter: ["==", ["get", "hasFloodRisk"], 1],
         paint: {
-          "fill-color": "#2563eb",
-          "fill-opacity": 0.12,
+          "fill-color": "#1d4ed8",
+          "fill-opacity": 0.08,
         },
-      });
-      // 境界線（ベース）
+      }, firstSymbolId);
+      // 境界線
       map.addLayer({
         id: "muni-outline",
         type: "line",
         source: "muni",
         paint: {
-          "line-color": "rgba(15, 23, 42, 0.22)",
+          "line-color": "rgba(15, 23, 42, 0.42)",
           "line-width": [
             "case",
-            ["boolean", ["feature-state", "hover"], false], 1.6,
-            0.6,
+            ["boolean", ["feature-state", "hover"], false], 1.8,
+            0.8,
           ],
         },
-      });
+      }, firstSymbolId);
       // 選択中ハイライト（明るいリング）
       map.addLayer({
         id: "muni-selected",
@@ -146,12 +138,12 @@ export default function MapView({ municipalities }: Props) {
           "line-color": "#1d4ed8",
           "line-width": [
             "case",
-            ["boolean", ["feature-state", "selected"], false], 3.2,
+            ["boolean", ["feature-state", "selected"], false], 3.6,
             0,
           ],
           "line-blur": 0.4,
         },
-      });
+      }, firstSymbolId);
 
       map.on("click", "muni-fill", (e: MapMouseEvent & { features?: maplibregl.MapGeoJSONFeature[] }) => {
         const f = e.features?.[0];
