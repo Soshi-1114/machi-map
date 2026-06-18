@@ -41,6 +41,18 @@ html, body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+/* 全画面地図用のシェル — iOS Safari の 100vh は URLバー込みの layout viewport を
+   返すため、bottom:0 のシートが画面外にはみ出る。100dvh で visible viewport に
+   合わせ、URLバー出現/退避にも追従させる。 */
+.app-shell {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+}
 body { letter-spacing: 0.005em; }
 a { color: var(--accent); text-decoration: none; transition: color .15s ease; }
 a:hover { color: var(--accent-hover); }
