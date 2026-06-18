@@ -1,7 +1,7 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { getMunicipality, listMunicipalities } from "@/lib/metrics";
+import { getMunicipality, listAll } from "@/lib/metrics";
 import { buildSummary } from "@/lib/summary";
 import { findRelatedByRent } from "@/lib/related";
 import { SITE, PREF_NAMES_JA, absoluteUrl } from "@/lib/site";
@@ -10,7 +10,7 @@ import type { Municipality } from "@/lib/types";
 type Params = { pref: string; city: string };
 
 export async function generateStaticParams() {
-  const all = await listMunicipalities("saitama");
+  const all = await listAll("saitama");
   return all.map((m) => ({ pref: m.pref, city: m.code }));
 }
 
@@ -18,10 +18,11 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
   const m = await getMunicipality(params.city);
   if (!m) return { title: "見つかりません | MachiMap" };
   const prefName = PREF_NAMES_JA[m.pref] ?? m.pref;
+  const fullName = m.displayName ?? m.name;
   const rent = m.rent.value.toLocaleString();
   const pop = m.population.toLocaleString();
-  const title = `${m.name}の住みやすさ — 家賃${rent}円/月｜${SITE.name}`;
-  const description = `${m.name}（${prefName}）の住みやすさを地図でチェック。民営借家中央値${rent}円/月、人口${pop}人。地価・待機児童・災害リスクをまとめて比較できる${SITE.name}の自治体ページ。`;
+  const title = `${fullName}の住みやすさ — 家賃${rent}円/月｜${SITE.name}`;
+  const description = `${fullName}（${prefName}）の住みやすさを地図でチェック。民営借家中央値${rent}円/月、人口${pop}人。地価・待機児童・災害リスクをまとめて比較できる${SITE.name}の自治体ページ。`;
   const url = absoluteUrl(`/area/${m.pref}/${m.code}`);
   const ogImage = absoluteUrl(`/api/og/${m.code}`);
   return {
@@ -51,26 +52,39 @@ export default async function AreaPage({ params }: { params: Params }) {
   const m = await getMunicipality(params.city);
   if (!m) notFound();
 
-  const all = await listMunicipalities(m.pref);
-  const related = findRelatedByRent(all, m, 6);
+  const all = await listAll(m.pref);
+  // 同じ階層（市区町村なら市区町村、区なら区）の中から類似自治体を選ぶ
+  const peers = all.filter((x) => (x.level ?? "muni") === (m.level ?? "muni"));
+  const related = findRelatedByRent(peers, m, 6);
   const prefName = PREF_NAMES_JA[m.pref] ?? m.pref;
+  const parent = m.parentCode ? all.find((x) => x.code === m.parentCode) ?? null : null;
+  const heading = m.displayName ?? m.name;
+
+  const breadcrumbItems: Array<{ name: string; item: string }> = [
+    { name: SITE.name, item: absoluteUrl("/") },
+    { name: prefName, item: absoluteUrl(`/?pref=${m.pref}`) },
+  ];
+  if (parent) {
+    breadcrumbItems.push({ name: parent.name, item: absoluteUrl(`/area/${parent.pref}/${parent.code}`) });
+  }
+  breadcrumbItems.push({ name: m.name, item: absoluteUrl(`/area/${m.pref}/${m.code}`) });
 
   const ldJson = {
     "@context": "https://schema.org",
     "@graph": [
       {
         "@type": "BreadcrumbList",
-        itemListElement: [
-          { "@type": "ListItem", position: 1, name: SITE.name, item: absoluteUrl("/") },
-          { "@type": "ListItem", position: 2, name: prefName, item: absoluteUrl(`/?pref=${m.pref}`) },
-          { "@type": "ListItem", position: 3, name: m.name, item: absoluteUrl(`/area/${m.pref}/${m.code}`) },
-        ],
+        itemListElement: breadcrumbItems.map((b, i) => ({
+          "@type": "ListItem", position: i + 1, name: b.name, item: b.item,
+        })),
       },
       {
         "@type": "AdministrativeArea",
-        name: m.name,
+        name: heading,
         addressCountry: "JP",
-        containedInPlace: { "@type": "AdministrativeArea", name: prefName },
+        containedInPlace: parent
+          ? { "@type": "AdministrativeArea", name: parent.name, containedInPlace: { "@type": "AdministrativeArea", name: prefName } }
+          : { "@type": "AdministrativeArea", name: prefName },
         identifier: m.code,
         url: absoluteUrl(`/area/${m.pref}/${m.code}`),
       },
@@ -88,13 +102,19 @@ export default async function AreaPage({ params }: { params: Params }) {
         <Link href="/" className="breadcrumb-link">{SITE.name}</Link>
         <span aria-hidden="true">/</span>
         <span className="breadcrumb-current">{prefName}</span>
+        {parent && (
+          <>
+            <span aria-hidden="true">/</span>
+            <Link href={`/area/${parent.pref}/${parent.code}`} className="breadcrumb-link">{parent.name}</Link>
+          </>
+        )}
         <span aria-hidden="true">/</span>
         <span className="breadcrumb-current">{m.name}</span>
       </nav>
 
       <header className="detail-hero">
         <h1 className="detail-title">
-          {m.name}
+          {heading}
           <span className="detail-title-sub">の住みやすさ</span>
         </h1>
         <p className="detail-lead">{buildSummary(m)}</p>

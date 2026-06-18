@@ -1,0 +1,92 @@
+[
+  {
+    "code": "11101", "pref": "saitama", "name": "西区", "displayName": "さいたま市西区",
+    "level": "ward", "parentCode": "11100",
+    "population": 94000, "populationTrend": "増加",
+    "rent": {"value": 60000, "unit": "円/月", "source": "サンプル", "asOf": "2023", "isEstimated": true},
+    "landPrice": {"value": 168000, "unit": "円/㎡", "source": "サンプル", "asOf": "2024", "isEstimated": true},
+    "waitlistChildren": {"value": 1, "unit": "人", "source": "サンプル", "asOf": "2025", "isEstimated": true},
+    "hazard": {"hasFloodRisk": true, "hasLandslideRisk": false, "note": "鴨川沿いに一部浸水想定", "source": "サンプル", "asOf": "2024"}
+  },
+  {
+    "code": "11102", "pref": "saitama", "name": "北区", "displayName": "さいたま市北区",
+    "level": "ward", "parentCode": "11100",
+    "population": 149000, "populationTrend": "微増",
+    "rent": {"value": 64000, "unit": "円/月", "source": "サンプル", "asOf": "2023", "isEstimated": true},
+    "landPrice": {"value": 215000, "unit": "円/㎡", "source": "サンプル", "asOf": "2024", "isEstimated": true},
+    "waitlistChildren": {"value": 1, "unit": "人", "source": "サンプル", "asOf": "2025", "isEstimated": true},
+    "hazard": {"hasFloodRisk": false, "hasLandslideRisk": false, "note": "大宮台地で水害リスク低い", "source": "サンプル", "asOf": "2024"}
+  },
+  {
+    "code": "11103", "pref": "saitama", "name": "大宮区", "displayName": "さいたま市大宮区",
+    "level": "ward", "parentCode": "11100",
+    "population": 120000, "populationTrend": "横ばい",
+    "rent": {"value": 75000, "unit": "円/月", "source": "サンプル", "asOf": "2023", "isEstimated": true},
+    "landPrice": {"value": 530000, "unit": "円/㎡", "source": "サンプル", "asOf": "2024", "isEstimated": true},
+    "waitlistChildren": {"value": 3, "unit": "人", "source": "サンプル", "asOf": "2025", "isEstimated": true},
+    "hazard": {"hasFloodRisk": false, "hasLandslideRisk": false, "note": "中心部は台地、駅周辺は高密度", "source": "サンプル", "asOf": "2024"}
+  },
+  {
+    "code": "11104", "pref": "saitama", "name": "見沼区", "displayName": "さいたま市見沼区",
+    "level": "ward", "parentCode": "11100",
+    "population": 165000, "populationTrend": "微増",
+    "rent": {"value": 63000, "unit": "円/月", "source": "サンプル", "asOf": "2023", "isEstimated": true},
+    "landPrice": {"value": 178000, "unit": "円/㎡", "source": "サンプル", "asOf": "2024", "isEstimated": true},
+    "waitlistChildren": {"value": 1, "unit": "人", "source": "サンプル", "asOf": "2025", "isEstimated": true},
+    "hazard": {"hasFloodRisk": true, "hasLandslideRisk": false, "note": "芝川・見沼田圃沿いに浸水想定", "source": "サンプル", "asOf": "2024"}
+  },
+  {
+    "code": "11105", "pref": "saitama", "name": "中央区", "displayName": "さいたま市中央区",
+    "level": "ward", "parentCode": "11100",
+    "population": 104000, "populationTrend": "増加",
+    "rent": {"value": 70000, "unit": "円/月", "source": "サンプル", "asOf": "2023", "isEstimated": true},
+    "landPrice": {"value": 282000, "unit": "円/㎡", "source": "サンプル", "asOf": "2024", "isEstimated": true},
+    "waitlistChildren": {"value": 2, "unit": "人", "source": "サンプル", "asOf": "2025", "isEstimated": true},
+    "hazard": {"hasFloodRisk": false, "hasLandslideRisk": false, "note": "与野周辺は台地で安定", "source": "サンプル", "asOf": "2024"}
+  },
+  {
+    "code": "11106", "pref": "saitama", "name": "桜区", "displayName": "さいたま市桜区",
+    "level": "ward", "parentCode": "11100",
+    "population": 99000, "populationTrend": "微増",
+    "rent": {"value": 62000, "unit": "円/月", "source": "サンプル", "asOf": "2023", "isEstimated": true},
+    "landPrice": {"value": 174000, "unit": "円/㎡", "source": "サンプル", "asOf": "2024", "isEstimated": true},
+    "waitlistChildren": {"value": 0, "unit": "人", "source": "サンプル", "asOf": "2025", "isEstimated": true},
+    "hazard": {"hasFloodRisk": true, "hasLandslideRisk": false, "note": "荒川沿いに広い浸水想定", "source": "サンプル", "asOf": "2024"}
+  },
+  {
+    "code": "11107", "pref": "saitama", "name": "浦和区", "displayName": "さいたま市浦和区",
+    "level": "ward", "parentCode": "11100",
+    "population": 166000, "populationTrend": "横ばい",
+    "rent": {"value": 78000, "unit": "円/月", "source": "サンプル", "asOf": "2023", "isEstimated": true},
+    "landPrice": {"value": 415000, "unit": "円/㎡", "source": "サンプル", "asOf": "2024", "isEstimated": true},
+    "waitlistChildren": {"value": 2, "unit": "人", "source": "サンプル", "asOf": "2025", "isEstimated": true},
+    "hazard": {"hasFloodRisk": false, "hasLandslideRisk": false, "note": "中心部は台地で水害リスク低い", "source": "サンプル", "asOf": "2024"}
+  },
+  {
+    "code": "11108", "pref": "saitama", "name": "南区", "displayName": "さいたま市南区",
+    "level": "ward", "parentCode": "11100",
+    "population": 191000, "populationTrend": "増加",
+    "rent": {"value": 68000, "unit": "円/月", "source": "サンプル", "asOf": "2023", "isEstimated": true},
+    "landPrice": {"value": 305000, "unit": "円/㎡", "source": "サンプル", "asOf": "2024", "isEstimated": true},
+    "waitlistChildren": {"value": 3, "unit": "人", "source": "サンプル", "asOf": "2025", "isEstimated": true},
+    "hazard": {"hasFloodRisk": true, "hasLandslideRisk": false, "note": "荒川沿いに浸水想定", "source": "サンプル", "asOf": "2024"}
+  },
+  {
+    "code": "11109", "pref": "saitama", "name": "緑区", "displayName": "さいたま市緑区",
+    "level": "ward", "parentCode": "11100",
+    "population": 131000, "populationTrend": "増加",
+    "rent": {"value": 65000, "unit": "円/月", "source": "サンプル", "asOf": "2023", "isEstimated": true},
+    "landPrice": {"value": 198000, "unit": "円/㎡", "source": "サンプル", "asOf": "2024", "isEstimated": true},
+    "waitlistChildren": {"value": 0, "unit": "人", "source": "サンプル", "asOf": "2025", "isEstimated": true},
+    "hazard": {"hasFloodRisk": true, "hasLandslideRisk": false, "note": "見沼田圃沿いに浸水想定", "source": "サンプル", "asOf": "2024"}
+  },
+  {
+    "code": "11110", "pref": "saitama", "name": "岩槻区", "displayName": "さいたま市岩槻区",
+    "level": "ward", "parentCode": "11100",
+    "population": 110000, "populationTrend": "微減",
+    "rent": {"value": 58000, "unit": "円/月", "source": "サンプル", "asOf": "2023", "isEstimated": true},
+    "landPrice": {"value": 122000, "unit": "円/㎡", "source": "サンプル", "asOf": "2024", "isEstimated": true},
+    "waitlistChildren": {"value": 0, "unit": "人", "source": "サンプル", "asOf": "2025", "isEstimated": true},
+    "hazard": {"hasFloodRisk": true, "hasLandslideRisk": false, "note": "元荒川沿いに浸水想定", "source": "サンプル", "asOf": "2024"}
+  }
+]

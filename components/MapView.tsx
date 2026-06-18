@@ -8,18 +8,22 @@ import { rentStepExpression, RENT_COLORS, RENT_THRESHOLDS } from "@/lib/rentColo
 import AreaPanel from "./AreaPanel";
 import MobileSheet from "./MobileSheet";
 
-type Props = { municipalities: Municipality[] };
+type Props = { all: Municipality[] };
+
+const WARDS_MIN_ZOOM = 11;
 
 // OpenFreeMap の Positron スタイル（Mapbox Light 相当の軽量モノクロ基盤）
 // CORS 対応、トークン不要、Apache-2.0
 const BASEMAP_STYLE = "https://tiles.openfreemap.org/styles/positron";
 const SAITAMA_BBOX: [number, number, number, number] = [138.71, 35.74, 139.91, 36.29];
 
-export default function MapView({ municipalities }: Props) {
+export default function MapView({ all }: Props) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const mapRef = useRef<MapLibreMap | null>(null);
-  const geoCacheRef = useRef<GeoJSON.FeatureCollection | null>(null);
+  const muniGeoRef = useRef<GeoJSON.FeatureCollection | null>(null);
+  const wardsGeoRef = useRef<GeoJSON.FeatureCollection | null>(null);
   const hoveredCodeRef = useRef<string | null>(null);
+  const hoveredSourceRef = useRef<"muni" | "wards" | null>(null);
 
   const [selectedCode, setSelectedCode] = useState<string | null>(null);
   const [hazardOn, setHazardOn] = useState(true);
@@ -28,11 +32,18 @@ export default function MapView({ municipalities }: Props) {
   const [mapReady, setMapReady] = useState(false);
   const [tooltip, setTooltip] = useState<{ x: number; y: number; name: string; rent: number } | null>(null);
 
+  const { municipalities, wards } = useMemo(() => {
+    const mu: Municipality[] = [];
+    const wa: Municipality[] = [];
+    for (const x of all) (x.level === "ward" ? wa : mu).push(x);
+    return { municipalities: mu, wards: wa };
+  }, [all]);
+
   const byCode = useMemo(() => {
     const m = new Map<string, Municipality>();
-    for (const x of municipalities) m.set(x.code, x);
+    for (const x of all) m.set(x.code, x);
     return m;
-  }, [municipalities]);
+  }, [all]);
 
   useEffect(() => {
     const detect = () => setIsMobile(window.innerWidth < 768);
@@ -52,11 +63,7 @@ export default function MapView({ municipalities }: Props) {
     });
     map.addControl(new maplibregl.NavigationControl({ showCompass: false, visualizePitch: false }), "bottom-right");
 
-    map.on("load", async () => {
-      map.fitBounds(SAITAMA_BBOX, { padding: 40, duration: 0 });
-      const res = await fetch("/saitama.geojson");
-      const geo = (await res.json()) as GeoJSON.FeatureCollection;
-      // 家賃・ハザード等を properties にマージ（コードでJOIN）
+    const mergeFeatureData = (geo: GeoJSON.FeatureCollection) => {
       for (const f of geo.features) {
         const code = String(f.properties?.code ?? "");
         const m = byCode.get(code);
@@ -68,7 +75,19 @@ export default function MapView({ municipalities }: Props) {
           hasFloodRisk: m.hazard.hasFloodRisk ? 1 : 0,
         };
       }
-      geoCacheRef.current = geo;
+    };
+
+    map.on("load", async () => {
+      map.fitBounds(SAITAMA_BBOX, { padding: 40, duration: 0 });
+      const [muniGeo, wardsGeo] = await Promise.all([
+        fetch("/saitama.geojson").then((r) => r.json() as Promise<GeoJSON.FeatureCollection>),
+        fetch("/saitama_wards.geojson").then((r) => r.json() as Promise<GeoJSON.FeatureCollection>),
+      ]);
+      mergeFeatureData(muniGeo);
+      mergeFeatureData(wardsGeo);
+      muniGeoRef.current = muniGeo;
+      wardsGeoRef.current = wardsGeo;
+      const geo = muniGeo; // 既存コード互換
 
       // ラベルを日本語優先に書き換え（OSMの name:ja があれば優先、無ければ name）
       const allLayers = map.getStyle().layers ?? [];
@@ -85,6 +104,7 @@ export default function MapView({ municipalities }: Props) {
       }
 
       map.addSource("muni", { type: "geojson", data: geo, promoteId: "code" });
+      map.addSource("wards", { type: "geojson", data: wardsGeo, promoteId: "code" });
 
       // 地名ラベル等の symbol レイヤーより下にコロプレスを差し込む
       const firstSymbolId = allLayers.find((l) => l.type === "symbol")?.id;
@@ -145,39 +165,109 @@ export default function MapView({ municipalities }: Props) {
         },
       }, firstSymbolId);
 
-      map.on("click", "muni-fill", (e: MapMouseEvent & { features?: maplibregl.MapGeoJSONFeature[] }) => {
+      // ===== 政令市の行政区レイヤー（ズーム閾値以上で表示）=====
+      map.addLayer({
+        id: "wards-fill",
+        type: "fill",
+        source: "wards",
+        minzoom: WARDS_MIN_ZOOM,
+        paint: {
+          "fill-color": rentStepExpression() as maplibregl.DataDrivenPropertyValueSpecification<string>,
+          "fill-opacity": [
+            "case",
+            ["boolean", ["feature-state", "selected"], false], 0.62,
+            ["boolean", ["feature-state", "hover"], false], 0.52,
+            0.32,
+          ],
+        },
+      }, firstSymbolId);
+      map.addLayer({
+        id: "wards-hazard",
+        type: "fill",
+        source: "wards",
+        minzoom: WARDS_MIN_ZOOM,
+        filter: ["==", ["get", "hasFloodRisk"], 1],
+        paint: { "fill-color": "#1d4ed8", "fill-opacity": 0.08 },
+      }, firstSymbolId);
+      map.addLayer({
+        id: "wards-outline",
+        type: "line",
+        source: "wards",
+        minzoom: WARDS_MIN_ZOOM,
+        paint: {
+          "line-color": "rgba(15, 23, 42, 0.42)",
+          "line-width": [
+            "case",
+            ["boolean", ["feature-state", "hover"], false], 1.8,
+            0.8,
+          ],
+        },
+      }, firstSymbolId);
+      map.addLayer({
+        id: "wards-selected",
+        type: "line",
+        source: "wards",
+        minzoom: WARDS_MIN_ZOOM,
+        paint: {
+          "line-color": "#1d4ed8",
+          "line-width": [
+            "case",
+            ["boolean", ["feature-state", "selected"], false], 3.6,
+            0,
+          ],
+          "line-blur": 0.4,
+        },
+      }, firstSymbolId);
+
+      const onPolyClick = (e: MapMouseEvent & { features?: maplibregl.MapGeoJSONFeature[] }) => {
         const f = e.features?.[0];
         if (!f) return;
         const code = String(f.properties?.code ?? "");
         setSelectedCode(code);
         flyToCode(code);
-      });
+      };
+      map.on("click", "muni-fill", onPolyClick);
+      map.on("click", "wards-fill", onPolyClick);
 
-      map.on("mousemove", "muni-fill", (e: MapMouseEvent & { features?: maplibregl.MapGeoJSONFeature[] }) => {
-        const f = e.features?.[0];
-        if (!f) return;
-        const code = String(f.properties?.code ?? "");
-        if (hoveredCodeRef.current && hoveredCodeRef.current !== code) {
-          map.setFeatureState({ source: "muni", id: hoveredCodeRef.current }, { hover: false });
-        }
-        hoveredCodeRef.current = code;
-        map.setFeatureState({ source: "muni", id: code }, { hover: true });
-        map.getCanvas().style.cursor = "pointer";
-        setTooltip({
-          x: e.point.x,
-          y: e.point.y,
-          name: String(f.properties?.name ?? ""),
-          rent: Number(f.properties?.rent ?? 0),
-        });
-      });
-      map.on("mouseleave", "muni-fill", () => {
-        if (hoveredCodeRef.current) {
-          map.setFeatureState({ source: "muni", id: hoveredCodeRef.current }, { hover: false });
+      const onPolyMove = (sourceId: "muni" | "wards") =>
+        (e: MapMouseEvent & { features?: maplibregl.MapGeoJSONFeature[] }) => {
+          const f = e.features?.[0];
+          if (!f) return;
+          const code = String(f.properties?.code ?? "");
+          if (hoveredCodeRef.current && hoveredSourceRef.current &&
+              (hoveredCodeRef.current !== code || hoveredSourceRef.current !== sourceId)) {
+            map.setFeatureState(
+              { source: hoveredSourceRef.current, id: hoveredCodeRef.current },
+              { hover: false },
+            );
+          }
+          hoveredCodeRef.current = code;
+          hoveredSourceRef.current = sourceId;
+          map.setFeatureState({ source: sourceId, id: code }, { hover: true });
+          map.getCanvas().style.cursor = "pointer";
+          setTooltip({
+            x: e.point.x,
+            y: e.point.y,
+            name: String(f.properties?.name ?? ""),
+            rent: Number(f.properties?.rent ?? 0),
+          });
+        };
+      map.on("mousemove", "muni-fill", onPolyMove("muni"));
+      map.on("mousemove", "wards-fill", onPolyMove("wards"));
+      const onPolyLeave = () => {
+        if (hoveredCodeRef.current && hoveredSourceRef.current) {
+          map.setFeatureState(
+            { source: hoveredSourceRef.current, id: hoveredCodeRef.current },
+            { hover: false },
+          );
           hoveredCodeRef.current = null;
+          hoveredSourceRef.current = null;
         }
         map.getCanvas().style.cursor = "";
         setTooltip(null);
-      });
+      };
+      map.on("mouseleave", "muni-fill", onPolyLeave);
+      map.on("mouseleave", "wards-fill", onPolyLeave);
 
       setMapReady(true);
     });
@@ -201,6 +291,7 @@ export default function MapView({ municipalities }: Props) {
     const map = mapRef.current;
     if (!map || !mapReady) return;
     map.setLayoutProperty("muni-hazard", "visibility", hazardOn ? "visible" : "none");
+    map.setLayoutProperty("wards-hazard", "visibility", hazardOn ? "visible" : "none");
   }, [hazardOn, mapReady]);
 
   useEffect(() => {
@@ -209,20 +300,32 @@ export default function MapView({ municipalities }: Props) {
     municipalities.forEach((m) => {
       map.setFeatureState({ source: "muni", id: m.code }, { selected: m.code === selectedCode });
     });
-  }, [selectedCode, mapReady, municipalities]);
+    wards.forEach((m) => {
+      map.setFeatureState({ source: "wards", id: m.code }, { selected: m.code === selectedCode });
+    });
+  }, [selectedCode, mapReady, municipalities, wards]);
 
   const filtered = useMemo(() => {
     const q = searchQuery.trim();
     if (!q) return [];
-    return municipalities.filter((m) => m.name.includes(q)).slice(0, 8);
-  }, [searchQuery, municipalities]);
+    // 市区町村と区を両方検索対象に
+    return [...municipalities, ...wards]
+      .filter((m) => (m.displayName ?? m.name).includes(q) || m.name.includes(q))
+      .slice(0, 8);
+  }, [searchQuery, municipalities, wards]);
 
   // 自治体コードを画面内に収める。SP は下部シート分、PC は右パネル分の余白を確保。
   const flyToCode = useCallback((code: string) => {
     const map = mapRef.current;
-    const geo = geoCacheRef.current;
-    if (!map || !geo) return;
-    const feat = geo.features.find((x) => String(x.properties?.code) === code);
+    if (!map) return;
+    // muniGeo にあれば muni、なければ wardsGeo を見る
+    const muniFeat = muniGeoRef.current?.features.find(
+      (x) => String(x.properties?.code) === code,
+    );
+    const wardFeat = !muniFeat
+      ? wardsGeoRef.current?.features.find((x) => String(x.properties?.code) === code)
+      : undefined;
+    const feat = muniFeat || wardFeat;
     if (!feat) return;
     const bbox = computeBbox(feat.geometry);
     if (!bbox) return;
@@ -230,7 +333,16 @@ export default function MapView({ municipalities }: Props) {
     const padding = sp
       ? { top: 100, bottom: 360, left: 24, right: 24 }
       : { top: 80, bottom: 60, left: 60, right: 420 };
-    map.fitBounds(bbox, { padding, maxZoom: 12.5, duration: 800 });
+    // 区を選択した時は最低 z=11 まで寄せて区レイヤーが見える状態に
+    const minZoom = wardFeat ? WARDS_MIN_ZOOM : 0;
+    const currentZoom = map.getZoom();
+    map.fitBounds(bbox, { padding, maxZoom: 13.5, duration: 800 });
+    if (wardFeat && currentZoom < minZoom) {
+      // fitBounds の結果が minZoom 未満ならズーム引き上げ
+      setTimeout(() => {
+        if (map.getZoom() < minZoom) map.easeTo({ zoom: minZoom, duration: 400 });
+      }, 850);
+    }
   }, []);
 
   const flyToMuni = useCallback((m: Municipality) => {

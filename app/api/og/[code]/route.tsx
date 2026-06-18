@@ -15,6 +15,10 @@ export async function GET(
     return new Response("not found", { status: 404 });
   }
   const prefName = PREF_NAMES_JA[m.pref] ?? m.pref;
+  // 区の場合はパンくず的に "埼玉県 / さいたま市" を上に出し、見出しは "浦和区" のみ
+  const parent = m.parentCode ? await getMunicipality(m.parentCode) : null;
+  const breadcrumbText = parent ? `${prefName} / ${parent.name}` : prefName;
+  const heading = m.name;
   const rent = m.rent.value.toLocaleString();
   const pop = m.population.toLocaleString();
   // ImageResponse の組込フォントには U+33A1 (㎡) のグリフが無いため m² に置換
@@ -56,7 +60,7 @@ export async function GET(
         {/* Title */}
         <div style={{ marginTop: 56, display: "flex", flexDirection: "column" }}>
           <div style={{ fontSize: 26, color: "#475569", fontWeight: 600 }}>
-            {prefName}
+            {breadcrumbText}
           </div>
           <div
             style={{
@@ -68,7 +72,7 @@ export async function GET(
               color: "#0f172a",
             }}
           >
-            {m.name}
+            {heading}
           </div>
           <div style={{ marginTop: 8, fontSize: 28, color: "#1e3a8a", fontWeight: 600 }}>
             の住みやすさ

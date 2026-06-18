@@ -15,10 +15,15 @@ export type HazardInfo = {
   asOf: string;
 };
 
+export type AdminLevel = "muni" | "ward"; // 市区町村 / 政令市の行政区
+
 export type Municipality = {
-  code: string;          // 全国地方公共団体コード 例 "11203"
+  code: string;          // 全国地方公共団体コード 例 "11203"（市区町村） / "11107"（区）
   pref: string;          // "saitama"（URL用スラッグ）
-  name: string;          // "川口市"
+  name: string;          // "川口市" / "浦和区"
+  level?: AdminLevel;    // 既定は "muni"。"ward" の場合は parentCode 必須を想定
+  parentCode?: string;   // ward の親市コード 例 "11100"
+  displayName?: string;  // 表示用フルネーム 例 "さいたま市浦和区"。指定無ければ name にフォールバック
   population: number;
   populationTrend: "増加" | "微増" | "横ばい" | "微減" | "減少";
   rent: Metric;          // 民営借家中央値
