@@ -10,9 +10,9 @@ if (!APP_ID) {
 
 const url = new URL("https://api.e-stat.go.jp/rest/3.0/app/json/getStatsList");
 url.searchParams.set("appId", APP_ID);
-// 政府統計コード 00200521 = 国勢調査
-url.searchParams.set("statsCode", "00200521");
-url.searchParams.set("searchWord", "令和2年 人口等基本集計 男女別人口");
+// 政府統計コード 00200522 = 住宅・土地統計調査
+url.searchParams.set("statsCode", "00200522");
+url.searchParams.set("searchWord", "１か月当たり家賃 借家");
 url.searchParams.set("limit", "50");
 
 const res = await fetch(url);
