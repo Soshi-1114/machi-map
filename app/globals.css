@@ -539,15 +539,11 @@ button { font-family: inherit; }
 .sheet-scrim {
   position: absolute;
   inset: 0;
-  background: rgba(15, 23, 42, 0.32);
+  background: rgba(15, 23, 42, 1); /* opacity は MobileSheet 側で動的制御 */
   backdrop-filter: blur(2px);
   -webkit-backdrop-filter: blur(2px);
   z-index: 9;
-  animation: scrim-in .2s ease;
-}
-@keyframes scrim-in {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  transition: opacity .25s cubic-bezier(0.32, 0.72, 0, 1);
 }
 .sheet {
   position: absolute;
@@ -562,13 +558,17 @@ button { font-family: inherit; }
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  transition: height .3s cubic-bezier(0.16, 1, 0.3, 1);
-  /* iOS のホームインジケータ領域分を確保し、コンテンツが隠れないように */
+  /* Apple sheet 風のスムーズ ease。snap 時のスプリング感を演出 */
+  transition: height .38s cubic-bezier(0.32, 0.72, 0, 1);
   padding-bottom: env(safe-area-inset-bottom);
   touch-action: pan-y;
 }
 .sheet.is-dragging {
   transition: none;
+}
+/* スワイプ受付エリア — ハンドル周辺の hit エリアを広げる */
+.sheet-handle-wrap {
+  touch-action: pan-y;
 }
 /* half は persistent（地図と並列）なので影をやや軽く、full は深く */
 .sheet-stage-half {

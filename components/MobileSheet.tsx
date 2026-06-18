@@ -13,10 +13,10 @@ type Props = {
   onClose: () => void;
 };
 
-// half は persistent / 200px、full は modal / 82vh。+ iOS safe-area。
+// half: persistent / 200px、full: modal / 60vh。+ iOS safe-area。
 const STAGE_HEIGHTS: Record<Stage, string> = {
   half: "calc(200px + env(safe-area-inset-bottom))",
-  full: "calc(82vh + env(safe-area-inset-bottom))",
+  full: "calc(60vh + env(safe-area-inset-bottom))",
 };
 
 const IS_MODAL: Record<Stage, boolean> = {
@@ -24,14 +24,16 @@ const IS_MODAL: Record<Stage, boolean> = {
   full: true,
 };
 
-const DRAG_DISMISS_THRESHOLD = 110; // px ドラッグで half へ snap
+// half→full / full→half スナップしきい値
+const SNAP_UP_THRESHOLD = 70;   // half でこれ以上上にスワイプで full
+const SNAP_DOWN_THRESHOLD = 100; // full でこれ以上下にスワイプで half
 
 export default function MobileSheet({ municipality, onClose }: Props) {
   const [stage, setStage] = useState<Stage>("half");
+  // 上方向 = -, 下方向 = + のドラッグ量
   const [dragOffset, setDragOffset] = useState(0);
   const dragStartY = useRef<number | null>(null);
 
-  // 自治体が切り替わったら half に戻す（読みかけリセット）
   useEffect(() => {
     setStage("half");
     setDragOffset(0);
@@ -42,20 +44,26 @@ export default function MobileSheet({ municipality, onClose }: Props) {
 
   const toggle = () => setStage((s) => (s === "half" ? "full" : "half"));
   const collapse = () => setStage("half");
+  const expand = () => setStage("full");
 
-  // ドラッグ（full モード時のみ有効、下方向に縮める）
+  // 双方向ドラッグ: half では上方向のみ、full では下方向のみ受け付ける
   const onTouchStart = (e: React.TouchEvent) => {
-    if (stage !== "full") return;
     dragStartY.current = e.touches[0].clientY;
   };
   const onTouchMove = (e: React.TouchEvent) => {
     if (dragStartY.current === null) return;
     const dy = e.touches[0].clientY - dragStartY.current;
-    setDragOffset(Math.max(0, dy)); // 下方向のみ
+    if (stage === "half") {
+      setDragOffset(Math.min(0, dy)); // 上 (-) のみ
+    } else {
+      setDragOffset(Math.max(0, dy)); // 下 (+) のみ
+    }
   };
   const onTouchEnd = () => {
     if (dragStartY.current === null) return;
-    if (dragOffset > DRAG_DISMISS_THRESHOLD) {
+    if (stage === "half" && dragOffset < -SNAP_UP_THRESHOLD) {
+      setStage("full");
+    } else if (stage === "full" && dragOffset > SNAP_DOWN_THRESHOLD) {
       setStage("half");
     }
     setDragOffset(0);
@@ -63,34 +71,61 @@ export default function MobileSheet({ municipality, onClose }: Props) {
   };
 
   const heading = m.displayName ?? m.name;
-  const heightStyle =
+
+  // ドラッグ中の動的な高さ計算
+  let heightStyle = STAGE_HEIGHTS[stage];
+  if (stage === "half" && dragOffset < 0) {
+    heightStyle = `calc(${STAGE_HEIGHTS.half} + ${-dragOffset}px)`;
+  } else if (stage === "full" && dragOffset > 0) {
+    heightStyle = `calc(${STAGE_HEIGHTS.full} - ${dragOffset}px)`;
+  }
+
+  // scrim は full スナップ完了後にだけ出す。
+  // ドラッグ中（dragOffset !== 0）は scrim を出さない方が地図が見える。
+  const showScrim = IS_MODAL[stage] && dragOffset === 0;
+  // ドラッグ中の scrim opacity 補間（より自然な遷移）
+  const scrimIntensity =
     stage === "full" && dragOffset > 0
-      ? `calc(${STAGE_HEIGHTS.full} - ${dragOffset}px)`
-      : STAGE_HEIGHTS[stage];
+      ? Math.max(0, 1 - dragOffset / 200)
+      : stage === "half" && dragOffset < 0
+      ? Math.min(1, -dragOffset / 150)
+      : showScrim
+      ? 1
+      : 0;
 
   return (
     <>
-      {IS_MODAL[stage] && (
-        <div className="sheet-scrim" aria-hidden="true" onClick={collapse} />
+      {scrimIntensity > 0.01 && (
+        <div
+          className="sheet-scrim"
+          aria-hidden="true"
+          onClick={collapse}
+          style={{ opacity: scrimIntensity * 0.32 }}
+        />
       )}
       <div
-        className={`sheet sheet-stage-${stage}${dragOffset > 0 ? " is-dragging" : ""}`}
+        className={`sheet sheet-stage-${stage}${dragOffset !== 0 ? " is-dragging" : ""}`}
         style={{ height: heightStyle }}
         role="dialog"
         aria-modal={IS_MODAL[stage]}
         aria-label={`${heading}の詳細`}
       >
-        <button
-          className="sheet-handle-btn"
-          aria-label={stage === "full" ? "シートを縮める" : "シートを拡大"}
-          onClick={toggle}
+        {/* ハンドル + スワイプ受付エリア。タップでも toggle */}
+        <div
+          className="sheet-handle-wrap"
           onTouchStart={onTouchStart}
           onTouchMove={onTouchMove}
           onTouchEnd={onTouchEnd}
           onTouchCancel={onTouchEnd}
         >
-          <span className="sheet-handle" />
-        </button>
+          <button
+            className="sheet-handle-btn"
+            aria-label={stage === "full" ? "シートを縮める" : "シートを拡大"}
+            onClick={toggle}
+          >
+            <span className="sheet-handle" />
+          </button>
+        </div>
 
         <div className="sheet-content">
           <div className="panel-head-top">
@@ -102,11 +137,13 @@ export default function MobileSheet({ municipality, onClose }: Props) {
               </p>
             </div>
             <div style={{ display: "flex", gap: 2, flexShrink: 0 }}>
-              {stage === "full" && (
-                <button className="panel-close" aria-label="シートを縮める" onClick={collapse}>
-                  <ChevronDown />
-                </button>
-              )}
+              <button
+                className="panel-close"
+                aria-label={stage === "full" ? "シートを縮める" : "シートを拡大"}
+                onClick={stage === "full" ? collapse : expand}
+              >
+                {stage === "full" ? <ChevronDown /> : <ChevronUp />}
+              </button>
               <button className="panel-close" aria-label="閉じる" onClick={onClose}>×</button>
             </div>
           </div>
@@ -116,7 +153,7 @@ export default function MobileSheet({ municipality, onClose }: Props) {
           </div>
 
           {stage === "full" && (
-            <div style={{ marginTop: 16 }}>
+            <div style={{ marginTop: 14 }}>
               <div className="summary-block">{buildSummary(m)}</div>
               <p style={{ fontSize: 13, color: "var(--text-muted)", margin: "8px 0" }}>
                 人口 {m.population.toLocaleString()}人
@@ -137,6 +174,13 @@ export default function MobileSheet({ municipality, onClose }: Props) {
   );
 }
 
+function ChevronUp() {
+  return (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <polyline points="18 15 12 9 6 15" />
+    </svg>
+  );
+}
 function ChevronDown() {
   return (
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">

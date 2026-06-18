@@ -31,7 +31,7 @@ export default function MapView({ all }: Props) {
   const [searchQuery, setSearchQuery] = useState("");
   const [mapReady, setMapReady] = useState(false);
   const [tooltip, setTooltip] = useState<{ x: number; y: number; name: string; rent: number } | null>(null);
-  const [layersOpen, setLayersOpen] = useState(true);
+  const [layersOpen, setLayersOpen] = useState(false);
 
   const { municipalities, wards } = useMemo(() => {
     const mu: Municipality[] = [];
