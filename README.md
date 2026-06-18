@@ -79,10 +79,12 @@ machi-map/
 
 ## 出典クレジット（予定）
 
-- 地図タイル: 国土地理院（[https://maps.gsi.go.jp/development/ichiran.html](https://maps.gsi.go.jp/development/ichiran.html)）
+- 地図基盤: [OpenFreeMap Positron](https://openfreemap.org/)（OpenStreetMap データ、OpenMapTiles スキーマ、CC0 / ODbL）
 - 行政区域: 国土数値情報（行政区域データ N03）
 - 家賃: 総務省統計局「住宅・土地統計調査」（e-Stat 経由）
 - 地価・ハザード: 国土交通省「不動産情報ライブラリ」（reinfolib）
+
+なお `app/api/tile/[z]/[x]/[y]/route.ts` は国土地理院タイルの同一originプロキシ実装で、現状未使用だが OpenFreeMap が止まった際の fallback として残置している。
 
 ## ライセンス
 
