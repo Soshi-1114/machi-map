@@ -1,61 +1,207 @@
 import Link from "next/link";
+import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 import { getMunicipality, listMunicipalities } from "@/lib/metrics";
 import { buildSummary } from "@/lib/summary";
+import { findRelatedByRent } from "@/lib/related";
+import { SITE, PREF_NAMES_JA, absoluteUrl } from "@/lib/site";
+import type { Municipality } from "@/lib/types";
+
+type Params = { pref: string; city: string };
 
 export async function generateStaticParams() {
   const all = await listMunicipalities("saitama");
   return all.map((m) => ({ pref: m.pref, city: m.code }));
 }
 
-export default async function AreaPage({
-  params,
-}: {
-  params: { pref: string; city: string };
-}) {
+export async function generateMetadata({ params }: { params: Params }): Promise<Metadata> {
   const m = await getMunicipality(params.city);
-  if (!m) {
-    return (
-      <div className="detail-root">
-        <p>該当する自治体が見つかりません。</p>
-        <Link href="/" className="detail-back">← 地図に戻る</Link>
-      </div>
-    );
-  }
+  if (!m) return { title: "見つかりません | MachiMap" };
+  const prefName = PREF_NAMES_JA[m.pref] ?? m.pref;
+  const rent = m.rent.value.toLocaleString();
+  const pop = m.population.toLocaleString();
+  const title = `${m.name}の住みやすさ — 家賃${rent}円/月｜${SITE.name}`;
+  const description = `${m.name}（${prefName}）の住みやすさを地図でチェック。民営借家中央値${rent}円/月、人口${pop}人。地価・待機児童・災害リスクをまとめて比較できる${SITE.name}の自治体ページ。`;
+  const url = absoluteUrl(`/area/${m.pref}/${m.code}`);
+  const ogImage = absoluteUrl(`/api/og/${m.code}`);
+  return {
+    title,
+    description,
+    metadataBase: new URL(SITE.baseUrl),
+    alternates: { canonical: url },
+    openGraph: {
+      type: "article",
+      locale: SITE.locale,
+      url,
+      title,
+      description,
+      siteName: SITE.name,
+      images: [{ url: ogImage, width: 1200, height: 630, alt: `${m.name}の住みやすさサマリー` }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: [ogImage],
+    },
+  };
+}
 
-  const rows: { label: string; value: string; source?: string; asOf?: string; est?: boolean }[] = [
-    { label: "人口", value: `${m.population.toLocaleString()} 人（${m.populationTrend}）` },
-    { label: "家賃中央値", value: `${m.rent.value.toLocaleString()} ${m.rent.unit}`, source: m.rent.source, asOf: m.rent.asOf, est: m.rent.isEstimated },
-    { label: "地価", value: `${m.landPrice.value.toLocaleString()} ${m.landPrice.unit}`, source: m.landPrice.source, asOf: m.landPrice.asOf, est: m.landPrice.isEstimated },
-    { label: "待機児童", value: `${m.waitlistChildren.value} ${m.waitlistChildren.unit}`, source: m.waitlistChildren.source, asOf: m.waitlistChildren.asOf, est: m.waitlistChildren.isEstimated },
-    { label: "災害リスク", value: `${m.hazard.hasFloodRisk ? "浸水想定あり" : "浸水想定なし"} / ${m.hazard.hasLandslideRisk ? "土砂災害あり" : "土砂災害なし"}`, source: m.hazard.source, asOf: m.hazard.asOf },
-  ];
+export default async function AreaPage({ params }: { params: Params }) {
+  const m = await getMunicipality(params.city);
+  if (!m) notFound();
+
+  const all = await listMunicipalities(m.pref);
+  const related = findRelatedByRent(all, m, 6);
+  const prefName = PREF_NAMES_JA[m.pref] ?? m.pref;
+
+  const ldJson = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: SITE.name, item: absoluteUrl("/") },
+          { "@type": "ListItem", position: 2, name: prefName, item: absoluteUrl(`/?pref=${m.pref}`) },
+          { "@type": "ListItem", position: 3, name: m.name, item: absoluteUrl(`/area/${m.pref}/${m.code}`) },
+        ],
+      },
+      {
+        "@type": "AdministrativeArea",
+        name: m.name,
+        addressCountry: "JP",
+        containedInPlace: { "@type": "AdministrativeArea", name: prefName },
+        identifier: m.code,
+        url: absoluteUrl(`/area/${m.pref}/${m.code}`),
+      },
+    ],
+  };
 
   return (
     <div className="detail-root">
-      <Link href="/" className="detail-back">← 地図に戻る</Link>
-      <h1 className="detail-title">{m.name}</h1>
-      <p className="detail-lead">{buildSummary(m)}</p>
-      <table className="detail-table">
-        <tbody>
-          {rows.map((r) => (
-            <tr key={r.label}>
-              <th>{r.label}</th>
-              <td>
-                {r.value}
-                {r.est && <span className="metric-est">推計</span>}
-                {r.source && (
-                  <div className="detail-source">
-                    出典: {r.source}（{r.asOf}）
-                  </div>
-                )}
-              </td>
-            </tr>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(ldJson) }}
+      />
+
+      <nav aria-label="パンくず" className="breadcrumb">
+        <Link href="/" className="breadcrumb-link">{SITE.name}</Link>
+        <span aria-hidden="true">/</span>
+        <span className="breadcrumb-current">{prefName}</span>
+        <span aria-hidden="true">/</span>
+        <span className="breadcrumb-current">{m.name}</span>
+      </nav>
+
+      <header className="detail-hero">
+        <h1 className="detail-title">
+          {m.name}
+          <span className="detail-title-sub">の住みやすさ</span>
+        </h1>
+        <p className="detail-lead">{buildSummary(m)}</p>
+        <ul className="hero-stats">
+          <HeroStat label="家賃中央値" value={`${m.rent.value.toLocaleString()}円/月`} highlight />
+          <HeroStat label="人口" value={`${m.population.toLocaleString()}人`} sub={m.populationTrend} />
+          <HeroStat label="地価" value={`${m.landPrice.value.toLocaleString()}円/㎡`} />
+          <HeroStat label="待機児童" value={`${m.waitlistChildren.value}人`} />
+        </ul>
+      </header>
+
+      <section className="detail-section">
+        <h2 className="detail-h2">家賃・住居コスト</h2>
+        <p className="detail-p">
+          {m.name}の民営借家中央値は <strong>{m.rent.value.toLocaleString()}円/月</strong>。
+          {prefName}全体の中で見ると、家賃水準は{rentBand(m.rent.value)}に位置します。
+          地価（住宅地）は <strong>{m.landPrice.value.toLocaleString()}円/㎡</strong> です。
+        </p>
+        <SourceLine source={m.rent.source} asOf={m.rent.asOf} estimated={m.rent.isEstimated} />
+      </section>
+
+      <section className="detail-section">
+        <h2 className="detail-h2">子育て環境</h2>
+        <p className="detail-p">
+          待機児童数は <strong>{m.waitlistChildren.value}人</strong>
+          {m.waitlistChildren.value === 0 ? "（待機児童ゼロ）" : ""}。
+          人口は <strong>{m.population.toLocaleString()}人</strong>（{m.populationTrend}傾向）。
+        </p>
+        <SourceLine source={m.waitlistChildren.source} asOf={m.waitlistChildren.asOf} estimated={m.waitlistChildren.isEstimated} />
+      </section>
+
+      <section className="detail-section">
+        <h2 className="detail-h2">災害リスク</h2>
+        <p className="detail-p">
+          浸水想定区域: <strong>{m.hazard.hasFloodRisk ? "あり" : "なし"}</strong>
+          {" / "}
+          土砂災害区域: <strong>{m.hazard.hasLandslideRisk ? "あり" : "なし"}</strong>
+        </p>
+        {m.hazard.note && <p className="detail-note">{m.hazard.note}</p>}
+        <SourceLine source={m.hazard.source} asOf={m.hazard.asOf} />
+      </section>
+
+      <section className="detail-section">
+        <h2 className="detail-h2">家賃水準が近い自治体</h2>
+        <p className="detail-p" style={{ color: "var(--text-muted)", fontSize: 13.5 }}>
+          {m.name}と家賃中央値が近い{prefName}の自治体です。
+        </p>
+        <ul className="related-grid">
+          {related.map((r) => (
+            <li key={r.code}>
+              <Link href={`/area/${r.pref}/${r.code}`} className="related-card">
+                <span className="related-name">{r.name}</span>
+                <span className="related-rent">{r.rent.value.toLocaleString()} 円/月</span>
+              </Link>
+            </li>
           ))}
-        </tbody>
-      </table>
-      {m.hazard.note && (
-        <p className="detail-note">災害メモ: {m.hazard.note}</p>
-      )}
+        </ul>
+      </section>
+
+      <section className="detail-section">
+        <h2 className="detail-h2">出典・データについて</h2>
+        <p className="detail-p" style={{ fontSize: 13, color: "var(--text-muted)" }}>
+          本ページの数値は MVP 段階のサンプル値です（{m.rent.source}）。本番版では reinfolib（不動産情報ライブラリ）と e-Stat（政府統計）から取得した数値に置き換えます。
+        </p>
+      </section>
+
+      <div style={{ marginTop: 28, display: "flex", gap: 12 }}>
+        <Link href="/" className="detail-back">← 地図に戻る</Link>
+      </div>
     </div>
   );
+}
+
+function HeroStat({
+  label,
+  value,
+  sub,
+  highlight,
+}: {
+  label: string;
+  value: string;
+  sub?: string;
+  highlight?: boolean;
+}) {
+  return (
+    <li className={`hero-stat ${highlight ? "is-highlight" : ""}`}>
+      <span className="hero-stat-label">{label}</span>
+      <span className="hero-stat-value">{value}</span>
+      {sub && <span className="hero-stat-sub">{sub}</span>}
+    </li>
+  );
+}
+
+function SourceLine({ source, asOf, estimated }: { source: string; asOf: string; estimated?: boolean }) {
+  return (
+    <p className="detail-source-line">
+      出典: {source}（{asOf}）
+      {estimated && <span className="metric-est">推計</span>}
+    </p>
+  );
+}
+
+// 家賃水準のテキスト表記。コロプレスの色しきい値と同じ境界。
+function rentBand(value: number): string {
+  if (value < 50000) return "低め";
+  if (value < 55000) return "やや低め";
+  if (value < 60000) return "中位";
+  if (value < 65000) return "やや高め";
+  return "高め";
 }
