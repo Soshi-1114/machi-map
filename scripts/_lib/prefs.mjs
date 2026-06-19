@@ -262,6 +262,12 @@ export const PREFS = {
     hasWards: false,
     parentToWards: {},
   },
+  iwate: {
+    code: "03", nameJa: "岩手県",
+    bbox: { west: 140.653, south: 38.748, east: 142.072, north: 40.450 },
+    hasWards: false,
+    parentToWards: {},
+  },
 };
 
 export function getPref(slug) {
