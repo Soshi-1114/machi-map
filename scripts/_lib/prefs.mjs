@@ -97,6 +97,12 @@ export const PREFS = {
     hasWards: false,
     parentToWards: {},
   },
+  shiga: {
+    code: "25", nameJa: "滋賀県",
+    bbox: { west: 135.764, south: 34.791, east: 136.455, north: 35.704 },
+    hasWards: false,
+    parentToWards: {},
+  },
 };
 
 export function getPref(slug) {
