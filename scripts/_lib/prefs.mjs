@@ -248,6 +248,14 @@ export const PREFS = {
     hasWards: false,
     parentToWards: {},
   },
+  okinawa: {
+    code: "47", nameJa: "沖縄県",
+    // 沖縄本島クラスタ（+久米島・伊平屋伊是名）のみ。全域は与那国(123E)〜大東(131E)で
+    // span 8.4度=数万タイルになるため。宮古・八重山・大東の hazard はサンプル維持。
+    bbox: { west: 126.708, south: 26.074, east: 128.336, north: 27.101 },
+    hasWards: false,
+    parentToWards: {},
+  },
 };
 
 export function getPref(slug) {
