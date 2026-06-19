@@ -207,6 +207,12 @@ export const PREFS = {
       "40130": ["40131","40132","40133","40134","40135","40136","40137"], // 福岡市7区
     },
   },
+  saga: {
+    code: "41", nameJa: "佐賀県",
+    bbox: { west: 129.737, south: 32.950, east: 130.542, north: 33.619 },
+    hasWards: false,
+    parentToWards: {},
+  },
 };
 
 export function getPref(slug) {
