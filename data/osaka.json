@@ -1,0 +1,1808 @@
+[
+  {
+    "code": "27100",
+    "pref": "osaka",
+    "name": "大阪市",
+    "population": 2752412,
+    "populationTrend": "横ばい",
+    "rent": {
+      "value": 64040,
+      "unit": "円/月",
+      "source": "住宅・土地統計調査（加重平均）",
+      "asOf": "2023",
+      "isEstimated": false
+    },
+    "landPrice": {
+      "value": 1069211,
+      "unit": "円/㎡",
+      "source": "地価公示（住宅地平均）",
+      "asOf": "2025",
+      "isEstimated": false
+    },
+    "waitlistChildren": {
+      "value": 2,
+      "unit": "人",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
+    },
+    "hazard": {
+      "hasFloodRisk": true,
+      "hasLandslideRisk": false,
+      "note": "浸水想定区域あり",
+      "source": "国土数値情報（reinfolib XKT026/029）",
+      "asOf": "2024"
+    },
+    "amenities": {
+      "stations": 287,
+      "preschools": 1450,
+      "medicalFacilities": 5876,
+      "source": "国土数値情報（reinfolib XKT015/007/010）",
+      "asOf": "令和5年度"
+    }
+  },
+  {
+    "code": "27140",
+    "pref": "osaka",
+    "name": "堺市",
+    "population": 826161,
+    "populationTrend": "横ばい",
+    "rent": {
+      "value": 55000,
+      "unit": "円/月",
+      "source": "住宅・土地統計調査（加重平均）",
+      "asOf": "2023",
+      "isEstimated": false
+    },
+    "landPrice": {
+      "value": 160803,
+      "unit": "円/㎡",
+      "source": "地価公示（住宅地平均）",
+      "asOf": "2025",
+      "isEstimated": false
+    },
+    "waitlistChildren": {
+      "value": 0,
+      "unit": "人",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
+    },
+    "hazard": {
+      "hasFloodRisk": true,
+      "hasLandslideRisk": true,
+      "note": "浸水想定区域あり / 土砂災害警戒区域あり",
+      "source": "国土数値情報（reinfolib XKT026/029）",
+      "asOf": "2024"
+    },
+    "amenities": {
+      "stations": 45,
+      "preschools": 508,
+      "medicalFacilities": 1263,
+      "source": "国土数値情報（reinfolib XKT015/007/010）",
+      "asOf": "令和5年度"
+    }
+  },
+  {
+    "code": "27202",
+    "pref": "osaka",
+    "name": "岸和田市",
+    "population": 190658,
+    "populationTrend": "横ばい",
+    "rent": {
+      "value": 49579,
+      "unit": "円/月",
+      "source": "住宅・土地統計調査（加重平均）",
+      "asOf": "2023",
+      "isEstimated": false
+    },
+    "landPrice": {
+      "value": 98459,
+      "unit": "円/㎡",
+      "source": "地価公示（住宅地平均）",
+      "asOf": "2025",
+      "isEstimated": false
+    },
+    "waitlistChildren": {
+      "value": 6,
+      "unit": "人",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
+    },
+    "hazard": {
+      "hasFloodRisk": true,
+      "hasLandslideRisk": true,
+      "note": "浸水想定区域あり / 土砂災害警戒区域あり",
+      "source": "国土数値情報（reinfolib XKT026/029）",
+      "asOf": "2024"
+    },
+    "amenities": {
+      "stations": 7,
+      "preschools": 105,
+      "medicalFacilities": 254,
+      "source": "国土数値情報（reinfolib XKT015/007/010）",
+      "asOf": "令和5年度"
+    }
+  },
+  {
+    "code": "27203",
+    "pref": "osaka",
+    "name": "豊中市",
+    "population": 401558,
+    "populationTrend": "横ばい",
+    "rent": {
+      "value": 75904,
+      "unit": "円/月",
+      "source": "住宅・土地統計調査（加重平均）",
+      "asOf": "2023",
+      "isEstimated": false
+    },
+    "landPrice": {
+      "value": 281971,
+      "unit": "円/㎡",
+      "source": "地価公示（住宅地平均）",
+      "asOf": "2025",
+      "isEstimated": false
+    },
+    "waitlistChildren": {
+      "value": 28,
+      "unit": "人",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
+    },
+    "hazard": {
+      "hasFloodRisk": true,
+      "hasLandslideRisk": true,
+      "note": "浸水想定区域あり / 土砂災害警戒区域あり",
+      "source": "国土数値情報（reinfolib XKT026/029）",
+      "asOf": "2024"
+    },
+    "amenities": {
+      "stations": 13,
+      "preschools": 280,
+      "medicalFacilities": 683,
+      "source": "国土数値情報（reinfolib XKT015/007/010）",
+      "asOf": "令和5年度"
+    }
+  },
+  {
+    "code": "27204",
+    "pref": "osaka",
+    "name": "池田市",
+    "population": 104993,
+    "populationTrend": "横ばい",
+    "rent": {
+      "value": 65980,
+      "unit": "円/月",
+      "source": "住宅・土地統計調査（加重平均）",
+      "asOf": "2023",
+      "isEstimated": false
+    },
+    "landPrice": {
+      "value": 241565,
+      "unit": "円/㎡",
+      "source": "地価公示（住宅地平均）",
+      "asOf": "2025",
+      "isEstimated": false
+    },
+    "waitlistChildren": {
+      "value": 0,
+      "unit": "人",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
+    },
+    "hazard": {
+      "hasFloodRisk": true,
+      "hasLandslideRisk": true,
+      "note": "浸水想定区域あり / 土砂災害警戒区域あり",
+      "source": "国土数値情報（reinfolib XKT026/029）",
+      "asOf": "2024"
+    },
+    "amenities": {
+      "stations": 3,
+      "preschools": 50,
+      "medicalFacilities": 174,
+      "source": "国土数値情報（reinfolib XKT015/007/010）",
+      "asOf": "令和5年度"
+    }
+  },
+  {
+    "code": "27205",
+    "pref": "osaka",
+    "name": "吹田市",
+    "population": 385567,
+    "populationTrend": "横ばい",
+    "rent": {
+      "value": 69419,
+      "unit": "円/月",
+      "source": "住宅・土地統計調査（加重平均）",
+      "asOf": "2023",
+      "isEstimated": false
+    },
+    "landPrice": {
+      "value": 315735,
+      "unit": "円/㎡",
+      "source": "地価公示（住宅地平均）",
+      "asOf": "2025",
+      "isEstimated": false
+    },
+    "waitlistChildren": {
+      "value": 4,
+      "unit": "人",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
+    },
+    "hazard": {
+      "hasFloodRisk": true,
+      "hasLandslideRisk": true,
+      "note": "浸水想定区域あり / 土砂災害警戒区域あり",
+      "source": "国土数値情報（reinfolib XKT026/029）",
+      "asOf": "2024"
+    },
+    "amenities": {
+      "stations": 17,
+      "preschools": 246,
+      "medicalFacilities": 570,
+      "source": "国土数値情報（reinfolib XKT015/007/010）",
+      "asOf": "令和5年度"
+    }
+  },
+  {
+    "code": "27206",
+    "pref": "osaka",
+    "name": "泉大津市",
+    "population": 74412,
+    "populationTrend": "横ばい",
+    "rent": {
+      "value": 54365,
+      "unit": "円/月",
+      "source": "住宅・土地統計調査（加重平均）",
+      "asOf": "2023",
+      "isEstimated": false
+    },
+    "landPrice": {
+      "value": 113494,
+      "unit": "円/㎡",
+      "source": "地価公示（住宅地平均）",
+      "asOf": "2025",
+      "isEstimated": false
+    },
+    "waitlistChildren": {
+      "value": 0,
+      "unit": "人",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
+    },
+    "hazard": {
+      "hasFloodRisk": true,
+      "hasLandslideRisk": false,
+      "note": "浸水想定区域あり",
+      "source": "国土数値情報（reinfolib XKT026/029）",
+      "asOf": "2024"
+    },
+    "amenities": {
+      "stations": 3,
+      "preschools": 42,
+      "medicalFacilities": 117,
+      "source": "国土数値情報（reinfolib XKT015/007/010）",
+      "asOf": "令和5年度"
+    }
+  },
+  {
+    "code": "27207",
+    "pref": "osaka",
+    "name": "高槻市",
+    "population": 352698,
+    "populationTrend": "横ばい",
+    "rent": {
+      "value": 64093,
+      "unit": "円/月",
+      "source": "住宅・土地統計調査（加重平均）",
+      "asOf": "2023",
+      "isEstimated": false
+    },
+    "landPrice": {
+      "value": 190065,
+      "unit": "円/㎡",
+      "source": "地価公示（住宅地平均）",
+      "asOf": "2025",
+      "isEstimated": false
+    },
+    "waitlistChildren": {
+      "value": 0,
+      "unit": "人",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
+    },
+    "hazard": {
+      "hasFloodRisk": true,
+      "hasLandslideRisk": true,
+      "note": "浸水想定区域あり / 土砂災害警戒区域あり",
+      "source": "国土数値情報（reinfolib XKT026/029）",
+      "asOf": "2024"
+    },
+    "amenities": {
+      "stations": 5,
+      "preschools": 231,
+      "medicalFacilities": 501,
+      "source": "国土数値情報（reinfolib XKT015/007/010）",
+      "asOf": "令和5年度"
+    }
+  },
+  {
+    "code": "27208",
+    "pref": "osaka",
+    "name": "貝塚市",
+    "population": 84443,
+    "populationTrend": "横ばい",
+    "rent": {
+      "value": 44955,
+      "unit": "円/月",
+      "source": "住宅・土地統計調査（加重平均）",
+      "asOf": "2023",
+      "isEstimated": false
+    },
+    "landPrice": {
+      "value": 64235,
+      "unit": "円/㎡",
+      "source": "地価公示（住宅地平均）",
+      "asOf": "2025",
+      "isEstimated": false
+    },
+    "waitlistChildren": {
+      "value": 0,
+      "unit": "人",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
+    },
+    "hazard": {
+      "hasFloodRisk": true,
+      "hasLandslideRisk": true,
+      "note": "浸水想定区域あり / 土砂災害警戒区域あり",
+      "source": "国土数値情報（reinfolib XKT026/029）",
+      "asOf": "2024"
+    },
+    "amenities": {
+      "stations": 14,
+      "preschools": 60,
+      "medicalFacilities": 98,
+      "source": "国土数値情報（reinfolib XKT015/007/010）",
+      "asOf": "令和5年度"
+    }
+  },
+  {
+    "code": "27209",
+    "pref": "osaka",
+    "name": "守口市",
+    "population": 143096,
+    "populationTrend": "横ばい",
+    "rent": {
+      "value": 55825,
+      "unit": "円/月",
+      "source": "住宅・土地統計調査（加重平均）",
+      "asOf": "2023",
+      "isEstimated": false
+    },
+    "landPrice": {
+      "value": 189815,
+      "unit": "円/㎡",
+      "source": "地価公示（住宅地平均）",
+      "asOf": "2025",
+      "isEstimated": false
+    },
+    "waitlistChildren": {
+      "value": 0,
+      "unit": "人",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
+    },
+    "hazard": {
+      "hasFloodRisk": true,
+      "hasLandslideRisk": false,
+      "note": "浸水想定区域あり",
+      "source": "国土数値情報（reinfolib XKT026/029）",
+      "asOf": "2024"
+    },
+    "amenities": {
+      "stations": 7,
+      "preschools": 81,
+      "medicalFacilities": 221,
+      "source": "国土数値情報（reinfolib XKT015/007/010）",
+      "asOf": "令和5年度"
+    }
+  },
+  {
+    "code": "27210",
+    "pref": "osaka",
+    "name": "枚方市",
+    "population": 397289,
+    "populationTrend": "横ばい",
+    "rent": {
+      "value": 55119,
+      "unit": "円/月",
+      "source": "住宅・土地統計調査（加重平均）",
+      "asOf": "2023",
+      "isEstimated": false
+    },
+    "landPrice": {
+      "value": 163258,
+      "unit": "円/㎡",
+      "source": "地価公示（住宅地平均）",
+      "asOf": "2025",
+      "isEstimated": false
+    },
+    "waitlistChildren": {
+      "value": 0,
+      "unit": "人",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
+    },
+    "hazard": {
+      "hasFloodRisk": true,
+      "hasLandslideRisk": true,
+      "note": "浸水想定区域あり / 土砂災害警戒区域あり",
+      "source": "国土数値情報（reinfolib XKT026/029）",
+      "asOf": "2024"
+    },
+    "amenities": {
+      "stations": 13,
+      "preschools": 36,
+      "medicalFacilities": 529,
+      "source": "国土数値情報（reinfolib XKT015/007/010）",
+      "asOf": "令和5年度"
+    }
+  },
+  {
+    "code": "27211",
+    "pref": "osaka",
+    "name": "茨木市",
+    "population": 287730,
+    "populationTrend": "横ばい",
+    "rent": {
+      "value": 70817,
+      "unit": "円/月",
+      "source": "住宅・土地統計調査（加重平均）",
+      "asOf": "2023",
+      "isEstimated": false
+    },
+    "landPrice": {
+      "value": 218757,
+      "unit": "円/㎡",
+      "source": "地価公示（住宅地平均）",
+      "asOf": "2025",
+      "isEstimated": false
+    },
+    "waitlistChildren": {
+      "value": 24,
+      "unit": "人",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
+    },
+    "hazard": {
+      "hasFloodRisk": true,
+      "hasLandslideRisk": true,
+      "note": "浸水想定区域あり / 土砂災害警戒区域あり",
+      "source": "国土数値情報（reinfolib XKT026/029）",
+      "asOf": "2024"
+    },
+    "amenities": {
+      "stations": 11,
+      "preschools": 160,
+      "medicalFacilities": 399,
+      "source": "国土数値情報（reinfolib XKT015/007/010）",
+      "asOf": "令和5年度"
+    }
+  },
+  {
+    "code": "27212",
+    "pref": "osaka",
+    "name": "八尾市",
+    "population": 264642,
+    "populationTrend": "横ばい",
+    "rent": {
+      "value": 59437,
+      "unit": "円/月",
+      "source": "住宅・土地統計調査（加重平均）",
+      "asOf": "2023",
+      "isEstimated": false
+    },
+    "landPrice": {
+      "value": 139941,
+      "unit": "円/㎡",
+      "source": "地価公示（住宅地平均）",
+      "asOf": "2025",
+      "isEstimated": false
+    },
+    "waitlistChildren": {
+      "value": 0,
+      "unit": "人",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
+    },
+    "hazard": {
+      "hasFloodRisk": true,
+      "hasLandslideRisk": true,
+      "note": "浸水想定区域あり / 土砂災害警戒区域あり",
+      "source": "国土数値情報（reinfolib XKT026/029）",
+      "asOf": "2024"
+    },
+    "amenities": {
+      "stations": 15,
+      "preschools": 177,
+      "medicalFacilities": 367,
+      "source": "国土数値情報（reinfolib XKT015/007/010）",
+      "asOf": "令和5年度"
+    }
+  },
+  {
+    "code": "27213",
+    "pref": "osaka",
+    "name": "泉佐野市",
+    "population": 100131,
+    "populationTrend": "横ばい",
+    "rent": {
+      "value": 51852,
+      "unit": "円/月",
+      "source": "住宅・土地統計調査（加重平均）",
+      "asOf": "2023",
+      "isEstimated": false
+    },
+    "landPrice": {
+      "value": 68020,
+      "unit": "円/㎡",
+      "source": "地価公示（住宅地平均）",
+      "asOf": "2025",
+      "isEstimated": false
+    },
+    "waitlistChildren": {
+      "value": 0,
+      "unit": "人",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
+    },
+    "hazard": {
+      "hasFloodRisk": true,
+      "hasLandslideRisk": true,
+      "note": "浸水想定区域あり / 土砂災害警戒区域あり",
+      "source": "国土数値情報（reinfolib XKT026/029）",
+      "asOf": "2024"
+    },
+    "amenities": {
+      "stations": 11,
+      "preschools": 50,
+      "medicalFacilities": 147,
+      "source": "国土数値情報（reinfolib XKT015/007/010）",
+      "asOf": "令和5年度"
+    }
+  },
+  {
+    "code": "27214",
+    "pref": "osaka",
+    "name": "富田林市",
+    "population": 108699,
+    "populationTrend": "横ばい",
+    "rent": {
+      "value": 48378,
+      "unit": "円/月",
+      "source": "住宅・土地統計調査（加重平均）",
+      "asOf": "2023",
+      "isEstimated": false
+    },
+    "landPrice": {
+      "value": 83856,
+      "unit": "円/㎡",
+      "source": "地価公示（住宅地平均）",
+      "asOf": "2025",
+      "isEstimated": false
+    },
+    "waitlistChildren": {
+      "value": 1,
+      "unit": "人",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
+    },
+    "hazard": {
+      "hasFloodRisk": true,
+      "hasLandslideRisk": true,
+      "note": "浸水想定区域あり / 土砂災害警戒区域あり",
+      "source": "国土数値情報（reinfolib XKT026/029）",
+      "asOf": "2024"
+    },
+    "amenities": {
+      "stations": 6,
+      "preschools": 48,
+      "medicalFacilities": 153,
+      "source": "国土数値情報（reinfolib XKT015/007/010）",
+      "asOf": "令和5年度"
+    }
+  },
+  {
+    "code": "27215",
+    "pref": "osaka",
+    "name": "寝屋川市",
+    "population": 229733,
+    "populationTrend": "横ばい",
+    "rent": {
+      "value": 53674,
+      "unit": "円/月",
+      "source": "住宅・土地統計調査（加重平均）",
+      "asOf": "2023",
+      "isEstimated": false
+    },
+    "landPrice": {
+      "value": 151761,
+      "unit": "円/㎡",
+      "source": "地価公示（住宅地平均）",
+      "asOf": "2025",
+      "isEstimated": false
+    },
+    "waitlistChildren": {
+      "value": 0,
+      "unit": "人",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
+    },
+    "hazard": {
+      "hasFloodRisk": true,
+      "hasLandslideRisk": true,
+      "note": "浸水想定区域あり / 土砂災害警戒区域あり",
+      "source": "国土数値情報（reinfolib XKT026/029）",
+      "asOf": "2024"
+    },
+    "amenities": {
+      "stations": 4,
+      "preschools": 107,
+      "medicalFacilities": 316,
+      "source": "国土数値情報（reinfolib XKT015/007/010）",
+      "asOf": "令和5年度"
+    }
+  },
+  {
+    "code": "27216",
+    "pref": "osaka",
+    "name": "河内長野市",
+    "population": 101692,
+    "populationTrend": "横ばい",
+    "rent": {
+      "value": 51538,
+      "unit": "円/月",
+      "source": "住宅・土地統計調査（加重平均）",
+      "asOf": "2023",
+      "isEstimated": false
+    },
+    "landPrice": {
+      "value": 72434,
+      "unit": "円/㎡",
+      "source": "地価公示（住宅地平均）",
+      "asOf": "2025",
+      "isEstimated": false
+    },
+    "waitlistChildren": {
+      "value": 0,
+      "unit": "人",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
+    },
+    "hazard": {
+      "hasFloodRisk": true,
+      "hasLandslideRisk": true,
+      "note": "浸水想定区域あり / 土砂災害警戒区域あり",
+      "source": "国土数値情報（reinfolib XKT026/029）",
+      "asOf": "2024"
+    },
+    "amenities": {
+      "stations": 8,
+      "preschools": 52,
+      "medicalFacilities": 147,
+      "source": "国土数値情報（reinfolib XKT015/007/010）",
+      "asOf": "令和5年度"
+    }
+  },
+  {
+    "code": "27217",
+    "pref": "osaka",
+    "name": "松原市",
+    "population": 117641,
+    "populationTrend": "横ばい",
+    "rent": {
+      "value": 54816,
+      "unit": "円/月",
+      "source": "住宅・土地統計調査（加重平均）",
+      "asOf": "2023",
+      "isEstimated": false
+    },
+    "landPrice": {
+      "value": 119204,
+      "unit": "円/㎡",
+      "source": "地価公示（住宅地平均）",
+      "asOf": "2025",
+      "isEstimated": false
+    },
+    "waitlistChildren": {
+      "value": 0,
+      "unit": "人",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
+    },
+    "hazard": {
+      "hasFloodRisk": true,
+      "hasLandslideRisk": false,
+      "note": "浸水想定区域あり",
+      "source": "国土数値情報（reinfolib XKT026/029）",
+      "asOf": "2024"
+    },
+    "amenities": {
+      "stations": 4,
+      "preschools": 37,
+      "medicalFacilities": 153,
+      "source": "国土数値情報（reinfolib XKT015/007/010）",
+      "asOf": "令和5年度"
+    }
+  },
+  {
+    "code": "27218",
+    "pref": "osaka",
+    "name": "大東市",
+    "population": 119367,
+    "populationTrend": "横ばい",
+    "rent": {
+      "value": 54108,
+      "unit": "円/月",
+      "source": "住宅・土地統計調査（加重平均）",
+      "asOf": "2023",
+      "isEstimated": false
+    },
+    "landPrice": {
+      "value": 154712,
+      "unit": "円/㎡",
+      "source": "地価公示（住宅地平均）",
+      "asOf": "2025",
+      "isEstimated": false
+    },
+    "waitlistChildren": {
+      "value": 0,
+      "unit": "人",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
+    },
+    "hazard": {
+      "hasFloodRisk": true,
+      "hasLandslideRisk": true,
+      "note": "浸水想定区域あり / 土砂災害警戒区域あり",
+      "source": "国土数値情報（reinfolib XKT026/029）",
+      "asOf": "2024"
+    },
+    "amenities": {
+      "stations": 3,
+      "preschools": 64,
+      "medicalFacilities": 145,
+      "source": "国土数値情報（reinfolib XKT015/007/010）",
+      "asOf": "令和5年度"
+    }
+  },
+  {
+    "code": "27219",
+    "pref": "osaka",
+    "name": "和泉市",
+    "population": 184495,
+    "populationTrend": "横ばい",
+    "rent": {
+      "value": 50753,
+      "unit": "円/月",
+      "source": "住宅・土地統計調査（加重平均）",
+      "asOf": "2023",
+      "isEstimated": false
+    },
+    "landPrice": {
+      "value": 87329,
+      "unit": "円/㎡",
+      "source": "地価公示（住宅地平均）",
+      "asOf": "2025",
+      "isEstimated": false
+    },
+    "waitlistChildren": {
+      "value": 2,
+      "unit": "人",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
+    },
+    "hazard": {
+      "hasFloodRisk": true,
+      "hasLandslideRisk": true,
+      "note": "浸水想定区域あり / 土砂災害警戒区域あり",
+      "source": "国土数値情報（reinfolib XKT026/029）",
+      "asOf": "2024"
+    },
+    "amenities": {
+      "stations": 4,
+      "preschools": 84,
+      "medicalFacilities": 233,
+      "source": "国土数値情報（reinfolib XKT015/007/010）",
+      "asOf": "令和5年度"
+    }
+  },
+  {
+    "code": "27220",
+    "pref": "osaka",
+    "name": "箕面市",
+    "population": 136868,
+    "populationTrend": "横ばい",
+    "rent": {
+      "value": 66293,
+      "unit": "円/月",
+      "source": "住宅・土地統計調査（加重平均）",
+      "asOf": "2023",
+      "isEstimated": false
+    },
+    "landPrice": {
+      "value": 226812,
+      "unit": "円/㎡",
+      "source": "地価公示（住宅地平均）",
+      "asOf": "2025",
+      "isEstimated": false
+    },
+    "waitlistChildren": {
+      "value": 0,
+      "unit": "人",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
+    },
+    "hazard": {
+      "hasFloodRisk": true,
+      "hasLandslideRisk": true,
+      "note": "浸水想定区域あり / 土砂災害警戒区域あり",
+      "source": "国土数値情報（reinfolib XKT026/029）",
+      "asOf": "2024"
+    },
+    "amenities": {
+      "stations": 5,
+      "preschools": 53,
+      "medicalFacilities": 214,
+      "source": "国土数値情報（reinfolib XKT015/007/010）",
+      "asOf": "令和5年度"
+    }
+  },
+  {
+    "code": "27221",
+    "pref": "osaka",
+    "name": "柏原市",
+    "population": 68775,
+    "populationTrend": "横ばい",
+    "rent": {
+      "value": 53997,
+      "unit": "円/月",
+      "source": "住宅・土地統計調査（加重平均）",
+      "asOf": "2023",
+      "isEstimated": false
+    },
+    "landPrice": {
+      "value": 100295,
+      "unit": "円/㎡",
+      "source": "地価公示（住宅地平均）",
+      "asOf": "2025",
+      "isEstimated": false
+    },
+    "waitlistChildren": {
+      "value": 0,
+      "unit": "人",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
+    },
+    "hazard": {
+      "hasFloodRisk": true,
+      "hasLandslideRisk": true,
+      "note": "浸水想定区域あり / 土砂災害警戒区域あり",
+      "source": "国土数値情報（reinfolib XKT026/029）",
+      "asOf": "2024"
+    },
+    "amenities": {
+      "stations": 10,
+      "preschools": 21,
+      "medicalFacilities": 85,
+      "source": "国土数値情報（reinfolib XKT015/007/010）",
+      "asOf": "令和5年度"
+    }
+  },
+  {
+    "code": "27222",
+    "pref": "osaka",
+    "name": "羽曳野市",
+    "population": 108736,
+    "populationTrend": "横ばい",
+    "rent": {
+      "value": 51764,
+      "unit": "円/月",
+      "source": "住宅・土地統計調査（加重平均）",
+      "asOf": "2023",
+      "isEstimated": false
+    },
+    "landPrice": {
+      "value": 88988,
+      "unit": "円/㎡",
+      "source": "地価公示（住宅地平均）",
+      "asOf": "2025",
+      "isEstimated": false
+    },
+    "waitlistChildren": {
+      "value": 0,
+      "unit": "人",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
+    },
+    "hazard": {
+      "hasFloodRisk": true,
+      "hasLandslideRisk": true,
+      "note": "浸水想定区域あり / 土砂災害警戒区域あり",
+      "source": "国土数値情報（reinfolib XKT026/029）",
+      "asOf": "2024"
+    },
+    "amenities": {
+      "stations": 6,
+      "preschools": 37,
+      "medicalFacilities": 121,
+      "source": "国土数値情報（reinfolib XKT015/007/010）",
+      "asOf": "令和5年度"
+    }
+  },
+  {
+    "code": "27223",
+    "pref": "osaka",
+    "name": "門真市",
+    "population": 119764,
+    "populationTrend": "横ばい",
+    "rent": {
+      "value": 48471,
+      "unit": "円/月",
+      "source": "住宅・土地統計調査（加重平均）",
+      "asOf": "2023",
+      "isEstimated": false
+    },
+    "landPrice": {
+      "value": 144063,
+      "unit": "円/㎡",
+      "source": "地価公示（住宅地平均）",
+      "asOf": "2025",
+      "isEstimated": false
+    },
+    "waitlistChildren": {
+      "value": 0,
+      "unit": "人",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
+    },
+    "hazard": {
+      "hasFloodRisk": true,
+      "hasLandslideRisk": false,
+      "note": "浸水想定区域あり",
+      "source": "国土数値情報（reinfolib XKT026/029）",
+      "asOf": "2024"
+    },
+    "amenities": {
+      "stations": 6,
+      "preschools": 55,
+      "medicalFacilities": 195,
+      "source": "国土数値情報（reinfolib XKT015/007/010）",
+      "asOf": "令和5年度"
+    }
+  },
+  {
+    "code": "27224",
+    "pref": "osaka",
+    "name": "摂津市",
+    "population": 87456,
+    "populationTrend": "横ばい",
+    "rent": {
+      "value": 56779,
+      "unit": "円/月",
+      "source": "住宅・土地統計調査（加重平均）",
+      "asOf": "2023",
+      "isEstimated": false
+    },
+    "landPrice": {
+      "value": 185429,
+      "unit": "円/㎡",
+      "source": "地価公示（住宅地平均）",
+      "asOf": "2025",
+      "isEstimated": false
+    },
+    "waitlistChildren": {
+      "value": 23,
+      "unit": "人",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
+    },
+    "hazard": {
+      "hasFloodRisk": true,
+      "hasLandslideRisk": false,
+      "note": "浸水想定区域あり",
+      "source": "国土数値情報（reinfolib XKT026/029）",
+      "asOf": "2024"
+    },
+    "amenities": {
+      "stations": 4,
+      "preschools": 67,
+      "medicalFacilities": 96,
+      "source": "国土数値情報（reinfolib XKT015/007/010）",
+      "asOf": "令和5年度"
+    }
+  },
+  {
+    "code": "27225",
+    "pref": "osaka",
+    "name": "高石市",
+    "population": 55635,
+    "populationTrend": "横ばい",
+    "rent": {
+      "value": 56288,
+      "unit": "円/月",
+      "source": "住宅・土地統計調査（加重平均）",
+      "asOf": "2023",
+      "isEstimated": false
+    },
+    "landPrice": {
+      "value": 140357,
+      "unit": "円/㎡",
+      "source": "地価公示（住宅地平均）",
+      "asOf": "2025",
+      "isEstimated": false
+    },
+    "waitlistChildren": {
+      "value": 8,
+      "unit": "人",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
+    },
+    "hazard": {
+      "hasFloodRisk": true,
+      "hasLandslideRisk": false,
+      "note": "浸水想定区域あり",
+      "source": "国土数値情報（reinfolib XKT026/029）",
+      "asOf": "2024"
+    },
+    "amenities": {
+      "stations": 7,
+      "preschools": 29,
+      "medicalFacilities": 91,
+      "source": "国土数値情報（reinfolib XKT015/007/010）",
+      "asOf": "令和5年度"
+    }
+  },
+  {
+    "code": "27226",
+    "pref": "osaka",
+    "name": "藤井寺市",
+    "population": 63688,
+    "populationTrend": "横ばい",
+    "rent": {
+      "value": 58529,
+      "unit": "円/月",
+      "source": "住宅・土地統計調査（加重平均）",
+      "asOf": "2023",
+      "isEstimated": false
+    },
+    "landPrice": {
+      "value": 135841,
+      "unit": "円/㎡",
+      "source": "地価公示（住宅地平均）",
+      "asOf": "2025",
+      "isEstimated": false
+    },
+    "waitlistChildren": {
+      "value": 3,
+      "unit": "人",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
+    },
+    "hazard": {
+      "hasFloodRisk": true,
+      "hasLandslideRisk": false,
+      "note": "浸水想定区域あり",
+      "source": "国土数値情報（reinfolib XKT026/029）",
+      "asOf": "2024"
+    },
+    "amenities": {
+      "stations": 4,
+      "preschools": 27,
+      "medicalFacilities": 122,
+      "source": "国土数値情報（reinfolib XKT015/007/010）",
+      "asOf": "令和5年度"
+    }
+  },
+  {
+    "code": "27227",
+    "pref": "osaka",
+    "name": "東大阪市",
+    "population": 493940,
+    "populationTrend": "横ばい",
+    "rent": {
+      "value": 56576,
+      "unit": "円/月",
+      "source": "住宅・土地統計調査（加重平均）",
+      "asOf": "2023",
+      "isEstimated": false
+    },
+    "landPrice": {
+      "value": 162659,
+      "unit": "円/㎡",
+      "source": "地価公示（住宅地平均）",
+      "asOf": "2025",
+      "isEstimated": false
+    },
+    "waitlistChildren": {
+      "value": 5,
+      "unit": "人",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
+    },
+    "hazard": {
+      "hasFloodRisk": true,
+      "hasLandslideRisk": true,
+      "note": "浸水想定区域あり / 土砂災害警戒区域あり",
+      "source": "国土数値情報（reinfolib XKT026/029）",
+      "asOf": "2024"
+    },
+    "amenities": {
+      "stations": 28,
+      "preschools": 309,
+      "medicalFacilities": 714,
+      "source": "国土数値情報（reinfolib XKT015/007/010）",
+      "asOf": "令和5年度"
+    }
+  },
+  {
+    "code": "27228",
+    "pref": "osaka",
+    "name": "泉南市",
+    "population": 60102,
+    "populationTrend": "横ばい",
+    "rent": {
+      "value": 43630,
+      "unit": "円/月",
+      "source": "住宅・土地統計調査（加重平均）",
+      "asOf": "2023",
+      "isEstimated": false
+    },
+    "landPrice": {
+      "value": 44395,
+      "unit": "円/㎡",
+      "source": "地価公示（住宅地平均）",
+      "asOf": "2025",
+      "isEstimated": false
+    },
+    "waitlistChildren": {
+      "value": 2,
+      "unit": "人",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
+    },
+    "hazard": {
+      "hasFloodRisk": true,
+      "hasLandslideRisk": true,
+      "note": "浸水想定区域あり / 土砂災害警戒区域あり",
+      "source": "国土数値情報（reinfolib XKT026/029）",
+      "asOf": "2024"
+    },
+    "amenities": {
+      "stations": 4,
+      "preschools": 23,
+      "medicalFacilities": 66,
+      "source": "国土数値情報（reinfolib XKT015/007/010）",
+      "asOf": "令和5年度"
+    }
+  },
+  {
+    "code": "27229",
+    "pref": "osaka",
+    "name": "四條畷市",
+    "population": 55177,
+    "populationTrend": "横ばい",
+    "rent": {
+      "value": 57218,
+      "unit": "円/月",
+      "source": "住宅・土地統計調査（加重平均）",
+      "asOf": "2023",
+      "isEstimated": false
+    },
+    "landPrice": {
+      "value": 120950,
+      "unit": "円/㎡",
+      "source": "地価公示（住宅地平均）",
+      "asOf": "2025",
+      "isEstimated": false
+    },
+    "waitlistChildren": {
+      "value": 3,
+      "unit": "人",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
+    },
+    "hazard": {
+      "hasFloodRisk": true,
+      "hasLandslideRisk": true,
+      "note": "浸水想定区域あり / 土砂災害警戒区域あり",
+      "source": "国土数値情報（reinfolib XKT026/029）",
+      "asOf": "2024"
+    },
+    "amenities": {
+      "stations": 1,
+      "preschools": 27,
+      "medicalFacilities": 63,
+      "source": "国土数値情報（reinfolib XKT015/007/010）",
+      "asOf": "令和5年度"
+    }
+  },
+  {
+    "code": "27230",
+    "pref": "osaka",
+    "name": "交野市",
+    "population": 75033,
+    "populationTrend": "横ばい",
+    "rent": {
+      "value": 53492,
+      "unit": "円/月",
+      "source": "住宅・土地統計調査（加重平均）",
+      "asOf": "2023",
+      "isEstimated": false
+    },
+    "landPrice": {
+      "value": 117453,
+      "unit": "円/㎡",
+      "source": "地価公示（住宅地平均）",
+      "asOf": "2025",
+      "isEstimated": false
+    },
+    "waitlistChildren": {
+      "value": 0,
+      "unit": "人",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
+    },
+    "hazard": {
+      "hasFloodRisk": true,
+      "hasLandslideRisk": true,
+      "note": "浸水想定区域あり / 土砂災害警戒区域あり",
+      "source": "国土数値情報（reinfolib XKT026/029）",
+      "asOf": "2024"
+    },
+    "amenities": {
+      "stations": 6,
+      "preschools": 42,
+      "medicalFacilities": 92,
+      "source": "国土数値情報（reinfolib XKT015/007/010）",
+      "asOf": "令和5年度"
+    }
+  },
+  {
+    "code": "27231",
+    "pref": "osaka",
+    "name": "大阪狭山市",
+    "population": 58435,
+    "populationTrend": "横ばい",
+    "rent": {
+      "value": 54952,
+      "unit": "円/月",
+      "source": "住宅・土地統計調査（加重平均）",
+      "asOf": "2023",
+      "isEstimated": false
+    },
+    "landPrice": {
+      "value": 116907,
+      "unit": "円/㎡",
+      "source": "地価公示（住宅地平均）",
+      "asOf": "2025",
+      "isEstimated": false
+    },
+    "waitlistChildren": {
+      "value": 0,
+      "unit": "人",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
+    },
+    "hazard": {
+      "hasFloodRisk": true,
+      "hasLandslideRisk": true,
+      "note": "浸水想定区域あり / 土砂災害警戒区域あり",
+      "source": "国土数値情報（reinfolib XKT026/029）",
+      "asOf": "2024"
+    },
+    "amenities": {
+      "stations": 3,
+      "preschools": 29,
+      "medicalFacilities": 97,
+      "source": "国土数値情報（reinfolib XKT015/007/010）",
+      "asOf": "令和5年度"
+    }
+  },
+  {
+    "code": "27232",
+    "pref": "osaka",
+    "name": "阪南市",
+    "population": 51254,
+    "populationTrend": "横ばい",
+    "rent": {
+      "value": 42909,
+      "unit": "円/月",
+      "source": "住宅・土地統計調査（加重平均）",
+      "asOf": "2023",
+      "isEstimated": false
+    },
+    "landPrice": {
+      "value": 38537,
+      "unit": "円/㎡",
+      "source": "地価公示（住宅地平均）",
+      "asOf": "2025",
+      "isEstimated": false
+    },
+    "waitlistChildren": {
+      "value": 0,
+      "unit": "人",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
+    },
+    "hazard": {
+      "hasFloodRisk": true,
+      "hasLandslideRisk": true,
+      "note": "浸水想定区域あり / 土砂災害警戒区域あり",
+      "source": "国土数値情報（reinfolib XKT026/029）",
+      "asOf": "2024"
+    },
+    "amenities": {
+      "stations": 5,
+      "preschools": 21,
+      "medicalFacilities": 77,
+      "source": "国土数値情報（reinfolib XKT015/007/010）",
+      "asOf": "令和5年度"
+    }
+  },
+  {
+    "code": "27301",
+    "pref": "osaka",
+    "name": "島本町",
+    "population": 30927,
+    "populationTrend": "横ばい",
+    "rent": {
+      "value": 57618,
+      "unit": "円/月",
+      "source": "住宅・土地統計調査（加重平均）",
+      "asOf": "2023",
+      "isEstimated": false
+    },
+    "landPrice": {
+      "value": 181167,
+      "unit": "円/㎡",
+      "source": "地価公示（住宅地平均）",
+      "asOf": "2025",
+      "isEstimated": false
+    },
+    "waitlistChildren": {
+      "value": 0,
+      "unit": "人",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
+    },
+    "hazard": {
+      "hasFloodRisk": true,
+      "hasLandslideRisk": true,
+      "note": "浸水想定区域あり / 土砂災害警戒区域あり",
+      "source": "国土数値情報（reinfolib XKT026/029）",
+      "asOf": "2024"
+    },
+    "amenities": {
+      "stations": 2,
+      "preschools": 13,
+      "medicalFacilities": 36,
+      "source": "国土数値情報（reinfolib XKT015/007/010）",
+      "asOf": "令和5年度"
+    }
+  },
+  {
+    "code": "27321",
+    "pref": "osaka",
+    "name": "豊能町",
+    "population": 18279,
+    "populationTrend": "横ばい",
+    "rent": {
+      "value": 59091,
+      "unit": "円/月",
+      "source": "住宅・土地統計調査（加重平均）",
+      "asOf": "2023",
+      "isEstimated": false
+    },
+    "landPrice": {
+      "value": 28670,
+      "unit": "円/㎡",
+      "source": "地価公示（住宅地平均）",
+      "asOf": "2025",
+      "isEstimated": false
+    },
+    "waitlistChildren": {
+      "value": 0,
+      "unit": "人",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
+    },
+    "hazard": {
+      "hasFloodRisk": true,
+      "hasLandslideRisk": true,
+      "note": "浸水想定区域あり / 土砂災害警戒区域あり",
+      "source": "国土数値情報（reinfolib XKT026/029）",
+      "asOf": "2024"
+    },
+    "amenities": {
+      "stations": 3,
+      "preschools": 5,
+      "medicalFacilities": 24,
+      "source": "国土数値情報（reinfolib XKT015/007/010）",
+      "asOf": "令和5年度"
+    }
+  },
+  {
+    "code": "27322",
+    "pref": "osaka",
+    "name": "能勢町",
+    "population": 9079,
+    "populationTrend": "横ばい",
+    "rent": {
+      "value": 0,
+      "unit": "円/月",
+      "source": "サンプル",
+      "asOf": "-",
+      "isEstimated": true
+    },
+    "landPrice": {
+      "value": 12167,
+      "unit": "円/㎡",
+      "source": "地価公示（住宅地平均）",
+      "asOf": "2025",
+      "isEstimated": false
+    },
+    "waitlistChildren": {
+      "value": 0,
+      "unit": "人",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
+    },
+    "hazard": {
+      "hasFloodRisk": true,
+      "hasLandslideRisk": true,
+      "note": "浸水想定区域あり / 土砂災害警戒区域あり",
+      "source": "国土数値情報（reinfolib XKT026/029）",
+      "asOf": "2024"
+    },
+    "amenities": {
+      "stations": 0,
+      "preschools": 4,
+      "medicalFacilities": 10,
+      "source": "国土数値情報（reinfolib XKT015/007/010）",
+      "asOf": "令和5年度"
+    }
+  },
+  {
+    "code": "27341",
+    "pref": "osaka",
+    "name": "忠岡町",
+    "population": 16567,
+    "populationTrend": "横ばい",
+    "rent": {
+      "value": 49647,
+      "unit": "円/月",
+      "source": "住宅・土地統計調査（加重平均）",
+      "asOf": "2023",
+      "isEstimated": false
+    },
+    "landPrice": {
+      "value": 84543,
+      "unit": "円/㎡",
+      "source": "地価公示（住宅地平均）",
+      "asOf": "2025",
+      "isEstimated": false
+    },
+    "waitlistChildren": {
+      "value": 0,
+      "unit": "人",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
+    },
+    "hazard": {
+      "hasFloodRisk": true,
+      "hasLandslideRisk": false,
+      "note": "浸水想定区域あり",
+      "source": "国土数値情報（reinfolib XKT026/029）",
+      "asOf": "2024"
+    },
+    "amenities": {
+      "stations": 1,
+      "preschools": 9,
+      "medicalFacilities": 25,
+      "source": "国土数値情報（reinfolib XKT015/007/010）",
+      "asOf": "令和5年度"
+    }
+  },
+  {
+    "code": "27361",
+    "pref": "osaka",
+    "name": "熊取町",
+    "population": 43763,
+    "populationTrend": "横ばい",
+    "rent": {
+      "value": 46882,
+      "unit": "円/月",
+      "source": "住宅・土地統計調査（加重平均）",
+      "asOf": "2023",
+      "isEstimated": false
+    },
+    "landPrice": {
+      "value": 53494,
+      "unit": "円/㎡",
+      "source": "地価公示（住宅地平均）",
+      "asOf": "2025",
+      "isEstimated": false
+    },
+    "waitlistChildren": {
+      "value": 0,
+      "unit": "人",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
+    },
+    "hazard": {
+      "hasFloodRisk": true,
+      "hasLandslideRisk": true,
+      "note": "浸水想定区域あり / 土砂災害警戒区域あり",
+      "source": "国土数値情報（reinfolib XKT026/029）",
+      "asOf": "2024"
+    },
+    "amenities": {
+      "stations": 1,
+      "preschools": 14,
+      "medicalFacilities": 53,
+      "source": "国土数値情報（reinfolib XKT015/007/010）",
+      "asOf": "令和5年度"
+    }
+  },
+  {
+    "code": "27362",
+    "pref": "osaka",
+    "name": "田尻町",
+    "population": 8434,
+    "populationTrend": "横ばい",
+    "rent": {
+      "value": 0,
+      "unit": "円/月",
+      "source": "サンプル",
+      "asOf": "-",
+      "isEstimated": true
+    },
+    "landPrice": {
+      "value": 56000,
+      "unit": "円/㎡",
+      "source": "地価公示（住宅地平均）",
+      "asOf": "2025",
+      "isEstimated": false
+    },
+    "waitlistChildren": {
+      "value": 0,
+      "unit": "人",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
+    },
+    "hazard": {
+      "hasFloodRisk": true,
+      "hasLandslideRisk": true,
+      "note": "浸水想定区域あり / 土砂災害警戒区域あり",
+      "source": "国土数値情報（reinfolib XKT026/029）",
+      "asOf": "2024"
+    },
+    "amenities": {
+      "stations": 3,
+      "preschools": 3,
+      "medicalFacilities": 13,
+      "source": "国土数値情報（reinfolib XKT015/007/010）",
+      "asOf": "令和5年度"
+    }
+  },
+  {
+    "code": "27366",
+    "pref": "osaka",
+    "name": "岬町",
+    "population": 14741,
+    "populationTrend": "横ばい",
+    "rent": {
+      "value": 0,
+      "unit": "円/月",
+      "source": "サンプル",
+      "asOf": "-",
+      "isEstimated": true
+    },
+    "landPrice": {
+      "value": 19427,
+      "unit": "円/㎡",
+      "source": "地価公示（住宅地平均）",
+      "asOf": "2025",
+      "isEstimated": false
+    },
+    "waitlistChildren": {
+      "value": 0,
+      "unit": "人",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
+    },
+    "hazard": {
+      "hasFloodRisk": true,
+      "hasLandslideRisk": true,
+      "note": "浸水想定区域あり / 土砂災害警戒区域あり",
+      "source": "国土数値情報（reinfolib XKT026/029）",
+      "asOf": "2024"
+    },
+    "amenities": {
+      "stations": 7,
+      "preschools": 8,
+      "medicalFacilities": 15,
+      "source": "国土数値情報（reinfolib XKT015/007/010）",
+      "asOf": "令和5年度"
+    }
+  },
+  {
+    "code": "27381",
+    "pref": "osaka",
+    "name": "太子町",
+    "population": 13009,
+    "populationTrend": "横ばい",
+    "rent": {
+      "value": 0,
+      "unit": "円/月",
+      "source": "サンプル",
+      "asOf": "-",
+      "isEstimated": true
+    },
+    "landPrice": {
+      "value": 46400,
+      "unit": "円/㎡",
+      "source": "地価公示（住宅地平均）",
+      "asOf": "2025",
+      "isEstimated": false
+    },
+    "waitlistChildren": {
+      "value": 0,
+      "unit": "人",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
+    },
+    "hazard": {
+      "hasFloodRisk": true,
+      "hasLandslideRisk": true,
+      "note": "浸水想定区域あり / 土砂災害警戒区域あり",
+      "source": "国土数値情報（reinfolib XKT026/029）",
+      "asOf": "2024"
+    },
+    "amenities": {
+      "stations": 0,
+      "preschools": 6,
+      "medicalFacilities": 12,
+      "source": "国土数値情報（reinfolib XKT015/007/010）",
+      "asOf": "令和5年度"
+    }
+  },
+  {
+    "code": "27382",
+    "pref": "osaka",
+    "name": "河南町",
+    "population": 15697,
+    "populationTrend": "横ばい",
+    "rent": {
+      "value": 47353,
+      "unit": "円/月",
+      "source": "住宅・土地統計調査（加重平均）",
+      "asOf": "2023",
+      "isEstimated": false
+    },
+    "landPrice": {
+      "value": 31250,
+      "unit": "円/㎡",
+      "source": "地価公示（住宅地平均）",
+      "asOf": "2025",
+      "isEstimated": false
+    },
+    "waitlistChildren": {
+      "value": 0,
+      "unit": "人",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
+    },
+    "hazard": {
+      "hasFloodRisk": true,
+      "hasLandslideRisk": true,
+      "note": "浸水想定区域あり / 土砂災害警戒区域あり",
+      "source": "国土数値情報（reinfolib XKT026/029）",
+      "asOf": "2024"
+    },
+    "amenities": {
+      "stations": 0,
+      "preschools": 6,
+      "medicalFacilities": 12,
+      "source": "国土数値情報（reinfolib XKT015/007/010）",
+      "asOf": "令和5年度"
+    }
+  },
+  {
+    "code": "27383",
+    "pref": "osaka",
+    "name": "千早赤阪村",
+    "population": 4909,
+    "populationTrend": "横ばい",
+    "rent": {
+      "value": 0,
+      "unit": "円/月",
+      "source": "サンプル",
+      "asOf": "-",
+      "isEstimated": true
+    },
+    "landPrice": {
+      "value": 23400,
+      "unit": "円/㎡",
+      "source": "地価公示（住宅地平均）",
+      "asOf": "2025",
+      "isEstimated": false
+    },
+    "waitlistChildren": {
+      "value": 0,
+      "unit": "人",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
+    },
+    "hazard": {
+      "hasFloodRisk": true,
+      "hasLandslideRisk": true,
+      "note": "浸水想定区域あり / 土砂災害警戒区域あり",
+      "source": "国土数値情報（reinfolib XKT026/029）",
+      "asOf": "2024"
+    },
+    "amenities": {
+      "stations": 0,
+      "preschools": 3,
+      "medicalFacilities": 5,
+      "source": "国土数値情報（reinfolib XKT015/007/010）",
+      "asOf": "令和5年度"
+    }
+  }
+]
