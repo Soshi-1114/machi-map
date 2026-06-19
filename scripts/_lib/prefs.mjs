@@ -38,6 +38,14 @@ export const PREFS = {
     hasWards: false,
     parentToWards: {},
   },
+  tokyo: {
+    code: "13", nameJa: "東京都",
+    // 島嶼部（伊豆諸島・小笠原）を除いた本土＋多摩のみ。
+    // 全域 bbox は west:136 / east:154 に達し reinfolib タイル数が膨大になるため。
+    bbox: { west: 138.93, south: 35.49, east: 139.95, north: 35.90 },
+    hasWards: false,
+    parentToWards: {},
+  },
 };
 
 export function getPref(slug) {

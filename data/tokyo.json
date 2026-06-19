@@ -1,0 +1,2606 @@
+[
+  {
+    "code": "13101",
+    "pref": "tokyo",
+    "name": "千代田区",
+    "population": 66680,
+    "populationTrend": "横ばい",
+    "rent": {
+      "value": 133963,
+      "unit": "円/月",
+      "source": "住宅・土地統計調査（加重平均）",
+      "asOf": "2023",
+      "isEstimated": false
+    },
+    "landPrice": {
+      "value": 6226780,
+      "unit": "円/㎡",
+      "source": "地価公示（住宅地平均）",
+      "asOf": "2025",
+      "isEstimated": false
+    },
+    "waitlistChildren": {
+      "value": 0,
+      "unit": "人",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
+    },
+    "hazard": {
+      "hasFloodRisk": true,
+      "hasLandslideRisk": true,
+      "note": "浸水想定区域あり / 土砂災害警戒区域あり",
+      "source": "国土数値情報（reinfolib XKT026/029）",
+      "asOf": "2024"
+    },
+    "amenities": {
+      "stations": 57,
+      "preschools": 44,
+      "medicalFacilities": 855,
+      "source": "国土数値情報（reinfolib XKT015/007/010）",
+      "asOf": "令和5年度"
+    }
+  },
+  {
+    "code": "13102",
+    "pref": "tokyo",
+    "name": "中央区",
+    "population": 169179,
+    "populationTrend": "横ばい",
+    "rent": {
+      "value": 138883,
+      "unit": "円/月",
+      "source": "住宅・土地統計調査（加重平均）",
+      "asOf": "2023",
+      "isEstimated": false
+    },
+    "landPrice": {
+      "value": 9202857,
+      "unit": "円/㎡",
+      "source": "地価公示（住宅地平均）",
+      "asOf": "2025",
+      "isEstimated": false
+    },
+    "waitlistChildren": {
+      "value": 0,
+      "unit": "人",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
+    },
+    "hazard": {
+      "hasFloodRisk": true,
+      "hasLandslideRisk": false,
+      "note": "浸水想定区域あり",
+      "source": "国土数値情報（reinfolib XKT026/029）",
+      "asOf": "2024"
+    },
+    "amenities": {
+      "stations": 32,
+      "preschools": 106,
+      "medicalFacilities": 1127,
+      "source": "国土数値情報（reinfolib XKT015/007/010）",
+      "asOf": "令和5年度"
+    }
+  },
+  {
+    "code": "13103",
+    "pref": "tokyo",
+    "name": "港区",
+    "population": 260486,
+    "populationTrend": "横ばい",
+    "rent": {
+      "value": 144177,
+      "unit": "円/月",
+      "source": "住宅・土地統計調査（加重平均）",
+      "asOf": "2023",
+      "isEstimated": false
+    },
+    "landPrice": {
+      "value": 4906203,
+      "unit": "円/㎡",
+      "source": "地価公示（住宅地平均）",
+      "asOf": "2025",
+      "isEstimated": false
+    },
+    "waitlistChildren": {
+      "value": 0,
+      "unit": "人",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
+    },
+    "hazard": {
+      "hasFloodRisk": true,
+      "hasLandslideRisk": true,
+      "note": "浸水想定区域あり / 土砂災害警戒区域あり",
+      "source": "国土数値情報（reinfolib XKT026/029）",
+      "asOf": "2024"
+    },
+    "amenities": {
+      "stations": 54,
+      "preschools": 129,
+      "medicalFacilities": 1428,
+      "source": "国土数値情報（reinfolib XKT015/007/010）",
+      "asOf": "令和5年度"
+    }
+  },
+  {
+    "code": "13104",
+    "pref": "tokyo",
+    "name": "新宿区",
+    "population": 349385,
+    "populationTrend": "横ばい",
+    "rent": {
+      "value": 104681,
+      "unit": "円/月",
+      "source": "住宅・土地統計調査（加重平均）",
+      "asOf": "2023",
+      "isEstimated": false
+    },
+    "landPrice": {
+      "value": 3984605,
+      "unit": "円/㎡",
+      "source": "地価公示（住宅地平均）",
+      "asOf": "2025",
+      "isEstimated": false
+    },
+    "waitlistChildren": {
+      "value": 0,
+      "unit": "人",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
+    },
+    "hazard": {
+      "hasFloodRisk": true,
+      "hasLandslideRisk": true,
+      "note": "浸水想定区域あり / 土砂災害警戒区域あり",
+      "source": "国土数値情報（reinfolib XKT026/029）",
+      "asOf": "2024"
+    },
+    "amenities": {
+      "stations": 45,
+      "preschools": 124,
+      "medicalFacilities": 1118,
+      "source": "国土数値情報（reinfolib XKT015/007/010）",
+      "asOf": "令和5年度"
+    }
+  },
+  {
+    "code": "13105",
+    "pref": "tokyo",
+    "name": "文京区",
+    "population": 240069,
+    "populationTrend": "横ばい",
+    "rent": {
+      "value": 111786,
+      "unit": "円/月",
+      "source": "住宅・土地統計調査（加重平均）",
+      "asOf": "2023",
+      "isEstimated": false
+    },
+    "landPrice": {
+      "value": 1649596,
+      "unit": "円/㎡",
+      "source": "地価公示（住宅地平均）",
+      "asOf": "2025",
+      "isEstimated": false
+    },
+    "waitlistChildren": {
+      "value": 2,
+      "unit": "人",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
+    },
+    "hazard": {
+      "hasFloodRisk": true,
+      "hasLandslideRisk": true,
+      "note": "浸水想定区域あり / 土砂災害警戒区域あり",
+      "source": "国土数値情報（reinfolib XKT026/029）",
+      "asOf": "2024"
+    },
+    "amenities": {
+      "stations": 19,
+      "preschools": 126,
+      "medicalFacilities": 516,
+      "source": "国土数値情報（reinfolib XKT015/007/010）",
+      "asOf": "令和5年度"
+    }
+  },
+  {
+    "code": "13106",
+    "pref": "tokyo",
+    "name": "台東区",
+    "population": 211444,
+    "populationTrend": "横ばい",
+    "rent": {
+      "value": 112505,
+      "unit": "円/月",
+      "source": "住宅・土地統計調査（加重平均）",
+      "asOf": "2023",
+      "isEstimated": false
+    },
+    "landPrice": {
+      "value": 2018189,
+      "unit": "円/㎡",
+      "source": "地価公示（住宅地平均）",
+      "asOf": "2025",
+      "isEstimated": false
+    },
+    "waitlistChildren": {
+      "value": 0,
+      "unit": "人",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
+    },
+    "hazard": {
+      "hasFloodRisk": true,
+      "hasLandslideRisk": true,
+      "note": "浸水想定区域あり / 土砂災害警戒区域あり",
+      "source": "国土数値情報（reinfolib XKT026/029）",
+      "asOf": "2024"
+    },
+    "amenities": {
+      "stations": 27,
+      "preschools": 79,
+      "medicalFacilities": 496,
+      "source": "国土数値情報（reinfolib XKT015/007/010）",
+      "asOf": "令和5年度"
+    }
+  },
+  {
+    "code": "13107",
+    "pref": "tokyo",
+    "name": "墨田区",
+    "population": 272085,
+    "populationTrend": "横ばい",
+    "rent": {
+      "value": 93951,
+      "unit": "円/月",
+      "source": "住宅・土地統計調査（加重平均）",
+      "asOf": "2023",
+      "isEstimated": false
+    },
+    "landPrice": {
+      "value": 810083,
+      "unit": "円/㎡",
+      "source": "地価公示（住宅地平均）",
+      "asOf": "2025",
+      "isEstimated": false
+    },
+    "waitlistChildren": {
+      "value": 8,
+      "unit": "人",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
+    },
+    "hazard": {
+      "hasFloodRisk": true,
+      "hasLandslideRisk": false,
+      "note": "浸水想定区域あり",
+      "source": "国土数値情報（reinfolib XKT026/029）",
+      "asOf": "2024"
+    },
+    "amenities": {
+      "stations": 19,
+      "preschools": 110,
+      "medicalFacilities": 435,
+      "source": "国土数値情報（reinfolib XKT015/007/010）",
+      "asOf": "令和5年度"
+    }
+  },
+  {
+    "code": "13108",
+    "pref": "tokyo",
+    "name": "江東区",
+    "population": 524310,
+    "populationTrend": "横ばい",
+    "rent": {
+      "value": 88026,
+      "unit": "円/月",
+      "source": "住宅・土地統計調査（加重平均）",
+      "asOf": "2023",
+      "isEstimated": false
+    },
+    "landPrice": {
+      "value": 778935,
+      "unit": "円/㎡",
+      "source": "地価公示（住宅地平均）",
+      "asOf": "2025",
+      "isEstimated": false
+    },
+    "waitlistChildren": {
+      "value": 0,
+      "unit": "人",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
+    },
+    "hazard": {
+      "hasFloodRisk": true,
+      "hasLandslideRisk": false,
+      "note": "浸水想定区域あり",
+      "source": "国土数値情報（reinfolib XKT026/029）",
+      "asOf": "2024"
+    },
+    "amenities": {
+      "stations": 36,
+      "preschools": 240,
+      "medicalFacilities": 747,
+      "source": "国土数値情報（reinfolib XKT015/007/010）",
+      "asOf": "令和5年度"
+    }
+  },
+  {
+    "code": "13109",
+    "pref": "tokyo",
+    "name": "品川区",
+    "population": 422488,
+    "populationTrend": "横ばい",
+    "rent": {
+      "value": 103152,
+      "unit": "円/月",
+      "source": "住宅・土地統計調査（加重平均）",
+      "asOf": "2023",
+      "isEstimated": false
+    },
+    "landPrice": {
+      "value": 1578103,
+      "unit": "円/㎡",
+      "source": "地価公示（住宅地平均）",
+      "asOf": "2025",
+      "isEstimated": false
+    },
+    "waitlistChildren": {
+      "value": 0,
+      "unit": "人",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
+    },
+    "hazard": {
+      "hasFloodRisk": true,
+      "hasLandslideRisk": true,
+      "note": "浸水想定区域あり / 土砂災害警戒区域あり",
+      "source": "国土数値情報（reinfolib XKT026/029）",
+      "asOf": "2024"
+    },
+    "amenities": {
+      "stations": 36,
+      "preschools": 198,
+      "medicalFacilities": 850,
+      "source": "国土数値情報（reinfolib XKT015/007/010）",
+      "asOf": "令和5年度"
+    }
+  },
+  {
+    "code": "13110",
+    "pref": "tokyo",
+    "name": "目黒区",
+    "population": 288088,
+    "populationTrend": "横ばい",
+    "rent": {
+      "value": 120547,
+      "unit": "円/月",
+      "source": "住宅・土地統計調査（加重平均）",
+      "asOf": "2023",
+      "isEstimated": false
+    },
+    "landPrice": {
+      "value": 1609694,
+      "unit": "円/㎡",
+      "source": "地価公示（住宅地平均）",
+      "asOf": "2025",
+      "isEstimated": false
+    },
+    "waitlistChildren": {
+      "value": 0,
+      "unit": "人",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
+    },
+    "hazard": {
+      "hasFloodRisk": true,
+      "hasLandslideRisk": true,
+      "note": "浸水想定区域あり / 土砂災害警戒区域あり",
+      "source": "国土数値情報（reinfolib XKT026/029）",
+      "asOf": "2024"
+    },
+    "amenities": {
+      "stations": 13,
+      "preschools": 130,
+      "medicalFacilities": 621,
+      "source": "国土数値情報（reinfolib XKT015/007/010）",
+      "asOf": "令和5年度"
+    }
+  },
+  {
+    "code": "13111",
+    "pref": "tokyo",
+    "name": "大田区",
+    "population": 748081,
+    "populationTrend": "横ばい",
+    "rent": {
+      "value": 86276,
+      "unit": "円/月",
+      "source": "住宅・土地統計調査（加重平均）",
+      "asOf": "2023",
+      "isEstimated": false
+    },
+    "landPrice": {
+      "value": 771989,
+      "unit": "円/㎡",
+      "source": "地価公示（住宅地平均）",
+      "asOf": "2025",
+      "isEstimated": false
+    },
+    "waitlistChildren": {
+      "value": 0,
+      "unit": "人",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
+    },
+    "hazard": {
+      "hasFloodRisk": true,
+      "hasLandslideRisk": true,
+      "note": "浸水想定区域あり / 土砂災害警戒区域あり",
+      "source": "国土数値情報（reinfolib XKT026/029）",
+      "asOf": "2024"
+    },
+    "amenities": {
+      "stations": 46,
+      "preschools": 276,
+      "medicalFacilities": 1205,
+      "source": "国土数値情報（reinfolib XKT015/007/010）",
+      "asOf": "令和5年度"
+    }
+  },
+  {
+    "code": "13112",
+    "pref": "tokyo",
+    "name": "世田谷区",
+    "population": 943664,
+    "populationTrend": "横ばい",
+    "rent": {
+      "value": 100671,
+      "unit": "円/月",
+      "source": "住宅・土地統計調査（加重平均）",
+      "asOf": "2023",
+      "isEstimated": false
+    },
+    "landPrice": {
+      "value": 834180,
+      "unit": "円/㎡",
+      "source": "地価公示（住宅地平均）",
+      "asOf": "2025",
+      "isEstimated": false
+    },
+    "waitlistChildren": {
+      "value": 58,
+      "unit": "人",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
+    },
+    "hazard": {
+      "hasFloodRisk": true,
+      "hasLandslideRisk": true,
+      "note": "浸水想定区域あり / 土砂災害警戒区域あり",
+      "source": "国土数値情報（reinfolib XKT026/029）",
+      "asOf": "2024"
+    },
+    "amenities": {
+      "stations": 43,
+      "preschools": 323,
+      "medicalFacilities": 1690,
+      "source": "国土数値情報（reinfolib XKT015/007/010）",
+      "asOf": "令和5年度"
+    }
+  },
+  {
+    "code": "13113",
+    "pref": "tokyo",
+    "name": "渋谷区",
+    "population": 243883,
+    "populationTrend": "横ばい",
+    "rent": {
+      "value": 120625,
+      "unit": "円/月",
+      "source": "住宅・土地統計調査（加重平均）",
+      "asOf": "2023",
+      "isEstimated": false
+    },
+    "landPrice": {
+      "value": 5486034,
+      "unit": "円/㎡",
+      "source": "地価公示（住宅地平均）",
+      "asOf": "2025",
+      "isEstimated": false
+    },
+    "waitlistChildren": {
+      "value": 0,
+      "unit": "人",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
+    },
+    "hazard": {
+      "hasFloodRisk": true,
+      "hasLandslideRisk": true,
+      "note": "浸水想定区域あり / 土砂災害警戒区域あり",
+      "source": "国土数値情報（reinfolib XKT026/029）",
+      "asOf": "2024"
+    },
+    "amenities": {
+      "stations": 31,
+      "preschools": 97,
+      "medicalFacilities": 1059,
+      "source": "国土数値情報（reinfolib XKT015/007/010）",
+      "asOf": "令和5年度"
+    }
+  },
+  {
+    "code": "13114",
+    "pref": "tokyo",
+    "name": "中野区",
+    "population": 344880,
+    "populationTrend": "横ばい",
+    "rent": {
+      "value": 88715,
+      "unit": "円/月",
+      "source": "住宅・土地統計調査（加重平均）",
+      "asOf": "2023",
+      "isEstimated": false
+    },
+    "landPrice": {
+      "value": 1187740,
+      "unit": "円/㎡",
+      "source": "地価公示（住宅地平均）",
+      "asOf": "2025",
+      "isEstimated": false
+    },
+    "waitlistChildren": {
+      "value": 0,
+      "unit": "人",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
+    },
+    "hazard": {
+      "hasFloodRisk": true,
+      "hasLandslideRisk": true,
+      "note": "浸水想定区域あり / 土砂災害警戒区域あり",
+      "source": "国土数値情報（reinfolib XKT026/029）",
+      "asOf": "2024"
+    },
+    "amenities": {
+      "stations": 16,
+      "preschools": 128,
+      "medicalFacilities": 589,
+      "source": "国土数値情報（reinfolib XKT015/007/010）",
+      "asOf": "令和5年度"
+    }
+  },
+  {
+    "code": "13115",
+    "pref": "tokyo",
+    "name": "杉並区",
+    "population": 591108,
+    "populationTrend": "横ばい",
+    "rent": {
+      "value": 89586,
+      "unit": "円/月",
+      "source": "住宅・土地統計調査（加重平均）",
+      "asOf": "2023",
+      "isEstimated": false
+    },
+    "landPrice": {
+      "value": 827253,
+      "unit": "円/㎡",
+      "source": "地価公示（住宅地平均）",
+      "asOf": "2025",
+      "isEstimated": false
+    },
+    "waitlistChildren": {
+      "value": 0,
+      "unit": "人",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
+    },
+    "hazard": {
+      "hasFloodRisk": true,
+      "hasLandslideRisk": true,
+      "note": "浸水想定区域あり / 土砂災害警戒区域あり",
+      "source": "国土数値情報（reinfolib XKT026/029）",
+      "asOf": "2024"
+    },
+    "amenities": {
+      "stations": 19,
+      "preschools": 229,
+      "medicalFacilities": 963,
+      "source": "国土数値情報（reinfolib XKT015/007/010）",
+      "asOf": "令和5年度"
+    }
+  },
+  {
+    "code": "13116",
+    "pref": "tokyo",
+    "name": "豊島区",
+    "population": 301599,
+    "populationTrend": "横ばい",
+    "rent": {
+      "value": 91627,
+      "unit": "円/月",
+      "source": "住宅・土地統計調査（加重平均）",
+      "asOf": "2023",
+      "isEstimated": false
+    },
+    "landPrice": {
+      "value": 1957148,
+      "unit": "円/㎡",
+      "source": "地価公示（住宅地平均）",
+      "asOf": "2025",
+      "isEstimated": false
+    },
+    "waitlistChildren": {
+      "value": 0,
+      "unit": "人",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
+    },
+    "hazard": {
+      "hasFloodRisk": true,
+      "hasLandslideRisk": true,
+      "note": "浸水想定区域あり / 土砂災害警戒区域あり",
+      "source": "国土数値情報（reinfolib XKT026/029）",
+      "asOf": "2024"
+    },
+    "amenities": {
+      "stations": 35,
+      "preschools": 119,
+      "medicalFacilities": 815,
+      "source": "国土数値情報（reinfolib XKT015/007/010）",
+      "asOf": "令和5年度"
+    }
+  },
+  {
+    "code": "13117",
+    "pref": "tokyo",
+    "name": "北区",
+    "population": 355213,
+    "populationTrend": "横ばい",
+    "rent": {
+      "value": 81586,
+      "unit": "円/月",
+      "source": "住宅・土地統計調査（加重平均）",
+      "asOf": "2023",
+      "isEstimated": false
+    },
+    "landPrice": {
+      "value": 927111,
+      "unit": "円/㎡",
+      "source": "地価公示（住宅地平均）",
+      "asOf": "2025",
+      "isEstimated": false
+    },
+    "waitlistChildren": {
+      "value": 8,
+      "unit": "人",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
+    },
+    "hazard": {
+      "hasFloodRisk": true,
+      "hasLandslideRisk": true,
+      "note": "浸水想定区域あり / 土砂災害警戒区域あり",
+      "source": "国土数値情報（reinfolib XKT026/029）",
+      "asOf": "2024"
+    },
+    "amenities": {
+      "stations": 23,
+      "preschools": 138,
+      "medicalFacilities": 552,
+      "source": "国土数値情報（reinfolib XKT015/007/010）",
+      "asOf": "令和5年度"
+    }
+  },
+  {
+    "code": "13118",
+    "pref": "tokyo",
+    "name": "荒川区",
+    "population": 217475,
+    "populationTrend": "横ばい",
+    "rent": {
+      "value": 88441,
+      "unit": "円/月",
+      "source": "住宅・土地統計調査（加重平均）",
+      "asOf": "2023",
+      "isEstimated": false
+    },
+    "landPrice": {
+      "value": 852500,
+      "unit": "円/㎡",
+      "source": "地価公示（住宅地平均）",
+      "asOf": "2025",
+      "isEstimated": false
+    },
+    "waitlistChildren": {
+      "value": 33,
+      "unit": "人",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
+    },
+    "hazard": {
+      "hasFloodRisk": true,
+      "hasLandslideRisk": true,
+      "note": "浸水想定区域あり / 土砂災害警戒区域あり",
+      "source": "国土数値情報（reinfolib XKT026/029）",
+      "asOf": "2024"
+    },
+    "amenities": {
+      "stations": 29,
+      "preschools": 83,
+      "medicalFacilities": 333,
+      "source": "国土数値情報（reinfolib XKT015/007/010）",
+      "asOf": "令和5年度"
+    }
+  },
+  {
+    "code": "13119",
+    "pref": "tokyo",
+    "name": "板橋区",
+    "population": 584483,
+    "populationTrend": "横ばい",
+    "rent": {
+      "value": 77054,
+      "unit": "円/月",
+      "source": "住宅・土地統計調査（加重平均）",
+      "asOf": "2023",
+      "isEstimated": false
+    },
+    "landPrice": {
+      "value": 604435,
+      "unit": "円/㎡",
+      "source": "地価公示（住宅地平均）",
+      "asOf": "2025",
+      "isEstimated": false
+    },
+    "waitlistChildren": {
+      "value": 0,
+      "unit": "人",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
+    },
+    "hazard": {
+      "hasFloodRisk": true,
+      "hasLandslideRisk": true,
+      "note": "浸水想定区域あり / 土砂災害警戒区域あり",
+      "source": "国土数値情報（reinfolib XKT026/029）",
+      "asOf": "2024"
+    },
+    "amenities": {
+      "stations": 19,
+      "preschools": 189,
+      "medicalFacilities": 776,
+      "source": "国土数値情報（reinfolib XKT015/007/010）",
+      "asOf": "令和5年度"
+    }
+  },
+  {
+    "code": "13120",
+    "pref": "tokyo",
+    "name": "練馬区",
+    "population": 752608,
+    "populationTrend": "横ばい",
+    "rent": {
+      "value": 86555,
+      "unit": "円/月",
+      "source": "住宅・土地統計調査（加重平均）",
+      "asOf": "2023",
+      "isEstimated": false
+    },
+    "landPrice": {
+      "value": 513606,
+      "unit": "円/㎡",
+      "source": "地価公示（住宅地平均）",
+      "asOf": "2025",
+      "isEstimated": false
+    },
+    "waitlistChildren": {
+      "value": 0,
+      "unit": "人",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
+    },
+    "hazard": {
+      "hasFloodRisk": true,
+      "hasLandslideRisk": true,
+      "note": "浸水想定区域あり / 土砂災害警戒区域あり",
+      "source": "国土数値情報（reinfolib XKT026/029）",
+      "asOf": "2024"
+    },
+    "amenities": {
+      "stations": 25,
+      "preschools": 263,
+      "medicalFacilities": 1053,
+      "source": "国土数値情報（reinfolib XKT015/007/010）",
+      "asOf": "令和5年度"
+    }
+  },
+  {
+    "code": "13121",
+    "pref": "tokyo",
+    "name": "足立区",
+    "population": 695043,
+    "populationTrend": "横ばい",
+    "rent": {
+      "value": 68631,
+      "unit": "円/月",
+      "source": "住宅・土地統計調査（加重平均）",
+      "asOf": "2023",
+      "isEstimated": false
+    },
+    "landPrice": {
+      "value": 485095,
+      "unit": "円/㎡",
+      "source": "地価公示（住宅地平均）",
+      "asOf": "2025",
+      "isEstimated": false
+    },
+    "waitlistChildren": {
+      "value": 5,
+      "unit": "人",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
+    },
+    "hazard": {
+      "hasFloodRisk": true,
+      "hasLandslideRisk": false,
+      "note": "浸水想定区域あり",
+      "source": "国土数値情報（reinfolib XKT026/029）",
+      "asOf": "2024"
+    },
+    "amenities": {
+      "stations": 30,
+      "preschools": 247,
+      "medicalFacilities": 894,
+      "source": "国土数値情報（reinfolib XKT015/007/010）",
+      "asOf": "令和5年度"
+    }
+  },
+  {
+    "code": "13122",
+    "pref": "tokyo",
+    "name": "葛飾区",
+    "population": 453093,
+    "populationTrend": "横ばい",
+    "rent": {
+      "value": 71340,
+      "unit": "円/月",
+      "source": "住宅・土地統計調査（加重平均）",
+      "asOf": "2023",
+      "isEstimated": false
+    },
+    "landPrice": {
+      "value": 442400,
+      "unit": "円/㎡",
+      "source": "地価公示（住宅地平均）",
+      "asOf": "2025",
+      "isEstimated": false
+    },
+    "waitlistChildren": {
+      "value": 0,
+      "unit": "人",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
+    },
+    "hazard": {
+      "hasFloodRisk": true,
+      "hasLandslideRisk": false,
+      "note": "浸水想定区域あり",
+      "source": "国土数値情報（reinfolib XKT026/029）",
+      "asOf": "2024"
+    },
+    "amenities": {
+      "stations": 16,
+      "preschools": 174,
+      "medicalFacilities": 659,
+      "source": "国土数値情報（reinfolib XKT015/007/010）",
+      "asOf": "令和5年度"
+    }
+  },
+  {
+    "code": "13123",
+    "pref": "tokyo",
+    "name": "江戸川区",
+    "population": 697932,
+    "populationTrend": "横ばい",
+    "rent": {
+      "value": 78977,
+      "unit": "円/月",
+      "source": "住宅・土地統計調査（加重平均）",
+      "asOf": "2023",
+      "isEstimated": false
+    },
+    "landPrice": {
+      "value": 478258,
+      "unit": "円/㎡",
+      "source": "地価公示（住宅地平均）",
+      "asOf": "2025",
+      "isEstimated": false
+    },
+    "waitlistChildren": {
+      "value": 0,
+      "unit": "人",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
+    },
+    "hazard": {
+      "hasFloodRisk": true,
+      "hasLandslideRisk": false,
+      "note": "浸水想定区域あり",
+      "source": "国土数値情報（reinfolib XKT026/029）",
+      "asOf": "2024"
+    },
+    "amenities": {
+      "stations": 11,
+      "preschools": 205,
+      "medicalFacilities": 824,
+      "source": "国土数値情報（reinfolib XKT015/007/010）",
+      "asOf": "令和5年度"
+    }
+  },
+  {
+    "code": "13201",
+    "pref": "tokyo",
+    "name": "八王子市",
+    "population": 579355,
+    "populationTrend": "横ばい",
+    "rent": {
+      "value": 60929,
+      "unit": "円/月",
+      "source": "住宅・土地統計調査（加重平均）",
+      "asOf": "2023",
+      "isEstimated": false
+    },
+    "landPrice": {
+      "value": 170037,
+      "unit": "円/㎡",
+      "source": "地価公示（住宅地平均）",
+      "asOf": "2025",
+      "isEstimated": false
+    },
+    "waitlistChildren": {
+      "value": 15,
+      "unit": "人",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
+    },
+    "hazard": {
+      "hasFloodRisk": true,
+      "hasLandslideRisk": true,
+      "note": "浸水想定区域あり / 土砂災害警戒区域あり",
+      "source": "国土数値情報（reinfolib XKT026/029）",
+      "asOf": "2024"
+    },
+    "amenities": {
+      "stations": 26,
+      "preschools": 154,
+      "medicalFacilities": 707,
+      "source": "国土数値情報（reinfolib XKT015/007/010）",
+      "asOf": "令和5年度"
+    }
+  },
+  {
+    "code": "13202",
+    "pref": "tokyo",
+    "name": "立川市",
+    "population": 183581,
+    "populationTrend": "横ばい",
+    "rent": {
+      "value": 69063,
+      "unit": "円/月",
+      "source": "住宅・土地統計調査（加重平均）",
+      "asOf": "2023",
+      "isEstimated": false
+    },
+    "landPrice": {
+      "value": 536436,
+      "unit": "円/㎡",
+      "source": "地価公示（住宅地平均）",
+      "asOf": "2025",
+      "isEstimated": false
+    },
+    "waitlistChildren": {
+      "value": 9,
+      "unit": "人",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
+    },
+    "hazard": {
+      "hasFloodRisk": true,
+      "hasLandslideRisk": true,
+      "note": "浸水想定区域あり / 土砂災害警戒区域あり",
+      "source": "国土数値情報（reinfolib XKT026/029）",
+      "asOf": "2024"
+    },
+    "amenities": {
+      "stations": 14,
+      "preschools": 58,
+      "medicalFacilities": 314,
+      "source": "国土数値情報（reinfolib XKT015/007/010）",
+      "asOf": "令和5年度"
+    }
+  },
+  {
+    "code": "13203",
+    "pref": "tokyo",
+    "name": "武蔵野市",
+    "population": 150149,
+    "populationTrend": "横ばい",
+    "rent": {
+      "value": 92729,
+      "unit": "円/月",
+      "source": "住宅・土地統計調査（加重平均）",
+      "asOf": "2023",
+      "isEstimated": false
+    },
+    "landPrice": {
+      "value": 1249161,
+      "unit": "円/㎡",
+      "source": "地価公示（住宅地平均）",
+      "asOf": "2025",
+      "isEstimated": false
+    },
+    "waitlistChildren": {
+      "value": 0,
+      "unit": "人",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
+    },
+    "hazard": {
+      "hasFloodRisk": true,
+      "hasLandslideRisk": false,
+      "note": "浸水想定区域あり",
+      "source": "国土数値情報（reinfolib XKT026/029）",
+      "asOf": "2024"
+    },
+    "amenities": {
+      "stations": 4,
+      "preschools": 60,
+      "medicalFacilities": 385,
+      "source": "国土数値情報（reinfolib XKT015/007/010）",
+      "asOf": "令和5年度"
+    }
+  },
+  {
+    "code": "13204",
+    "pref": "tokyo",
+    "name": "三鷹市",
+    "population": 195391,
+    "populationTrend": "横ばい",
+    "rent": {
+      "value": 84921,
+      "unit": "円/月",
+      "source": "住宅・土地統計調査（加重平均）",
+      "asOf": "2023",
+      "isEstimated": false
+    },
+    "landPrice": {
+      "value": 617524,
+      "unit": "円/㎡",
+      "source": "地価公示（住宅地平均）",
+      "asOf": "2025",
+      "isEstimated": false
+    },
+    "waitlistChildren": {
+      "value": 0,
+      "unit": "人",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
+    },
+    "hazard": {
+      "hasFloodRisk": true,
+      "hasLandslideRisk": true,
+      "note": "浸水想定区域あり / 土砂災害警戒区域あり",
+      "source": "国土数値情報（reinfolib XKT026/029）",
+      "asOf": "2024"
+    },
+    "amenities": {
+      "stations": 3,
+      "preschools": 77,
+      "medicalFacilities": 247,
+      "source": "国土数値情報（reinfolib XKT015/007/010）",
+      "asOf": "令和5年度"
+    }
+  },
+  {
+    "code": "13205",
+    "pref": "tokyo",
+    "name": "青梅市",
+    "population": 133535,
+    "populationTrend": "横ばい",
+    "rent": {
+      "value": 52212,
+      "unit": "円/月",
+      "source": "住宅・土地統計調査（加重平均）",
+      "asOf": "2023",
+      "isEstimated": false
+    },
+    "landPrice": {
+      "value": 109895,
+      "unit": "円/㎡",
+      "source": "地価公示（住宅地平均）",
+      "asOf": "2025",
+      "isEstimated": false
+    },
+    "waitlistChildren": {
+      "value": 2,
+      "unit": "人",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
+    },
+    "hazard": {
+      "hasFloodRisk": true,
+      "hasLandslideRisk": true,
+      "note": "浸水想定区域あり / 土砂災害警戒区域あり",
+      "source": "国土数値情報（reinfolib XKT026/029）",
+      "asOf": "2024"
+    },
+    "amenities": {
+      "stations": 12,
+      "preschools": 40,
+      "medicalFacilities": 167,
+      "source": "国土数値情報（reinfolib XKT015/007/010）",
+      "asOf": "令和5年度"
+    }
+  },
+  {
+    "code": "13206",
+    "pref": "tokyo",
+    "name": "府中市",
+    "population": 262790,
+    "populationTrend": "横ばい",
+    "rent": {
+      "value": 75102,
+      "unit": "円/月",
+      "source": "住宅・土地統計調査（加重平均）",
+      "asOf": "2023",
+      "isEstimated": false
+    },
+    "landPrice": {
+      "value": 400519,
+      "unit": "円/㎡",
+      "source": "地価公示（住宅地平均）",
+      "asOf": "2025",
+      "isEstimated": false
+    },
+    "waitlistChildren": {
+      "value": 0,
+      "unit": "人",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
+    },
+    "hazard": {
+      "hasFloodRisk": true,
+      "hasLandslideRisk": true,
+      "note": "浸水想定区域あり / 土砂災害警戒区域あり",
+      "source": "国土数値情報（reinfolib XKT026/029）",
+      "asOf": "2024"
+    },
+    "amenities": {
+      "stations": 17,
+      "preschools": 91,
+      "medicalFacilities": 359,
+      "source": "国土数値情報（reinfolib XKT015/007/010）",
+      "asOf": "令和5年度"
+    }
+  },
+  {
+    "code": "13207",
+    "pref": "tokyo",
+    "name": "昭島市",
+    "population": 113949,
+    "populationTrend": "横ばい",
+    "rent": {
+      "value": 59112,
+      "unit": "円/月",
+      "source": "住宅・土地統計調査（加重平均）",
+      "asOf": "2023",
+      "isEstimated": false
+    },
+    "landPrice": {
+      "value": 219409,
+      "unit": "円/㎡",
+      "source": "地価公示（住宅地平均）",
+      "asOf": "2025",
+      "isEstimated": false
+    },
+    "waitlistChildren": {
+      "value": 16,
+      "unit": "人",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
+    },
+    "hazard": {
+      "hasFloodRisk": true,
+      "hasLandslideRisk": true,
+      "note": "浸水想定区域あり / 土砂災害警戒区域あり",
+      "source": "国土数値情報（reinfolib XKT026/029）",
+      "asOf": "2024"
+    },
+    "amenities": {
+      "stations": 7,
+      "preschools": 36,
+      "medicalFacilities": 134,
+      "source": "国土数値情報（reinfolib XKT015/007/010）",
+      "asOf": "令和5年度"
+    }
+  },
+  {
+    "code": "13208",
+    "pref": "tokyo",
+    "name": "調布市",
+    "population": 242614,
+    "populationTrend": "横ばい",
+    "rent": {
+      "value": 81125,
+      "unit": "円/月",
+      "source": "住宅・土地統計調査（加重平均）",
+      "asOf": "2023",
+      "isEstimated": false
+    },
+    "landPrice": {
+      "value": 479957,
+      "unit": "円/㎡",
+      "source": "地価公示（住宅地平均）",
+      "asOf": "2025",
+      "isEstimated": false
+    },
+    "waitlistChildren": {
+      "value": 13,
+      "unit": "人",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
+    },
+    "hazard": {
+      "hasFloodRisk": true,
+      "hasLandslideRisk": true,
+      "note": "浸水想定区域あり / 土砂災害警戒区域あり",
+      "source": "国土数値情報（reinfolib XKT026/029）",
+      "asOf": "2024"
+    },
+    "amenities": {
+      "stations": 10,
+      "preschools": 95,
+      "medicalFacilities": 363,
+      "source": "国土数値情報（reinfolib XKT015/007/010）",
+      "asOf": "令和5年度"
+    }
+  },
+  {
+    "code": "13209",
+    "pref": "tokyo",
+    "name": "町田市",
+    "population": 431079,
+    "populationTrend": "横ばい",
+    "rent": {
+      "value": 62837,
+      "unit": "円/月",
+      "source": "住宅・土地統計調査（加重平均）",
+      "asOf": "2023",
+      "isEstimated": false
+    },
+    "landPrice": {
+      "value": 268363,
+      "unit": "円/㎡",
+      "source": "地価公示（住宅地平均）",
+      "asOf": "2025",
+      "isEstimated": false
+    },
+    "waitlistChildren": {
+      "value": 28,
+      "unit": "人",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
+    },
+    "hazard": {
+      "hasFloodRisk": true,
+      "hasLandslideRisk": true,
+      "note": "浸水想定区域あり / 土砂災害警戒区域あり",
+      "source": "国土数値情報（reinfolib XKT026/029）",
+      "asOf": "2024"
+    },
+    "amenities": {
+      "stations": 10,
+      "preschools": 131,
+      "medicalFacilities": 589,
+      "source": "国土数値情報（reinfolib XKT015/007/010）",
+      "asOf": "令和5年度"
+    }
+  },
+  {
+    "code": "13210",
+    "pref": "tokyo",
+    "name": "小金井市",
+    "population": 126074,
+    "populationTrend": "横ばい",
+    "rent": {
+      "value": 74040,
+      "unit": "円/月",
+      "source": "住宅・土地統計調査（加重平均）",
+      "asOf": "2023",
+      "isEstimated": false
+    },
+    "landPrice": {
+      "value": 460083,
+      "unit": "円/㎡",
+      "source": "地価公示（住宅地平均）",
+      "asOf": "2025",
+      "isEstimated": false
+    },
+    "waitlistChildren": {
+      "value": 0,
+      "unit": "人",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
+    },
+    "hazard": {
+      "hasFloodRisk": true,
+      "hasLandslideRisk": true,
+      "note": "浸水想定区域あり / 土砂災害警戒区域あり",
+      "source": "国土数値情報（reinfolib XKT026/029）",
+      "asOf": "2024"
+    },
+    "amenities": {
+      "stations": 3,
+      "preschools": 56,
+      "medicalFacilities": 167,
+      "source": "国土数値情報（reinfolib XKT015/007/010）",
+      "asOf": "令和5年度"
+    }
+  },
+  {
+    "code": "13211",
+    "pref": "tokyo",
+    "name": "小平市",
+    "population": 198739,
+    "populationTrend": "横ばい",
+    "rent": {
+      "value": 64361,
+      "unit": "円/月",
+      "source": "住宅・土地統計調査（加重平均）",
+      "asOf": "2023",
+      "isEstimated": false
+    },
+    "landPrice": {
+      "value": 263907,
+      "unit": "円/㎡",
+      "source": "地価公示（住宅地平均）",
+      "asOf": "2025",
+      "isEstimated": false
+    },
+    "waitlistChildren": {
+      "value": 0,
+      "unit": "人",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
+    },
+    "hazard": {
+      "hasFloodRisk": true,
+      "hasLandslideRisk": true,
+      "note": "浸水想定区域あり / 土砂災害警戒区域あり",
+      "source": "国土数値情報（reinfolib XKT026/029）",
+      "asOf": "2024"
+    },
+    "amenities": {
+      "stations": 9,
+      "preschools": 76,
+      "medicalFacilities": 247,
+      "source": "国土数値情報（reinfolib XKT015/007/010）",
+      "asOf": "令和5年度"
+    }
+  },
+  {
+    "code": "13212",
+    "pref": "tokyo",
+    "name": "日野市",
+    "population": 190435,
+    "populationTrend": "横ばい",
+    "rent": {
+      "value": 66016,
+      "unit": "円/月",
+      "source": "住宅・土地統計調査（加重平均）",
+      "asOf": "2023",
+      "isEstimated": false
+    },
+    "landPrice": {
+      "value": 239911,
+      "unit": "円/㎡",
+      "source": "地価公示（住宅地平均）",
+      "asOf": "2025",
+      "isEstimated": false
+    },
+    "waitlistChildren": {
+      "value": 26,
+      "unit": "人",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
+    },
+    "hazard": {
+      "hasFloodRisk": true,
+      "hasLandslideRisk": true,
+      "note": "浸水想定区域あり / 土砂災害警戒区域あり",
+      "source": "国土数値情報（reinfolib XKT026/029）",
+      "asOf": "2024"
+    },
+    "amenities": {
+      "stations": 13,
+      "preschools": 62,
+      "medicalFacilities": 224,
+      "source": "国土数値情報（reinfolib XKT015/007/010）",
+      "asOf": "令和5年度"
+    }
+  },
+  {
+    "code": "13213",
+    "pref": "tokyo",
+    "name": "東村山市",
+    "population": 151815,
+    "populationTrend": "横ばい",
+    "rent": {
+      "value": 62628,
+      "unit": "円/月",
+      "source": "住宅・土地統計調査（加重平均）",
+      "asOf": "2023",
+      "isEstimated": false
+    },
+    "landPrice": {
+      "value": 237759,
+      "unit": "円/㎡",
+      "source": "地価公示（住宅地平均）",
+      "asOf": "2025",
+      "isEstimated": false
+    },
+    "waitlistChildren": {
+      "value": 18,
+      "unit": "人",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
+    },
+    "hazard": {
+      "hasFloodRisk": true,
+      "hasLandslideRisk": true,
+      "note": "浸水想定区域あり / 土砂災害警戒区域あり",
+      "source": "国土数値情報（reinfolib XKT026/029）",
+      "asOf": "2024"
+    },
+    "amenities": {
+      "stations": 12,
+      "preschools": 37,
+      "medicalFacilities": 175,
+      "source": "国土数値情報（reinfolib XKT015/007/010）",
+      "asOf": "令和5年度"
+    }
+  },
+  {
+    "code": "13214",
+    "pref": "tokyo",
+    "name": "国分寺市",
+    "population": 129242,
+    "populationTrend": "横ばい",
+    "rent": {
+      "value": 80043,
+      "unit": "円/月",
+      "source": "住宅・土地統計調査（加重平均）",
+      "asOf": "2023",
+      "isEstimated": false
+    },
+    "landPrice": {
+      "value": 444304,
+      "unit": "円/㎡",
+      "source": "地価公示（住宅地平均）",
+      "asOf": "2025",
+      "isEstimated": false
+    },
+    "waitlistChildren": {
+      "value": 24,
+      "unit": "人",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
+    },
+    "hazard": {
+      "hasFloodRisk": true,
+      "hasLandslideRisk": true,
+      "note": "浸水想定区域あり / 土砂災害警戒区域あり",
+      "source": "国土数値情報（reinfolib XKT026/029）",
+      "asOf": "2024"
+    },
+    "amenities": {
+      "stations": 6,
+      "preschools": 49,
+      "medicalFacilities": 196,
+      "source": "国土数値情報（reinfolib XKT015/007/010）",
+      "asOf": "令和5年度"
+    }
+  },
+  {
+    "code": "13215",
+    "pref": "tokyo",
+    "name": "国立市",
+    "population": 77130,
+    "populationTrend": "横ばい",
+    "rent": {
+      "value": 68425,
+      "unit": "円/月",
+      "source": "住宅・土地統計調査（加重平均）",
+      "asOf": "2023",
+      "isEstimated": false
+    },
+    "landPrice": {
+      "value": 446400,
+      "unit": "円/㎡",
+      "source": "地価公示（住宅地平均）",
+      "asOf": "2025",
+      "isEstimated": false
+    },
+    "waitlistChildren": {
+      "value": 16,
+      "unit": "人",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
+    },
+    "hazard": {
+      "hasFloodRisk": true,
+      "hasLandslideRisk": true,
+      "note": "浸水想定区域あり / 土砂災害警戒区域あり",
+      "source": "国土数値情報（reinfolib XKT026/029）",
+      "asOf": "2024"
+    },
+    "amenities": {
+      "stations": 3,
+      "preschools": 30,
+      "medicalFacilities": 164,
+      "source": "国土数値情報（reinfolib XKT015/007/010）",
+      "asOf": "令和5年度"
+    }
+  },
+  {
+    "code": "13218",
+    "pref": "tokyo",
+    "name": "福生市",
+    "population": 56414,
+    "populationTrend": "横ばい",
+    "rent": {
+      "value": 54006,
+      "unit": "円/月",
+      "source": "住宅・土地統計調査（加重平均）",
+      "asOf": "2023",
+      "isEstimated": false
+    },
+    "landPrice": {
+      "value": 211125,
+      "unit": "円/㎡",
+      "source": "地価公示（住宅地平均）",
+      "asOf": "2025",
+      "isEstimated": false
+    },
+    "waitlistChildren": {
+      "value": 0,
+      "unit": "人",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
+    },
+    "hazard": {
+      "hasFloodRisk": true,
+      "hasLandslideRisk": true,
+      "note": "浸水想定区域あり / 土砂災害警戒区域あり",
+      "source": "国土数値情報（reinfolib XKT026/029）",
+      "asOf": "2024"
+    },
+    "amenities": {
+      "stations": 5,
+      "preschools": 18,
+      "medicalFacilities": 79,
+      "source": "国土数値情報（reinfolib XKT015/007/010）",
+      "asOf": "令和5年度"
+    }
+  },
+  {
+    "code": "13219",
+    "pref": "tokyo",
+    "name": "狛江市",
+    "population": 84772,
+    "populationTrend": "横ばい",
+    "rent": {
+      "value": 70964,
+      "unit": "円/月",
+      "source": "住宅・土地統計調査（加重平均）",
+      "asOf": "2023",
+      "isEstimated": false
+    },
+    "landPrice": {
+      "value": 386286,
+      "unit": "円/㎡",
+      "source": "地価公示（住宅地平均）",
+      "asOf": "2025",
+      "isEstimated": false
+    },
+    "waitlistChildren": {
+      "value": 12,
+      "unit": "人",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
+    },
+    "hazard": {
+      "hasFloodRisk": true,
+      "hasLandslideRisk": true,
+      "note": "浸水想定区域あり / 土砂災害警戒区域あり",
+      "source": "国土数値情報（reinfolib XKT026/029）",
+      "asOf": "2024"
+    },
+    "amenities": {
+      "stations": 2,
+      "preschools": 27,
+      "medicalFacilities": 103,
+      "source": "国土数値情報（reinfolib XKT015/007/010）",
+      "asOf": "令和5年度"
+    }
+  },
+  {
+    "code": "13220",
+    "pref": "tokyo",
+    "name": "東大和市",
+    "population": 83901,
+    "populationTrend": "横ばい",
+    "rent": {
+      "value": 52318,
+      "unit": "円/月",
+      "source": "住宅・土地統計調査（加重平均）",
+      "asOf": "2023",
+      "isEstimated": false
+    },
+    "landPrice": {
+      "value": 179269,
+      "unit": "円/㎡",
+      "source": "地価公示（住宅地平均）",
+      "asOf": "2025",
+      "isEstimated": false
+    },
+    "waitlistChildren": {
+      "value": 0,
+      "unit": "人",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
+    },
+    "hazard": {
+      "hasFloodRisk": true,
+      "hasLandslideRisk": true,
+      "note": "浸水想定区域あり / 土砂災害警戒区域あり",
+      "source": "国土数値情報（reinfolib XKT026/029）",
+      "asOf": "2024"
+    },
+    "amenities": {
+      "stations": 4,
+      "preschools": 22,
+      "medicalFacilities": 97,
+      "source": "国土数値情報（reinfolib XKT015/007/010）",
+      "asOf": "令和5年度"
+    }
+  },
+  {
+    "code": "13221",
+    "pref": "tokyo",
+    "name": "清瀬市",
+    "population": 76208,
+    "populationTrend": "横ばい",
+    "rent": {
+      "value": 54110,
+      "unit": "円/月",
+      "source": "住宅・土地統計調査（加重平均）",
+      "asOf": "2023",
+      "isEstimated": false
+    },
+    "landPrice": {
+      "value": 213222,
+      "unit": "円/㎡",
+      "source": "地価公示（住宅地平均）",
+      "asOf": "2025",
+      "isEstimated": false
+    },
+    "waitlistChildren": {
+      "value": 9,
+      "unit": "人",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
+    },
+    "hazard": {
+      "hasFloodRisk": true,
+      "hasLandslideRisk": true,
+      "note": "浸水想定区域あり / 土砂災害警戒区域あり",
+      "source": "国土数値情報（reinfolib XKT026/029）",
+      "asOf": "2024"
+    },
+    "amenities": {
+      "stations": 2,
+      "preschools": 24,
+      "medicalFacilities": 95,
+      "source": "国土数値情報（reinfolib XKT015/007/010）",
+      "asOf": "令和5年度"
+    }
+  },
+  {
+    "code": "13222",
+    "pref": "tokyo",
+    "name": "東久留米市",
+    "population": 115271,
+    "populationTrend": "横ばい",
+    "rent": {
+      "value": 66879,
+      "unit": "円/月",
+      "source": "住宅・土地統計調査（加重平均）",
+      "asOf": "2023",
+      "isEstimated": false
+    },
+    "landPrice": {
+      "value": 241192,
+      "unit": "円/㎡",
+      "source": "地価公示（住宅地平均）",
+      "asOf": "2025",
+      "isEstimated": false
+    },
+    "waitlistChildren": {
+      "value": 0,
+      "unit": "人",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
+    },
+    "hazard": {
+      "hasFloodRisk": true,
+      "hasLandslideRisk": true,
+      "note": "浸水想定区域あり / 土砂災害警戒区域あり",
+      "source": "国土数値情報（reinfolib XKT026/029）",
+      "asOf": "2024"
+    },
+    "amenities": {
+      "stations": 1,
+      "preschools": 32,
+      "medicalFacilities": 127,
+      "source": "国土数値情報（reinfolib XKT015/007/010）",
+      "asOf": "令和5年度"
+    }
+  },
+  {
+    "code": "13223",
+    "pref": "tokyo",
+    "name": "武蔵村山市",
+    "population": 70829,
+    "populationTrend": "横ばい",
+    "rent": {
+      "value": 50149,
+      "unit": "円/月",
+      "source": "住宅・土地統計調査（加重平均）",
+      "asOf": "2023",
+      "isEstimated": false
+    },
+    "landPrice": {
+      "value": 129421,
+      "unit": "円/㎡",
+      "source": "地価公示（住宅地平均）",
+      "asOf": "2025",
+      "isEstimated": false
+    },
+    "waitlistChildren": {
+      "value": 10,
+      "unit": "人",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
+    },
+    "hazard": {
+      "hasFloodRisk": true,
+      "hasLandslideRisk": true,
+      "note": "浸水想定区域あり / 土砂災害警戒区域あり",
+      "source": "国土数値情報（reinfolib XKT026/029）",
+      "asOf": "2024"
+    },
+    "amenities": {
+      "stations": 0,
+      "preschools": 18,
+      "medicalFacilities": 58,
+      "source": "国土数値情報（reinfolib XKT015/007/010）",
+      "asOf": "令和5年度"
+    }
+  },
+  {
+    "code": "13224",
+    "pref": "tokyo",
+    "name": "多摩市",
+    "population": 146951,
+    "populationTrend": "横ばい",
+    "rent": {
+      "value": 58686,
+      "unit": "円/月",
+      "source": "住宅・土地統計調査（加重平均）",
+      "asOf": "2023",
+      "isEstimated": false
+    },
+    "landPrice": {
+      "value": 236111,
+      "unit": "円/㎡",
+      "source": "地価公示（住宅地平均）",
+      "asOf": "2025",
+      "isEstimated": false
+    },
+    "waitlistChildren": {
+      "value": 7,
+      "unit": "人",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
+    },
+    "hazard": {
+      "hasFloodRisk": true,
+      "hasLandslideRisk": true,
+      "note": "浸水想定区域あり / 土砂災害警戒区域あり",
+      "source": "国土数値情報（reinfolib XKT026/029）",
+      "asOf": "2024"
+    },
+    "amenities": {
+      "stations": 7,
+      "preschools": 45,
+      "medicalFacilities": 187,
+      "source": "国土数値情報（reinfolib XKT015/007/010）",
+      "asOf": "令和5年度"
+    }
+  },
+  {
+    "code": "13225",
+    "pref": "tokyo",
+    "name": "稲城市",
+    "population": 93151,
+    "populationTrend": "横ばい",
+    "rent": {
+      "value": 72949,
+      "unit": "円/月",
+      "source": "住宅・土地統計調査（加重平均）",
+      "asOf": "2023",
+      "isEstimated": false
+    },
+    "landPrice": {
+      "value": 258704,
+      "unit": "円/㎡",
+      "source": "地価公示（住宅地平均）",
+      "asOf": "2025",
+      "isEstimated": false
+    },
+    "waitlistChildren": {
+      "value": 7,
+      "unit": "人",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
+    },
+    "hazard": {
+      "hasFloodRisk": true,
+      "hasLandslideRisk": true,
+      "note": "浸水想定区域あり / 土砂災害警戒区域あり",
+      "source": "国土数値情報（reinfolib XKT026/029）",
+      "asOf": "2024"
+    },
+    "amenities": {
+      "stations": 5,
+      "preschools": 32,
+      "medicalFacilities": 99,
+      "source": "国土数値情報（reinfolib XKT015/007/010）",
+      "asOf": "令和5年度"
+    }
+  },
+  {
+    "code": "13227",
+    "pref": "tokyo",
+    "name": "羽村市",
+    "population": 54326,
+    "populationTrend": "横ばい",
+    "rent": {
+      "value": 58839,
+      "unit": "円/月",
+      "source": "住宅・土地統計調査（加重平均）",
+      "asOf": "2023",
+      "isEstimated": false
+    },
+    "landPrice": {
+      "value": 146220,
+      "unit": "円/㎡",
+      "source": "地価公示（住宅地平均）",
+      "asOf": "2025",
+      "isEstimated": false
+    },
+    "waitlistChildren": {
+      "value": 0,
+      "unit": "人",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
+    },
+    "hazard": {
+      "hasFloodRisk": true,
+      "hasLandslideRisk": true,
+      "note": "浸水想定区域あり / 土砂災害警戒区域あり",
+      "source": "国土数値情報（reinfolib XKT026/029）",
+      "asOf": "2024"
+    },
+    "amenities": {
+      "stations": 2,
+      "preschools": 23,
+      "medicalFacilities": 70,
+      "source": "国土数値情報（reinfolib XKT015/007/010）",
+      "asOf": "令和5年度"
+    }
+  },
+  {
+    "code": "13228",
+    "pref": "tokyo",
+    "name": "あきる野市",
+    "population": 79292,
+    "populationTrend": "横ばい",
+    "rent": {
+      "value": 60297,
+      "unit": "円/月",
+      "source": "住宅・土地統計調査（加重平均）",
+      "asOf": "2023",
+      "isEstimated": false
+    },
+    "landPrice": {
+      "value": 105236,
+      "unit": "円/㎡",
+      "source": "地価公示（住宅地平均）",
+      "asOf": "2025",
+      "isEstimated": false
+    },
+    "waitlistChildren": {
+      "value": 8,
+      "unit": "人",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
+    },
+    "hazard": {
+      "hasFloodRisk": true,
+      "hasLandslideRisk": true,
+      "note": "浸水想定区域あり / 土砂災害警戒区域あり",
+      "source": "国土数値情報（reinfolib XKT026/029）",
+      "asOf": "2024"
+    },
+    "amenities": {
+      "stations": 5,
+      "preschools": 27,
+      "medicalFacilities": 90,
+      "source": "国土数値情報（reinfolib XKT015/007/010）",
+      "asOf": "令和5年度"
+    }
+  },
+  {
+    "code": "13229",
+    "pref": "tokyo",
+    "name": "西東京市",
+    "population": 207388,
+    "populationTrend": "横ばい",
+    "rent": {
+      "value": 74372,
+      "unit": "円/月",
+      "source": "住宅・土地統計調査（加重平均）",
+      "asOf": "2023",
+      "isEstimated": false
+    },
+    "landPrice": {
+      "value": 356278,
+      "unit": "円/㎡",
+      "source": "地価公示（住宅地平均）",
+      "asOf": "2025",
+      "isEstimated": false
+    },
+    "waitlistChildren": {
+      "value": 5,
+      "unit": "人",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
+    },
+    "hazard": {
+      "hasFloodRisk": true,
+      "hasLandslideRisk": true,
+      "note": "浸水想定区域あり / 土砂災害警戒区域あり",
+      "source": "国土数値情報（reinfolib XKT026/029）",
+      "asOf": "2024"
+    },
+    "amenities": {
+      "stations": 5,
+      "preschools": 65,
+      "medicalFacilities": 271,
+      "source": "国土数値情報（reinfolib XKT015/007/010）",
+      "asOf": "令和5年度"
+    }
+  },
+  {
+    "code": "13303",
+    "pref": "tokyo",
+    "name": "瑞穂町",
+    "population": 31765,
+    "populationTrend": "横ばい",
+    "rent": {
+      "value": 50839,
+      "unit": "円/月",
+      "source": "住宅・土地統計調査（加重平均）",
+      "asOf": "2023",
+      "isEstimated": false
+    },
+    "landPrice": {
+      "value": 93223,
+      "unit": "円/㎡",
+      "source": "地価公示（住宅地平均）",
+      "asOf": "2025",
+      "isEstimated": false
+    },
+    "waitlistChildren": {
+      "value": 0,
+      "unit": "人",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
+    },
+    "hazard": {
+      "hasFloodRisk": true,
+      "hasLandslideRisk": true,
+      "note": "浸水想定区域あり / 土砂災害警戒区域あり",
+      "source": "国土数値情報（reinfolib XKT026/029）",
+      "asOf": "2024"
+    },
+    "amenities": {
+      "stations": 1,
+      "preschools": 13,
+      "medicalFacilities": 27,
+      "source": "国土数値情報（reinfolib XKT015/007/010）",
+      "asOf": "令和5年度"
+    }
+  },
+  {
+    "code": "13305",
+    "pref": "tokyo",
+    "name": "日の出町",
+    "population": 16958,
+    "populationTrend": "横ばい",
+    "rent": {
+      "value": 57535,
+      "unit": "円/月",
+      "source": "住宅・土地統計調査（加重平均）",
+      "asOf": "2023",
+      "isEstimated": false
+    },
+    "landPrice": {
+      "value": 80821,
+      "unit": "円/㎡",
+      "source": "地価公示（住宅地平均）",
+      "asOf": "2025",
+      "isEstimated": false
+    },
+    "waitlistChildren": {
+      "value": 0,
+      "unit": "人",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
+    },
+    "hazard": {
+      "hasFloodRisk": true,
+      "hasLandslideRisk": true,
+      "note": "浸水想定区域あり / 土砂災害警戒区域あり",
+      "source": "国土数値情報（reinfolib XKT026/029）",
+      "asOf": "2024"
+    },
+    "amenities": {
+      "stations": 0,
+      "preschools": 7,
+      "medicalFacilities": 22,
+      "source": "国土数値情報（reinfolib XKT015/007/010）",
+      "asOf": "令和5年度"
+    }
+  },
+  {
+    "code": "13307",
+    "pref": "tokyo",
+    "name": "檜原村",
+    "population": 2003,
+    "populationTrend": "横ばい",
+    "rent": {
+      "value": 52000,
+      "unit": "円/月",
+      "source": "サンプル",
+      "asOf": "2023",
+      "isEstimated": true
+    },
+    "landPrice": {
+      "value": 210000,
+      "unit": "円/㎡",
+      "source": "サンプル",
+      "asOf": "2024",
+      "isEstimated": true
+    },
+    "waitlistChildren": {
+      "value": 0,
+      "unit": "人",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
+    },
+    "hazard": {
+      "hasFloodRisk": true,
+      "hasLandslideRisk": true,
+      "note": "浸水想定区域あり / 土砂災害警戒区域あり",
+      "source": "国土数値情報（reinfolib XKT026/029）",
+      "asOf": "2024"
+    },
+    "amenities": {
+      "stations": 0,
+      "preschools": 1,
+      "medicalFacilities": 3,
+      "source": "国土数値情報（reinfolib XKT015/007/010）",
+      "asOf": "令和5年度"
+    }
+  },
+  {
+    "code": "13308",
+    "pref": "tokyo",
+    "name": "奥多摩町",
+    "population": 4750,
+    "populationTrend": "横ばい",
+    "rent": {
+      "value": 49000,
+      "unit": "円/月",
+      "source": "サンプル",
+      "asOf": "2023",
+      "isEstimated": true
+    },
+    "landPrice": {
+      "value": 120000,
+      "unit": "円/㎡",
+      "source": "サンプル",
+      "asOf": "2024",
+      "isEstimated": true
+    },
+    "waitlistChildren": {
+      "value": 0,
+      "unit": "人",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
+    },
+    "hazard": {
+      "hasFloodRisk": true,
+      "hasLandslideRisk": true,
+      "note": "浸水想定区域あり / 土砂災害警戒区域あり",
+      "source": "国土数値情報（reinfolib XKT026/029）",
+      "asOf": "2024"
+    },
+    "amenities": {
+      "stations": 5,
+      "preschools": 2,
+      "medicalFacilities": 11,
+      "source": "国土数値情報（reinfolib XKT015/007/010）",
+      "asOf": "令和5年度"
+    }
+  },
+  {
+    "code": "13361",
+    "pref": "tokyo",
+    "name": "大島町",
+    "population": 7102,
+    "populationTrend": "横ばい",
+    "rent": {
+      "value": 51000,
+      "unit": "円/月",
+      "source": "サンプル",
+      "asOf": "2023",
+      "isEstimated": true
+    },
+    "landPrice": {
+      "value": 19133,
+      "unit": "円/㎡",
+      "source": "地価公示（住宅地平均）",
+      "asOf": "2025",
+      "isEstimated": false
+    },
+    "waitlistChildren": {
+      "value": 13,
+      "unit": "人",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
+    },
+    "hazard": {
+      "hasFloodRisk": false,
+      "hasLandslideRisk": false,
+      "note": "顕著な災害想定区域なし",
+      "source": "国土数値情報（reinfolib XKT026/029）",
+      "asOf": "2024"
+    },
+    "amenities": {
+      "stations": 0,
+      "preschools": 0,
+      "medicalFacilities": 0,
+      "source": "国土数値情報（reinfolib XKT015/007/010）",
+      "asOf": "令和5年度"
+    }
+  },
+  {
+    "code": "13362",
+    "pref": "tokyo",
+    "name": "利島村",
+    "population": 327,
+    "populationTrend": "横ばい",
+    "rent": {
+      "value": 43000,
+      "unit": "円/月",
+      "source": "サンプル",
+      "asOf": "2023",
+      "isEstimated": true
+    },
+    "landPrice": {
+      "value": 60000,
+      "unit": "円/㎡",
+      "source": "サンプル",
+      "asOf": "2024",
+      "isEstimated": true
+    },
+    "waitlistChildren": {
+      "value": 0,
+      "unit": "人",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
+    },
+    "hazard": {
+      "hasFloodRisk": false,
+      "hasLandslideRisk": false,
+      "note": "顕著な災害想定区域なし",
+      "source": "国土数値情報（reinfolib XKT026/029）",
+      "asOf": "2024"
+    },
+    "amenities": {
+      "stations": 0,
+      "preschools": 0,
+      "medicalFacilities": 0,
+      "source": "国土数値情報（reinfolib XKT015/007/010）",
+      "asOf": "令和5年度"
+    }
+  },
+  {
+    "code": "13363",
+    "pref": "tokyo",
+    "name": "新島村",
+    "population": 2441,
+    "populationTrend": "横ばい",
+    "rent": {
+      "value": 53000,
+      "unit": "円/月",
+      "source": "サンプル",
+      "asOf": "2023",
+      "isEstimated": true
+    },
+    "landPrice": {
+      "value": 7067,
+      "unit": "円/㎡",
+      "source": "地価公示（住宅地平均）",
+      "asOf": "2025",
+      "isEstimated": false
+    },
+    "waitlistChildren": {
+      "value": 0,
+      "unit": "人",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
+    },
+    "hazard": {
+      "hasFloodRisk": false,
+      "hasLandslideRisk": false,
+      "note": "顕著な災害想定区域なし",
+      "source": "国土数値情報（reinfolib XKT026/029）",
+      "asOf": "2024"
+    },
+    "amenities": {
+      "stations": 0,
+      "preschools": 0,
+      "medicalFacilities": 0,
+      "source": "国土数値情報（reinfolib XKT015/007/010）",
+      "asOf": "令和5年度"
+    }
+  },
+  {
+    "code": "13364",
+    "pref": "tokyo",
+    "name": "神津島村",
+    "population": 1855,
+    "populationTrend": "横ばい",
+    "rent": {
+      "value": 51000,
+      "unit": "円/月",
+      "source": "サンプル",
+      "asOf": "2023",
+      "isEstimated": true
+    },
+    "landPrice": {
+      "value": 7867,
+      "unit": "円/㎡",
+      "source": "地価公示（住宅地平均）",
+      "asOf": "2025",
+      "isEstimated": false
+    },
+    "waitlistChildren": {
+      "value": 0,
+      "unit": "人",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
+    },
+    "hazard": {
+      "hasFloodRisk": false,
+      "hasLandslideRisk": false,
+      "note": "顕著な災害想定区域なし",
+      "source": "国土数値情報（reinfolib XKT026/029）",
+      "asOf": "2024"
+    },
+    "amenities": {
+      "stations": 0,
+      "preschools": 0,
+      "medicalFacilities": 0,
+      "source": "国土数値情報（reinfolib XKT015/007/010）",
+      "asOf": "令和5年度"
+    }
+  },
+  {
+    "code": "13381",
+    "pref": "tokyo",
+    "name": "三宅村",
+    "population": 2273,
+    "populationTrend": "横ばい",
+    "rent": {
+      "value": 63000,
+      "unit": "円/月",
+      "source": "サンプル",
+      "asOf": "2023",
+      "isEstimated": true
+    },
+    "landPrice": {
+      "value": 9567,
+      "unit": "円/㎡",
+      "source": "地価公示（住宅地平均）",
+      "asOf": "2025",
+      "isEstimated": false
+    },
+    "waitlistChildren": {
+      "value": 8,
+      "unit": "人",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
+    },
+    "hazard": {
+      "hasFloodRisk": false,
+      "hasLandslideRisk": false,
+      "note": "顕著な災害想定区域なし",
+      "source": "国土数値情報（reinfolib XKT026/029）",
+      "asOf": "2024"
+    },
+    "amenities": {
+      "stations": 0,
+      "preschools": 0,
+      "medicalFacilities": 0,
+      "source": "国土数値情報（reinfolib XKT015/007/010）",
+      "asOf": "令和5年度"
+    }
+  },
+  {
+    "code": "13382",
+    "pref": "tokyo",
+    "name": "御蔵島村",
+    "population": 323,
+    "populationTrend": "横ばい",
+    "rent": {
+      "value": 60000,
+      "unit": "円/月",
+      "source": "サンプル",
+      "asOf": "2023",
+      "isEstimated": true
+    },
+    "landPrice": {
+      "value": 170000,
+      "unit": "円/㎡",
+      "source": "サンプル",
+      "asOf": "2024",
+      "isEstimated": true
+    },
+    "waitlistChildren": {
+      "value": 0,
+      "unit": "人",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
+    },
+    "hazard": {
+      "hasFloodRisk": false,
+      "hasLandslideRisk": false,
+      "note": "顕著な災害想定区域なし",
+      "source": "国土数値情報（reinfolib XKT026/029）",
+      "asOf": "2024"
+    },
+    "amenities": {
+      "stations": 0,
+      "preschools": 0,
+      "medicalFacilities": 0,
+      "source": "国土数値情報（reinfolib XKT015/007/010）",
+      "asOf": "令和5年度"
+    }
+  },
+  {
+    "code": "13401",
+    "pref": "tokyo",
+    "name": "八丈町",
+    "population": 7042,
+    "populationTrend": "横ばい",
+    "rent": {
+      "value": 56000,
+      "unit": "円/月",
+      "source": "サンプル",
+      "asOf": "2023",
+      "isEstimated": true
+    },
+    "landPrice": {
+      "value": 16000,
+      "unit": "円/㎡",
+      "source": "地価公示（住宅地平均）",
+      "asOf": "2025",
+      "isEstimated": false
+    },
+    "waitlistChildren": {
+      "value": 1,
+      "unit": "人",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
+    },
+    "hazard": {
+      "hasFloodRisk": false,
+      "hasLandslideRisk": false,
+      "note": "顕著な災害想定区域なし",
+      "source": "国土数値情報（reinfolib XKT026/029）",
+      "asOf": "2024"
+    },
+    "amenities": {
+      "stations": 0,
+      "preschools": 0,
+      "medicalFacilities": 0,
+      "source": "国土数値情報（reinfolib XKT015/007/010）",
+      "asOf": "令和5年度"
+    }
+  },
+  {
+    "code": "13402",
+    "pref": "tokyo",
+    "name": "青ヶ島村",
+    "population": 169,
+    "populationTrend": "横ばい",
+    "rent": {
+      "value": 45000,
+      "unit": "円/月",
+      "source": "サンプル",
+      "asOf": "2023",
+      "isEstimated": true
+    },
+    "landPrice": {
+      "value": 140000,
+      "unit": "円/㎡",
+      "source": "サンプル",
+      "asOf": "2024",
+      "isEstimated": true
+    },
+    "waitlistChildren": {
+      "value": 0,
+      "unit": "人",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
+    },
+    "hazard": {
+      "hasFloodRisk": false,
+      "hasLandslideRisk": false,
+      "note": "顕著な災害想定区域なし",
+      "source": "国土数値情報（reinfolib XKT026/029）",
+      "asOf": "2024"
+    },
+    "amenities": {
+      "stations": 0,
+      "preschools": 0,
+      "medicalFacilities": 0,
+      "source": "国土数値情報（reinfolib XKT015/007/010）",
+      "asOf": "令和5年度"
+    }
+  },
+  {
+    "code": "13421",
+    "pref": "tokyo",
+    "name": "小笠原村",
+    "population": 2929,
+    "populationTrend": "横ばい",
+    "rent": {
+      "value": 54000,
+      "unit": "円/月",
+      "source": "サンプル",
+      "asOf": "2023",
+      "isEstimated": true
+    },
+    "landPrice": {
+      "value": 52200,
+      "unit": "円/㎡",
+      "source": "地価公示（住宅地平均）",
+      "asOf": "2025",
+      "isEstimated": false
+    },
+    "waitlistChildren": {
+      "value": 0,
+      "unit": "人",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
+    },
+    "hazard": {
+      "hasFloodRisk": false,
+      "hasLandslideRisk": false,
+      "note": "顕著な災害想定区域なし",
+      "source": "国土数値情報（reinfolib XKT026/029）",
+      "asOf": "2024"
+    },
+    "amenities": {
+      "stations": 0,
+      "preschools": 0,
+      "medicalFacilities": 0,
+      "source": "国土数値情報（reinfolib XKT015/007/010）",
+      "asOf": "令和5年度"
+    }
+  }
+]
