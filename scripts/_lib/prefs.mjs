@@ -160,6 +160,14 @@ export const PREFS = {
       "33100": ["33101","33102","33103","33104"], // 岡山市4区（北/中/東/南）
     },
   },
+  hiroshima: {
+    code: "34", nameJa: "広島県",
+    bbox: { west: 132.036, south: 34.028, east: 133.471, north: 35.106 },
+    hasWards: true,
+    parentToWards: {
+      "34100": ["34101","34102","34103","34104","34105","34106","34107","34108"], // 広島市8区
+    },
+  },
 };
 
 export function getPref(slug) {
