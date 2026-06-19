@@ -32,6 +32,12 @@ export const PREFS = {
     hasWards: false,
     parentToWards: {},
   },
+  ibaraki: {
+    code: "08", nameJa: "茨城県",
+    bbox: { west: 139.688, south: 35.739, east: 140.852, north: 36.945 },
+    hasWards: false,
+    parentToWards: {},
+  },
 };
 
 export function getPref(slug) {
