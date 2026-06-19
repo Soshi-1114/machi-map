@@ -11,7 +11,7 @@ if (!APP_ID) {
 const url = new URL("https://api.e-stat.go.jp/rest/3.0/app/json/getStatsList");
 url.searchParams.set("appId", APP_ID);
 // statsCode を外して全分野横断検索
-url.searchParams.set("searchWord", "都道府県地価調査");
+url.searchParams.set("searchWord", "待機児童 都道府県");
 url.searchParams.set("limit", "50");
 
 const res = await fetch(url);

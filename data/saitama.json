@@ -20,11 +20,11 @@
       "isEstimated": false
     },
     "waitlistChildren": {
-      "value": 12,
+      "value": 0,
       "unit": "人",
-      "source": "サンプル",
-      "asOf": "2025",
-      "isEstimated": true
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
     },
     "hazard": {
       "hasFloodRisk": true,
@@ -62,11 +62,11 @@
       "isEstimated": false
     },
     "waitlistChildren": {
-      "value": 0,
+      "value": 10,
       "unit": "人",
-      "source": "サンプル",
-      "asOf": "2025",
-      "isEstimated": true
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
     },
     "hazard": {
       "hasFloodRisk": true,
@@ -106,9 +106,9 @@
     "waitlistChildren": {
       "value": 0,
       "unit": "人",
-      "source": "サンプル",
-      "asOf": "2025",
-      "isEstimated": true
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
     },
     "hazard": {
       "hasFloodRisk": true,
@@ -146,11 +146,11 @@
       "isEstimated": false
     },
     "waitlistChildren": {
-      "value": 28,
+      "value": 10,
       "unit": "人",
-      "source": "サンプル",
-      "asOf": "2025",
-      "isEstimated": true
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
     },
     "hazard": {
       "hasFloodRisk": true,
@@ -190,9 +190,9 @@
     "waitlistChildren": {
       "value": 0,
       "unit": "人",
-      "source": "サンプル",
-      "asOf": "2025",
-      "isEstimated": true
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
     },
     "hazard": {
       "hasFloodRisk": true,
@@ -230,11 +230,11 @@
       "isEstimated": false
     },
     "waitlistChildren": {
-      "value": 4,
+      "value": 0,
       "unit": "人",
-      "source": "サンプル",
-      "asOf": "2025",
-      "isEstimated": true
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
     },
     "hazard": {
       "hasFloodRisk": true,
@@ -272,11 +272,11 @@
       "isEstimated": false
     },
     "waitlistChildren": {
-      "value": 5,
+      "value": 6,
       "unit": "人",
-      "source": "サンプル",
-      "asOf": "2025",
-      "isEstimated": true
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
     },
     "hazard": {
       "hasFloodRisk": true,
@@ -316,9 +316,9 @@
     "waitlistChildren": {
       "value": 0,
       "unit": "人",
-      "source": "サンプル",
-      "asOf": "2025",
-      "isEstimated": true
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
     },
     "hazard": {
       "hasFloodRisk": true,
@@ -358,9 +358,9 @@
     "waitlistChildren": {
       "value": 0,
       "unit": "人",
-      "source": "サンプル",
-      "asOf": "2025",
-      "isEstimated": true
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
     },
     "hazard": {
       "hasFloodRisk": true,
@@ -400,9 +400,9 @@
     "waitlistChildren": {
       "value": 0,
       "unit": "人",
-      "source": "サンプル",
-      "asOf": "2025",
-      "isEstimated": true
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
     },
     "hazard": {
       "hasFloodRisk": true,
@@ -442,9 +442,9 @@
     "waitlistChildren": {
       "value": 0,
       "unit": "人",
-      "source": "サンプル",
-      "asOf": "2025",
-      "isEstimated": true
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
     },
     "hazard": {
       "hasFloodRisk": true,
@@ -482,11 +482,11 @@
       "isEstimated": false
     },
     "waitlistChildren": {
-      "value": 0,
+      "value": 11,
       "unit": "人",
-      "source": "サンプル",
-      "asOf": "2025",
-      "isEstimated": true
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
     },
     "hazard": {
       "hasFloodRisk": true,
@@ -524,11 +524,11 @@
       "isEstimated": false
     },
     "waitlistChildren": {
-      "value": 0,
+      "value": 16,
       "unit": "人",
-      "source": "サンプル",
-      "asOf": "2025",
-      "isEstimated": true
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
     },
     "hazard": {
       "hasFloodRisk": true,
@@ -568,9 +568,9 @@
     "waitlistChildren": {
       "value": 0,
       "unit": "人",
-      "source": "サンプル",
-      "asOf": "2025",
-      "isEstimated": true
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
     },
     "hazard": {
       "hasFloodRisk": true,
@@ -608,11 +608,11 @@
       "isEstimated": false
     },
     "waitlistChildren": {
-      "value": 2,
+      "value": 0,
       "unit": "人",
-      "source": "サンプル",
-      "asOf": "2025",
-      "isEstimated": true
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
     },
     "hazard": {
       "hasFloodRisk": true,
@@ -650,11 +650,11 @@
       "isEstimated": false
     },
     "waitlistChildren": {
-      "value": 3,
+      "value": 0,
       "unit": "人",
-      "source": "サンプル",
-      "asOf": "2025",
-      "isEstimated": true
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
     },
     "hazard": {
       "hasFloodRisk": true,
@@ -692,11 +692,11 @@
       "isEstimated": false
     },
     "waitlistChildren": {
-      "value": 0,
+      "value": 6,
       "unit": "人",
-      "source": "サンプル",
-      "asOf": "2025",
-      "isEstimated": true
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
     },
     "hazard": {
       "hasFloodRisk": true,
@@ -734,11 +734,11 @@
       "isEstimated": false
     },
     "waitlistChildren": {
-      "value": 8,
+      "value": 24,
       "unit": "人",
-      "source": "サンプル",
-      "asOf": "2025",
-      "isEstimated": true
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
     },
     "hazard": {
       "hasFloodRisk": true,
@@ -776,11 +776,11 @@
       "isEstimated": false
     },
     "waitlistChildren": {
-      "value": 3,
+      "value": 4,
       "unit": "人",
-      "source": "サンプル",
-      "asOf": "2025",
-      "isEstimated": true
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
     },
     "hazard": {
       "hasFloodRisk": true,
@@ -820,9 +820,9 @@
     "waitlistChildren": {
       "value": 0,
       "unit": "人",
-      "source": "サンプル",
-      "asOf": "2025",
-      "isEstimated": true
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
     },
     "hazard": {
       "hasFloodRisk": true,
@@ -862,9 +862,9 @@
     "waitlistChildren": {
       "value": 0,
       "unit": "人",
-      "source": "サンプル",
-      "asOf": "2025",
-      "isEstimated": true
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
     },
     "hazard": {
       "hasFloodRisk": true,
@@ -902,11 +902,11 @@
       "isEstimated": false
     },
     "waitlistChildren": {
-      "value": 0,
+      "value": 8,
       "unit": "人",
-      "source": "サンプル",
-      "asOf": "2025",
-      "isEstimated": true
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
     },
     "hazard": {
       "hasFloodRisk": true,
@@ -944,11 +944,11 @@
       "isEstimated": false
     },
     "waitlistChildren": {
-      "value": 0,
+      "value": 17,
       "unit": "人",
-      "source": "サンプル",
-      "asOf": "2025",
-      "isEstimated": true
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
     },
     "hazard": {
       "hasFloodRisk": true,
@@ -986,11 +986,11 @@
       "isEstimated": false
     },
     "waitlistChildren": {
-      "value": 0,
+      "value": 4,
       "unit": "人",
-      "source": "サンプル",
-      "asOf": "2025",
-      "isEstimated": true
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
     },
     "hazard": {
       "hasFloodRisk": true,
@@ -1028,11 +1028,11 @@
       "isEstimated": false
     },
     "waitlistChildren": {
-      "value": 4,
+      "value": 3,
       "unit": "人",
-      "source": "サンプル",
-      "asOf": "2025",
-      "isEstimated": true
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
     },
     "hazard": {
       "hasFloodRisk": true,
@@ -1070,11 +1070,11 @@
       "isEstimated": false
     },
     "waitlistChildren": {
-      "value": 0,
+      "value": 8,
       "unit": "人",
-      "source": "サンプル",
-      "asOf": "2025",
-      "isEstimated": true
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
     },
     "hazard": {
       "hasFloodRisk": true,
@@ -1114,9 +1114,9 @@
     "waitlistChildren": {
       "value": 0,
       "unit": "人",
-      "source": "サンプル",
-      "asOf": "2025",
-      "isEstimated": true
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
     },
     "hazard": {
       "hasFloodRisk": true,
@@ -1156,9 +1156,9 @@
     "waitlistChildren": {
       "value": 0,
       "unit": "人",
-      "source": "サンプル",
-      "asOf": "2025",
-      "isEstimated": true
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
     },
     "hazard": {
       "hasFloodRisk": true,
@@ -1196,11 +1196,11 @@
       "isEstimated": false
     },
     "waitlistChildren": {
-      "value": 3,
+      "value": 32,
       "unit": "人",
-      "source": "サンプル",
-      "asOf": "2025",
-      "isEstimated": true
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
     },
     "hazard": {
       "hasFloodRisk": true,
@@ -1238,11 +1238,11 @@
       "isEstimated": false
     },
     "waitlistChildren": {
-      "value": 0,
+      "value": 24,
       "unit": "人",
-      "source": "サンプル",
-      "asOf": "2025",
-      "isEstimated": true
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
     },
     "hazard": {
       "hasFloodRisk": true,
@@ -1280,11 +1280,11 @@
       "isEstimated": false
     },
     "waitlistChildren": {
-      "value": 0,
+      "value": 8,
       "unit": "人",
-      "source": "サンプル",
-      "asOf": "2025",
-      "isEstimated": true
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
     },
     "hazard": {
       "hasFloodRisk": true,
@@ -1324,9 +1324,9 @@
     "waitlistChildren": {
       "value": 0,
       "unit": "人",
-      "source": "サンプル",
-      "asOf": "2025",
-      "isEstimated": true
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
     },
     "hazard": {
       "hasFloodRisk": true,
@@ -1364,11 +1364,11 @@
       "isEstimated": false
     },
     "waitlistChildren": {
-      "value": 0,
+      "value": 9,
       "unit": "人",
-      "source": "サンプル",
-      "asOf": "2025",
-      "isEstimated": true
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
     },
     "hazard": {
       "hasFloodRisk": true,
@@ -1406,11 +1406,11 @@
       "isEstimated": false
     },
     "waitlistChildren": {
-      "value": 4,
+      "value": 0,
       "unit": "人",
-      "source": "サンプル",
-      "asOf": "2025",
-      "isEstimated": true
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
     },
     "hazard": {
       "hasFloodRisk": true,
@@ -1450,9 +1450,9 @@
     "waitlistChildren": {
       "value": 0,
       "unit": "人",
-      "source": "サンプル",
-      "asOf": "2025",
-      "isEstimated": true
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
     },
     "hazard": {
       "hasFloodRisk": true,
@@ -1492,9 +1492,9 @@
     "waitlistChildren": {
       "value": 0,
       "unit": "人",
-      "source": "サンプル",
-      "asOf": "2025",
-      "isEstimated": true
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
     },
     "hazard": {
       "hasFloodRisk": true,
@@ -1534,9 +1534,9 @@
     "waitlistChildren": {
       "value": 0,
       "unit": "人",
-      "source": "サンプル",
-      "asOf": "2025",
-      "isEstimated": true
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
     },
     "hazard": {
       "hasFloodRisk": true,
@@ -1574,11 +1574,11 @@
       "isEstimated": false
     },
     "waitlistChildren": {
-      "value": 5,
+      "value": 2,
       "unit": "人",
-      "source": "サンプル",
-      "asOf": "2025",
-      "isEstimated": true
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
     },
     "hazard": {
       "hasFloodRisk": true,
@@ -1618,9 +1618,9 @@
     "waitlistChildren": {
       "value": 2,
       "unit": "人",
-      "source": "サンプル",
-      "asOf": "2025",
-      "isEstimated": true
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
     },
     "hazard": {
       "hasFloodRisk": true,
@@ -1658,11 +1658,11 @@
       "isEstimated": false
     },
     "waitlistChildren": {
-      "value": 0,
+      "value": 36,
       "unit": "人",
-      "source": "サンプル",
-      "asOf": "2025",
-      "isEstimated": true
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
     },
     "hazard": {
       "hasFloodRisk": true,
@@ -1702,9 +1702,9 @@
     "waitlistChildren": {
       "value": 0,
       "unit": "人",
-      "source": "サンプル",
-      "asOf": "2025",
-      "isEstimated": true
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
     },
     "hazard": {
       "hasFloodRisk": true,
@@ -1744,9 +1744,9 @@
     "waitlistChildren": {
       "value": 0,
       "unit": "人",
-      "source": "サンプル",
-      "asOf": "2025",
-      "isEstimated": true
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
     },
     "hazard": {
       "hasFloodRisk": true,
@@ -1784,11 +1784,11 @@
       "isEstimated": false
     },
     "waitlistChildren": {
-      "value": 0,
+      "value": 1,
       "unit": "人",
-      "source": "サンプル",
-      "asOf": "2025",
-      "isEstimated": true
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
     },
     "hazard": {
       "hasFloodRisk": true,
@@ -1828,9 +1828,9 @@
     "waitlistChildren": {
       "value": 0,
       "unit": "人",
-      "source": "サンプル",
-      "asOf": "2025",
-      "isEstimated": true
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
     },
     "hazard": {
       "hasFloodRisk": true,
@@ -1870,9 +1870,9 @@
     "waitlistChildren": {
       "value": 0,
       "unit": "人",
-      "source": "サンプル",
-      "asOf": "2025",
-      "isEstimated": true
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
     },
     "hazard": {
       "hasFloodRisk": true,
@@ -1912,9 +1912,9 @@
     "waitlistChildren": {
       "value": 0,
       "unit": "人",
-      "source": "サンプル",
-      "asOf": "2025",
-      "isEstimated": true
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
     },
     "hazard": {
       "hasFloodRisk": true,
@@ -1954,9 +1954,9 @@
     "waitlistChildren": {
       "value": 0,
       "unit": "人",
-      "source": "サンプル",
-      "asOf": "2025",
-      "isEstimated": true
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
     },
     "hazard": {
       "hasFloodRisk": true,
@@ -1996,9 +1996,9 @@
     "waitlistChildren": {
       "value": 0,
       "unit": "人",
-      "source": "サンプル",
-      "asOf": "2025",
-      "isEstimated": true
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
     },
     "hazard": {
       "hasFloodRisk": true,
@@ -2038,9 +2038,9 @@
     "waitlistChildren": {
       "value": 0,
       "unit": "人",
-      "source": "サンプル",
-      "asOf": "2025",
-      "isEstimated": true
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
     },
     "hazard": {
       "hasFloodRisk": true,
@@ -2080,9 +2080,9 @@
     "waitlistChildren": {
       "value": 0,
       "unit": "人",
-      "source": "サンプル",
-      "asOf": "2025",
-      "isEstimated": true
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
     },
     "hazard": {
       "hasFloodRisk": true,
@@ -2122,9 +2122,9 @@
     "waitlistChildren": {
       "value": 0,
       "unit": "人",
-      "source": "サンプル",
-      "asOf": "2025",
-      "isEstimated": true
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
     },
     "hazard": {
       "hasFloodRisk": true,
@@ -2164,9 +2164,9 @@
     "waitlistChildren": {
       "value": 0,
       "unit": "人",
-      "source": "サンプル",
-      "asOf": "2025",
-      "isEstimated": true
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
     },
     "hazard": {
       "hasFloodRisk": true,
@@ -2206,9 +2206,9 @@
     "waitlistChildren": {
       "value": 0,
       "unit": "人",
-      "source": "サンプル",
-      "asOf": "2025",
-      "isEstimated": true
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
     },
     "hazard": {
       "hasFloodRisk": true,
@@ -2246,11 +2246,11 @@
       "isEstimated": true
     },
     "waitlistChildren": {
-      "value": 3,
+      "value": 0,
       "unit": "人",
-      "source": "サンプル",
-      "asOf": "2025",
-      "isEstimated": true
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
     },
     "hazard": {
       "hasFloodRisk": true,
@@ -2290,9 +2290,9 @@
     "waitlistChildren": {
       "value": 0,
       "unit": "人",
-      "source": "サンプル",
-      "asOf": "2025",
-      "isEstimated": true
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
     },
     "hazard": {
       "hasFloodRisk": true,
@@ -2332,9 +2332,9 @@
     "waitlistChildren": {
       "value": 0,
       "unit": "人",
-      "source": "サンプル",
-      "asOf": "2025",
-      "isEstimated": true
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
     },
     "hazard": {
       "hasFloodRisk": true,
@@ -2374,9 +2374,9 @@
     "waitlistChildren": {
       "value": 0,
       "unit": "人",
-      "source": "サンプル",
-      "asOf": "2025",
-      "isEstimated": true
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
     },
     "hazard": {
       "hasFloodRisk": true,
@@ -2416,9 +2416,9 @@
     "waitlistChildren": {
       "value": 0,
       "unit": "人",
-      "source": "サンプル",
-      "asOf": "2025",
-      "isEstimated": true
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
     },
     "hazard": {
       "hasFloodRisk": true,
@@ -2458,9 +2458,9 @@
     "waitlistChildren": {
       "value": 0,
       "unit": "人",
-      "source": "サンプル",
-      "asOf": "2025",
-      "isEstimated": true
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
     },
     "hazard": {
       "hasFloodRisk": true,
@@ -2500,9 +2500,9 @@
     "waitlistChildren": {
       "value": 0,
       "unit": "人",
-      "source": "サンプル",
-      "asOf": "2025",
-      "isEstimated": true
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
     },
     "hazard": {
       "hasFloodRisk": true,
@@ -2542,9 +2542,9 @@
     "waitlistChildren": {
       "value": 0,
       "unit": "人",
-      "source": "サンプル",
-      "asOf": "2025",
-      "isEstimated": true
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
     },
     "hazard": {
       "hasFloodRisk": true,
@@ -2584,9 +2584,9 @@
     "waitlistChildren": {
       "value": 0,
       "unit": "人",
-      "source": "サンプル",
-      "asOf": "2025",
-      "isEstimated": true
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
     },
     "hazard": {
       "hasFloodRisk": true,
@@ -2626,9 +2626,9 @@
     "waitlistChildren": {
       "value": 0,
       "unit": "人",
-      "source": "サンプル",
-      "asOf": "2025",
-      "isEstimated": true
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
     },
     "hazard": {
       "hasFloodRisk": true,
