@@ -4,7 +4,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import maplibregl, { Map as MapLibreMap, MapMouseEvent } from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
 import type { Municipality } from "@/lib/types";
-import { PREFS } from "@/lib/prefs";
+import { PREFS, getPrefByCode } from "@/lib/prefs";
 import { rentStepExpression, RENT_COLORS, RENT_THRESHOLDS } from "@/lib/rentColor";
 import AreaPanel from "./AreaPanel";
 import MobileSheet from "./MobileSheet";
@@ -27,6 +27,8 @@ export default function MapView({ all }: Props) {
   const muniGeoRef = useRef<GeoJSON.FeatureCollection | null>(null);
   const wardsGeoRef = useRef<GeoJSON.FeatureCollection | null>(null);
   const prefGeoRef = useRef<GeoJSON.FeatureCollection | null>(null);
+  const ensurePrefsRef = useRef<((slugs: string[]) => Promise<void>) | null>(null);
+  const selectedCodeRef = useRef<string | null>(null);
   const hoveredCodeRef = useRef<string | null>(null);
   const hoveredSourceRef = useRef<"muni" | "wards" | null>(null);
 
@@ -85,34 +87,18 @@ export default function MapView({ all }: Props) {
 
     map.on("load", async () => {
       map.fitBounds(SAITAMA_BBOX, { padding: 40, duration: 0 });
-      // prefectures は常時必要、各 pref の muni/wards も並列取得して結合。
-      // 将来 pref が増えたら viewport ベースの true lazy load に切替可能。
+      // prefectures(47県の輪郭, 約580KB)だけ起動時にロード。各県の市区町村/区
+      // ポリゴンは全件で22MB超あり SP 実機で破綻するため、ズームしてビューポートに
+      // 入った県だけを遅延ロードする（下の ensurePrefs / checkViewport）。
       const prefGeo = await fetch("/prefectures.geojson").then(
         (r) => r.json() as Promise<GeoJSON.FeatureCollection>,
       );
-      const perPref = await Promise.all(
-        PREFS.map(async (p) => ({
-          slug: p.slug,
-          muni: await fetch(`/${p.slug}.geojson`).then((r) => r.json() as Promise<GeoJSON.FeatureCollection>),
-          wards: p.hasWards
-            ? await fetch(`/${p.slug}_wards.geojson`).then((r) => r.json() as Promise<GeoJSON.FeatureCollection>)
-            : { type: "FeatureCollection" as const, features: [] },
-        })),
-      );
-      // 全 pref の muni / wards を統合
-      const muniGeo: GeoJSON.FeatureCollection = {
-        type: "FeatureCollection",
-        features: perPref.flatMap((p) => p.muni.features),
-      };
-      const wardsGeo: GeoJSON.FeatureCollection = {
-        type: "FeatureCollection",
-        features: perPref.flatMap((p) => p.wards.features),
-      };
-      mergeFeatureData(muniGeo);
-      mergeFeatureData(wardsGeo);
+      prefGeoRef.current = prefGeo;
+      // muni / wards は空で開始し、遅延ロードのたびに features を足して setData する
+      const muniGeo: GeoJSON.FeatureCollection = { type: "FeatureCollection", features: [] };
+      const wardsGeo: GeoJSON.FeatureCollection = { type: "FeatureCollection", features: [] };
       muniGeoRef.current = muniGeo;
       wardsGeoRef.current = wardsGeo;
-      prefGeoRef.current = prefGeo;
       const geo = muniGeo; // 既存コード互換
 
       // ラベルを日本語優先に書き換え（OSMの name:ja があれば優先、無ければ name）
@@ -375,6 +361,64 @@ export default function MapView({ all }: Props) {
       map.on("mouseleave", "muni-fill", onPolyLeave);
       map.on("mouseleave", "wards-fill", onPolyLeave);
 
+      // ===== 県単位の遅延ロード（ビューポートに入った県だけ取得）=====
+      const codeToSlug = new Map(PREFS.map((p) => [p.codePrefix, p.slug]));
+      const prefBySlug = new Map(PREFS.map((p) => [p.slug, p]));
+      const prefBboxBySlug = new Map<string, [number, number, number, number]>();
+      for (const f of prefGeo.features) {
+        const slug = codeToSlug.get(String(f.properties?.code ?? "").slice(0, 2));
+        if (!slug) continue;
+        const bb = computeBbox(f.geometry);
+        if (bb) prefBboxBySlug.set(slug, [bb[0][0], bb[0][1], bb[1][0], bb[1][1]]);
+      }
+      const loadedPrefs = new Set<string>();
+      const bboxHit = (a: number[], b: number[]) =>
+        !(a[2] < b[0] || a[0] > b[2] || a[3] < b[1] || a[1] > b[3]);
+
+      async function loadPrefGeo(p: (typeof PREFS)[number]) {
+        const muni = await fetch(`/${p.slug}.geojson`).then((r) => r.json() as Promise<GeoJSON.FeatureCollection>);
+        mergeFeatureData(muni);
+        muniGeoRef.current!.features.push(...muni.features);
+        if (p.hasWards) {
+          const wd = await fetch(`/${p.slug}_wards.geojson`).then((r) => r.json() as Promise<GeoJSON.FeatureCollection>);
+          mergeFeatureData(wd);
+          wardsGeoRef.current!.features.push(...wd.features);
+        }
+      }
+      async function ensurePrefs(slugs: string[]) {
+        const todo = [...new Set(slugs)].filter((s) => !loadedPrefs.has(s) && prefBySlug.has(s));
+        if (!todo.length) return;
+        todo.forEach((s) => loadedPrefs.add(s)); // 同期的に印を付け二重取得を防ぐ
+        await Promise.all(
+          todo.map((s) =>
+            loadPrefGeo(prefBySlug.get(s)!).catch((err) => {
+              loadedPrefs.delete(s);
+              console.error("pref geojson load 失敗:", s, err);
+            }),
+          ),
+        );
+        (map.getSource("muni") as maplibregl.GeoJSONSource | undefined)?.setData(muniGeoRef.current!);
+        (map.getSource("wards") as maplibregl.GeoJSONSource | undefined)?.setData(wardsGeoRef.current!);
+        // setData で feature-state が消えるため、選択中の自治体をハイライトし直す
+        const sel = selectedCodeRef.current;
+        if (sel) {
+          map.setFeatureState({ source: "muni", id: sel }, { selected: true });
+          map.setFeatureState({ source: "wards", id: sel }, { selected: true });
+        }
+      }
+      ensurePrefsRef.current = ensurePrefs;
+
+      function checkViewport() {
+        if (map.getZoom() < MUNI_MIN_ZOOM) return; // 県レベル表示中は muni 不要
+        const b = map.getBounds();
+        const vb = [b.getWest(), b.getSouth(), b.getEast(), b.getNorth()];
+        const slugs: string[] = [];
+        for (const [slug, bb] of prefBboxBySlug) if (bboxHit(vb, bb)) slugs.push(slug);
+        if (slugs.length) void ensurePrefs(slugs);
+      }
+      map.on("moveend", checkViewport);
+      checkViewport(); // 初期ビュー(埼玉付近)の県をロード
+
       setMapReady(true);
     });
 
@@ -401,6 +445,7 @@ export default function MapView({ all }: Props) {
   }, [hazardOn, mapReady]);
 
   useEffect(() => {
+    selectedCodeRef.current = selectedCode;
     const map = mapRef.current;
     if (!map || !mapReady) return;
     municipalities.forEach((m) => {
@@ -453,9 +498,12 @@ export default function MapView({ all }: Props) {
     }
   }, []);
 
-  const flyToMuni = useCallback((m: Municipality) => {
+  const flyToMuni = useCallback(async (m: Municipality) => {
     setSelectedCode(m.code);
     setSearchQuery("");
+    // 検索で他県を選んだ場合、その県がまだ遅延ロードされていなければ先に取得
+    const pref = getPrefByCode(m.code);
+    if (pref) await ensurePrefsRef.current?.([pref.slug]);
     flyToCode(m.code);
   }, [flyToCode]);
 
