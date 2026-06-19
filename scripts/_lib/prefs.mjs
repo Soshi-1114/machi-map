@@ -268,6 +268,14 @@ export const PREFS = {
     hasWards: false,
     parentToWards: {},
   },
+  miyagi: {
+    code: "04", nameJa: "宮城県",
+    bbox: { west: 140.275, south: 37.773, east: 141.677, north: 39.003 },
+    hasWards: true,
+    parentToWards: {
+      "04100": ["04101","04102","04103","04104","04105"], // 仙台市5区（青葉/宮城野/若林/太白/泉）
+    },
+  },
 };
 
 export function getPref(slug) {
