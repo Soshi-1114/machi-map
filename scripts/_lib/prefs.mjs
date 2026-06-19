@@ -294,6 +294,14 @@ export const PREFS = {
     hasWards: false,
     parentToWards: {},
   },
+  niigata: {
+    code: "15", nameJa: "新潟県",
+    bbox: { west: 137.635, south: 36.737, east: 139.900, north: 38.554 },
+    hasWards: true,
+    parentToWards: {
+      "15100": ["15101","15102","15103","15104","15105","15106","15107","15108"], // 新潟市8区
+    },
+  },
 };
 
 export function getPref(slug) {

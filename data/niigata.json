@@ -1,0 +1,1262 @@
+[
+  {
+    "code": "15100",
+    "pref": "niigata",
+    "name": "新潟市",
+    "population": 789275,
+    "populationTrend": "横ばい",
+    "rent": {
+      "value": 50925,
+      "unit": "円/月",
+      "source": "住宅・土地統計調査（加重平均）",
+      "asOf": "2023",
+      "isEstimated": false
+    },
+    "landPrice": {
+      "value": 72596,
+      "unit": "円/㎡",
+      "source": "地価公示（住宅地平均）",
+      "asOf": "2025",
+      "isEstimated": false
+    },
+    "waitlistChildren": {
+      "value": 0,
+      "unit": "人",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
+    },
+    "hazard": {
+      "hasFloodRisk": true,
+      "hasLandslideRisk": true,
+      "note": "浸水想定区域あり / 土砂災害警戒区域あり",
+      "source": "国土数値情報（reinfolib XKT026/029）",
+      "asOf": "2024"
+    },
+    "amenities": {
+      "stations": 33,
+      "preschools": 408,
+      "medicalFacilities": 1189,
+      "source": "国土数値情報（reinfolib XKT015/007/010）",
+      "asOf": "令和5年度"
+    }
+  },
+  {
+    "code": "15202",
+    "pref": "niigata",
+    "name": "長岡市",
+    "population": 266936,
+    "populationTrend": "横ばい",
+    "rent": {
+      "value": 51815,
+      "unit": "円/月",
+      "source": "住宅・土地統計調査（加重平均）",
+      "asOf": "2023",
+      "isEstimated": false
+    },
+    "landPrice": {
+      "value": 46882,
+      "unit": "円/㎡",
+      "source": "地価公示（住宅地平均）",
+      "asOf": "2025",
+      "isEstimated": false
+    },
+    "waitlistChildren": {
+      "value": 0,
+      "unit": "人",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
+    },
+    "hazard": {
+      "hasFloodRisk": true,
+      "hasLandslideRisk": true,
+      "note": "浸水想定区域あり / 土砂災害警戒区域あり",
+      "source": "国土数値情報（reinfolib XKT026/029）",
+      "asOf": "2024"
+    },
+    "amenities": {
+      "stations": 17,
+      "preschools": 135,
+      "medicalFacilities": 316,
+      "source": "国土数値情報（reinfolib XKT015/007/010）",
+      "asOf": "令和5年度"
+    }
+  },
+  {
+    "code": "15204",
+    "pref": "niigata",
+    "name": "三条市",
+    "population": 94642,
+    "populationTrend": "横ばい",
+    "rent": {
+      "value": 51325,
+      "unit": "円/月",
+      "source": "住宅・土地統計調査（加重平均）",
+      "asOf": "2023",
+      "isEstimated": false
+    },
+    "landPrice": {
+      "value": 33722,
+      "unit": "円/㎡",
+      "source": "地価公示（住宅地平均）",
+      "asOf": "2025",
+      "isEstimated": false
+    },
+    "waitlistChildren": {
+      "value": 0,
+      "unit": "人",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
+    },
+    "hazard": {
+      "hasFloodRisk": true,
+      "hasLandslideRisk": true,
+      "note": "浸水想定区域あり / 土砂災害警戒区域あり",
+      "source": "国土数値情報（reinfolib XKT026/029）",
+      "asOf": "2024"
+    },
+    "amenities": {
+      "stations": 8,
+      "preschools": 38,
+      "medicalFacilities": 127,
+      "source": "国土数値情報（reinfolib XKT015/007/010）",
+      "asOf": "令和5年度"
+    }
+  },
+  {
+    "code": "15205",
+    "pref": "niigata",
+    "name": "柏崎市",
+    "population": 81526,
+    "populationTrend": "横ばい",
+    "rent": {
+      "value": 45014,
+      "unit": "円/月",
+      "source": "住宅・土地統計調査（加重平均）",
+      "asOf": "2023",
+      "isEstimated": false
+    },
+    "landPrice": {
+      "value": 33871,
+      "unit": "円/㎡",
+      "source": "地価公示（住宅地平均）",
+      "asOf": "2025",
+      "isEstimated": false
+    },
+    "waitlistChildren": {
+      "value": 0,
+      "unit": "人",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
+    },
+    "hazard": {
+      "hasFloodRisk": true,
+      "hasLandslideRisk": true,
+      "note": "浸水想定区域あり / 土砂災害警戒区域あり",
+      "source": "国土数値情報（reinfolib XKT026/029）",
+      "asOf": "2024"
+    },
+    "amenities": {
+      "stations": 16,
+      "preschools": 32,
+      "medicalFacilities": 103,
+      "source": "国土数値情報（reinfolib XKT015/007/010）",
+      "asOf": "令和5年度"
+    }
+  },
+  {
+    "code": "15206",
+    "pref": "niigata",
+    "name": "新発田市",
+    "population": 94927,
+    "populationTrend": "横ばい",
+    "rent": {
+      "value": 47834,
+      "unit": "円/月",
+      "source": "住宅・土地統計調査（加重平均）",
+      "asOf": "2023",
+      "isEstimated": false
+    },
+    "landPrice": {
+      "value": 26357,
+      "unit": "円/㎡",
+      "source": "地価公示（住宅地平均）",
+      "asOf": "2025",
+      "isEstimated": false
+    },
+    "waitlistChildren": {
+      "value": 0,
+      "unit": "人",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
+    },
+    "hazard": {
+      "hasFloodRisk": true,
+      "hasLandslideRisk": true,
+      "note": "浸水想定区域あり / 土砂災害警戒区域あり",
+      "source": "国土数値情報（reinfolib XKT026/029）",
+      "asOf": "2024"
+    },
+    "amenities": {
+      "stations": 8,
+      "preschools": 47,
+      "medicalFacilities": 139,
+      "source": "国土数値情報（reinfolib XKT015/007/010）",
+      "asOf": "令和5年度"
+    }
+  },
+  {
+    "code": "15208",
+    "pref": "niigata",
+    "name": "小千谷市",
+    "population": 34096,
+    "populationTrend": "横ばい",
+    "rent": {
+      "value": 42913,
+      "unit": "円/月",
+      "source": "住宅・土地統計調査（加重平均）",
+      "asOf": "2023",
+      "isEstimated": false
+    },
+    "landPrice": {
+      "value": 33233,
+      "unit": "円/㎡",
+      "source": "地価公示（住宅地平均）",
+      "asOf": "2025",
+      "isEstimated": false
+    },
+    "waitlistChildren": {
+      "value": 0,
+      "unit": "人",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
+    },
+    "hazard": {
+      "hasFloodRisk": true,
+      "hasLandslideRisk": true,
+      "note": "浸水想定区域あり / 土砂災害警戒区域あり",
+      "source": "国土数値情報（reinfolib XKT026/029）",
+      "asOf": "2024"
+    },
+    "amenities": {
+      "stations": 2,
+      "preschools": 15,
+      "medicalFacilities": 43,
+      "source": "国土数値情報（reinfolib XKT015/007/010）",
+      "asOf": "令和5年度"
+    }
+  },
+  {
+    "code": "15209",
+    "pref": "niigata",
+    "name": "加茂市",
+    "population": 25441,
+    "populationTrend": "横ばい",
+    "rent": {
+      "value": 36345,
+      "unit": "円/月",
+      "source": "住宅・土地統計調査（加重平均）",
+      "asOf": "2023",
+      "isEstimated": false
+    },
+    "landPrice": {
+      "value": 31800,
+      "unit": "円/㎡",
+      "source": "地価公示（住宅地平均）",
+      "asOf": "2025",
+      "isEstimated": false
+    },
+    "waitlistChildren": {
+      "value": 0,
+      "unit": "人",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
+    },
+    "hazard": {
+      "hasFloodRisk": true,
+      "hasLandslideRisk": true,
+      "note": "浸水想定区域あり / 土砂災害警戒区域あり",
+      "source": "国土数値情報（reinfolib XKT026/029）",
+      "asOf": "2024"
+    },
+    "amenities": {
+      "stations": 1,
+      "preschools": 17,
+      "medicalFacilities": 34,
+      "source": "国土数値情報（reinfolib XKT015/007/010）",
+      "asOf": "令和5年度"
+    }
+  },
+  {
+    "code": "15210",
+    "pref": "niigata",
+    "name": "十日町市",
+    "population": 49820,
+    "populationTrend": "横ばい",
+    "rent": {
+      "value": 45298,
+      "unit": "円/月",
+      "source": "住宅・土地統計調査（加重平均）",
+      "asOf": "2023",
+      "isEstimated": false
+    },
+    "landPrice": {
+      "value": 25986,
+      "unit": "円/㎡",
+      "source": "地価公示（住宅地平均）",
+      "asOf": "2025",
+      "isEstimated": false
+    },
+    "waitlistChildren": {
+      "value": 0,
+      "unit": "人",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
+    },
+    "hazard": {
+      "hasFloodRisk": true,
+      "hasLandslideRisk": true,
+      "note": "浸水想定区域あり / 土砂災害警戒区域あり",
+      "source": "国土数値情報（reinfolib XKT026/029）",
+      "asOf": "2024"
+    },
+    "amenities": {
+      "stations": 10,
+      "preschools": 31,
+      "medicalFacilities": 59,
+      "source": "国土数値情報（reinfolib XKT015/007/010）",
+      "asOf": "令和5年度"
+    }
+  },
+  {
+    "code": "15211",
+    "pref": "niigata",
+    "name": "見附市",
+    "population": 39237,
+    "populationTrend": "横ばい",
+    "rent": {
+      "value": 42813,
+      "unit": "円/月",
+      "source": "住宅・土地統計調査（加重平均）",
+      "asOf": "2023",
+      "isEstimated": false
+    },
+    "landPrice": {
+      "value": 28422,
+      "unit": "円/㎡",
+      "source": "地価公示（住宅地平均）",
+      "asOf": "2025",
+      "isEstimated": false
+    },
+    "waitlistChildren": {
+      "value": 0,
+      "unit": "人",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
+    },
+    "hazard": {
+      "hasFloodRisk": true,
+      "hasLandslideRisk": true,
+      "note": "浸水想定区域あり / 土砂災害警戒区域あり",
+      "source": "国土数値情報（reinfolib XKT026/029）",
+      "asOf": "2024"
+    },
+    "amenities": {
+      "stations": 1,
+      "preschools": 21,
+      "medicalFacilities": 51,
+      "source": "国土数値情報（reinfolib XKT015/007/010）",
+      "asOf": "令和5年度"
+    }
+  },
+  {
+    "code": "15212",
+    "pref": "niigata",
+    "name": "村上市",
+    "population": 57418,
+    "populationTrend": "横ばい",
+    "rent": {
+      "value": 37602,
+      "unit": "円/月",
+      "source": "住宅・土地統計調査（加重平均）",
+      "asOf": "2023",
+      "isEstimated": false
+    },
+    "landPrice": {
+      "value": 23070,
+      "unit": "円/㎡",
+      "source": "地価公示（住宅地平均）",
+      "asOf": "2025",
+      "isEstimated": false
+    },
+    "waitlistChildren": {
+      "value": 0,
+      "unit": "人",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
+    },
+    "hazard": {
+      "hasFloodRisk": true,
+      "hasLandslideRisk": true,
+      "note": "浸水想定区域あり / 土砂災害警戒区域あり",
+      "source": "国土数値情報（reinfolib XKT026/029）",
+      "asOf": "2024"
+    },
+    "amenities": {
+      "stations": 12,
+      "preschools": 22,
+      "medicalFacilities": 78,
+      "source": "国土数値情報（reinfolib XKT015/007/010）",
+      "asOf": "令和5年度"
+    }
+  },
+  {
+    "code": "15213",
+    "pref": "niigata",
+    "name": "燕市",
+    "population": 77201,
+    "populationTrend": "横ばい",
+    "rent": {
+      "value": 47676,
+      "unit": "円/月",
+      "source": "住宅・土地統計調査（加重平均）",
+      "asOf": "2023",
+      "isEstimated": false
+    },
+    "landPrice": {
+      "value": 38267,
+      "unit": "円/㎡",
+      "source": "地価公示（住宅地平均）",
+      "asOf": "2025",
+      "isEstimated": false
+    },
+    "waitlistChildren": {
+      "value": 0,
+      "unit": "人",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
+    },
+    "hazard": {
+      "hasFloodRisk": true,
+      "hasLandslideRisk": true,
+      "note": "浸水想定区域あり / 土砂災害警戒区域あり",
+      "source": "国土数値情報（reinfolib XKT026/029）",
+      "asOf": "2024"
+    },
+    "amenities": {
+      "stations": 10,
+      "preschools": 34,
+      "medicalFacilities": 114,
+      "source": "国土数値情報（reinfolib XKT015/007/010）",
+      "asOf": "令和5年度"
+    }
+  },
+  {
+    "code": "15216",
+    "pref": "niigata",
+    "name": "糸魚川市",
+    "population": 40765,
+    "populationTrend": "横ばい",
+    "rent": {
+      "value": 43548,
+      "unit": "円/月",
+      "source": "住宅・土地統計調査（加重平均）",
+      "asOf": "2023",
+      "isEstimated": false
+    },
+    "landPrice": {
+      "value": 32682,
+      "unit": "円/㎡",
+      "source": "地価公示（住宅地平均）",
+      "asOf": "2025",
+      "isEstimated": false
+    },
+    "waitlistChildren": {
+      "value": 0,
+      "unit": "人",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
+    },
+    "hazard": {
+      "hasFloodRisk": true,
+      "hasLandslideRisk": true,
+      "note": "浸水想定区域あり / 土砂災害警戒区域あり",
+      "source": "国土数値情報（reinfolib XKT026/029）",
+      "asOf": "2024"
+    },
+    "amenities": {
+      "stations": 17,
+      "preschools": 21,
+      "medicalFacilities": 55,
+      "source": "国土数値情報（reinfolib XKT015/007/010）",
+      "asOf": "令和5年度"
+    }
+  },
+  {
+    "code": "15217",
+    "pref": "niigata",
+    "name": "妙高市",
+    "population": 30383,
+    "populationTrend": "横ばい",
+    "rent": {
+      "value": 42815,
+      "unit": "円/月",
+      "source": "住宅・土地統計調査（加重平均）",
+      "asOf": "2023",
+      "isEstimated": false
+    },
+    "landPrice": {
+      "value": 22150,
+      "unit": "円/㎡",
+      "source": "地価公示（住宅地平均）",
+      "asOf": "2025",
+      "isEstimated": false
+    },
+    "waitlistChildren": {
+      "value": 0,
+      "unit": "人",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
+    },
+    "hazard": {
+      "hasFloodRisk": true,
+      "hasLandslideRisk": true,
+      "note": "浸水想定区域あり / 土砂災害警戒区域あり",
+      "source": "国土数値情報（reinfolib XKT026/029）",
+      "asOf": "2024"
+    },
+    "amenities": {
+      "stations": 5,
+      "preschools": 14,
+      "medicalFacilities": 29,
+      "source": "国土数値情報（reinfolib XKT015/007/010）",
+      "asOf": "令和5年度"
+    }
+  },
+  {
+    "code": "15218",
+    "pref": "niigata",
+    "name": "五泉市",
+    "population": 47625,
+    "populationTrend": "横ばい",
+    "rent": {
+      "value": 36575,
+      "unit": "円/月",
+      "source": "住宅・土地統計調査（加重平均）",
+      "asOf": "2023",
+      "isEstimated": false
+    },
+    "landPrice": {
+      "value": 21767,
+      "unit": "円/㎡",
+      "source": "地価公示（住宅地平均）",
+      "asOf": "2025",
+      "isEstimated": false
+    },
+    "waitlistChildren": {
+      "value": 0,
+      "unit": "人",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
+    },
+    "hazard": {
+      "hasFloodRisk": true,
+      "hasLandslideRisk": true,
+      "note": "浸水想定区域あり / 土砂災害警戒区域あり",
+      "source": "国土数値情報（reinfolib XKT026/029）",
+      "asOf": "2024"
+    },
+    "amenities": {
+      "stations": 5,
+      "preschools": 28,
+      "medicalFacilities": 64,
+      "source": "国土数値情報（reinfolib XKT015/007/010）",
+      "asOf": "令和5年度"
+    }
+  },
+  {
+    "code": "15222",
+    "pref": "niigata",
+    "name": "上越市",
+    "population": 188047,
+    "populationTrend": "横ばい",
+    "rent": {
+      "value": 47594,
+      "unit": "円/月",
+      "source": "住宅・土地統計調査（加重平均）",
+      "asOf": "2023",
+      "isEstimated": false
+    },
+    "landPrice": {
+      "value": 27365,
+      "unit": "円/㎡",
+      "source": "地価公示（住宅地平均）",
+      "asOf": "2025",
+      "isEstimated": false
+    },
+    "waitlistChildren": {
+      "value": 0,
+      "unit": "人",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
+    },
+    "hazard": {
+      "hasFloodRisk": true,
+      "hasLandslideRisk": true,
+      "note": "浸水想定区域あり / 土砂災害警戒区域あり",
+      "source": "国土数値情報（reinfolib XKT026/029）",
+      "asOf": "2024"
+    },
+    "amenities": {
+      "stations": 25,
+      "preschools": 66,
+      "medicalFacilities": 247,
+      "source": "国土数値情報（reinfolib XKT015/007/010）",
+      "asOf": "令和5年度"
+    }
+  },
+  {
+    "code": "15223",
+    "pref": "niigata",
+    "name": "阿賀野市",
+    "population": 40696,
+    "populationTrend": "横ばい",
+    "rent": {
+      "value": 45000,
+      "unit": "円/月",
+      "source": "住宅・土地統計調査（加重平均）",
+      "asOf": "2023",
+      "isEstimated": false
+    },
+    "landPrice": {
+      "value": 19706,
+      "unit": "円/㎡",
+      "source": "地価公示（住宅地平均）",
+      "asOf": "2025",
+      "isEstimated": false
+    },
+    "waitlistChildren": {
+      "value": 0,
+      "unit": "人",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
+    },
+    "hazard": {
+      "hasFloodRisk": true,
+      "hasLandslideRisk": true,
+      "note": "浸水想定区域あり / 土砂災害警戒区域あり",
+      "source": "国土数値情報（reinfolib XKT026/029）",
+      "asOf": "2024"
+    },
+    "amenities": {
+      "stations": 3,
+      "preschools": 29,
+      "medicalFacilities": 44,
+      "source": "国土数値情報（reinfolib XKT015/007/010）",
+      "asOf": "令和5年度"
+    }
+  },
+  {
+    "code": "15224",
+    "pref": "niigata",
+    "name": "佐渡市",
+    "population": 51492,
+    "populationTrend": "横ばい",
+    "rent": {
+      "value": 35393,
+      "unit": "円/月",
+      "source": "住宅・土地統計調査（加重平均）",
+      "asOf": "2023",
+      "isEstimated": false
+    },
+    "landPrice": {
+      "value": 16510,
+      "unit": "円/㎡",
+      "source": "地価公示（住宅地平均）",
+      "asOf": "2025",
+      "isEstimated": false
+    },
+    "waitlistChildren": {
+      "value": 0,
+      "unit": "人",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
+    },
+    "hazard": {
+      "hasFloodRisk": true,
+      "hasLandslideRisk": true,
+      "note": "浸水想定区域あり / 土砂災害警戒区域あり",
+      "source": "国土数値情報（reinfolib XKT026/029）",
+      "asOf": "2024"
+    },
+    "amenities": {
+      "stations": 0,
+      "preschools": 33,
+      "medicalFacilities": 65,
+      "source": "国土数値情報（reinfolib XKT015/007/010）",
+      "asOf": "令和5年度"
+    }
+  },
+  {
+    "code": "15225",
+    "pref": "niigata",
+    "name": "魚沼市",
+    "population": 34483,
+    "populationTrend": "横ばい",
+    "rent": {
+      "value": 41295,
+      "unit": "円/月",
+      "source": "住宅・土地統計調査（加重平均）",
+      "asOf": "2023",
+      "isEstimated": false
+    },
+    "landPrice": {
+      "value": 16269,
+      "unit": "円/㎡",
+      "source": "地価公示（住宅地平均）",
+      "asOf": "2025",
+      "isEstimated": false
+    },
+    "waitlistChildren": {
+      "value": 0,
+      "unit": "人",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
+    },
+    "hazard": {
+      "hasFloodRisk": true,
+      "hasLandslideRisk": true,
+      "note": "浸水想定区域あり / 土砂災害警戒区域あり",
+      "source": "国土数値情報（reinfolib XKT026/029）",
+      "asOf": "2024"
+    },
+    "amenities": {
+      "stations": 12,
+      "preschools": 14,
+      "medicalFacilities": 41,
+      "source": "国土数値情報（reinfolib XKT015/007/010）",
+      "asOf": "令和5年度"
+    }
+  },
+  {
+    "code": "15226",
+    "pref": "niigata",
+    "name": "南魚沼市",
+    "population": 54851,
+    "populationTrend": "横ばい",
+    "rent": {
+      "value": 44756,
+      "unit": "円/月",
+      "source": "住宅・土地統計調査（加重平均）",
+      "asOf": "2023",
+      "isEstimated": false
+    },
+    "landPrice": {
+      "value": 23525,
+      "unit": "円/㎡",
+      "source": "地価公示（住宅地平均）",
+      "asOf": "2025",
+      "isEstimated": false
+    },
+    "waitlistChildren": {
+      "value": 0,
+      "unit": "人",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
+    },
+    "hazard": {
+      "hasFloodRisk": true,
+      "hasLandslideRisk": true,
+      "note": "浸水想定区域あり / 土砂災害警戒区域あり",
+      "source": "国土数値情報（reinfolib XKT026/029）",
+      "asOf": "2024"
+    },
+    "amenities": {
+      "stations": 11,
+      "preschools": 29,
+      "medicalFacilities": 50,
+      "source": "国土数値情報（reinfolib XKT015/007/010）",
+      "asOf": "令和5年度"
+    }
+  },
+  {
+    "code": "15227",
+    "pref": "niigata",
+    "name": "胎内市",
+    "population": 28509,
+    "populationTrend": "横ばい",
+    "rent": {
+      "value": 41696,
+      "unit": "円/月",
+      "source": "住宅・土地統計調査（加重平均）",
+      "asOf": "2023",
+      "isEstimated": false
+    },
+    "landPrice": {
+      "value": 22633,
+      "unit": "円/㎡",
+      "source": "地価公示（住宅地平均）",
+      "asOf": "2025",
+      "isEstimated": false
+    },
+    "waitlistChildren": {
+      "value": 0,
+      "unit": "人",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
+    },
+    "hazard": {
+      "hasFloodRisk": true,
+      "hasLandslideRisk": true,
+      "note": "浸水想定区域あり / 土砂災害警戒区域あり",
+      "source": "国土数値情報（reinfolib XKT026/029）",
+      "asOf": "2024"
+    },
+    "amenities": {
+      "stations": 2,
+      "preschools": 13,
+      "medicalFacilities": 39,
+      "source": "国土数値情報（reinfolib XKT015/007/010）",
+      "asOf": "令和5年度"
+    }
+  },
+  {
+    "code": "15307",
+    "pref": "niigata",
+    "name": "聖籠町",
+    "population": 14259,
+    "populationTrend": "横ばい",
+    "rent": {
+      "value": 0,
+      "unit": "円/月",
+      "source": "サンプル",
+      "asOf": "-",
+      "isEstimated": true
+    },
+    "landPrice": {
+      "value": 14950,
+      "unit": "円/㎡",
+      "source": "地価公示（住宅地平均）",
+      "asOf": "2025",
+      "isEstimated": false
+    },
+    "waitlistChildren": {
+      "value": 0,
+      "unit": "人",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
+    },
+    "hazard": {
+      "hasFloodRisk": true,
+      "hasLandslideRisk": false,
+      "note": "浸水想定区域あり",
+      "source": "国土数値情報（reinfolib XKT026/029）",
+      "asOf": "2024"
+    },
+    "amenities": {
+      "stations": 0,
+      "preschools": 7,
+      "medicalFacilities": 15,
+      "source": "国土数値情報（reinfolib XKT015/007/010）",
+      "asOf": "令和5年度"
+    }
+  },
+  {
+    "code": "15342",
+    "pref": "niigata",
+    "name": "弥彦村",
+    "population": 7705,
+    "populationTrend": "横ばい",
+    "rent": {
+      "value": 0,
+      "unit": "円/月",
+      "source": "サンプル",
+      "asOf": "-",
+      "isEstimated": true
+    },
+    "landPrice": {
+      "value": 25467,
+      "unit": "円/㎡",
+      "source": "地価公示（住宅地平均）",
+      "asOf": "2025",
+      "isEstimated": false
+    },
+    "waitlistChildren": {
+      "value": 0,
+      "unit": "人",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
+    },
+    "hazard": {
+      "hasFloodRisk": true,
+      "hasLandslideRisk": true,
+      "note": "浸水想定区域あり / 土砂災害警戒区域あり",
+      "source": "国土数値情報（reinfolib XKT026/029）",
+      "asOf": "2024"
+    },
+    "amenities": {
+      "stations": 2,
+      "preschools": 3,
+      "medicalFacilities": 8,
+      "source": "国土数値情報（reinfolib XKT015/007/010）",
+      "asOf": "令和5年度"
+    }
+  },
+  {
+    "code": "15361",
+    "pref": "niigata",
+    "name": "田上町",
+    "population": 11227,
+    "populationTrend": "横ばい",
+    "rent": {
+      "value": 0,
+      "unit": "円/月",
+      "source": "サンプル",
+      "asOf": "-",
+      "isEstimated": true
+    },
+    "landPrice": {
+      "value": 15700,
+      "unit": "円/㎡",
+      "source": "地価公示（住宅地平均）",
+      "asOf": "2025",
+      "isEstimated": false
+    },
+    "waitlistChildren": {
+      "value": 0,
+      "unit": "人",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
+    },
+    "hazard": {
+      "hasFloodRisk": true,
+      "hasLandslideRisk": true,
+      "note": "浸水想定区域あり / 土砂災害警戒区域あり",
+      "source": "国土数値情報（reinfolib XKT026/029）",
+      "asOf": "2024"
+    },
+    "amenities": {
+      "stations": 2,
+      "preschools": 4,
+      "medicalFacilities": 10,
+      "source": "国土数値情報（reinfolib XKT015/007/010）",
+      "asOf": "令和5年度"
+    }
+  },
+  {
+    "code": "15385",
+    "pref": "niigata",
+    "name": "阿賀町",
+    "population": 9965,
+    "populationTrend": "横ばい",
+    "rent": {
+      "value": 0,
+      "unit": "円/月",
+      "source": "サンプル",
+      "asOf": "-",
+      "isEstimated": true
+    },
+    "landPrice": {
+      "value": 11960,
+      "unit": "円/㎡",
+      "source": "地価公示（住宅地平均）",
+      "asOf": "2025",
+      "isEstimated": false
+    },
+    "waitlistChildren": {
+      "value": 0,
+      "unit": "人",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
+    },
+    "hazard": {
+      "hasFloodRisk": true,
+      "hasLandslideRisk": true,
+      "note": "浸水想定区域あり / 土砂災害警戒区域あり",
+      "source": "国土数値情報（reinfolib XKT026/029）",
+      "asOf": "2024"
+    },
+    "amenities": {
+      "stations": 7,
+      "preschools": 3,
+      "medicalFacilities": 18,
+      "source": "国土数値情報（reinfolib XKT015/007/010）",
+      "asOf": "令和5年度"
+    }
+  },
+  {
+    "code": "15405",
+    "pref": "niigata",
+    "name": "出雲崎町",
+    "population": 4113,
+    "populationTrend": "横ばい",
+    "rent": {
+      "value": 0,
+      "unit": "円/月",
+      "source": "サンプル",
+      "asOf": "-",
+      "isEstimated": true
+    },
+    "landPrice": {
+      "value": 0,
+      "unit": "円/㎡",
+      "source": "サンプル",
+      "asOf": "-",
+      "isEstimated": true
+    },
+    "waitlistChildren": {
+      "value": 0,
+      "unit": "人",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
+    },
+    "hazard": {
+      "hasFloodRisk": true,
+      "hasLandslideRisk": true,
+      "note": "浸水想定区域あり / 土砂災害警戒区域あり",
+      "source": "国土数値情報（reinfolib XKT026/029）",
+      "asOf": "2024"
+    },
+    "amenities": {
+      "stations": 2,
+      "preschools": 3,
+      "medicalFacilities": 5,
+      "source": "国土数値情報（reinfolib XKT015/007/010）",
+      "asOf": "令和5年度"
+    }
+  },
+  {
+    "code": "15461",
+    "pref": "niigata",
+    "name": "湯沢町",
+    "population": 7767,
+    "populationTrend": "横ばい",
+    "rent": {
+      "value": 0,
+      "unit": "円/月",
+      "source": "サンプル",
+      "asOf": "-",
+      "isEstimated": true
+    },
+    "landPrice": {
+      "value": 28067,
+      "unit": "円/㎡",
+      "source": "地価公示（住宅地平均）",
+      "asOf": "2025",
+      "isEstimated": false
+    },
+    "waitlistChildren": {
+      "value": 0,
+      "unit": "人",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
+    },
+    "hazard": {
+      "hasFloodRisk": true,
+      "hasLandslideRisk": true,
+      "note": "浸水想定区域あり / 土砂災害警戒区域あり",
+      "source": "国土数値情報（reinfolib XKT026/029）",
+      "asOf": "2024"
+    },
+    "amenities": {
+      "stations": 6,
+      "preschools": 1,
+      "medicalFacilities": 8,
+      "source": "国土数値情報（reinfolib XKT015/007/010）",
+      "asOf": "令和5年度"
+    }
+  },
+  {
+    "code": "15482",
+    "pref": "niigata",
+    "name": "津南町",
+    "population": 8989,
+    "populationTrend": "横ばい",
+    "rent": {
+      "value": 0,
+      "unit": "円/月",
+      "source": "サンプル",
+      "asOf": "-",
+      "isEstimated": true
+    },
+    "landPrice": {
+      "value": 0,
+      "unit": "円/㎡",
+      "source": "サンプル",
+      "asOf": "-",
+      "isEstimated": true
+    },
+    "waitlistChildren": {
+      "value": 0,
+      "unit": "人",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
+    },
+    "hazard": {
+      "hasFloodRisk": true,
+      "hasLandslideRisk": true,
+      "note": "浸水想定区域あり / 土砂災害警戒区域あり",
+      "source": "国土数値情報（reinfolib XKT026/029）",
+      "asOf": "2024"
+    },
+    "amenities": {
+      "stations": 4,
+      "preschools": 5,
+      "medicalFacilities": 12,
+      "source": "国土数値情報（reinfolib XKT015/007/010）",
+      "asOf": "令和5年度"
+    }
+  },
+  {
+    "code": "15504",
+    "pref": "niigata",
+    "name": "刈羽村",
+    "population": 4380,
+    "populationTrend": "横ばい",
+    "rent": {
+      "value": 0,
+      "unit": "円/月",
+      "source": "サンプル",
+      "asOf": "-",
+      "isEstimated": true
+    },
+    "landPrice": {
+      "value": 0,
+      "unit": "円/㎡",
+      "source": "サンプル",
+      "asOf": "-",
+      "isEstimated": true
+    },
+    "waitlistChildren": {
+      "value": 0,
+      "unit": "人",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
+    },
+    "hazard": {
+      "hasFloodRisk": true,
+      "hasLandslideRisk": true,
+      "note": "浸水想定区域あり / 土砂災害警戒区域あり",
+      "source": "国土数値情報（reinfolib XKT026/029）",
+      "asOf": "2024"
+    },
+    "amenities": {
+      "stations": 2,
+      "preschools": 1,
+      "medicalFacilities": 2,
+      "source": "国土数値情報（reinfolib XKT015/007/010）",
+      "asOf": "令和5年度"
+    }
+  },
+  {
+    "code": "15581",
+    "pref": "niigata",
+    "name": "関川村",
+    "population": 5144,
+    "populationTrend": "横ばい",
+    "rent": {
+      "value": 0,
+      "unit": "円/月",
+      "source": "サンプル",
+      "asOf": "-",
+      "isEstimated": true
+    },
+    "landPrice": {
+      "value": 0,
+      "unit": "円/㎡",
+      "source": "サンプル",
+      "asOf": "-",
+      "isEstimated": true
+    },
+    "waitlistChildren": {
+      "value": 0,
+      "unit": "人",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
+    },
+    "hazard": {
+      "hasFloodRisk": true,
+      "hasLandslideRisk": true,
+      "note": "浸水想定区域あり / 土砂災害警戒区域あり",
+      "source": "国土数値情報（reinfolib XKT026/029）",
+      "asOf": "2024"
+    },
+    "amenities": {
+      "stations": 4,
+      "preschools": 2,
+      "medicalFacilities": 6,
+      "source": "国土数値情報（reinfolib XKT015/007/010）",
+      "asOf": "令和5年度"
+    }
+  },
+  {
+    "code": "15586",
+    "pref": "niigata",
+    "name": "粟島浦村",
+    "population": 353,
+    "populationTrend": "横ばい",
+    "rent": {
+      "value": 0,
+      "unit": "円/月",
+      "source": "サンプル",
+      "asOf": "-",
+      "isEstimated": true
+    },
+    "landPrice": {
+      "value": 0,
+      "unit": "円/㎡",
+      "source": "サンプル",
+      "asOf": "-",
+      "isEstimated": true
+    },
+    "waitlistChildren": {
+      "value": 0,
+      "unit": "人",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ",
+      "asOf": "2024-04-01",
+      "isEstimated": false
+    },
+    "hazard": {
+      "hasFloodRisk": false,
+      "hasLandslideRisk": true,
+      "note": "土砂災害警戒区域あり",
+      "source": "国土数値情報（reinfolib XKT026/029）",
+      "asOf": "2024"
+    },
+    "amenities": {
+      "stations": 0,
+      "preschools": 1,
+      "medicalFacilities": 1,
+      "source": "国土数値情報（reinfolib XKT015/007/010）",
+      "asOf": "令和5年度"
+    }
+  }
+]
