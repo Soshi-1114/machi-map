@@ -213,6 +213,13 @@ export const PREFS = {
     hasWards: false,
     parentToWards: {},
   },
+  nagasaki: {
+    code: "42", nameJa: "長崎県",
+    // 対馬・壱岐・五島など離島を含むため南北に広い（有人島は全て自治体なのでフルbbox）。
+    bbox: { west: 128.104, south: 31.967, east: 130.390, north: 34.729 },
+    hasWards: false,
+    parentToWards: {},
+  },
 };
 
 export function getPref(slug) {
