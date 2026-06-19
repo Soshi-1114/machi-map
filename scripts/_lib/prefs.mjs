@@ -186,6 +186,12 @@ export const PREFS = {
     hasWards: false,
     parentToWards: {},
   },
+  ehime: {
+    code: "38", nameJa: "愛媛県",
+    bbox: { west: 132.012, south: 32.885, east: 133.693, north: 34.302 },
+    hasWards: false,
+    parentToWards: {},
+  },
 };
 
 export function getPref(slug) {
