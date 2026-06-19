@@ -1,17 +1,9 @@
-// 対応都道府県マニフェスト。
+// 対応都道府県マニフェスト（純粋なメタデータ）。
 // 新規県を追加する時はここに entry を 1 行足し、data/{slug}.json と
 // （政令市があれば）data/{slug}_wards.json + public/{slug}.geojson + 必要なら
 // public/{slug}_wards.geojson を準備する。
-//
-// loader は動的 import を返すため、各 pref データは Next.js のコード分割で
-// 必要時のみ chunk に積まれる（全 47 県の JSON がホームページに乗らない）。
 
 import type { Municipality } from "./types";
-
-type Loader = () => Promise<{
-  muni: Municipality[];
-  wards: Municipality[];
-}>;
 
 export type PrefEntry = {
   slug: string;
@@ -20,261 +12,70 @@ export type PrefEntry = {
   codePrefix: string;
   /** 政令市の行政区 wards.json を持っているか */
   hasWards: boolean;
-  load: Loader;
 };
 
-async function loadSaitama() {
-  const muni = (await import("../data/saitama.json")).default as Municipality[];
-  const wards = (await import("../data/saitama_wards.json")).default as Municipality[];
-  return { muni, wards };
-}
-async function loadChiba() {
-  const muni = (await import("../data/chiba.json")).default as Municipality[];
-  const wards = (await import("../data/chiba_wards.json")).default as Municipality[];
-  return { muni, wards };
-}
-async function loadGunma() {
-  const muni = (await import("../data/gunma.json")).default as Municipality[];
-  return { muni, wards: [] };
-}
-async function loadTochigi() {
-  const muni = (await import("../data/tochigi.json")).default as Municipality[];
-  return { muni, wards: [] };
-}
-async function loadIbaraki() {
-  const muni = (await import("../data/ibaraki.json")).default as Municipality[];
-  return { muni, wards: [] };
-}
-async function loadTokyo() {
-  const muni = (await import("../data/tokyo.json")).default as Municipality[];
-  return { muni, wards: [] };
-}
-async function loadKanagawa() {
-  const muni = (await import("../data/kanagawa.json")).default as Municipality[];
-  const wards = (await import("../data/kanagawa_wards.json")).default as Municipality[];
-  return { muni, wards };
-}
-async function loadYamanashi() {
-  const muni = (await import("../data/yamanashi.json")).default as Municipality[];
-  return { muni, wards: [] };
-}
-async function loadNagano() {
-  const muni = (await import("../data/nagano.json")).default as Municipality[];
-  return { muni, wards: [] };
-}
-async function loadGifu() {
-  const muni = (await import("../data/gifu.json")).default as Municipality[];
-  return { muni, wards: [] };
-}
-async function loadShizuoka() {
-  const muni = (await import("../data/shizuoka.json")).default as Municipality[];
-  const wards = (await import("../data/shizuoka_wards.json")).default as Municipality[];
-  return { muni, wards };
-}
-async function loadAichi() {
-  const muni = (await import("../data/aichi.json")).default as Municipality[];
-  const wards = (await import("../data/aichi_wards.json")).default as Municipality[];
-  return { muni, wards };
-}
-async function loadMie() {
-  const muni = (await import("../data/mie.json")).default as Municipality[];
-  return { muni, wards: [] };
-}
-async function loadShiga() {
-  const muni = (await import("../data/shiga.json")).default as Municipality[];
-  return { muni, wards: [] };
-}
-async function loadKyoto() {
-  const muni = (await import("../data/kyoto.json")).default as Municipality[];
-  const wards = (await import("../data/kyoto_wards.json")).default as Municipality[];
-  return { muni, wards };
-}
-async function loadOsaka() {
-  const muni = (await import("../data/osaka.json")).default as Municipality[];
-  const wards = (await import("../data/osaka_wards.json")).default as Municipality[];
-  return { muni, wards };
-}
-async function loadHyogo() {
-  const muni = (await import("../data/hyogo.json")).default as Municipality[];
-  const wards = (await import("../data/hyogo_wards.json")).default as Municipality[];
-  return { muni, wards };
-}
-async function loadNara() {
-  const muni = (await import("../data/nara.json")).default as Municipality[];
-  return { muni, wards: [] };
-}
-async function loadWakayama() {
-  const muni = (await import("../data/wakayama.json")).default as Municipality[];
-  return { muni, wards: [] };
-}
-async function loadTottori() {
-  const muni = (await import("../data/tottori.json")).default as Municipality[];
-  return { muni, wards: [] };
-}
-async function loadShimane() {
-  const muni = (await import("../data/shimane.json")).default as Municipality[];
-  return { muni, wards: [] };
-}
-async function loadOkayama() {
-  const muni = (await import("../data/okayama.json")).default as Municipality[];
-  const wards = (await import("../data/okayama_wards.json")).default as Municipality[];
-  return { muni, wards };
-}
-async function loadHiroshima() {
-  const muni = (await import("../data/hiroshima.json")).default as Municipality[];
-  const wards = (await import("../data/hiroshima_wards.json")).default as Municipality[];
-  return { muni, wards };
-}
-async function loadYamaguchi() {
-  const muni = (await import("../data/yamaguchi.json")).default as Municipality[];
-  return { muni, wards: [] };
-}
-async function loadTokushima() {
-  const muni = (await import("../data/tokushima.json")).default as Municipality[];
-  return { muni, wards: [] };
-}
-async function loadKagawa() {
-  const muni = (await import("../data/kagawa.json")).default as Municipality[];
-  return { muni, wards: [] };
-}
-async function loadEhime() {
-  const muni = (await import("../data/ehime.json")).default as Municipality[];
-  return { muni, wards: [] };
-}
-async function loadKochi() {
-  const muni = (await import("../data/kochi.json")).default as Municipality[];
-  return { muni, wards: [] };
-}
-async function loadFukuoka() {
-  const muni = (await import("../data/fukuoka.json")).default as Municipality[];
-  const wards = (await import("../data/fukuoka_wards.json")).default as Municipality[];
-  return { muni, wards };
-}
-async function loadSaga() {
-  const muni = (await import("../data/saga.json")).default as Municipality[];
-  return { muni, wards: [] };
-}
-async function loadNagasaki() {
-  const muni = (await import("../data/nagasaki.json")).default as Municipality[];
-  return { muni, wards: [] };
-}
-async function loadKumamoto() {
-  const muni = (await import("../data/kumamoto.json")).default as Municipality[];
-  const wards = (await import("../data/kumamoto_wards.json")).default as Municipality[];
-  return { muni, wards };
-}
-async function loadOita() {
-  const muni = (await import("../data/oita.json")).default as Municipality[];
-  return { muni, wards: [] };
-}
-async function loadMiyazaki() {
-  const muni = (await import("../data/miyazaki.json")).default as Municipality[];
-  return { muni, wards: [] };
-}
-async function loadKagoshima() {
-  const muni = (await import("../data/kagoshima.json")).default as Municipality[];
-  return { muni, wards: [] };
-}
-async function loadOkinawa() {
-  const muni = (await import("../data/okinawa.json")).default as Municipality[];
-  return { muni, wards: [] };
-}
-async function loadAomori() {
-  const muni = (await import("../data/aomori.json")).default as Municipality[];
-  return { muni, wards: [] };
-}
-async function loadIwate() {
-  const muni = (await import("../data/iwate.json")).default as Municipality[];
-  return { muni, wards: [] };
-}
-async function loadMiyagi() {
-  const muni = (await import("../data/miyagi.json")).default as Municipality[];
-  const wards = (await import("../data/miyagi_wards.json")).default as Municipality[];
-  return { muni, wards };
-}
-async function loadAkita() {
-  const muni = (await import("../data/akita.json")).default as Municipality[];
-  return { muni, wards: [] };
-}
-async function loadYamagata() {
-  const muni = (await import("../data/yamagata.json")).default as Municipality[];
-  return { muni, wards: [] };
-}
-async function loadFukushima() {
-  const muni = (await import("../data/fukushima.json")).default as Municipality[];
-  return { muni, wards: [] };
-}
-async function loadNiigata() {
-  const muni = (await import("../data/niigata.json")).default as Municipality[];
-  const wards = (await import("../data/niigata_wards.json")).default as Municipality[];
-  return { muni, wards };
-}
-async function loadToyama() {
-  const muni = (await import("../data/toyama.json")).default as Municipality[];
-  return { muni, wards: [] };
-}
-async function loadIshikawa() {
-  const muni = (await import("../data/ishikawa.json")).default as Municipality[];
-  return { muni, wards: [] };
-}
-async function loadFukui() {
-  const muni = (await import("../data/fukui.json")).default as Municipality[];
-  return { muni, wards: [] };
-}
-async function loadHokkaido() {
-  const muni = (await import("../data/hokkaido.json")).default as Municipality[];
-  const wards = (await import("../data/hokkaido_wards.json")).default as Municipality[];
+// 各 pref データのローダ。テンプレートリテラルの動的 import なので Next.js の
+// コード分割が効き、必要時のみ該当 pref の chunk が読み込まれる（全47県を
+// ホームページに乗せない）。
+export async function loadPrefData(
+  slug: string,
+  hasWards: boolean,
+): Promise<{ muni: Municipality[]; wards: Municipality[] }> {
+  const muni = (await import(`../data/${slug}.json`)).default as Municipality[];
+  const wards = hasWards
+    ? ((await import(`../data/${slug}_wards.json`)).default as Municipality[])
+    : [];
   return { muni, wards };
 }
 
 export const PREFS: PrefEntry[] = [
-  { slug: "saitama",  nameJa: "埼玉県",   codePrefix: "11", hasWards: true,  load: loadSaitama },
-  { slug: "chiba",    nameJa: "千葉県",   codePrefix: "12", hasWards: true,  load: loadChiba },
-  { slug: "gunma",    nameJa: "群馬県",   codePrefix: "10", hasWards: false, load: loadGunma },
-  { slug: "tochigi",  nameJa: "栃木県",   codePrefix: "09", hasWards: false, load: loadTochigi },
-  { slug: "ibaraki",  nameJa: "茨城県",   codePrefix: "08", hasWards: false, load: loadIbaraki },
-  { slug: "tokyo",    nameJa: "東京都",   codePrefix: "13", hasWards: false, load: loadTokyo },
-  { slug: "kanagawa", nameJa: "神奈川県", codePrefix: "14", hasWards: true,  load: loadKanagawa },
-  { slug: "yamanashi", nameJa: "山梨県",  codePrefix: "19", hasWards: false, load: loadYamanashi },
-  { slug: "nagano",    nameJa: "長野県",  codePrefix: "20", hasWards: false, load: loadNagano },
-  { slug: "gifu",      nameJa: "岐阜県",  codePrefix: "21", hasWards: false, load: loadGifu },
-  { slug: "shizuoka",  nameJa: "静岡県",  codePrefix: "22", hasWards: true,  load: loadShizuoka },
-  { slug: "aichi",     nameJa: "愛知県",  codePrefix: "23", hasWards: true,  load: loadAichi },
-  { slug: "mie",       nameJa: "三重県",  codePrefix: "24", hasWards: false, load: loadMie },
-  { slug: "shiga",     nameJa: "滋賀県",  codePrefix: "25", hasWards: false, load: loadShiga },
-  { slug: "kyoto",     nameJa: "京都府",  codePrefix: "26", hasWards: true,  load: loadKyoto },
-  { slug: "osaka",     nameJa: "大阪府",  codePrefix: "27", hasWards: true,  load: loadOsaka },
-  { slug: "hyogo",     nameJa: "兵庫県",  codePrefix: "28", hasWards: true,  load: loadHyogo },
-  { slug: "nara",      nameJa: "奈良県",  codePrefix: "29", hasWards: false, load: loadNara },
-  { slug: "wakayama",  nameJa: "和歌山県", codePrefix: "30", hasWards: false, load: loadWakayama },
-  { slug: "tottori",   nameJa: "鳥取県",  codePrefix: "31", hasWards: false, load: loadTottori },
-  { slug: "shimane",   nameJa: "島根県",  codePrefix: "32", hasWards: false, load: loadShimane },
-  { slug: "okayama",   nameJa: "岡山県",  codePrefix: "33", hasWards: true,  load: loadOkayama },
-  { slug: "hiroshima", nameJa: "広島県",  codePrefix: "34", hasWards: true,  load: loadHiroshima },
-  { slug: "yamaguchi", nameJa: "山口県",  codePrefix: "35", hasWards: false, load: loadYamaguchi },
-  { slug: "tokushima", nameJa: "徳島県",  codePrefix: "36", hasWards: false, load: loadTokushima },
-  { slug: "kagawa",    nameJa: "香川県",  codePrefix: "37", hasWards: false, load: loadKagawa },
-  { slug: "ehime",     nameJa: "愛媛県",  codePrefix: "38", hasWards: false, load: loadEhime },
-  { slug: "kochi",     nameJa: "高知県",  codePrefix: "39", hasWards: false, load: loadKochi },
-  { slug: "fukuoka",   nameJa: "福岡県",  codePrefix: "40", hasWards: true,  load: loadFukuoka },
-  { slug: "saga",      nameJa: "佐賀県",  codePrefix: "41", hasWards: false, load: loadSaga },
-  { slug: "nagasaki",  nameJa: "長崎県",  codePrefix: "42", hasWards: false, load: loadNagasaki },
-  { slug: "kumamoto",  nameJa: "熊本県",  codePrefix: "43", hasWards: true,  load: loadKumamoto },
-  { slug: "oita",      nameJa: "大分県",  codePrefix: "44", hasWards: false, load: loadOita },
-  { slug: "miyazaki",  nameJa: "宮崎県",  codePrefix: "45", hasWards: false, load: loadMiyazaki },
-  { slug: "kagoshima", nameJa: "鹿児島県", codePrefix: "46", hasWards: false, load: loadKagoshima },
-  { slug: "okinawa",   nameJa: "沖縄県",  codePrefix: "47", hasWards: false, load: loadOkinawa },
-  { slug: "aomori",    nameJa: "青森県",  codePrefix: "02", hasWards: false, load: loadAomori },
-  { slug: "iwate",     nameJa: "岩手県",  codePrefix: "03", hasWards: false, load: loadIwate },
-  { slug: "miyagi",    nameJa: "宮城県",  codePrefix: "04", hasWards: true,  load: loadMiyagi },
-  { slug: "akita",     nameJa: "秋田県",  codePrefix: "05", hasWards: false, load: loadAkita },
-  { slug: "yamagata",  nameJa: "山形県",  codePrefix: "06", hasWards: false, load: loadYamagata },
-  { slug: "fukushima", nameJa: "福島県",  codePrefix: "07", hasWards: false, load: loadFukushima },
-  { slug: "niigata",   nameJa: "新潟県",  codePrefix: "15", hasWards: true,  load: loadNiigata },
-  { slug: "toyama",    nameJa: "富山県",  codePrefix: "16", hasWards: false, load: loadToyama },
-  { slug: "ishikawa",  nameJa: "石川県",  codePrefix: "17", hasWards: false, load: loadIshikawa },
-  { slug: "fukui",     nameJa: "福井県",  codePrefix: "18", hasWards: false, load: loadFukui },
-  { slug: "hokkaido",  nameJa: "北海道",  codePrefix: "01", hasWards: true,  load: loadHokkaido },
+  { slug: "saitama", nameJa: "埼玉県", codePrefix: "11", hasWards: true },
+  { slug: "chiba", nameJa: "千葉県", codePrefix: "12", hasWards: true },
+  { slug: "gunma", nameJa: "群馬県", codePrefix: "10", hasWards: false },
+  { slug: "tochigi", nameJa: "栃木県", codePrefix: "09", hasWards: false },
+  { slug: "ibaraki", nameJa: "茨城県", codePrefix: "08", hasWards: false },
+  { slug: "tokyo", nameJa: "東京都", codePrefix: "13", hasWards: false },
+  { slug: "kanagawa", nameJa: "神奈川県", codePrefix: "14", hasWards: true },
+  { slug: "yamanashi", nameJa: "山梨県", codePrefix: "19", hasWards: false },
+  { slug: "nagano", nameJa: "長野県", codePrefix: "20", hasWards: false },
+  { slug: "gifu", nameJa: "岐阜県", codePrefix: "21", hasWards: false },
+  { slug: "shizuoka", nameJa: "静岡県", codePrefix: "22", hasWards: true },
+  { slug: "aichi", nameJa: "愛知県", codePrefix: "23", hasWards: true },
+  { slug: "mie", nameJa: "三重県", codePrefix: "24", hasWards: false },
+  { slug: "shiga", nameJa: "滋賀県", codePrefix: "25", hasWards: false },
+  { slug: "kyoto", nameJa: "京都府", codePrefix: "26", hasWards: true },
+  { slug: "osaka", nameJa: "大阪府", codePrefix: "27", hasWards: true },
+  { slug: "hyogo", nameJa: "兵庫県", codePrefix: "28", hasWards: true },
+  { slug: "nara", nameJa: "奈良県", codePrefix: "29", hasWards: false },
+  { slug: "wakayama", nameJa: "和歌山県", codePrefix: "30", hasWards: false },
+  { slug: "tottori", nameJa: "鳥取県", codePrefix: "31", hasWards: false },
+  { slug: "shimane", nameJa: "島根県", codePrefix: "32", hasWards: false },
+  { slug: "okayama", nameJa: "岡山県", codePrefix: "33", hasWards: true },
+  { slug: "hiroshima", nameJa: "広島県", codePrefix: "34", hasWards: true },
+  { slug: "yamaguchi", nameJa: "山口県", codePrefix: "35", hasWards: false },
+  { slug: "tokushima", nameJa: "徳島県", codePrefix: "36", hasWards: false },
+  { slug: "kagawa", nameJa: "香川県", codePrefix: "37", hasWards: false },
+  { slug: "ehime", nameJa: "愛媛県", codePrefix: "38", hasWards: false },
+  { slug: "kochi", nameJa: "高知県", codePrefix: "39", hasWards: false },
+  { slug: "fukuoka", nameJa: "福岡県", codePrefix: "40", hasWards: true },
+  { slug: "saga", nameJa: "佐賀県", codePrefix: "41", hasWards: false },
+  { slug: "nagasaki", nameJa: "長崎県", codePrefix: "42", hasWards: false },
+  { slug: "kumamoto", nameJa: "熊本県", codePrefix: "43", hasWards: true },
+  { slug: "oita", nameJa: "大分県", codePrefix: "44", hasWards: false },
+  { slug: "miyazaki", nameJa: "宮崎県", codePrefix: "45", hasWards: false },
+  { slug: "kagoshima", nameJa: "鹿児島県", codePrefix: "46", hasWards: false },
+  { slug: "okinawa", nameJa: "沖縄県", codePrefix: "47", hasWards: false },
+  { slug: "aomori", nameJa: "青森県", codePrefix: "02", hasWards: false },
+  { slug: "iwate", nameJa: "岩手県", codePrefix: "03", hasWards: false },
+  { slug: "miyagi", nameJa: "宮城県", codePrefix: "04", hasWards: true },
+  { slug: "akita", nameJa: "秋田県", codePrefix: "05", hasWards: false },
+  { slug: "yamagata", nameJa: "山形県", codePrefix: "06", hasWards: false },
+  { slug: "fukushima", nameJa: "福島県", codePrefix: "07", hasWards: false },
+  { slug: "niigata", nameJa: "新潟県", codePrefix: "15", hasWards: true },
+  { slug: "toyama", nameJa: "富山県", codePrefix: "16", hasWards: false },
+  { slug: "ishikawa", nameJa: "石川県", codePrefix: "17", hasWards: false },
+  { slug: "fukui", nameJa: "福井県", codePrefix: "18", hasWards: false },
+  { slug: "hokkaido", nameJa: "北海道", codePrefix: "01", hasWards: true },
 ];
 
 const BY_SLUG = new Map(PREFS.map((p) => [p.slug, p]));

@@ -4,7 +4,7 @@
 // シグネチャは将来 reinfolib/e-Stat の直接呼び出しに差し替え可能な形を維持。
 
 import { Municipality, MuniSummary } from "./types";
-import { PREFS, getPrefBySlug, getPrefByCode } from "./prefs";
+import { PREFS, getPrefBySlug, getPrefByCode, loadPrefData } from "./prefs";
 
 // pref データのキャッシュ（同一 build/request 内で同じ pref を複数回呼んでも 1 度しかロードしない）
 const cache = new Map<string, Promise<{ muni: Municipality[]; wards: Municipality[] }>>();
@@ -14,7 +14,7 @@ function loadPref(slug: string) {
   if (!pref) return Promise.resolve({ muni: [], wards: [] });
   let p = cache.get(slug);
   if (!p) {
-    p = pref.load();
+    p = loadPrefData(pref.slug, pref.hasWards);
     cache.set(slug, p);
   }
   return p;
