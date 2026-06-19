@@ -3,8 +3,8 @@
     "code": "12101",
     "pref": "chiba",
     "name": "中央区",
-    "population": 211736,
-    "populationTrend": "横ばい",
+    "population": 226620,
+    "populationTrend": "増加",
     "rent": {
       "value": 63862,
       "unit": "円/月",
@@ -48,7 +48,7 @@
     "code": "12102",
     "pref": "chiba",
     "name": "花見川区",
-    "population": 177328,
+    "population": 177681,
     "populationTrend": "横ばい",
     "rent": {
       "value": 65826,
@@ -93,7 +93,7 @@
     "code": "12103",
     "pref": "chiba",
     "name": "稲毛区",
-    "population": 160582,
+    "population": 160643,
     "populationTrend": "横ばい",
     "rent": {
       "value": 54841,
@@ -138,8 +138,8 @@
     "code": "12104",
     "pref": "chiba",
     "name": "若葉区",
-    "population": 146940,
-    "populationTrend": "横ばい",
+    "population": 145445,
+    "populationTrend": "微減",
     "rent": {
       "value": 55030,
       "unit": "円/月",
@@ -183,7 +183,7 @@
     "code": "12105",
     "pref": "chiba",
     "name": "緑区",
-    "population": 129421,
+    "population": 128248,
     "populationTrend": "横ばい",
     "rent": {
       "value": 61317,
@@ -228,8 +228,8 @@
     "code": "12106",
     "pref": "chiba",
     "name": "美浜区",
-    "population": 148944,
-    "populationTrend": "横ばい",
+    "population": 156333,
+    "populationTrend": "増加",
     "rent": {
       "value": 65616,
       "unit": "円/月",

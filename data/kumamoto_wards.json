@@ -6,8 +6,8 @@
     "level": "ward",
     "parentCode": "43100",
     "displayName": "熊本市中央区",
-    "population": 187502,
-    "populationTrend": "横ばい",
+    "population": 185413,
+    "populationTrend": "微減",
     "rent": {
       "value": 52483,
       "unit": "円/月",
@@ -51,7 +51,7 @@
     "level": "ward",
     "parentCode": "43100",
     "displayName": "熊本市東区",
-    "population": 189524,
+    "population": 189030,
     "populationTrend": "横ばい",
     "rent": {
       "value": 49622,
@@ -96,8 +96,8 @@
     "level": "ward",
     "parentCode": "43100",
     "displayName": "熊本市西区",
-    "population": 91177,
-    "populationTrend": "横ばい",
+    "population": 89598,
+    "populationTrend": "微減",
     "rent": {
       "value": 48286,
       "unit": "円/月",
@@ -141,7 +141,7 @@
     "level": "ward",
     "parentCode": "43100",
     "displayName": "熊本市南区",
-    "population": 130829,
+    "population": 131743,
     "populationTrend": "横ばい",
     "rent": {
       "value": 50374,
@@ -186,8 +186,8 @@
     "level": "ward",
     "parentCode": "43100",
     "displayName": "熊本市北区",
-    "population": 139833,
-    "populationTrend": "横ばい",
+    "population": 135070,
+    "populationTrend": "減少",
     "rent": {
       "value": 48811,
       "unit": "円/月",

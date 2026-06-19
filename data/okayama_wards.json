@@ -6,8 +6,8 @@
     "level": "ward",
     "parentCode": "33100",
     "displayName": "岡山市北区",
-    "population": 314523,
-    "populationTrend": "横ばい",
+    "population": 311192,
+    "populationTrend": "微減",
     "rent": {
       "value": 55421,
       "unit": "円/月",
@@ -51,8 +51,8 @@
     "level": "ward",
     "parentCode": "33100",
     "displayName": "岡山市中区",
-    "population": 149232,
-    "populationTrend": "横ばい",
+    "population": 145326,
+    "populationTrend": "微減",
     "rent": {
       "value": 48182,
       "unit": "円/月",
@@ -96,8 +96,8 @@
     "level": "ward",
     "parentCode": "33100",
     "displayName": "岡山市東区",
-    "population": 93108,
-    "populationTrend": "横ばい",
+    "population": 88651,
+    "populationTrend": "減少",
     "rent": {
       "value": 51268,
       "unit": "円/月",
@@ -141,8 +141,8 @@
     "level": "ward",
     "parentCode": "33100",
     "displayName": "岡山市南区",
-    "population": 167828,
-    "populationTrend": "横ばい",
+    "population": 162747,
+    "populationTrend": "減少",
     "rent": {
       "value": 53407,
       "unit": "円/月",

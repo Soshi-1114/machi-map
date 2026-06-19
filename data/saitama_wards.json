@@ -6,8 +6,8 @@
     "displayName": "さいたま市西区",
     "level": "ward",
     "parentCode": "11100",
-    "population": 93499,
-    "populationTrend": "増加",
+    "population": 94098,
+    "populationTrend": "横ばい",
     "rent": {
       "value": 64911,
       "unit": "円/月",
@@ -51,8 +51,8 @@
     "displayName": "さいたま市北区",
     "level": "ward",
     "parentCode": "11100",
-    "population": 149242,
-    "populationTrend": "微増",
+    "population": 147468,
+    "populationTrend": "微減",
     "rent": {
       "value": 69356,
       "unit": "円/月",
@@ -96,8 +96,8 @@
     "displayName": "さいたま市大宮区",
     "level": "ward",
     "parentCode": "11100",
-    "population": 117784,
-    "populationTrend": "横ばい",
+    "population": 125310,
+    "populationTrend": "増加",
     "rent": {
       "value": 78604,
       "unit": "円/月",
@@ -141,7 +141,7 @@
     "displayName": "さいたま市見沼区",
     "level": "ward",
     "parentCode": "11100",
-    "population": 165049,
+    "population": 166998,
     "populationTrend": "微増",
     "rent": {
       "value": 61382,
@@ -186,8 +186,8 @@
     "displayName": "さいたま市中央区",
     "level": "ward",
     "parentCode": "11100",
-    "population": 103269,
-    "populationTrend": "増加",
+    "population": 103816,
+    "populationTrend": "横ばい",
     "rent": {
       "value": 75276,
       "unit": "円/月",
@@ -231,8 +231,8 @@
     "displayName": "さいたま市桜区",
     "level": "ward",
     "parentCode": "11100",
-    "population": 98661,
-    "populationTrend": "微増",
+    "population": 98914,
+    "populationTrend": "横ばい",
     "rent": {
       "value": 60244,
       "unit": "円/月",
@@ -276,8 +276,8 @@
     "displayName": "さいたま市浦和区",
     "level": "ward",
     "parentCode": "11100",
-    "population": 164822,
-    "populationTrend": "横ばい",
+    "population": 169458,
+    "populationTrend": "微増",
     "rent": {
       "value": 77854,
       "unit": "円/月",
@@ -321,8 +321,8 @@
     "displayName": "さいたま市南区",
     "level": "ward",
     "parentCode": "11100",
-    "population": 191563,
-    "populationTrend": "増加",
+    "population": 196111,
+    "populationTrend": "微増",
     "rent": {
       "value": 78762,
       "unit": "円/月",
@@ -366,7 +366,7 @@
     "displayName": "さいたま市緑区",
     "level": "ward",
     "parentCode": "11100",
-    "population": 128321,
+    "population": 132329,
     "populationTrend": "増加",
     "rent": {
       "value": 73756,
@@ -411,7 +411,7 @@
     "displayName": "さいたま市岩槻区",
     "level": "ward",
     "parentCode": "11100",
-    "population": 111815,
+    "population": 110514,
     "populationTrend": "微減",
     "rent": {
       "value": 56229,
