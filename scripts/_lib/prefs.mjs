@@ -234,6 +234,12 @@ export const PREFS = {
     hasWards: false,
     parentToWards: {},
   },
+  miyazaki: {
+    code: "45", nameJa: "宮崎県",
+    bbox: { west: 130.703, south: 31.356, east: 131.886, north: 32.839 },
+    hasWards: false,
+    parentToWards: {},
+  },
 };
 
 export function getPref(slug) {
