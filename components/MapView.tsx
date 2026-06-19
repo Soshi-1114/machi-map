@@ -3,13 +3,13 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import maplibregl, { Map as MapLibreMap, MapMouseEvent } from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
-import type { Municipality } from "@/lib/types";
+import type { Municipality, MuniSummary } from "@/lib/types";
 import { PREFS, getPrefByCode } from "@/lib/prefs";
 import { rentStepExpression, RENT_COLORS, RENT_THRESHOLDS } from "@/lib/rentColor";
 import AreaPanel from "./AreaPanel";
 import MobileSheet from "./MobileSheet";
 
-type Props = { all: Municipality[] };
+type Props = { summary: MuniSummary[] };
 
 const WARDS_MIN_ZOOM = 11;
 const MUNI_MIN_ZOOM = 7.5;       // 市区町村レイヤーを出すズーム
@@ -21,7 +21,7 @@ const PREF_CLICK_MAX_ZOOM = 8;   // この zoom 以下で pref クリックを f
 const BASEMAP_STYLE = "https://tiles.openfreemap.org/styles/positron";
 const SAITAMA_BBOX: [number, number, number, number] = [138.71, 35.74, 139.91, 36.29];
 
-export default function MapView({ all }: Props) {
+export default function MapView({ summary }: Props) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const mapRef = useRef<MapLibreMap | null>(null);
   const muniGeoRef = useRef<GeoJSON.FeatureCollection | null>(null);
@@ -39,19 +39,21 @@ export default function MapView({ all }: Props) {
   const [mapReady, setMapReady] = useState(false);
   const [tooltip, setTooltip] = useState<{ x: number; y: number; name: string; rent: number } | null>(null);
   const [layersOpen, setLayersOpen] = useState(false);
+  // 選択中自治体のフル詳細（/api/muni/[code] で取得）。サマリには無い人口/地価等を含む
+  const [selectedDetail, setSelectedDetail] = useState<Municipality | null>(null);
 
   const { municipalities, wards } = useMemo(() => {
-    const mu: Municipality[] = [];
-    const wa: Municipality[] = [];
-    for (const x of all) (x.level === "ward" ? wa : mu).push(x);
+    const mu: MuniSummary[] = [];
+    const wa: MuniSummary[] = [];
+    for (const x of summary) (x.level === "ward" ? wa : mu).push(x);
     return { municipalities: mu, wards: wa };
-  }, [all]);
+  }, [summary]);
 
   const byCode = useMemo(() => {
-    const m = new Map<string, Municipality>();
-    for (const x of all) m.set(x.code, x);
+    const m = new Map<string, MuniSummary>();
+    for (const x of summary) m.set(x.code, x);
     return m;
-  }, [all]);
+  }, [summary]);
 
   useEffect(() => {
     const detect = () => setIsMobile(window.innerWidth < 768);
@@ -78,9 +80,9 @@ export default function MapView({ all }: Props) {
         if (!m) continue;
         f.properties = {
           ...f.properties,
-          rent: m.rent.value,
+          rent: m.rent,
           name: m.name,
-          hasFloodRisk: m.hazard.hasFloodRisk ? 1 : 0,
+          hasFloodRisk: m.hasFloodRisk ? 1 : 0,
         };
       }
     };
@@ -456,6 +458,18 @@ export default function MapView({ all }: Props) {
     });
   }, [selectedCode, mapReady, municipalities, wards]);
 
+  // 選択中自治体のフル詳細をオンデマンド取得（初期配信はサマリのみのため）
+  useEffect(() => {
+    if (!selectedCode) { setSelectedDetail(null); return; }
+    let aborted = false;
+    setSelectedDetail(null);
+    fetch(`/api/muni/${selectedCode}`)
+      .then((r) => (r.ok ? r.json() : null))
+      .then((d: Municipality | null) => { if (!aborted) setSelectedDetail(d); })
+      .catch(() => { if (!aborted) setSelectedDetail(null); });
+    return () => { aborted = true; };
+  }, [selectedCode]);
+
   const filtered = useMemo(() => {
     const q = searchQuery.trim();
     if (!q) return [];
@@ -498,7 +512,7 @@ export default function MapView({ all }: Props) {
     }
   }, []);
 
-  const flyToMuni = useCallback(async (m: Municipality) => {
+  const flyToMuni = useCallback(async (m: MuniSummary) => {
     setSelectedCode(m.code);
     setSearchQuery("");
     // 検索で他県を選んだ場合、その県がまだ遅延ロードされていなければ先に取得
@@ -507,11 +521,11 @@ export default function MapView({ all }: Props) {
     flyToCode(m.code);
   }, [flyToCode]);
 
-  const selected = selectedCode ? byCode.get(selectedCode) ?? null : null;
+  // パネル開閉はフル詳細の取得完了で判定（取得中の一瞬は閉のまま）
   const rootClass = [
     "map-root",
-    selected && isMobile ? "is-sheet-open" : "",
-    selected && !isMobile ? "is-panel-open" : "",
+    selectedDetail && isMobile ? "is-sheet-open" : "",
+    selectedDetail && !isMobile ? "is-panel-open" : "",
   ].filter(Boolean).join(" ");
 
   return (
@@ -554,7 +568,7 @@ export default function MapView({ all }: Props) {
                 <li key={m.code}>
                   <button onClick={() => flyToMuni(m)}>
                     <span>{m.name}</span>
-                    <span className="search-rent">{m.rent.value.toLocaleString()}円</span>
+                    <span className="search-rent">{m.rent.toLocaleString()}円</span>
                   </button>
                 </li>
               ))}
@@ -599,9 +613,9 @@ export default function MapView({ all }: Props) {
 
       {/* パネル / シート */}
       {!isMobile ? (
-        <AreaPanel municipality={selected} onClose={() => setSelectedCode(null)} />
+        <AreaPanel municipality={selectedDetail} onClose={() => setSelectedCode(null)} />
       ) : (
-        <MobileSheet municipality={selected} onClose={() => setSelectedCode(null)} />
+        <MobileSheet municipality={selectedDetail} onClose={() => setSelectedCode(null)} />
       )}
     </div>
   );

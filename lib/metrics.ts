@@ -3,7 +3,7 @@
 //
 // シグネチャは将来 reinfolib/e-Stat の直接呼び出しに差し替え可能な形を維持。
 
-import { Municipality } from "./types";
+import { Municipality, MuniSummary } from "./types";
 import { PREFS, getPrefBySlug, getPrefByCode } from "./prefs";
 
 // pref データのキャッシュ（同一 build/request 内で同じ pref を複数回呼んでも 1 度しかロードしない）
@@ -49,4 +49,28 @@ export async function listAllAcrossPrefs(): Promise<Municipality[]> {
     all.push(...muni, ...wards);
   }
   return all;
+}
+
+/**
+ * 全 pref 横断の軽量サマリ。トップ地図の初期配信用（検索・色付け・分割に必要な
+ * 最小フィールドのみ）。フル Municipality（約1.8MB）を積まずに済む。
+ */
+export async function listSummaryAcrossPrefs(): Promise<MuniSummary[]> {
+  const out: MuniSummary[] = [];
+  for (const p of PREFS) {
+    const { muni, wards } = await loadPref(p.slug);
+    for (const m of [...muni, ...wards]) {
+      out.push({
+        code: m.code,
+        pref: m.pref,
+        name: m.name,
+        displayName: m.displayName,
+        level: m.level,
+        parentCode: m.parentCode,
+        rent: m.rent.value,
+        hasFloodRisk: m.hazard.hasFloodRisk,
+      });
+    }
+  }
+  return out;
 }

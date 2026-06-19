@@ -38,3 +38,17 @@ export type Municipality = {
     asOf: string;
   };
 };
+
+// トップ地図の初期配信用の軽量サマリ。検索・地図の色付け・自治体分割に必要な
+// 最小フィールドのみ（全1923自治体ぶんを積んでも軽い）。詳細は選択時に
+// /api/muni/[code] でフル Municipality を取得する。
+export type MuniSummary = {
+  code: string;
+  pref: string;
+  name: string;
+  displayName?: string;
+  level?: AdminLevel;
+  parentCode?: string;
+  rent: number;          // rent.value（円/月）
+  hasFloodRisk: boolean;  // hazard.hasFloodRisk
+};
