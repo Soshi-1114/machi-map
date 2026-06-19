@@ -62,6 +62,12 @@ export const PREFS = {
     hasWards: false,
     parentToWards: {},
   },
+  nagano: {
+    code: "20", nameJa: "長野県",
+    bbox: { west: 137.325, south: 35.198, east: 138.739, north: 37.030 },
+    hasWards: false,
+    parentToWards: {},
+  },
 };
 
 export function getPref(slug) {
