@@ -288,6 +288,12 @@ export const PREFS = {
     hasWards: false,
     parentToWards: {},
   },
+  fukushima: {
+    code: "07", nameJa: "福島県",
+    bbox: { west: 139.165, south: 36.791, east: 141.046, north: 37.977 },
+    hasWards: false,
+    parentToWards: {},
+  },
 };
 
 export function getPref(slug) {
