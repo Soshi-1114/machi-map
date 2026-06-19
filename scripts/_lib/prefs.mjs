@@ -276,6 +276,12 @@ export const PREFS = {
       "04100": ["04101","04102","04103","04104","04105"], // 仙台市5区（青葉/宮城野/若林/太白/泉）
     },
   },
+  akita: {
+    code: "05", nameJa: "秋田県",
+    bbox: { west: 139.692, south: 38.873, east: 140.995, north: 40.511 },
+    hasWards: false,
+    parentToWards: {},
+  },
 };
 
 export function getPref(slug) {
