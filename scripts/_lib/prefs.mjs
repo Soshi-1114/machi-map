@@ -26,6 +26,12 @@ export const PREFS = {
     hasWards: false,
     parentToWards: {},
   },
+  tochigi: {
+    code: "09", nameJa: "栃木県",
+    bbox: { west: 139.327, south: 36.201, east: 140.292, north: 37.155 },
+    hasWards: false,
+    parentToWards: {},
+  },
 };
 
 export function getPref(slug) {
