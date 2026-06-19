@@ -308,6 +308,12 @@ export const PREFS = {
     hasWards: false,
     parentToWards: {},
   },
+  ishikawa: {
+    code: "17", nameJa: "石川県",
+    bbox: { west: 136.242, south: 36.067, east: 137.365, north: 37.858 },
+    hasWards: false,
+    parentToWards: {},
+  },
 };
 
 export function getPref(slug) {
