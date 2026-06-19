@@ -152,6 +152,14 @@ export const PREFS = {
     hasWards: false,
     parentToWards: {},
   },
+  okayama: {
+    code: "33", nameJa: "岡山県",
+    bbox: { west: 133.267, south: 34.298, east: 134.413, north: 35.353 },
+    hasWards: true,
+    parentToWards: {
+      "33100": ["33101","33102","33103","33104"], // 岡山市4区（北/中/東/南）
+    },
+  },
 };
 
 export function getPref(slug) {
