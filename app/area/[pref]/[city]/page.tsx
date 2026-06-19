@@ -1,7 +1,7 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { getMunicipality, listAll } from "@/lib/metrics";
+import { getMunicipality, listAll, listAllAcrossPrefs } from "@/lib/metrics";
 import { buildSummary } from "@/lib/summary";
 import { findRelatedByRent } from "@/lib/related";
 import { SITE, PREF_NAMES_JA, absoluteUrl } from "@/lib/site";
@@ -10,7 +10,7 @@ import type { Municipality } from "@/lib/types";
 type Params = { pref: string; city: string };
 
 export async function generateStaticParams() {
-  const all = await listAll("saitama");
+  const all = await listAllAcrossPrefs();
   return all.map((m) => ({ pref: m.pref, city: m.code }));
 }
 

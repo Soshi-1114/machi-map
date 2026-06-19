@@ -1,9 +1,9 @@
 import type { MetadataRoute } from "next";
-import { listAll } from "@/lib/metrics";
+import { listAllAcrossPrefs } from "@/lib/metrics";
 import { SITE, absoluteUrl } from "@/lib/site";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const all = await listAll("saitama");
+  const all = await listAllAcrossPrefs();
   const now = new Date();
   const entries: MetadataRoute.Sitemap = [
     {

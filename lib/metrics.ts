@@ -1,25 +1,52 @@
-import { Municipality } from "./types";
-import saitama from "../data/saitama.json";
-import saitamaWards from "../data/saitama_wards.json";
+// 自治体データのアクセス層。pref 別 JSON を動的 import で読むので、
+// 47 県展開時もホームページに全データが乗らない（Next.js のコード分割で必要時のみ）。
+//
+// シグネチャは将来 reinfolib/e-Stat の直接呼び出しに差し替え可能な形を維持。
 
-// 市区町村 + 政令市の行政区を統合した検索対象。
-// ★将来：これらの中身をreinfolib/e-Stat呼び出しに差し替える。シグネチャは変えない。
-const MUNI = saitama as unknown as Municipality[];
-const WARDS = saitamaWards as unknown as Municipality[];
-const ALL = [...MUNI, ...WARDS];
+import { Municipality } from "./types";
+import { PREFS, getPrefBySlug, getPrefByCode } from "./prefs";
+
+// pref データのキャッシュ（同一 build/request 内で同じ pref を複数回呼んでも 1 度しかロードしない）
+const cache = new Map<string, Promise<{ muni: Municipality[]; wards: Municipality[] }>>();
+
+function loadPref(slug: string) {
+  const pref = getPrefBySlug(slug);
+  if (!pref) return Promise.resolve({ muni: [], wards: [] });
+  let p = cache.get(slug);
+  if (!p) {
+    p = pref.load();
+    cache.set(slug, p);
+  }
+  return p;
+}
 
 export async function getMunicipality(code: string): Promise<Municipality | null> {
-  return ALL.find((m) => m.code === code) ?? null;
+  // code prefix から pref を引き、その pref データだけロード
+  const pref = getPrefByCode(code);
+  if (!pref) return null;
+  const { muni, wards } = await loadPref(pref.slug);
+  return muni.find((m) => m.code === code) ?? wards.find((m) => m.code === code) ?? null;
 }
 
 export async function listMunicipalities(pref: string): Promise<Municipality[]> {
-  return MUNI.filter((m) => m.pref === pref);
+  return (await loadPref(pref)).muni;
 }
 
 export async function listWards(pref: string): Promise<Municipality[]> {
-  return WARDS.filter((m) => m.pref === pref);
+  return (await loadPref(pref)).wards;
 }
 
 export async function listAll(pref: string): Promise<Municipality[]> {
-  return ALL.filter((m) => m.pref === pref);
+  const { muni, wards } = await loadPref(pref);
+  return [...muni, ...wards];
+}
+
+/** 全 pref を横断して全自治体（市区町村 + 行政区）を返す。sitemap 用。 */
+export async function listAllAcrossPrefs(): Promise<Municipality[]> {
+  const all: Municipality[] = [];
+  for (const p of PREFS) {
+    const { muni, wards } = await loadPref(p.slug);
+    all.push(...muni, ...wards);
+  }
+  return all;
 }
