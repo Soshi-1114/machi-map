@@ -256,6 +256,12 @@ export const PREFS = {
     hasWards: false,
     parentToWards: {},
   },
+  aomori: {
+    code: "02", nameJa: "青森県",
+    bbox: { west: 139.497, south: 40.218, east: 141.683, north: 41.556 },
+    hasWards: false,
+    parentToWards: {},
+  },
 };
 
 export function getPref(slug) {
