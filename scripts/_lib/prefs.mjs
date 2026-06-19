@@ -220,6 +220,14 @@ export const PREFS = {
     hasWards: false,
     parentToWards: {},
   },
+  kumamoto: {
+    code: "43", nameJa: "熊本県",
+    bbox: { west: 129.939, south: 32.095, east: 131.330, north: 33.195 },
+    hasWards: true,
+    parentToWards: {
+      "43100": ["43101","43102","43103","43104","43105"], // 熊本市5区（中央/東/西/南/北）
+    },
+  },
 };
 
 export function getPref(slug) {
