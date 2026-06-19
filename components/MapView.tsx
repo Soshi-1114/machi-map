@@ -4,6 +4,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import maplibregl, { Map as MapLibreMap, MapMouseEvent } from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
 import type { Municipality } from "@/lib/types";
+import { PREFS } from "@/lib/prefs";
 import { rentStepExpression, RENT_COLORS, RENT_THRESHOLDS } from "@/lib/rentColor";
 import AreaPanel from "./AreaPanel";
 import MobileSheet from "./MobileSheet";
@@ -84,14 +85,29 @@ export default function MapView({ all }: Props) {
 
     map.on("load", async () => {
       map.fitBounds(SAITAMA_BBOX, { padding: 40, duration: 0 });
-      // prefectures は常時必要（低ズーム表示 + 高ズーム時の遷移）。
-      // 市区町村/区は将来 pref ごと on-demand 読み込みに切替可能だが、
-      // 現状は saitama のみなので並列ロード。
-      const [prefGeo, muniGeo, wardsGeo] = await Promise.all([
-        fetch("/prefectures.geojson").then((r) => r.json() as Promise<GeoJSON.FeatureCollection>),
-        fetch("/saitama.geojson").then((r) => r.json() as Promise<GeoJSON.FeatureCollection>),
-        fetch("/saitama_wards.geojson").then((r) => r.json() as Promise<GeoJSON.FeatureCollection>),
-      ]);
+      // prefectures は常時必要、各 pref の muni/wards も並列取得して結合。
+      // 将来 pref が増えたら viewport ベースの true lazy load に切替可能。
+      const prefGeo = await fetch("/prefectures.geojson").then(
+        (r) => r.json() as Promise<GeoJSON.FeatureCollection>,
+      );
+      const perPref = await Promise.all(
+        PREFS.map(async (p) => ({
+          slug: p.slug,
+          muni: await fetch(`/${p.slug}.geojson`).then((r) => r.json() as Promise<GeoJSON.FeatureCollection>),
+          wards: p.hasWards
+            ? await fetch(`/${p.slug}_wards.geojson`).then((r) => r.json() as Promise<GeoJSON.FeatureCollection>)
+            : { type: "FeatureCollection" as const, features: [] },
+        })),
+      );
+      // 全 pref の muni / wards を統合
+      const muniGeo: GeoJSON.FeatureCollection = {
+        type: "FeatureCollection",
+        features: perPref.flatMap((p) => p.muni.features),
+      };
+      const wardsGeo: GeoJSON.FeatureCollection = {
+        type: "FeatureCollection",
+        features: perPref.flatMap((p) => p.wards.features),
+      };
       mergeFeatureData(muniGeo);
       mergeFeatureData(wardsGeo);
       muniGeoRef.current = muniGeo;

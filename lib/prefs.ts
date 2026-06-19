@@ -28,9 +28,15 @@ async function loadSaitama() {
   const wards = (await import("../data/saitama_wards.json")).default as Municipality[];
   return { muni, wards };
 }
+async function loadChiba() {
+  const muni = (await import("../data/chiba.json")).default as Municipality[];
+  const wards = (await import("../data/chiba_wards.json")).default as Municipality[];
+  return { muni, wards };
+}
 
 export const PREFS: PrefEntry[] = [
   { slug: "saitama", nameJa: "埼玉県", codePrefix: "11", hasWards: true, load: loadSaitama },
+  { slug: "chiba",   nameJa: "千葉県", codePrefix: "12", hasWards: true, load: loadChiba },
 ];
 
 const BY_SLUG = new Map(PREFS.map((p) => [p.slug, p]));
