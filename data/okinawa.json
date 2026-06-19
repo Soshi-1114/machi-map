@@ -1,47 +1,5 @@
 [
   {
-    "code": "47000",
-    "pref": "okinawa",
-    "name": "所属未定地",
-    "population": 1468220,
-    "populationTrend": "横ばい",
-    "rent": {
-      "value": 52424,
-      "unit": "円/月",
-      "source": "住宅・土地統計調査（加重平均）",
-      "asOf": "2023",
-      "isEstimated": false
-    },
-    "landPrice": {
-      "value": 0,
-      "unit": "円/㎡",
-      "source": "サンプル",
-      "asOf": "-",
-      "isEstimated": true
-    },
-    "waitlistChildren": {
-      "value": 0,
-      "unit": "人",
-      "source": "こども家庭庁 保育所等関連状況取りまとめ",
-      "asOf": "2024-04-01",
-      "isEstimated": false
-    },
-    "hazard": {
-      "hasFloodRisk": false,
-      "hasLandslideRisk": false,
-      "note": "顕著な災害想定区域なし",
-      "source": "国土数値情報（reinfolib XKT026/029）",
-      "asOf": "2024"
-    },
-    "amenities": {
-      "stations": 0,
-      "preschools": 0,
-      "medicalFacilities": 0,
-      "source": "国土数値情報（reinfolib XKT015/007/010）",
-      "asOf": "令和5年度"
-    }
-  },
-  {
     "code": "47201",
     "pref": "okinawa",
     "name": "那覇市",

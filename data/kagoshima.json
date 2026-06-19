@@ -1,47 +1,5 @@
 [
   {
-    "code": "46000",
-    "pref": "kagoshima",
-    "name": "所属未定地",
-    "population": 1512969,
-    "populationTrend": "減少",
-    "rent": {
-      "value": 42135,
-      "unit": "円/月",
-      "source": "住宅・土地統計調査（加重平均）",
-      "asOf": "2023",
-      "isEstimated": false
-    },
-    "landPrice": {
-      "value": 0,
-      "unit": "円/㎡",
-      "source": "サンプル",
-      "asOf": "-",
-      "isEstimated": true
-    },
-    "waitlistChildren": {
-      "value": 0,
-      "unit": "人",
-      "source": "こども家庭庁 保育所等関連状況取りまとめ",
-      "asOf": "2024-04-01",
-      "isEstimated": false
-    },
-    "hazard": {
-      "hasFloodRisk": false,
-      "hasLandslideRisk": false,
-      "note": "顕著な災害想定区域なし",
-      "source": "国土数値情報（reinfolib XKT026/029）",
-      "asOf": "2024"
-    },
-    "amenities": {
-      "stations": 0,
-      "preschools": 0,
-      "medicalFacilities": 0,
-      "source": "国土数値情報（reinfolib XKT015/007/010）",
-      "asOf": "令和5年度"
-    }
-  },
-  {
     "code": "46201",
     "pref": "kagoshima",
     "name": "鹿児島市",

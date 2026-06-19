@@ -107,7 +107,9 @@ async function main() {
   for (const f of raw.features) {
     const p = f.properties;
     const code = String(p.N03_007 ?? "");
-    if (!code || code.length !== 5) continue;       // 所属未定地など除外
+    if (!code || code.length !== 5) continue;       // 不正コード除外
+    // 「所属未定地」(湖沼・境界未定地。コードは prefcode+"000")は自治体ではないので除外
+    if (p.N03_004 === "所属未定地" || code.endsWith("000")) continue;
     const name = p.N03_004 || p.N03_003 || code;    // 通常自治体名 / 政令市なら市名
     const wardName = p.N03_005 || null;             // "葵区" など（政令市の区のみ）
     if (!byCode.has(code)) byCode.set(code, { name, wardName, geoms: [] });
