@@ -1,0 +1,157 @@
+name: Data Update (annual / e-Stat + NLNI + CFA)
+
+# 年次更新（CFA Excel 公開後を想定して 3 月初旬）。
+# - e-Stat: 国勢調査 (人口) / 住宅・土地統計 (家賃)
+# - NLNI L01: 地価公示
+# - CFA Excel: 待機児童
+on:
+  schedule:
+    # 3/15 深夜（UTC 19:00 = JST 04:00）
+    - cron: "0 19 14 3 *"
+  workflow_dispatch:
+    inputs:
+      pref:
+        description: "対象都道府県 slug (省略で全 pref)"
+        required: false
+        default: ""
+
+permissions:
+  contents: write
+
+concurrency:
+  group: data-update-annual
+  cancel-in-progress: false
+
+env:
+  # こども家庭庁 待機児童 Excel URL（年度更新時に手動で書き換え）
+  CFA_XLSX_URL: "https://www.cfa.go.jp/assets/contents/node/basic_page/field_ref_resources/4ddf7d00-3f9a-4435-93a4-8e6c204db16c/ccac221b/20240829_policies_hoiku_torimatome_r6_03.xlsx"
+  # 国土数値情報 L01 地価公示の年度バージョン（年度ごとに書換）
+  L01_VERSION: "25"
+
+jobs:
+  resolve-prefs:
+    runs-on: ubuntu-latest
+    outputs:
+      prefs: ${{ steps.set.outputs.prefs }}
+    steps:
+      - uses: actions/checkout@v4
+      - id: set
+        run: |
+          input="${{ inputs.pref }}"
+          if [[ -n "$input" ]]; then
+            echo "prefs=[\"$input\"]" >> "$GITHUB_OUTPUT"
+          else
+            list=$(node -e 'import("./scripts/_lib/prefs.mjs").then(m=>console.log(JSON.stringify(Object.keys(m.PREFS))))')
+            echo "prefs=$list" >> "$GITHUB_OUTPUT"
+          fi
+
+  fetch:
+    needs: resolve-prefs
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      max-parallel: 5
+      matrix:
+        pref: ${{ fromJson(needs.resolve-prefs.outputs.prefs) }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - run: npm ci
+
+      - name: Read pref code
+        id: prefmeta
+        run: |
+          code=$(node -e 'import("./scripts/_lib/prefs.mjs").then(m=>console.log(m.getPref("${{ matrix.pref }}").code))')
+          echo "code=$code" >> "$GITHUB_OUTPUT"
+
+      - name: Download NLNI L01 (${{ steps.prefmeta.outputs.code }})
+        run: |
+          mkdir -p /tmp/l01
+          curl -sL -o /tmp/l01.zip \
+            "https://nlftp.mlit.go.jp/ksj/gml/data/L01/L01-${{ env.L01_VERSION }}/L01-${{ env.L01_VERSION }}_${{ steps.prefmeta.outputs.code }}_GML.zip"
+          unzip -o /tmp/l01.zip -d /tmp/l01
+
+      - name: Download CFA waitlist xlsx
+        run: curl -sL -o /tmp/cfa_waitlist.xlsx "${{ env.CFA_XLSX_URL }}"
+
+      - name: Fetch population (e-Stat)
+        run: node scripts/fetch-population.mjs --pref=${{ matrix.pref }}
+        env:
+          ESTAT_APP_ID: ${{ secrets.ESTAT_APP_ID }}
+
+      - name: Fetch rent (e-Stat)
+        run: node scripts/fetch-rent.mjs --pref=${{ matrix.pref }}
+        env:
+          ESTAT_APP_ID: ${{ secrets.ESTAT_APP_ID }}
+
+      - name: Fetch land price (NLNI L01)
+        run: |
+          # NLNI zip 解凍後のパスは L01-{ver}_{code}_GML/L01-{ver}_{code}.geojson
+          GEOJSON="/tmp/l01/L01-${{ env.L01_VERSION }}_${{ steps.prefmeta.outputs.code }}_GML/L01-${{ env.L01_VERSION }}_${{ steps.prefmeta.outputs.code }}.geojson"
+          L01_GEOJSON="$GEOJSON" node scripts/fetch-land-price.mjs --pref=${{ matrix.pref }}
+
+      - name: Fetch waitlist (CFA Excel)
+        run: WAITLIST_XLSX=/tmp/cfa_waitlist.xlsx node scripts/fetch-waitlist.mjs --pref=${{ matrix.pref }}
+
+      - name: Detect diff & commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          if [[ -n "$(git status --porcelain data/${{ matrix.pref }}.json data/${{ matrix.pref }}_wards.json 2>/dev/null)" ]]; then
+            git add data/${{ matrix.pref }}.json data/${{ matrix.pref }}_wards.json 2>/dev/null || true
+            git commit -m "chore(data): ${{ matrix.pref }} annual estat/nlni/cfa update"
+            git pull --rebase origin main || true
+            git push origin HEAD:main
+          else
+            echo "No data diff for ${{ matrix.pref }}"
+          fi
+
+  deploy:
+    needs: fetch
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install Vercel CLI
+        run: npm install --global vercel@latest
+
+      - name: Pull Vercel env (preview)
+        run: vercel pull --yes --environment=preview --token=$VERCEL_TOKEN
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+
+      - name: Build
+        run: vercel build --token=$VERCEL_TOKEN
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+
+      - name: Deploy preview
+        id: deploy
+        run: |
+          url=$(vercel deploy --prebuilt --token=$VERCEL_TOKEN)
+          echo "url=$url" >> "$GITHUB_OUTPUT"
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+
+      - name: Summary
+        run: echo "🚀 Preview: ${{ steps.deploy.outputs.url }}" >> "$GITHUB_STEP_SUMMARY"
