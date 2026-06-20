@@ -16,7 +16,7 @@
       "isEstimated": false
     },
     "landPrice": {
-      "value": 236833,
+      "value": 243641,
       "unit": "円/㎡",
       "source": "地価公示（住宅地平均）",
       "asOf": "2025",
@@ -25,8 +25,8 @@
     "waitlistChildren": {
       "value": 0,
       "unit": "人",
-      "source": "区別非公表（静岡市全体で8人）／こども家庭庁 保育所等関連状況取りまとめ",
-      "asOf": "2024-04-01",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ（市総合より）",
+      "asOf": "2025-04-01",
       "isEstimated": false
     },
     "hazard": {
@@ -61,7 +61,7 @@
       "isEstimated": false
     },
     "landPrice": {
-      "value": 156937,
+      "value": 160221,
       "unit": "円/㎡",
       "source": "地価公示（住宅地平均）",
       "asOf": "2025",
@@ -70,8 +70,8 @@
     "waitlistChildren": {
       "value": 0,
       "unit": "人",
-      "source": "区別非公表（静岡市全体で8人）／こども家庭庁 保育所等関連状況取りまとめ",
-      "asOf": "2024-04-01",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ（市総合より）",
+      "asOf": "2025-04-01",
       "isEstimated": false
     },
     "hazard": {
@@ -106,7 +106,7 @@
       "isEstimated": false
     },
     "landPrice": {
-      "value": 90514,
+      "value": 92549,
       "unit": "円/㎡",
       "source": "地価公示（住宅地平均）",
       "asOf": "2025",
@@ -115,8 +115,8 @@
     "waitlistChildren": {
       "value": 0,
       "unit": "人",
-      "source": "区別非公表（静岡市全体で8人）／こども家庭庁 保育所等関連状況取りまとめ",
-      "asOf": "2024-04-01",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ（市総合より）",
+      "asOf": "2025-04-01",
       "isEstimated": false
     },
     "hazard": {
@@ -151,7 +151,7 @@
       "isEstimated": false
     },
     "landPrice": {
-      "value": 99873,
+      "value": 101342,
       "unit": "円/㎡",
       "source": "地価公示（住宅地平均）",
       "asOf": "2025",
@@ -161,7 +161,7 @@
       "value": 0,
       "unit": "人",
       "source": "こども家庭庁 保育所等関連状況取りまとめ（市総合より）",
-      "asOf": "2024-04-01",
+      "asOf": "2025-04-01",
       "isEstimated": false
     },
     "hazard": {
@@ -196,7 +196,7 @@
       "isEstimated": false
     },
     "landPrice": {
-      "value": 50679,
+      "value": 51604,
       "unit": "円/㎡",
       "source": "地価公示（住宅地平均）",
       "asOf": "2025",
@@ -206,7 +206,7 @@
       "value": 0,
       "unit": "人",
       "source": "こども家庭庁 保育所等関連状況取りまとめ（市総合より）",
-      "asOf": "2024-04-01",
+      "asOf": "2025-04-01",
       "isEstimated": false
     },
     "hazard": {
@@ -241,7 +241,7 @@
       "isEstimated": false
     },
     "landPrice": {
-      "value": 33425,
+      "value": 32700,
       "unit": "円/㎡",
       "source": "地価公示（住宅地平均）",
       "asOf": "2025",
@@ -251,7 +251,7 @@
       "value": 0,
       "unit": "人",
       "source": "こども家庭庁 保育所等関連状況取りまとめ（市総合より）",
-      "asOf": "2024-04-01",
+      "asOf": "2025-04-01",
       "isEstimated": false
     },
     "hazard": {
