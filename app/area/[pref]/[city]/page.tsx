@@ -5,7 +5,7 @@ import { getMunicipality, listAll, listAllAcrossPrefs } from "@/lib/metrics";
 import { buildSummary } from "@/lib/summary";
 import { findRelatedByRent } from "@/lib/related";
 import { SITE, PREF_NAMES_JA, absoluteUrl } from "@/lib/site";
-import { hasRent } from "@/lib/rentColor";
+import { hasRent, rentBand } from "@/lib/rentColor";
 import { isWaitlistDisclosed } from "@/lib/waitlist";
 import { hasLandPrice } from "@/lib/landPrice";
 import { isHazardEvaluated, isAmenitiesCounted } from "@/lib/coverage";
@@ -267,13 +267,4 @@ function SourceLine({ source, asOf, estimated }: { source: string; asOf: string;
       {estimated && <span className="metric-est">推計</span>}
     </p>
   );
-}
-
-// 家賃水準のテキスト表記。コロプレスの色しきい値と同じ境界。
-function rentBand(value: number): string {
-  if (value < 50000) return "低め";
-  if (value < 55000) return "やや低め";
-  if (value < 60000) return "中位";
-  if (value < 65000) return "やや高め";
-  return "高め";
 }

@@ -20,6 +20,16 @@ export function hasRent(value: number): boolean {
   return value > 0;
 }
 
+// 家賃水準のテキスト表記。コロプレスの色しきい値（RENT_THRESHOLDS）と同じ境界を
+// 単一ソースとして共有する（詳細ページ等の文章表現用）。
+export const RENT_BAND_LABELS = ["低め", "やや低め", "中位", "やや高め", "高め"] as const;
+
+export function rentBand(value: number): string {
+  let i = 0;
+  while (i < RENT_THRESHOLDS.length && value >= RENT_THRESHOLDS[i]) i++;
+  return RENT_BAND_LABELS[i];
+}
+
 export function rentColor(value: number): string {
   if (!hasRent(value)) return RENT_NODATA_COLOR;
   if (value < RENT_THRESHOLDS[0]) return RENT_COLORS[0];

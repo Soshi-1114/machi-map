@@ -2,6 +2,7 @@ import { describe, it, expect } from "vitest";
 import {
   hasRent,
   rentColor,
+  rentBand,
   rentStepExpression,
   RENT_COLORS,
   RENT_NODATA_COLOR,
@@ -33,6 +34,20 @@ describe("rentColor 境界", () => {
     expect(rentColor(64999)).toBe(RENT_COLORS[3]);
     expect(rentColor(65000)).toBe(RENT_COLORS[4]);
     expect(rentColor(999999)).toBe(RENT_COLORS[4]);
+  });
+});
+
+describe("rentBand 境界（色しきい値と一致・>= 比較）", () => {
+  it("5区分のラベル", () => {
+    expect(rentBand(49999)).toBe("低め");
+    expect(rentBand(50000)).toBe("やや低め");
+    expect(rentBand(54999)).toBe("やや低め");
+    expect(rentBand(55000)).toBe("中位");
+    expect(rentBand(59999)).toBe("中位");
+    expect(rentBand(60000)).toBe("やや高め");
+    expect(rentBand(64999)).toBe("やや高め");
+    expect(rentBand(65000)).toBe("高め");
+    expect(rentBand(999999)).toBe("高め");
   });
 });
 
