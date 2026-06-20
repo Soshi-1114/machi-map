@@ -33,6 +33,13 @@ export default function MapView({ summary }: Props) {
   const hoveredCodeRef = useRef<string | null>(null);
   const hoveredSourceRef = useRef<"muni" | "wards" | null>(null);
   const activeMetricRef = useRef<MapMetricKey>(DEFAULT_METRIC_KEY);
+  // 選択時に減光するベース地図ラベル（道路名・水系名等。place=地名は残す）。
+  // 元の opacity を保存し、選択解除で復元する。
+  const labelDimRef = useRef<{ ids: string[]; text: Map<string, unknown>; icon: Map<string, unknown> }>({
+    ids: [],
+    text: new Map(),
+    icon: new Map(),
+  });
 
   const [selectedCode, setSelectedCode] = useState<string | null>(null);
   const [hazardOn, setHazardOn] = useState(true);
@@ -128,6 +135,17 @@ export default function MapView({ summary }: Props) {
           ["get", "name:latin"],
           ["get", "name"],
         ]);
+      }
+
+      // 自治体選択時に減光する「道路名・水系名等」のラベル群を控えておく
+      // （source-layer="place" の地名ラベルは選択中も読めるよう対象外）。
+      const dimIds = allLayers
+        .filter((l) => l.type === "symbol" && (l as { "source-layer"?: string })["source-layer"] !== "place")
+        .map((l) => l.id);
+      labelDimRef.current.ids = dimIds;
+      for (const id of dimIds) {
+        labelDimRef.current.text.set(id, map.getPaintProperty(id, "text-opacity"));
+        labelDimRef.current.icon.set(id, map.getPaintProperty(id, "icon-opacity"));
       }
 
       map.addSource("prefectures", { type: "geojson", data: prefGeo, promoteId: "code" });
@@ -482,6 +500,21 @@ export default function MapView({ summary }: Props) {
     map.setPaintProperty("muni-fill", "fill-color", expr);
     map.setPaintProperty("wards-fill", "fill-color", expr);
   }, [activeMetric, mapReady]);
+
+  // 自治体選択中はベース地図の道路名・水系名ラベルを減光し、選択ポリゴンと
+  // パネルに視線を集める。地名(place)は残す。解除で元の opacity に復元。
+  useEffect(() => {
+    const map = mapRef.current;
+    if (!map || !mapReady) return;
+    const { ids, text, icon } = labelDimRef.current;
+    const dim = !!selectedCode;
+    for (const id of ids) {
+      map.setPaintProperty(id, "text-opacity-transition", { duration: 300, delay: 0 });
+      map.setPaintProperty(id, "icon-opacity-transition", { duration: 300, delay: 0 });
+      map.setPaintProperty(id, "text-opacity", dim ? 0.35 : (text.get(id) ?? 1));
+      map.setPaintProperty(id, "icon-opacity", dim ? 0.3 : (icon.get(id) ?? 1));
+    }
+  }, [selectedCode, mapReady]);
 
   useEffect(() => {
     selectedCodeRef.current = selectedCode;
