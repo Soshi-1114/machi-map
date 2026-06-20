@@ -2281,11 +2281,11 @@
       "isEstimated": true
     },
     "landPrice": {
-      "value": 60000,
+      "value": 0,
       "unit": "円/㎡",
-      "source": "サンプル",
-      "asOf": "2024",
-      "isEstimated": true
+      "source": "対象外（地価公示・地価調査の標準地なし）",
+      "asOf": "-",
+      "isEstimated": false
     },
     "waitlistChildren": {
       "value": 0,
@@ -2449,11 +2449,11 @@
       "isEstimated": true
     },
     "landPrice": {
-      "value": 170000,
+      "value": 0,
       "unit": "円/㎡",
-      "source": "サンプル",
-      "asOf": "2024",
-      "isEstimated": true
+      "source": "対象外（地価公示・地価調査の標準地なし）",
+      "asOf": "-",
+      "isEstimated": false
     },
     "waitlistChildren": {
       "value": 0,
@@ -2533,11 +2533,11 @@
       "isEstimated": true
     },
     "landPrice": {
-      "value": 140000,
+      "value": 0,
       "unit": "円/㎡",
-      "source": "サンプル",
-      "asOf": "2024",
-      "isEstimated": true
+      "source": "対象外（地価公示・地価調査の標準地なし）",
+      "asOf": "-",
+      "isEstimated": false
     },
     "waitlistChildren": {
       "value": 0,

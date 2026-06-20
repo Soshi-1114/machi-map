@@ -2283,9 +2283,9 @@
     "landPrice": {
       "value": 0,
       "unit": "円/㎡",
-      "source": "サンプル",
+      "source": "対象外（帰還困難区域・地価公示等の標準地なし）",
       "asOf": "-",
-      "isEstimated": true
+      "isEstimated": false
     },
     "waitlistChildren": {
       "value": 0,

@@ -7,6 +7,7 @@ import { findRelatedByRent } from "@/lib/related";
 import { SITE, PREF_NAMES_JA, absoluteUrl } from "@/lib/site";
 import { hasRent } from "@/lib/rentColor";
 import { isWaitlistDisclosed } from "@/lib/waitlist";
+import { hasLandPrice } from "@/lib/landPrice";
 import type { Municipality } from "@/lib/types";
 
 type Params = { pref: string; city: string };
@@ -127,7 +128,7 @@ export default async function AreaPage({ params }: { params: Params }) {
         <ul className="hero-stats">
           <HeroStat label="家賃中央値" value={hasRent(m.rent.value) ? `${m.rent.value.toLocaleString()}円/月` : "データなし"} highlight />
           <HeroStat label="人口" value={`${m.population.toLocaleString()}人`} sub={m.populationTrend} />
-          <HeroStat label="地価" value={`${m.landPrice.value.toLocaleString()}円/㎡`} />
+          <HeroStat label="地価" value={hasLandPrice(m.landPrice.value) ? `${m.landPrice.value.toLocaleString()}円/㎡` : "データなし"} />
           <HeroStat label="待機児童" value={isWaitlistDisclosed(m.waitlistChildren) ? `${m.waitlistChildren.value}人` : "データなし"} />
         </ul>
       </header>
@@ -145,7 +146,12 @@ export default async function AreaPage({ params }: { params: Params }) {
               {m.name}の民営借家中央値は<strong>データなし</strong>です（住宅統計の集計対象外）。
             </>
           )}
-          地価（住宅地）は <strong>{m.landPrice.value.toLocaleString()}円/㎡</strong> です。
+          地価（住宅地）は{" "}
+          {hasLandPrice(m.landPrice.value) ? (
+            <><strong>{m.landPrice.value.toLocaleString()}円/㎡</strong> です。</>
+          ) : (
+            <><strong>データなし</strong>です（{m.landPrice.source.replace(/^対象外（/, "").replace(/）$/, "")}）。</>
+          )}
         </p>
         {hasRent(m.rent.value) && (
           <SourceLine source={m.rent.source} asOf={m.rent.asOf} estimated={m.rent.isEstimated} />

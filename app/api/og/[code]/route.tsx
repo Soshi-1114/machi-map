@@ -2,6 +2,7 @@ import { ImageResponse } from "next/og";
 import { getMunicipality } from "@/lib/metrics";
 import { PREF_NAMES_JA } from "@/lib/site";
 import { hasRent } from "@/lib/rentColor";
+import { hasLandPrice } from "@/lib/landPrice";
 
 export const runtime = "edge";
 
@@ -25,7 +26,9 @@ export async function GET(
   const pop = m.population.toLocaleString();
   // ImageResponse の組込フォントには U+33A1 (㎡) のグリフが無いため m² に置換
   const landUnit = (m.landPrice.unit || "").replace("㎡", "m²");
-  const land = `${m.landPrice.value.toLocaleString()}${landUnit ? ` ${landUnit}` : ""}`;
+  const land = hasLandPrice(m.landPrice.value)
+    ? `${m.landPrice.value.toLocaleString()}${landUnit ? ` ${landUnit}` : ""}`
+    : "データなし";
 
   return new ImageResponse(
     (

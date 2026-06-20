@@ -7533,9 +7533,9 @@
     "landPrice": {
       "value": 0,
       "unit": "円/㎡",
-      "source": "サンプル",
+      "source": "対象外（北方領土・地価公示等の標準地なし）",
       "asOf": "-",
-      "isEstimated": true
+      "isEstimated": false
     },
     "waitlistChildren": {
       "value": 0,
@@ -7575,9 +7575,9 @@
     "landPrice": {
       "value": 0,
       "unit": "円/㎡",
-      "source": "サンプル",
+      "source": "対象外（北方領土・地価公示等の標準地なし）",
       "asOf": "-",
-      "isEstimated": true
+      "isEstimated": false
     },
     "waitlistChildren": {
       "value": 0,
@@ -7617,9 +7617,9 @@
     "landPrice": {
       "value": 0,
       "unit": "円/㎡",
-      "source": "サンプル",
+      "source": "対象外（北方領土・地価公示等の標準地なし）",
       "asOf": "-",
-      "isEstimated": true
+      "isEstimated": false
     },
     "waitlistChildren": {
       "value": 0,
@@ -7659,9 +7659,9 @@
     "landPrice": {
       "value": 0,
       "unit": "円/㎡",
-      "source": "サンプル",
+      "source": "対象外（北方領土・地価公示等の標準地なし）",
       "asOf": "-",
-      "isEstimated": true
+      "isEstimated": false
     },
     "waitlistChildren": {
       "value": 0,
@@ -7701,9 +7701,9 @@
     "landPrice": {
       "value": 0,
       "unit": "円/㎡",
-      "source": "サンプル",
+      "source": "対象外（北方領土・地価公示等の標準地なし）",
       "asOf": "-",
-      "isEstimated": true
+      "isEstimated": false
     },
     "waitlistChildren": {
       "value": 0,
@@ -7743,9 +7743,9 @@
     "landPrice": {
       "value": 0,
       "unit": "円/㎡",
-      "source": "サンプル",
+      "source": "対象外（北方領土・地価公示等の標準地なし）",
       "asOf": "-",
-      "isEstimated": true
+      "isEstimated": false
     },
     "waitlistChildren": {
       "value": 0,
