@@ -1,12 +1,10 @@
 name: Data Update (annual / e-Stat + NLNI + CFA)
 
-# 年次更新（CFA Excel 公開後を想定して 3 月初旬）。
-# - e-Stat: 国勢調査 (人口) / 住宅・土地統計 (家賃)
-# - NLNI L01: 地価公示
-# - CFA Excel: 待機児童
-# 各県を並列 fetch → アーティファクト化 → 集約ジョブ(open-pr)が全県分をまとめて
-# 単一 PR を自動作成する。（旧方式は各県が main へ直 push していたが、47県の並列 push が
-# レースで多数失敗したため PR 集約方式に変更）。
+# 年次更新（CFA Excel 公開後を想定して 3 月）。
+# 全国まとめ取得方式: 人口/家賃(e-Stat)と待機児童(CFA)は全国を1回でまとめ取得、
+# 地価(L01)は県別 zip のため逐次取得。1ジョブで data/*.json を生成し単一 PR を自動作成。
+# （旧: 県別47ジョブが各自 e-Stat へ接続 → 毎回2-3県が接続タイムアウト＋CFAを47回DL。
+#  本方式で接続バースト・冗長 DL・push レースをまとめて解消）。
 # preview への反映が必要な時は Deploy Preview ワークフローを手動実行する。
 on:
   schedule:
@@ -32,34 +30,13 @@ env:
   # 令和7年(2025-04-01)版「（参考）資料1～6」= _r7_02.xlsx（fetch-waitlist が読む
   # シート「資料６－１/６－２」を含む。採番は年度で変わるためラベルで選ぶこと）
   CFA_XLSX_URL: "https://www.cfa.go.jp/assets/contents/node/basic_page/field_ref_resources/b0a8057b-34bf-4c20-84fb-ae592708ca9b/1a728dcc/20250828_policies_hoiku_torimatome_r7_02.xlsx"
-  # 国土数値情報 L01 地価公示の年度バージョン（年度ごとに書換）
+  # 国土数値情報 L01 地価公示の年度（年度ごとに書換。VERSION=zip 版、ASOF=出典表示の年。必ず同期）
   L01_VERSION: "26"
+  L01_ASOF: "2026"
 
 jobs:
-  resolve-prefs:
+  update:
     runs-on: ubuntu-latest
-    outputs:
-      prefs: ${{ steps.set.outputs.prefs }}
-    steps:
-      - uses: actions/checkout@v4
-      - id: set
-        run: |
-          input="${{ inputs.pref }}"
-          if [[ -n "$input" ]]; then
-            echo "prefs=[\"$input\"]" >> "$GITHUB_OUTPUT"
-          else
-            list=$(node -e 'import("./scripts/_lib/prefs.mjs").then(m=>console.log(JSON.stringify(Object.keys(m.PREFS))))')
-            echo "prefs=$list" >> "$GITHUB_OUTPUT"
-          fi
-
-  fetch:
-    needs: resolve-prefs
-    runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      max-parallel: 5
-      matrix:
-        pref: ${{ fromJson(needs.resolve-prefs.outputs.prefs) }}
     steps:
       - uses: actions/checkout@v4
 
@@ -70,85 +47,57 @@ jobs:
 
       - run: npm ci
 
-      - name: Read pref code
-        id: prefmeta
+      - name: スコープ決定（pref 入力 or 全県）
+        id: scope
         run: |
-          code=$(node -e 'import("./scripts/_lib/prefs.mjs").then(m=>console.log(m.getPref("${{ matrix.pref }}").code))')
-          echo "code=$code" >> "$GITHUB_OUTPUT"
+          if [[ -n "${{ inputs.pref }}" ]]; then
+            echo "estat=--pref=${{ inputs.pref }}" >> "$GITHUB_OUTPUT"
+            echo "prefs=${{ inputs.pref }}" >> "$GITHUB_OUTPUT"
+          else
+            echo "estat=--all" >> "$GITHUB_OUTPUT"
+            echo "prefs=$(node -e 'import("./scripts/_lib/prefs.mjs").then(m=>console.log(Object.keys(m.PREFS).join(" ")))')" >> "$GITHUB_OUTPUT"
+          fi
 
-      - name: Download NLNI L01 (${{ steps.prefmeta.outputs.code }})
-        run: |
-          mkdir -p /tmp/l01
-          curl -sL -o /tmp/l01.zip \
-            "https://nlftp.mlit.go.jp/ksj/gml/data/L01/L01-${{ env.L01_VERSION }}/L01-${{ env.L01_VERSION }}_${{ steps.prefmeta.outputs.code }}_GML.zip"
-          unzip -o /tmp/l01.zip -d /tmp/l01
-
-      - name: Download CFA waitlist xlsx
+      - name: 待機児童 Excel を取得（全国1回）
         run: curl -sL -o /tmp/cfa_waitlist.xlsx "${{ env.CFA_XLSX_URL }}"
 
-      - name: Fetch population (e-Stat)
-        run: node scripts/fetch-population-2025.mjs --pref=${{ matrix.pref }}
+      - name: 人口（e-Stat 全国一括）
+        run: node scripts/fetch-population-2025.mjs ${{ steps.scope.outputs.estat }}
         env:
           ESTAT_APP_ID: ${{ secrets.ESTAT_APP_ID }}
 
-      - name: Fetch rent (e-Stat)
-        run: node scripts/fetch-rent.mjs --pref=${{ matrix.pref }}
+      - name: 家賃（e-Stat 全国一括）
+        run: node scripts/fetch-rent.mjs ${{ steps.scope.outputs.estat }}
         env:
           ESTAT_APP_ID: ${{ secrets.ESTAT_APP_ID }}
 
-      - name: Fetch land price (NLNI L01)
+      - name: 待機児童（CFA 全国一括）
+        run: WAITLIST_XLSX=/tmp/cfa_waitlist.xlsx node scripts/fetch-waitlist.mjs ${{ steps.scope.outputs.estat }}
+
+      - name: 地価（L01 県別 zip・逐次, DL リトライ＋県別失敗は警告で継続）
         run: |
-          # NLNI zip 解凍後のパスは L01-{ver}_{code}_GML/L01-{ver}_{code}.geojson
-          GEOJSON="/tmp/l01/L01-${{ env.L01_VERSION }}_${{ steps.prefmeta.outputs.code }}_GML/L01-${{ env.L01_VERSION }}_${{ steps.prefmeta.outputs.code }}.geojson"
-          L01_GEOJSON="$GEOJSON" node scripts/fetch-land-price.mjs --pref=${{ matrix.pref }}
+          for pref in ${{ steps.scope.outputs.prefs }}; do
+            code=$(node -e "import('./scripts/_lib/prefs.mjs').then(m=>console.log(m.getPref('$pref').code))")
+            url="https://nlftp.mlit.go.jp/ksj/gml/data/L01/L01-${L01_VERSION}/L01-${L01_VERSION}_${code}_GML.zip"
+            ok=""
+            for i in 1 2 3; do
+              if curl -fsSL -o /tmp/l01.zip "$url"; then ok=1; break; fi
+              echo "L01 DL retry $i: $pref"; sleep 3
+            done
+            if [[ -z "$ok" ]]; then echo "::warning::L01 download failed for $pref"; continue; fi
+            rm -rf /tmp/l01 && unzip -oq /tmp/l01.zip -d /tmp/l01
+            GEOJSON="/tmp/l01/L01-${L01_VERSION}_${code}_GML/L01-${L01_VERSION}_${code}.geojson"
+            L01_GEOJSON="$GEOJSON" node scripts/fetch-land-price.mjs --pref="$pref" || echo "::warning::land price failed for $pref"
+          done
 
-      - name: Fetch waitlist (CFA Excel)
-        run: WAITLIST_XLSX=/tmp/cfa_waitlist.xlsx node scripts/fetch-waitlist.mjs --pref=${{ matrix.pref }}
-
-      # main へは push せず、変更後のデータをアーティファクトに退避（集約ジョブが回収）。
-      # 並列 push のレースを構造的に排除する。
-      - name: Upload fetched data
-        uses: actions/upload-artifact@v4
-        with:
-          name: data-${{ matrix.pref }}
-          path: |
-            data/${{ matrix.pref }}.json
-            data/${{ matrix.pref }}_wards.json
-          if-no-files-found: ignore
-          retention-days: 1
-
-  # 全 fetch ジョブのアーティファクトを回収し、全県分の差分を1コミットにまとめて
-  # 単一 PR を作成する（一部の県が失敗しても成功分は PR に載せる）。
-  open-pr:
-    needs: fetch
-    if: always()
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Download all pref data artifacts
-        uses: actions/download-artifact@v4
-        with:
-          path: /tmp/incoming
-          pattern: data-*
-          merge-multiple: true
-
-      - name: Apply fetched data into data/
-        run: |
-          mkdir -p data
-          # アーティファクト内の階層差異を吸収して data/ にフラットコピー
-          # （ファイル名は {pref}.json / {pref}_wards.json で一意）
-          find /tmp/incoming -name '*.json' -exec cp {} data/ \; 2>/dev/null || true
-          echo "変更ファイル:"; git status --porcelain data/ || true
-
-      - name: Create PR if data changed
+      - name: 差分があれば単一 PR を作成
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           if [[ -z "$(git status --porcelain data/)" ]]; then
-            echo "全県で差分なし。PR は作成しない。"
+            echo "差分なし。PR は作成しない。"
             exit 0
           fi
           BRANCH="data/annual-${{ github.run_id }}"
@@ -158,4 +107,4 @@ jobs:
           git push origin "$BRANCH"
           gh pr create --base main --head "$BRANCH" \
             --title "chore(data): 年次データ更新 (e-Stat / NLNI L01 / CFA)" \
-            --body "annual ワークフロー (run ${{ github.run_id }}) による年次データ更新。各県の fetch 結果を集約した単一 PR です。マージ後、必要なら Deploy Preview を手動実行してください。"
+            --body "annual ワークフロー (run ${{ github.run_id }}) による年次データ更新。人口/家賃/待機児童を全国一括取得、地価を県別取得して集約した単一 PR です。マージ後、必要なら Deploy Preview を手動実行してください。"
