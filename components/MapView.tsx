@@ -5,7 +5,8 @@ import maplibregl, { Map as MapLibreMap, MapMouseEvent } from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
 import type { Municipality, MuniSummary } from "@/lib/types";
 import { PREFS, getPrefByCode } from "@/lib/prefs";
-import { rentStepExpression, RENT_COLORS, RENT_THRESHOLDS, RENT_NODATA_COLOR, hasRent } from "@/lib/rentColor";
+import { RENT_NODATA_COLOR, hasRent } from "@/lib/rentColor";
+import { MAP_METRICS, getMapMetric, DEFAULT_METRIC_KEY, TREND_PROPERTY, type MapMetricKey } from "@/lib/mapMetrics";
 import AreaPanel from "./AreaPanel";
 import MobileSheet from "./MobileSheet";
 
@@ -31,13 +32,15 @@ export default function MapView({ summary }: Props) {
   const selectedCodeRef = useRef<string | null>(null);
   const hoveredCodeRef = useRef<string | null>(null);
   const hoveredSourceRef = useRef<"muni" | "wards" | null>(null);
+  const activeMetricRef = useRef<MapMetricKey>(DEFAULT_METRIC_KEY);
 
   const [selectedCode, setSelectedCode] = useState<string | null>(null);
   const [hazardOn, setHazardOn] = useState(true);
+  const [activeMetric, setActiveMetric] = useState<MapMetricKey>(DEFAULT_METRIC_KEY);
   const [isMobile, setIsMobile] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [mapReady, setMapReady] = useState(false);
-  const [tooltip, setTooltip] = useState<{ x: number; y: number; name: string; rent: number } | null>(null);
+  const [tooltip, setTooltip] = useState<{ x: number; y: number; name: string; label: string; value: string } | null>(null);
   const [layersOpen, setLayersOpen] = useState(false);
   // 選択中自治体のフル詳細（/api/muni/[code] で取得）。サマリには無い人口/地価等を含む
   const [selectedDetail, setSelectedDetail] = useState<Municipality | null>(null);
@@ -81,6 +84,8 @@ export default function MapView({ summary }: Props) {
         f.properties = {
           ...f.properties,
           rent: m.rent,
+          landPrice: m.landPrice,
+          [TREND_PROPERTY]: m.populationTrend ?? "",
           name: m.name,
           hasFloodRisk: m.hasFloodRisk ? 1 : 0,
         };
@@ -171,7 +176,7 @@ export default function MapView({ summary }: Props) {
         source: "muni",
         minzoom: MUNI_MIN_ZOOM,
         paint: {
-          "fill-color": rentStepExpression() as maplibregl.DataDrivenPropertyValueSpecification<string>,
+          "fill-color": getMapMetric(DEFAULT_METRIC_KEY).colorExpression() as maplibregl.DataDrivenPropertyValueSpecification<string>,
           "fill-opacity": [
             "case",
             ["boolean", ["feature-state", "selected"], false], 0.62,
@@ -231,7 +236,7 @@ export default function MapView({ summary }: Props) {
         source: "wards",
         minzoom: WARDS_MIN_ZOOM,
         paint: {
-          "fill-color": rentStepExpression() as maplibregl.DataDrivenPropertyValueSpecification<string>,
+          "fill-color": getMapMetric(DEFAULT_METRIC_KEY).colorExpression() as maplibregl.DataDrivenPropertyValueSpecification<string>,
           "fill-opacity": [
             "case",
             ["boolean", ["feature-state", "selected"], false], 0.62,
@@ -339,11 +344,14 @@ export default function MapView({ summary }: Props) {
           hoveredSourceRef.current = sourceId;
           map.setFeatureState({ source: sourceId, id: code }, { hover: true });
           map.getCanvas().style.cursor = "pointer";
+          const metric = getMapMetric(activeMetricRef.current);
+          const propKey = metric.key === "populationTrend" ? TREND_PROPERTY : metric.key;
           setTooltip({
             x: e.point.x,
             y: e.point.y,
             name: String(f.properties?.name ?? ""),
-            rent: Number(f.properties?.rent ?? 0),
+            label: metric.label,
+            value: metric.formatValue(f.properties?.[propKey]),
           });
         };
       map.on("mousemove", "muni-fill", onPolyMove("muni"));
@@ -446,6 +454,16 @@ export default function MapView({ summary }: Props) {
     map.setLayoutProperty("wards-hazard", "visibility", hazardOn ? "visible" : "none");
   }, [hazardOn, mapReady]);
 
+  // 指標切替：muni/wards の fill-color を選択中メトリックの式に差し替える
+  useEffect(() => {
+    activeMetricRef.current = activeMetric;
+    const map = mapRef.current;
+    if (!map || !mapReady) return;
+    const expr = getMapMetric(activeMetric).colorExpression() as maplibregl.DataDrivenPropertyValueSpecification<string>;
+    map.setPaintProperty("muni-fill", "fill-color", expr);
+    map.setPaintProperty("wards-fill", "fill-color", expr);
+  }, [activeMetric, mapReady]);
+
   useEffect(() => {
     selectedCodeRef.current = selectedCode;
     const map = mapRef.current;
@@ -540,11 +558,7 @@ export default function MapView({ summary }: Props) {
         >
           <div className="map-tooltip-name">{tooltip.name}</div>
           <div className="map-tooltip-rent">
-            {hasRent(tooltip.rent) ? (
-              <>家賃 <strong>{tooltip.rent.toLocaleString()}</strong> 円/月</>
-            ) : (
-              <>家賃 <strong>データなし</strong></>
-            )}
+            {tooltip.label} <strong>{tooltip.value}</strong>
           </div>
         </div>
       )}
@@ -592,32 +606,27 @@ export default function MapView({ summary }: Props) {
       {/* レイヤーパネル（デフォルト展開、ヘッダー右下） */}
       {layersOpen && (
         <div className="layers-panel">
-          <div className="layers-title">表示レイヤー</div>
-          <LayerToggle label="家賃コロプレス" checked disabled />
+          <div className="layers-title">塗り分け指標</div>
+          <div className="metric-radios" role="radiogroup" aria-label="塗り分け指標">
+            {MAP_METRICS.map((m) => (
+              <label key={m.key} className={`metric-radio ${activeMetric === m.key ? "is-active" : ""}`}>
+                <input
+                  type="radio"
+                  name="map-metric"
+                  checked={activeMetric === m.key}
+                  onChange={() => setActiveMetric(m.key)}
+                />
+                <span className="metric-radio-label">{m.label}</span>
+              </label>
+            ))}
+          </div>
+          <div className="layers-title layers-title-sub">オーバーレイ</div>
           <LayerToggle label="災害リスク" checked={hazardOn} onChange={setHazardOn} />
         </div>
       )}
 
-      {/* 凡例 */}
-      <div className="legend">
-        <div className="legend-title">民営借家中央値（円/月）</div>
-        <div className="legend-bar">
-          {RENT_COLORS.map((c) => (
-            <div key={c} className="legend-cell" style={{ background: c }} />
-          ))}
-        </div>
-        <div className="legend-scale">
-          <span>～5万</span>
-          {RENT_THRESHOLDS.slice(1, -1).map((t) => (
-            <span key={t}>{t / 10000}万</span>
-          ))}
-          <span>6.5万～</span>
-        </div>
-        <div className="legend-nodata">
-          <span className="legend-cell" style={{ background: RENT_NODATA_COLOR }} />
-          データなし（住宅統計の集計対象外）
-        </div>
-      </div>
+      {/* 凡例（選択中の指標に追従） */}
+      <MetricLegend metricKey={activeMetric} />
 
       {/* パネル / シート */}
       {!isMobile ? (
@@ -625,6 +634,43 @@ export default function MapView({ summary }: Props) {
       ) : (
         <MobileSheet municipality={selectedDetail} onClose={() => setSelectedCode(null)} />
       )}
+    </div>
+  );
+}
+
+function MetricLegend({ metricKey }: { metricKey: MapMetricKey }) {
+  const metric = getMapMetric(metricKey);
+  const { legend } = metric;
+  return (
+    <div className="legend">
+      <div className="legend-title">{metric.legendTitle}</div>
+      {legend.kind === "numeric" ? (
+        <>
+          <div className="legend-bar">
+            {legend.colors.map((c) => (
+              <div key={c} className="legend-cell" style={{ background: c }} />
+            ))}
+          </div>
+          <div className="legend-scale">
+            {legend.scaleLabels.map((s) => (
+              <span key={s}>{s}</span>
+            ))}
+          </div>
+        </>
+      ) : (
+        <div className="legend-cats">
+          {legend.items.map((it) => (
+            <div key={it.label} className="legend-cat">
+              <span className="legend-cell" style={{ background: it.color }} />
+              {it.label}
+            </div>
+          ))}
+        </div>
+      )}
+      <div className="legend-nodata">
+        <span className="legend-cell" style={{ background: RENT_NODATA_COLOR }} />
+        {metric.nodataLabel}
+      </div>
     </div>
   );
 }

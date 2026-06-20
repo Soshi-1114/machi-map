@@ -285,6 +285,44 @@ button { font-family: inherit; }
 .layer-toggle input:checked + .layer-switch::after { left: 16px; }
 .layer-label { font-size: 13.5px; color: var(--text); font-weight: 500; }
 
+/* 指標切替ラジオ（家賃 / 地価 / 人口トレンド） */
+.metric-radios {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 14px;
+}
+.metric-radio {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 7px 10px;
+  border-radius: var(--radius-sm, 8px);
+  cursor: pointer;
+  user-select: none;
+  transition: background .15s ease;
+}
+.metric-radio:hover { background: rgba(15,23,42,0.04); }
+.metric-radio.is-active { background: rgba(37,99,235,0.10); }
+.metric-radio input { position: absolute; opacity: 0; pointer-events: none; }
+.metric-radio-label { font-size: 13.5px; color: var(--text); font-weight: 500; }
+.metric-radio::before {
+  content: "";
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  border: 2px solid #cbd5e1;
+  box-sizing: border-box;
+  transition: border-color .15s ease, box-shadow .15s ease;
+}
+.metric-radio.is-active::before {
+  border-color: var(--accent);
+  border-width: 5px;
+}
+.metric-radio.is-active .metric-radio-label { font-weight: 700; color: var(--text); }
+.layers-title-sub { margin-top: 2px; }
+
 /* 凡例 — シートに隠れないよう sheet open 時は繰り上げる */
 .legend {
   position: absolute;
@@ -347,6 +385,26 @@ button { font-family: inherit; }
   color: var(--text-muted);
   margin-top: 6px;
   font-variant-numeric: tabular-nums;
+}
+/* カテゴリ凡例（人口トレンド） */
+.legend-cats {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.legend-cat {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11.5px;
+  color: var(--text);
+}
+.legend-cats .legend-cell {
+  flex: 0 0 auto;
+  width: 14px;
+  height: 14px;
+  border-radius: 3px;
+  box-shadow: inset 0 0 0 1px rgba(15,23,42,0.08);
 }
 
 /* MapLibre組み込みUIをモダンに */

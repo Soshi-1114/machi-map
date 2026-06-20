@@ -50,5 +50,7 @@ export type MuniSummary = {
   level?: AdminLevel;
   parentCode?: string;
   rent: number;          // rent.value（円/月）
+  landPrice: number;     // landPrice.value（円/㎡）。<=0 はデータなし
+  populationTrend: Municipality["populationTrend"]; // 人口トレンド（地図の塗り分け用）
   hasFloodRisk: boolean;  // hazard.hasFloodRisk
 };

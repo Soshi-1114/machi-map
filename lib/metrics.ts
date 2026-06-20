@@ -68,6 +68,8 @@ export async function listSummaryAcrossPrefs(): Promise<MuniSummary[]> {
         level: m.level,
         parentCode: m.parentCode,
         rent: m.rent.value,
+        landPrice: m.landPrice.value,
+        populationTrend: m.populationTrend,
         hasFloodRisk: m.hazard.hasFloodRisk,
       });
     }
