@@ -8,7 +8,7 @@ import { fileURLToPath } from "node:url";
 import * as turf from "@turf/turf";
 import { resolvePref } from "./_lib/prefs.mjs";
 import { loadMuni, saveMuni } from "./_lib/data.mjs";
-import { createTileFetcher, loadMuniPolys } from "./_lib/reinfolib.mjs";
+import { createTileFetcher, loadMuniPolys, requireReinfolibKey } from "./_lib/reinfolib.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, "..");
@@ -16,8 +16,7 @@ const ROOT = path.resolve(__dirname, "..");
 const pref = resolvePref(process.argv.slice(2));
 console.log(`pref: ${pref.slug} (${pref.nameJa})`);
 
-const KEY = process.env.REINFOLIB_API_KEY;
-if (!KEY) { console.error("REINFOLIB_API_KEY が未設定"); process.exit(1); }
+const KEY = requireReinfolibKey();
 
 const ZOOM = 13;
 const tiles = createTileFetcher({

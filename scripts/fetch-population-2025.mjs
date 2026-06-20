@@ -9,7 +9,7 @@
 
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { PREFS, getPref } from "./_lib/prefs.mjs";
+import { resolvePrefs } from "./_lib/prefs.mjs";
 import { loadMuni, saveMuni } from "./_lib/data.mjs";
 import { requireEstatAppId, fetchValueByArea } from "./_lib/estat.mjs";
 
@@ -50,14 +50,6 @@ async function runPref(pref) {
 }
 
 async function main() {
-  const argv = process.argv.slice(2);
-  if (argv.includes("--all")) {
-    for (const slug of Object.keys(PREFS)) await runPref(getPref(slug));
-  } else {
-    const a = argv.find((x) => x.startsWith("--pref="));
-    const slug = a ? a.slice("--pref=".length) : (argv.includes("--pref") ? argv[argv.indexOf("--pref") + 1] : null);
-    if (!slug) { console.error("--pref=<slug> か --all を指定"); process.exit(1); }
-    await runPref(getPref(slug));
-  }
+  for (const pref of resolvePrefs(process.argv.slice(2))) await runPref(pref);
 }
 main().catch((e) => { console.error(e); process.exit(1); });

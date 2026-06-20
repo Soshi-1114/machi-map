@@ -9,6 +9,13 @@ import * as turf from "@turf/turf";
 
 export const REINFOLIB_BASE = "https://www.reinfolib.mlit.go.jp/ex-api/external";
 
+/** REINFOLIB_API_KEY を取得。未設定なら終了。 */
+export function requireReinfolibKey() {
+  const key = process.env.REINFOLIB_API_KEY;
+  if (!key) { console.error("REINFOLIB_API_KEY が未設定"); process.exit(1); }
+  return key;
+}
+
 // ===== Slippy map タイル座標 <-> 経緯度 =====
 export function lng2tileX(lng, z) {
   return Math.floor(((lng + 180) / 360) * Math.pow(2, z));

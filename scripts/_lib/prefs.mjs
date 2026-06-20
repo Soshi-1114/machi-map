@@ -350,6 +350,13 @@ export function resolvePref(argv) {
   return getPref(process.env.PREF || "saitama");
 }
 
+// CLI から複数 pref を解決。--all で全47県、それ以外は resolvePref と同じ単一解決
+// （--pref / PREF / デフォルト saitama）。全県を回すスクリプト向け。
+export function resolvePrefs(argv) {
+  if (argv.includes("--all")) return Object.keys(PREFS).map((slug) => getPref(slug));
+  return [resolvePref(argv)];
+}
+
 /** data/{pref}.json と data/{pref}_wards.json のパスを返す */
 export function dataPaths(rootDir, pref) {
   return {
