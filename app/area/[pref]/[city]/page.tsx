@@ -173,7 +173,7 @@ export default async function AreaPage({ params }: { params: Params }) {
           人口は <strong>{m.population.toLocaleString()}人</strong>（{m.populationTrend}傾向）。
         </p>
         <SourceLine source={m.waitlistChildren.source} asOf={m.waitlistChildren.asOf} estimated={m.waitlistChildren.isEstimated} />
-        <p className="detail-source-line" style={{ marginTop: 4 }}>人口は令和2年国勢調査</p>
+        <p className="detail-source-line" style={{ marginTop: 4 }}>人口は令和7年(2025)国勢調査 速報</p>
       </section>
 
       <section className="detail-section">
@@ -229,7 +229,7 @@ export default async function AreaPage({ params }: { params: Params }) {
       <section className="detail-section">
         <h2 className="detail-h2">出典・データについて</h2>
         <p className="detail-p" style={{ fontSize: 13, color: "var(--text-muted)" }}>
-          本ページの数値は MVP 段階のサンプル値です（{m.rent.source}）。本番版では reinfolib（不動産情報ライブラリ）と e-Stat（政府統計）から取得した数値に置き換えます。
+          本ページの数値は政府統計・国土数値情報の実データです。家賃は住宅・土地統計調査、人口は国勢調査（ともに e-Stat 経由）、地価は地価公示・地価調査、ハザード・生活インフラは不動産情報ライブラリ（reinfolib）／国土数値情報、待機児童はこども家庭庁の公表値に基づきます。データのない項目は推計で埋めず「データなし／対象外」と明示しています。
         </p>
       </section>
 
