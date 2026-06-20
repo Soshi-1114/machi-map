@@ -288,11 +288,15 @@ button { font-family: inherit; }
   to { opacity: 1; transform: translateY(0); }
 }
 .is-panel-open .layers-panel { right: calc(380px + 30px); }
+/* レイヤーパネル(右上)・凡例(左下)はカード体裁を共通化。タイトルも
+   下の .legend-title と同一スペックに揃え、両者の視覚的な一貫性を出す。
+   ※モバイルではレイヤーパネルが閉のため凡例は独立配置が必須。よって
+   凡例のパネル内統合は行わず、スタイル統一に留める。 */
 .layers-title {
   font-size: 11px;
   font-weight: 800;
   color: var(--text-muted);
-  letter-spacing: 0.10em;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
   margin-bottom: 12px;
 }
@@ -405,10 +409,11 @@ button { font-family: inherit; }
 }
 .legend-title {
   font-size: 11px;
+  font-weight: 800;
   color: var(--text-muted);
-  font-weight: 700;
-  margin-bottom: 8px;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 10px;
 }
 .legend-bar {
   display: flex;
