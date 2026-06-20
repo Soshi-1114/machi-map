@@ -1,8 +1,9 @@
 name: Data Update (quarterly / reinfolib)
 
 # reinfolib 由来データ（災害リスク + 駅・保育・医療）を四半期ごとに更新。
-# データ取得と main への commit のみ行う。preview への反映が必要な時は
-# Deploy Preview ワークフローを手動実行する（自動 deploy はデプロイ数抑制のため廃止）。
+# 各県を並列 fetch → アーティファクト化 → 集約ジョブ(open-pr)が全県分をまとめて
+# 単一 PR を自動作成する（旧: 各県が main へ直 push → 並列レースで失敗するため変更）。
+# preview への反映が必要な時は Deploy Preview ワークフローを手動実行する。
 on:
   schedule:
     # 1/1・4/1・7/1・10/1 の 04:00 JST（= 各前日 19:00 UTC）。
@@ -18,6 +19,7 @@ on:
 
 permissions:
   contents: write
+  pull-requests: write
 
 concurrency:
   group: data-update-quarterly
@@ -75,25 +77,53 @@ jobs:
         env:
           REINFOLIB_API_KEY: ${{ secrets.REINFOLIB_API_KEY }}
 
-      # 各 pref ごとに diff を確認 → あれば commit & push
-      - name: Detect diff & commit
-        id: commit
+      # main へは push せず、変更後データをアーティファクトに退避（集約ジョブが回収）。
+      - name: Upload fetched data
+        uses: actions/upload-artifact@v4
+        with:
+          name: data-${{ matrix.pref }}
+          path: |
+            data/${{ matrix.pref }}.json
+            data/${{ matrix.pref }}_wards.json
+          if-no-files-found: ignore
+          retention-days: 1
+
+  # 全 fetch ジョブのアーティファクトを回収し、全県分の差分を1コミットにまとめて単一 PR を作成。
+  open-pr:
+    needs: fetch
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download all pref data artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: /tmp/incoming
+          pattern: data-*
+          merge-multiple: true
+
+      - name: Apply fetched data into data/
+        run: |
+          mkdir -p data
+          find /tmp/incoming -name '*.json' -exec cp {} data/ \; 2>/dev/null || true
+          echo "変更ファイル:"; git status --porcelain data/ || true
+
+      - name: Create PR if data changed
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          if [[ -n "$(git status --porcelain data/${{ matrix.pref }}.json data/${{ matrix.pref }}_wards.json 2>/dev/null)" ]]; then
-            git add data/${{ matrix.pref }}.json data/${{ matrix.pref }}_wards.json 2>/dev/null || true
-            git commit -m "chore(data): ${{ matrix.pref }} quarterly reinfolib update"
-            # 並列 job が同時に main へ push するため、rebase + push をリトライ（レース対策）
-            pushed=""
-            for i in $(seq 1 8); do
-              if git pull --rebase origin main && git push origin HEAD:main; then pushed=1; break; fi
-              echo "push attempt $i failed (likely concurrent push); retrying..."
-              sleep $(( (RANDOM % 6) + 2 ))
-            done
-            if [[ -z "$pushed" ]]; then echo "::error::push failed after retries for ${{ matrix.pref }}"; exit 1; fi
-            echo "changed=true" >> "$GITHUB_OUTPUT"
-          else
-            echo "No data diff for ${{ matrix.pref }}"
-            echo "changed=false" >> "$GITHUB_OUTPUT"
+          if [[ -z "$(git status --porcelain data/)" ]]; then
+            echo "全県で差分なし。PR は作成しない。"
+            exit 0
           fi
+          BRANCH="data/quarterly-${{ github.run_id }}"
+          git switch -c "$BRANCH"
+          git add data/
+          git commit -m "chore(data): quarterly reinfolib update (run ${{ github.run_id }})"
+          git push origin "$BRANCH"
+          gh pr create --base main --head "$BRANCH" \
+            --title "chore(data): 四半期データ更新 (reinfolib 災害/生活インフラ)" \
+            --body "quarterly ワークフロー (run ${{ github.run_id }}) による更新。各県の fetch 結果を集約した単一 PR です。マージ後、必要なら Deploy Preview を手動実行してください。"
