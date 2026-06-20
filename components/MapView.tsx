@@ -540,6 +540,18 @@ export default function MapView({ summary }: Props) {
     return () => { aborted = true; };
   }, [selectedCode]);
 
+  // サイドパネル余白用：選択中自治体と同県・同階層で家賃中央値が近い上位3件。
+  const relatedNearby = useMemo(() => {
+    const m = selectedDetail;
+    if (!m || !hasRent(m.rent.value)) return [];
+    const level = m.level ?? "muni";
+    const myRent = m.rent.value;
+    return [...municipalities, ...wards]
+      .filter((x) => (x.level ?? "muni") === level && x.pref === m.pref && x.code !== m.code && hasRent(x.rent))
+      .sort((a, b) => Math.abs(a.rent - myRent) - Math.abs(b.rent - myRent))
+      .slice(0, 3);
+  }, [selectedDetail, municipalities, wards]);
+
   const filtered = useMemo(() => {
     const q = searchQuery.trim();
     if (!q) return [];
@@ -698,7 +710,7 @@ export default function MapView({ summary }: Props) {
 
       {/* パネル / シート */}
       {!isMobile ? (
-        <AreaPanel municipality={selectedDetail} selectedCode={selectedCode} onClose={() => setSelectedCode(null)} />
+        <AreaPanel municipality={selectedDetail} selectedCode={selectedCode} related={relatedNearby} onClose={() => setSelectedCode(null)} />
       ) : (
         <MobileSheet municipality={selectedDetail} onClose={() => setSelectedCode(null)} />
       )}

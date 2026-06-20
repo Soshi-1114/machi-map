@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import type { Municipality } from "@/lib/types";
+import type { Municipality, MuniSummary } from "@/lib/types";
 import { buildSummary } from "@/lib/summary";
 import { hasRent } from "@/lib/rentColor";
 import { isWaitlistDisclosed } from "@/lib/waitlist";
@@ -12,10 +12,12 @@ type Props = {
   municipality: Municipality | null;
   // 選択中だが詳細取得待ちの間は空状態を出さない（クリック直後のチラつき防止）
   selectedCode?: string | null;
+  // 同県・同階層で家賃が近い自治体（CTA 下の余白に置くクイックリンク）
+  related?: MuniSummary[];
   onClose: () => void;
 };
 
-export default function AreaPanel({ municipality, selectedCode, onClose }: Props) {
+export default function AreaPanel({ municipality, selectedCode, related, onClose }: Props) {
   if (!municipality) {
     if (selectedCode) return null; // 取得中
     // 未選択時：操作を促す空状態ガイド（AreaPanel は PC のみ描画される）
@@ -47,6 +49,23 @@ export default function AreaPanel({ municipality, selectedCode, onClose }: Props
         <Link href={`/area/${m.pref}/${m.code}`} className="cta-button">
           詳細を見る →
         </Link>
+        {related && related.length > 0 && (
+          <div className="panel-related">
+            <div className="panel-related-title">家賃が近い近隣の自治体</div>
+            <ul className="panel-related-list">
+              {related.map((r) => (
+                <li key={r.code}>
+                  <Link href={`/area/${r.pref}/${r.code}`} className="panel-related-item">
+                    <span className="panel-related-name">{r.name}</span>
+                    <span className="panel-related-rent">
+                      {hasRent(r.rent) ? `${r.rent.toLocaleString()} 円/月` : "データなし"}
+                    </span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
       </div>
     </aside>
   );

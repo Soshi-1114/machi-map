@@ -697,6 +697,31 @@ button { font-family: inherit; }
   text-decoration: none;
 }
 
+/* サイドパネル下部の近隣自治体クイックリンク（余白の活用＋回遊導線） */
+.panel-related { margin-top: 22px; }
+.panel-related-title {
+  font-size: 11px;
+  font-weight: 800;
+  color: var(--text-muted);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+.panel-related-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+.panel-related-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 14px;
+  background: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  transition: border-color .15s ease, background .15s ease;
+}
+.panel-related-item:hover { background: var(--accent-soft); border-color: rgba(37,99,235,0.2); text-decoration: none; }
+.panel-related-name { font-size: 13.5px; font-weight: 700; color: var(--text); }
+.panel-related-rent { font-size: 12px; color: var(--text-muted); font-variant-numeric: tabular-nums; }
+
 /* ========== MobileSheet (SP) ========== */
 /* compact: 非モーダル、地図と並列。half/full: モーダル(scrim付き) */
 .sheet-scrim {
