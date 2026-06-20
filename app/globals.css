@@ -67,6 +67,41 @@ button { font-family: inherit; }
 .map-root { position: relative; width: 100%; height: 100%; background: var(--bg); }
 .map-canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
 
+/* 初回描画までのローディングオーバーレイ */
+.map-loading {
+  position: absolute;
+  inset: 0;
+  z-index: 11;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  background: var(--bg);
+  animation: map-loading-fade .25s ease;
+}
+@keyframes map-loading-fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.map-loading-spinner {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 3px solid var(--border);
+  border-top-color: var(--accent);
+  animation: map-loading-spin .8s linear infinite;
+}
+@keyframes map-loading-spin {
+  to { transform: rotate(360deg); }
+}
+.map-loading-text {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-muted);
+  letter-spacing: 0.02em;
+}
+
 /* 統合ヘッダー — 画面上部に固定。KurashiMap + 検索 + レイヤー切替 */
 .app-header {
   position: absolute;
@@ -169,12 +204,19 @@ button { font-family: inherit; }
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 7px;
   background: #f1f5f9;
   border: 1px solid transparent;
   border-radius: var(--radius-pill);
   color: var(--text-muted);
   cursor: pointer;
   transition: background .15s, color .15s, border-color .15s;
+}
+/* 現在の塗り分け指標名はボタンに併記（PC のみ）。閉じていても切替可能と分かる */
+.layers-btn-label { display: none; }
+@media (min-width: 768px) {
+  .app-header-layers-btn { width: auto; padding: 0 14px; }
+  .layers-btn-label { display: inline; font-size: 13px; font-weight: 600; white-space: nowrap; }
 }
 .app-header-layers-btn:hover { background: #e2e8f0; color: var(--text); }
 .app-header-layers-btn.is-active {
@@ -339,6 +381,15 @@ button { font-family: inherit; }
   min-width: 220px;
   transition: bottom .25s cubic-bezier(0.16, 1, 0.3, 1);
 }
+/* SP（シート未展開）では凡例をアトリビューション帯の上へ逃がし、横幅も縮める。
+   .is-sheet-open .legend はクラス2つで特異度が高く、シート展開時は 216px が優先される。 */
+@media (max-width: 768px) {
+  .legend {
+    bottom: calc(40px + env(safe-area-inset-bottom));
+    min-width: 168px;
+    padding: 10px 12px 8px;
+  }
+}
 /* SP で sheet open 時、凡例と MapLibre 標準コントロールを sheet 上に繰り上げる */
 .is-sheet-open .legend {
   bottom: calc(216px + env(safe-area-inset-bottom));
@@ -444,6 +495,33 @@ button { font-family: inherit; }
 .map-tooltip-rent strong { color: #fff; font-weight: 700; }
 
 /* ========== AreaPanel (PC) ========== */
+/* 未選択時の操作ガイド（PC）。レイヤーパネル/凡例を避けて下部中央に控えめに置く */
+.area-hint {
+  position: absolute;
+  left: 50%;
+  bottom: calc(22px + env(safe-area-inset-bottom));
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  max-width: min(520px, 60vw);
+  padding: 10px 16px;
+  background: var(--surface);
+  backdrop-filter: saturate(180%) blur(16px);
+  -webkit-backdrop-filter: saturate(180%) blur(16px);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  box-shadow: var(--shadow-md);
+  color: var(--text-muted);
+  font-size: 13px;
+  font-weight: 500;
+  z-index: 5;
+  pointer-events: none;
+  animation: map-loading-fade .4s ease;
+}
+.area-hint svg { color: var(--accent); flex-shrink: 0; }
+.area-hint strong { color: var(--text); font-weight: 700; }
+
 .area-panel {
   position: absolute;
   top: calc(var(--header-h) + env(safe-area-inset-top) + 14px);

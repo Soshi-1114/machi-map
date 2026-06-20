@@ -54,13 +54,16 @@ function formatYen(raw: unknown, unit: string): string {
   return `${v.toLocaleString()} ${unit}`;
 }
 
-// 人口トレンドの5カテゴリ（減少→増加）を赤→緑の発散配色で。
+// 人口トレンドの5カテゴリ（減少→増加）を紫→緑の発散配色で。
+// 赤緑ダイバージングは P/D 型色覚で識別困難なため、色覚多様性に配慮した
+// ColorBrewer PRGn（紫⇔緑）を採用。「増加=緑」の直感は維持しつつ減少側を紫に。
+// 横ばいは near-white として、データなし（gray-300 #d1d5db）と明確に分離する。
 const TREND_ITEMS = [
-  { value: "減少", color: "#dc2626" }, // red-600
-  { value: "微減", color: "#fca5a5" }, // red-300
-  { value: "横ばい", color: "#e5e7eb" }, // gray-200
-  { value: "微増", color: "#86efac" }, // green-300
-  { value: "増加", color: "#16a34a" }, // green-600
+  { value: "減少", color: "#762a83" }, // PRGn purple-700
+  { value: "微減", color: "#af8dc3" }, // PRGn purple-300
+  { value: "横ばい", color: "#f7f7f7" }, // PRGn neutral（near-white）
+  { value: "微増", color: "#7fbf7b" }, // PRGn green-300
+  { value: "増加", color: "#1b7837" }, // PRGn green-700
 ] as const;
 
 export const MAP_METRICS: readonly MapMetric[] = [

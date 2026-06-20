@@ -40,6 +40,8 @@ export default function MapView({ summary }: Props) {
   const [isMobile, setIsMobile] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [mapReady, setMapReady] = useState(false);
+  // 初回ビューのポリゴンが描画され切るまで true にしない（凡例先行・白地図対策）
+  const [firstPaintReady, setFirstPaintReady] = useState(false);
   const [tooltip, setTooltip] = useState<{ x: number; y: number; name: string; label: string; value: string } | null>(null);
   const [layersOpen, setLayersOpen] = useState(false);
   // 選択中自治体のフル詳細（/api/muni/[code] で取得）。サマリには無い人口/地価等を含む
@@ -63,6 +65,12 @@ export default function MapView({ summary }: Props) {
     detect();
     window.addEventListener("resize", detect);
     return () => window.removeEventListener("resize", detect);
+  }, []);
+
+  // PC は塗り分け指標が核なのでレイヤーパネルを初期表示（発見性向上）。
+  // SP は画面が狭いため閉じたまま。マウント後に一度だけ設定し hydration 不一致を避ける。
+  useEffect(() => {
+    if (window.innerWidth >= 768) setLayersOpen(true);
   }, []);
 
   useEffect(() => {
@@ -427,9 +435,20 @@ export default function MapView({ summary }: Props) {
         if (slugs.length) void ensurePrefs(slugs);
       }
       map.on("moveend", checkViewport);
-      checkViewport(); // 初期ビュー(埼玉付近)の県をロード
 
       setMapReady(true);
+
+      // 初期ビュー(埼玉付近)の県ポリゴンを await し、描画が落ち着いてから
+      // ローディングオーバーレイを外す。idle が来ない環境向けに失敗保険も置く。
+      if (map.getZoom() >= MUNI_MIN_ZOOM) {
+        const b = map.getBounds();
+        const vb = [b.getWest(), b.getSouth(), b.getEast(), b.getNorth()];
+        const initSlugs: string[] = [];
+        for (const [slug, bb] of prefBboxBySlug) if (bboxHit(vb, bb)) initSlugs.push(slug);
+        await ensurePrefs(initSlugs);
+      }
+      map.once("idle", () => setFirstPaintReady(true));
+      setTimeout(() => setFirstPaintReady(true), 6000);
     });
 
     mapRef.current = map;
@@ -550,6 +569,14 @@ export default function MapView({ summary }: Props) {
     <div className={rootClass}>
       <div ref={containerRef} className="map-canvas" />
 
+      {/* 初回描画までのローディングオーバーレイ（白地図・凡例先行の体感を解消） */}
+      {!firstPaintReady && (
+        <div className="map-loading" aria-hidden="true">
+          <div className="map-loading-spinner" />
+          <div className="map-loading-text">地図を読み込み中…</div>
+        </div>
+      )}
+
       {/* ホバーツールチップ */}
       {tooltip && !isMobile && (
         <div
@@ -593,14 +620,17 @@ export default function MapView({ summary }: Props) {
             </ul>
           )}
         </div>
-        <button
-          className={`app-header-layers-btn ${layersOpen ? "is-active" : ""}`}
-          aria-label="レイヤーを開閉"
-          aria-expanded={layersOpen}
-          onClick={() => setLayersOpen((v) => !v)}
-        >
-          <LayersIcon />
-        </button>
+        {firstPaintReady && (
+          <button
+            className={`app-header-layers-btn ${layersOpen ? "is-active" : ""}`}
+            aria-label="レイヤーを開閉"
+            aria-expanded={layersOpen}
+            onClick={() => setLayersOpen((v) => !v)}
+          >
+            <LayersIcon />
+            <span className="layers-btn-label">{getMapMetric(activeMetric).label}</span>
+          </button>
+        )}
       </header>
 
       {/* レイヤーパネル（デフォルト展開、ヘッダー右下） */}
@@ -625,12 +655,12 @@ export default function MapView({ summary }: Props) {
         </div>
       )}
 
-      {/* 凡例（選択中の指標に追従） */}
-      <MetricLegend metricKey={activeMetric} />
+      {/* 凡例（選択中の指標に追従）。初回描画完了まで出さず「凡例だけ先行」を防ぐ */}
+      {firstPaintReady && <MetricLegend metricKey={activeMetric} />}
 
       {/* パネル / シート */}
       {!isMobile ? (
-        <AreaPanel municipality={selectedDetail} onClose={() => setSelectedCode(null)} />
+        <AreaPanel municipality={selectedDetail} selectedCode={selectedCode} onClose={() => setSelectedCode(null)} />
       ) : (
         <MobileSheet municipality={selectedDetail} onClose={() => setSelectedCode(null)} />
       )}
