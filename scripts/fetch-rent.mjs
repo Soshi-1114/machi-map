@@ -5,17 +5,14 @@
 
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { resolvePref } from "./_lib/prefs.mjs";
-import { loadMuni, saveMuni } from "./_lib/data.mjs";
+import { resolvePrefs } from "./_lib/prefs.mjs";
+import { loadAllMuni, saveMuni } from "./_lib/data.mjs";
 import { requireEstatAppId, fetchStatsValues } from "./_lib/estat.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, "..");
 
 const APP_ID = requireEstatAppId();
-
-const pref = resolvePref(process.argv.slice(2));
-console.log(`pref: ${pref.slug} (${pref.nameJa})`);
 
 const STATS_DATA_ID = "0004021470";
 const RENT_BIN_MIDPOINT = {
@@ -49,30 +46,29 @@ function weightedMean(distribution) {
 }
 
 async function main() {
-  const { muni, wards, codes, paths } = await loadMuni(ROOT, pref);
-
-  console.log(`Fetching rent dist for ${codes.length} areas...`);
+  // 対象 pref 群の全コードを1リクエスト群でまとめ取得し、各 muni に加重平均家賃を分配。
+  const prefs = resolvePrefs(process.argv.slice(2));
+  const { entries, byCode, codes } = await loadAllMuni(ROOT, prefs);
+  console.log(`対象 ${prefs.length}県 / ${codes.length}自治体 の家賃分布を一括取得...`);
   const byArea = await fetchDistribution(codes);
-  console.log(`Got ${byArea.size} areas with data`);
+  console.log(`データ取得: ${byArea.size}自治体`);
 
   const missing = [];
-  for (const list of [muni, wards]) {
-    for (const m of list) {
-      const dist = byArea.get(m.code);
-      const mean = dist ? weightedMean(dist) : null;
-      if (mean == null) { missing.push(`${m.code} ${m.name}`); continue; }
-      m.rent = {
-        value: mean,
-        unit: "円/月",
-        source: "住宅・土地統計調査（加重平均）",
-        asOf: "2023",
-        isEstimated: false,
-      };
-    }
+  for (const [code, m] of byCode) {
+    const dist = byArea.get(code);
+    const mean = dist ? weightedMean(dist) : null;
+    if (mean == null) { missing.push(`${code} ${m.name}`); continue; }
+    m.rent = {
+      value: mean,
+      unit: "円/月",
+      source: "住宅・土地統計調査（加重平均）",
+      asOf: "2023",
+      isEstimated: false,
+    };
   }
   if (missing.length) console.warn(`Missing ${missing.length}:`, missing.join(", "));
 
-  await saveMuni(paths, muni, wards);
+  for (const { paths, muni, wards } of entries) await saveMuni(paths, muni, wards);
 }
 
 main().catch((e) => { console.error(e); process.exit(1); });

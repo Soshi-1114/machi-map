@@ -10,7 +10,7 @@
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { resolvePrefs } from "./_lib/prefs.mjs";
-import { loadMuni, saveMuni } from "./_lib/data.mjs";
+import { loadAllMuni, saveMuni } from "./_lib/data.mjs";
 import { requireEstatAppId, fetchValueByArea } from "./_lib/estat.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -31,25 +31,26 @@ function trendOf(ratePct) {
   return "減少";
 }
 
-async function runPref(pref) {
-  const { muni, wards, all, codes, paths } = await loadMuni(ROOT, pref);
+async function main() {
+  // 対象 pref 群の全コードを 1 リクエスト群（estat 側で100件チャンク）でまとめ取得し、
+  // 各 muni に分配する。--all なら全国 ~1900 自治体を ~19req/指標で取得（県別ループより
+  // 接続回数・冗長を大幅削減）。
+  const prefs = resolvePrefs(process.argv.slice(2));
+  const { entries, byCode, codes } = await loadAllMuni(ROOT, prefs);
+  console.log(`対象 ${prefs.length}県 / ${codes.length}自治体 を一括取得`);
 
   const pop2025 = await fetchValueByArea(APP_ID, POP_2025, codes, { cdCat01: "0" });
   const rate = await fetchValueByArea(APP_ID, CHG_2025, codes, { cdTab: "2025_35" });
 
   const dist = {};
   let popUpd = 0, trendUpd = 0, miss = 0;
-  for (const m of all) {
-    const p = pop2025.get(m.code);
+  for (const [code, m] of byCode) {
+    const p = pop2025.get(code);
     if (p != null) { m.population = p; popUpd++; } else miss++;
-    const t = trendOf(rate.get(m.code));
+    const t = trendOf(rate.get(code));
     if (t) { m.populationTrend = t; trendUpd++; dist[t] = (dist[t] || 0) + 1; }
   }
-  await saveMuni(paths, muni, wards);
-  console.log(`${pref.slug}: pop更新${popUpd}/${all.length}(欠${miss}) trend${trendUpd} | ${JSON.stringify(dist)}`);
-}
-
-async function main() {
-  for (const pref of resolvePrefs(process.argv.slice(2))) await runPref(pref);
+  for (const { paths, muni, wards } of entries) await saveMuni(paths, muni, wards);
+  console.log(`pop更新${popUpd}/${byCode.size}(欠${miss}) trend${trendUpd} | ${JSON.stringify(dist)}`);
 }
 main().catch((e) => { console.error(e); process.exit(1); });

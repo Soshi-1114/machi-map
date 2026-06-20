@@ -1,8 +1,10 @@
-// 国土数値情報 L01（地価公示）令和7年版から、市区町村別の住宅地平均地価を計算。
+// 国土数値情報 L01（地価公示）から、市区町村別の住宅地平均地価を計算。
+// 年度は L01_VERSION（例 26=令和8年/2026）と L01_ASOF（出典表示の年, 既定 "2026"）で指定。
+// CI では L01_VERSION / L01_ASOF をワークフロー env から渡す（両者を必ず同期させること）。
 //
 // 事前:
-//   curl -L -o /tmp/L01_25_{prefCode}.zip https://nlftp.mlit.go.jp/ksj/gml/data/L01/L01-25/L01-25_{prefCode}_GML.zip
-//   unzip -o /tmp/L01_25_{prefCode}.zip -d /tmp/L01_25_{prefCode}
+//   curl -L -o /tmp/L01_26_{prefCode}.zip https://nlftp.mlit.go.jp/ksj/gml/data/L01/L01-26/L01-26_{prefCode}_GML.zip
+//   unzip -o /tmp/L01_26_{prefCode}.zip -d /tmp/L01_26_{prefCode}
 //
 // 実行: node scripts/fetch-land-price.mjs --pref=saitama
 //       L01_GEOJSON=path/to/L01-XX_NN.geojson node scripts/fetch-land-price.mjs
@@ -20,14 +22,18 @@ const ROOT = path.resolve(__dirname, "..");
 const pref = resolvePref(process.argv.slice(2));
 console.log(`pref: ${pref.slug} (${pref.nameJa}, code=${pref.code})`);
 
+// 年度: L01_VERSION（zip バージョン, 例 26）/ L01_ASOF（出典表示の年, 例 2026）。
+const L01_VERSION = process.env.L01_VERSION || "26";
+const L01_ASOF = process.env.L01_ASOF || "2026";
+
 const L01_PATH =
   process.env.L01_GEOJSON ||
   process.argv.find((a) => a.endsWith(".geojson")) ||
-  `/tmp/L01_25_${pref.code}/L01-25_${pref.code}_GML/L01-25_${pref.code}.geojson`;
+  `/tmp/L01_${L01_VERSION}_${pref.code}/L01-${L01_VERSION}_${pref.code}_GML/L01-${L01_VERSION}_${pref.code}.geojson`;
 
 if (!existsSync(L01_PATH)) {
   console.error(`L01 geojson not found: ${L01_PATH}`);
-  console.error(`Download: curl -L -o /tmp/L01_25_${pref.code}.zip https://nlftp.mlit.go.jp/ksj/gml/data/L01/L01-25/L01-25_${pref.code}_GML.zip && unzip -o /tmp/L01_25_${pref.code}.zip -d /tmp/L01_25_${pref.code}`);
+  console.error(`Download: curl -L -o /tmp/L01_${L01_VERSION}_${pref.code}.zip https://nlftp.mlit.go.jp/ksj/gml/data/L01/L01-${L01_VERSION}/L01-${L01_VERSION}_${pref.code}_GML.zip && unzip -o /tmp/L01_${L01_VERSION}_${pref.code}.zip -d /tmp/L01_${L01_VERSION}_${pref.code}`);
   process.exit(1);
 }
 
@@ -94,7 +100,7 @@ async function main() {
     for (const m of list) {
       const a1 = collect(groups, m.code);
       if (a1) {
-        m.landPrice = { value: mean(a1), unit: "円/㎡", source: "地価公示（住宅地平均）", asOf: "2025", isEstimated: false };
+        m.landPrice = { value: mean(a1), unit: "円/㎡", source: "地価公示（住宅地平均）", asOf: L01_ASOF, isEstimated: false };
         fromL01++; continue;
       }
       const a2 = collect(groups2, m.code);

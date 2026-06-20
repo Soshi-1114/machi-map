@@ -3,20 +3,19 @@
 // シート「資料６－１/６－２」を読むため「（参考）資料1～6」(_r7_02.xlsx)を使う。
 //
 // 事前: curl -L -o /tmp/cfa_waitlist.xlsx https://www.cfa.go.jp/.../20250828_policies_hoiku_torimatome_r7_02.xlsx
-// 実行: node scripts/fetch-waitlist.mjs --pref=saitama
+// 実行: node scripts/fetch-waitlist.mjs --pref=saitama   /   --all（全国1ファイルから全県反映）
 
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { existsSync } from "node:fs";
 import XLSX from "xlsx";
-import { resolvePref } from "./_lib/prefs.mjs";
+import { resolvePrefs } from "./_lib/prefs.mjs";
 import { loadMuni, saveMuni } from "./_lib/data.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, "..");
 
-const pref = resolvePref(process.argv.slice(2));
-console.log(`pref: ${pref.slug} (${pref.nameJa})`);
+const prefs = resolvePrefs(process.argv.slice(2));
 
 const XLSX_PATH = process.env.WAITLIST_XLSX ||
   process.argv.find((a) => a.endsWith(".xlsx")) ||
@@ -49,32 +48,21 @@ function extractFromR6(ws) {
   return results;
 }
 
-async function main() {
-  const wb = XLSX.readFile(XLSX_PATH);
-  const sheets = ["資料６－１", "資料６－２"];
-  const all = new Map();
-  for (const name of sheets) {
-    const ws = wb.Sheets[name]; if (!ws) continue;
-    const got = extractFromR6(ws);
-    for (const [k, v] of got) all.set(k, v);
-    console.log(`  ${name}: ${got.size} entries`);
-  }
+const META = {
+  unit: "人",
+  source: "こども家庭庁 保育所等関連状況取りまとめ",
+  asOf: "2025-04-01",
+  isEstimated: false,
+};
 
+async function applyPref(pref, all) {
   const targetPref = new Map();
   for (const [k, v] of all) {
     const [p, m] = k.split("|");
     if (p === pref.nameJa) targetPref.set(m, v);
   }
-  console.log(`\n${pref.nameJa}内 待機児童≠0 自治体: ${targetPref.size}`);
 
   const { muni, wards, paths } = await loadMuni(ROOT, pref);
-
-  const META = {
-    unit: "人",
-    source: "こども家庭庁 保育所等関連状況取りまとめ",
-    asOf: "2025-04-01",
-    isEstimated: false,
-  };
 
   let nonZero = 0, zero = 0;
   for (const m of muni) {
@@ -82,7 +70,6 @@ async function main() {
     if (v != null) { m.waitlistChildren = { value: v, ...META }; nonZero++; }
     else { m.waitlistChildren = { value: 0, ...META }; zero++; }
   }
-  console.log(`muni: ${nonZero} 実値非0、${zero} 実値0`);
 
   // 政令市親が 0 ならば子区も 0、非0なら推計のまま残す
   for (const [parent, children] of Object.entries(pref.parentToWards ?? {})) {
@@ -97,13 +84,25 @@ async function main() {
           asOf: "2025-04-01", isEstimated: false,
         };
       }
-      console.log(`  ${p.name} 総合=0 → ${children.length}区も0で実値化`);
-    } else {
-      console.log(`  ${p.name} 総合=${p.waitlistChildren.value}、区内訳は CFA に無し → 推計維持`);
     }
   }
 
   await saveMuni(paths, muni, wards);
+  console.log(`${pref.slug}: 待機児童≠0 ${nonZero} / 0 ${zero}`);
+}
+
+async function main() {
+  const wb = XLSX.readFile(XLSX_PATH);
+  const sheets = ["資料６－１", "資料６－２"];
+  const all = new Map();
+  for (const name of sheets) {
+    const ws = wb.Sheets[name]; if (!ws) continue;
+    const got = extractFromR6(ws);
+    for (const [k, v] of got) all.set(k, v);
+    console.log(`  ${name}: ${got.size} entries`);
+  }
+  // Excel は1回パース。対象 pref 群へまとめて反映（--all で全国1ファイルから全県）。
+  for (const pref of prefs) await applyPref(pref, all);
   console.log("data files 保存完了");
 }
 
