@@ -58,7 +58,7 @@ export async function GET(
             }}
           />
           <div style={{ fontSize: 28, fontWeight: 800, letterSpacing: "-0.01em" }}>
-            MachiMap
+            KurashiMap
           </div>
         </div>
 
@@ -110,7 +110,7 @@ export async function GET(
             border: "1px solid rgba(15,23,42,0.08)",
           }}
         >
-          machi-map.vercel.app
+          kurashimap.jp
         </div>
       </div>
     ),

@@ -2,9 +2,9 @@
 import { PREFS } from "./prefs";
 
 export const SITE = {
-  name: "MachiMap",
+  name: "KurashiMap",
   description: "市区町村の住みやすさを地図で横断比較",
-  baseUrl: "https://machi-map.vercel.app",
+  baseUrl: "https://kurashimap.jp",
   locale: "ja_JP",
   brandColor: "#2563eb",
 } as const;

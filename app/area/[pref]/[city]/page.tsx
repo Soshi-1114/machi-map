@@ -20,7 +20,7 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: { params: Params }): Promise<Metadata> {
   const m = await getMunicipality(params.city);
-  if (!m) return { title: "見つかりません | MachiMap" };
+  if (!m) return { title: "見つかりません | KurashiMap" };
   const prefName = prefNameOf(m.pref);
   const fullName = m.displayName ?? m.name;
   const pop = m.population.toLocaleString();

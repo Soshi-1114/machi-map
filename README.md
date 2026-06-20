@@ -1,4 +1,4 @@
-# MachiMap（machi-map）
+# KurashiMap（kurashi-map）
 
 市区町村別の住みやすさ関連データ（家賃相場・地価・人口・子育て・災害リスク・生活インフラ）を地図上で横断比較できる、一般向け無料Webサービスです。
 
@@ -35,7 +35,7 @@ npm run build
 ## 主要構成
 
 ```
-machi-map/
+kurashi-map/
 ├ app/
 │  ├ page.tsx                      # トップ＝全画面地図モード
 │  ├ area/[pref]/[city]/page.tsx   # 自治体詳細ページ（SEO・構造化データ付き）

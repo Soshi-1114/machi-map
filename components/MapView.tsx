@@ -567,7 +567,7 @@ export default function MapView({ summary }: Props) {
       <header className="app-header">
         <div className="app-header-brand">
           <div className="brand-mark" />
-          <div className="brand-name">MachiMap</div>
+          <div className="brand-name">KurashiMap</div>
         </div>
         <div className="app-header-search">
           <div className="search-input-wrap">

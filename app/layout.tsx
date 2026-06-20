@@ -2,7 +2,7 @@ import type { Metadata, Viewport } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "MachiMap",
+  title: "KurashiMap",
   description: "市区町村の住みやすさを地図で横断比較するサービス",
 };
 

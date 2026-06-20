@@ -67,7 +67,7 @@ button { font-family: inherit; }
 .map-root { position: relative; width: 100%; height: 100%; background: var(--bg); }
 .map-canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
 
-/* 統合ヘッダー — 画面上部に固定。MachiMap + 検索 + レイヤー切替 */
+/* 統合ヘッダー — 画面上部に固定。KurashiMap + 検索 + レイヤー切替 */
 .app-header {
   position: absolute;
   top: 0;
