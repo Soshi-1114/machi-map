@@ -7,12 +7,12 @@ import fs from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { resolvePref, dataPaths } from "./_lib/prefs.mjs";
+import { requireEstatAppId, fetchStatsValues } from "./_lib/estat.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, "..");
 
-const APP_ID = process.env.ESTAT_APP_ID;
-if (!APP_ID) { console.error("ESTAT_APP_ID が未設定"); process.exit(1); }
+const APP_ID = requireEstatAppId();
 
 const pref = resolvePref(process.argv.slice(2));
 console.log(`pref: ${pref.slug} (${pref.nameJa})`);
@@ -23,29 +23,16 @@ const RENT_BIN_MIDPOINT = {
   "07": 90000, "08": 125000, "09": 175000, "10": 220000,
 };
 
+// area -> (家賃区分 cat01 -> 借家数) の分布 Map。加重平均の材料。
 async function fetchDistribution(codes) {
   const byArea = new Map();
-  // e-Stat の cdArea は 1 リクエスト 100 個までなので分割（北海道=195自治体など）
-  for (let i = 0; i < codes.length; i += 100) {
-    const chunk = codes.slice(i, i + 100);
-    const url = new URL("https://api.e-stat.go.jp/rest/3.0/app/json/getStatsData");
-    url.searchParams.set("appId", APP_ID);
-    url.searchParams.set("statsDataId", STATS_DATA_ID);
-    url.searchParams.set("cdArea", chunk.join(","));
-    url.searchParams.set("cdCat02", "0");
-    url.searchParams.set("limit", "100000");
-    const res = await fetch(url);
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    const data = await res.json();
-    const values = data.GET_STATS_DATA?.STATISTICAL_DATA?.DATA_INF?.VALUE ?? [];
-    const arr = Array.isArray(values) ? values : [values];
-    for (const v of arr) {
-      const area = v["@area"]; const cat = v["@cat01"];
-      const n = parseInt(v["$"], 10);
-      if (Number.isNaN(n)) continue;
-      if (!byArea.has(area)) byArea.set(area, new Map());
-      byArea.get(area).set(cat, n);
-    }
+  const rows = await fetchStatsValues(APP_ID, STATS_DATA_ID, codes, { cdCat02: "0" });
+  for (const v of rows) {
+    const area = v["@area"]; const cat = v["@cat01"];
+    const n = parseInt(v["$"], 10);
+    if (Number.isNaN(n)) continue;
+    if (!byArea.has(area)) byArea.set(area, new Map());
+    byArea.get(area).set(cat, n);
   }
   return byArea;
 }

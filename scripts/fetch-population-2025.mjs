@@ -11,12 +11,12 @@ import fs from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { PREFS, getPref, dataPaths } from "./_lib/prefs.mjs";
+import { requireEstatAppId, fetchValueByArea } from "./_lib/estat.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, "..");
 
-const APP_ID = process.env.ESTAT_APP_ID;
-if (!APP_ID) { console.error("ESTAT_APP_ID が未設定"); process.exit(1); }
+const APP_ID = requireEstatAppId();
 
 const POP_2025 = "0004050397"; // 令和7年 速報 男女別人口
 const CHG_2025 = "0004050417"; // 令和7年 速報 5年間の人口増減率ほか
@@ -31,30 +31,6 @@ function trendOf(ratePct) {
   return "減少";
 }
 
-// e-Stat getStatsData を 100 area / リクエストで分割取得し code->数値 Map を返す
-async function fetchByArea(statsDataId, codes, extraParams) {
-  const byCode = new Map();
-  for (let i = 0; i < codes.length; i += 100) {
-    const chunk = codes.slice(i, i + 100);
-    const url = new URL("https://api.e-stat.go.jp/rest/3.0/app/json/getStatsData");
-    url.searchParams.set("appId", APP_ID);
-    url.searchParams.set("statsDataId", statsDataId);
-    url.searchParams.set("cdArea", chunk.join(","));
-    for (const [k, v] of Object.entries(extraParams)) url.searchParams.set(k, v);
-    url.searchParams.set("limit", "100000");
-    const res = await fetch(url);
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    const data = await res.json();
-    const values = data.GET_STATS_DATA?.STATISTICAL_DATA?.DATA_INF?.VALUE ?? [];
-    const arr = Array.isArray(values) ? values : [values];
-    for (const v of arr) {
-      const n = Number(v["$"]);
-      if (!Number.isNaN(n)) byCode.set(v["@area"], n);
-    }
-  }
-  return byCode;
-}
-
 async function runPref(pref) {
   const paths = dataPaths(ROOT, pref);
   const muni = JSON.parse(await fs.readFile(paths.muni, "utf8"));
@@ -62,8 +38,8 @@ async function runPref(pref) {
   const all = [...muni, ...wards];
   const codes = all.map((m) => m.code);
 
-  const pop2025 = await fetchByArea(POP_2025, codes, { cdCat01: "0" });
-  const rate = await fetchByArea(CHG_2025, codes, { cdTab: "2025_35" });
+  const pop2025 = await fetchValueByArea(APP_ID, POP_2025, codes, { cdCat01: "0" });
+  const rate = await fetchValueByArea(APP_ID, CHG_2025, codes, { cdTab: "2025_35" });
 
   const dist = {};
   let popUpd = 0, trendUpd = 0, miss = 0;
