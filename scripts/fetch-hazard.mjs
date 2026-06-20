@@ -6,9 +6,14 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { existsSync, mkdirSync } from "node:fs";
 import * as turf from "@turf/turf";
 import { resolvePref, dataPaths } from "./_lib/prefs.mjs";
+import {
+  createTileFetcher,
+  loadMuniPolys,
+  tileBbox,
+  bboxIntersects,
+} from "./_lib/reinfolib.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, "..");
@@ -16,131 +21,26 @@ const ROOT = path.resolve(__dirname, "..");
 const pref = resolvePref(process.argv.slice(2));
 console.log(`pref: ${pref.slug} (${pref.nameJa})`);
 
-const CACHE_DIR = path.join(ROOT, `.cache/reinfolib-tiles/${pref.slug}`);
-mkdirSync(CACHE_DIR, { recursive: true });
-
 const KEY = process.env.REINFOLIB_API_KEY;
 if (!KEY) { console.error("REINFOLIB_API_KEY が未設定"); process.exit(1); }
 
-const BASE = "https://www.reinfolib.mlit.go.jp/ex-api/external";
 const ZOOM = 14;
-const FETCH_CONCURRENCY = 4;
-
-function lng2tileX(lng, z) { return Math.floor(((lng + 180) / 360) * Math.pow(2, z)); }
-function lat2tileY(lat, z) {
-  const r = (lat * Math.PI) / 180;
-  return Math.floor(((1 - Math.log(Math.tan(r) + 1 / Math.cos(r)) / Math.PI) / 2) * Math.pow(2, z));
-}
-function tileX2lng(x, z) { return (x / Math.pow(2, z)) * 360 - 180; }
-function tileY2lat(y, z) {
-  const n = Math.PI - (2 * Math.PI * y) / Math.pow(2, z);
-  return (180 / Math.PI) * Math.atan(0.5 * (Math.exp(n) - Math.exp(-n)));
-}
-function tileBbox(x, y, z) {
-  return [tileX2lng(x, z), tileY2lat(y + 1, z), tileX2lng(x + 1, z), tileY2lat(y, z)];
-}
-function tilesForBbox(bbox, z) {
-  const xMin = lng2tileX(bbox.west, z), xMax = lng2tileX(bbox.east, z);
-  const yMin = lat2tileY(bbox.north, z), yMax = lat2tileY(bbox.south, z);
-  const list = [];
-  for (let x = xMin; x <= xMax; x++) for (let y = yMin; y <= yMax; y++) list.push({ x, y });
-  return list;
-}
-function bboxIntersects(a, b) { return !(a[2] < b[0] || a[0] > b[2] || a[3] < b[1] || a[1] > b[3]); }
-
-// 自治体ポリゴンの bbox に交差するタイルだけに絞る。矩形 pref.bbox では
-// 北海道・島嶼県は海タイルが大半を占めるため（北海道 z14 で約11万→陸地のみ約3万）、
-// 不要な海上タイルの取得を避ける。
-function tilesForPolys(polys, z) {
-  let W = Infinity, S = Infinity, E = -Infinity, N = -Infinity;
-  for (const p of polys) {
-    if (p.bbox[0] < W) W = p.bbox[0];
-    if (p.bbox[1] < S) S = p.bbox[1];
-    if (p.bbox[2] > E) E = p.bbox[2];
-    if (p.bbox[3] > N) N = p.bbox[3];
-  }
-  const xMin = lng2tileX(W, z), xMax = lng2tileX(E, z);
-  const yMin = lat2tileY(N, z), yMax = lat2tileY(S, z);
-  const list = [];
-  for (let x = xMin; x <= xMax; x++) for (let y = yMin; y <= yMax; y++) {
-    const tb = tileBbox(x, y, z); // [w,s,e,n]
-    // 1段目: bbox 交差で候補を絞る（多島の自治体は bbox が広く海も含む）
-    const cand = polys.filter((p) => bboxIntersects(p.bbox, tb));
-    if (cand.length === 0) continue;
-    // 2段目: タイル矩形とポリゴン実形状の交差を確認し、海上タイルを除外
-    const sq = turf.polygon([[[tb[0], tb[1]], [tb[2], tb[1]], [tb[2], tb[3]], [tb[0], tb[3]], [tb[0], tb[1]]]]);
-    if (cand.some((p) => { try { return turf.booleanIntersects(sq, p.feat); } catch { return true; } })) {
-      list.push({ x, y });
-    }
-  }
-  return list;
-}
-
-async function ensureTile(api, x, y, z) {
-  const cachePath = path.join(CACHE_DIR, `${api}_z${z}_x${x}_y${y}.json`);
-  if (existsSync(cachePath)) return cachePath;
-  const url = new URL(`${BASE}/${api}`);
-  url.searchParams.set("response_format", "geojson");
-  url.searchParams.set("z", z); url.searchParams.set("x", x); url.searchParams.set("y", y);
-  // 200 のみキャッシュ。429/5xx はリトライし、空データを誤って「災害なし」と
-  // キャッシュしない（false negative 防止）。最終的に失敗したら throw して中断。
-  for (let attempt = 0; attempt < 5; attempt++) {
-    let res;
-    try { res = await fetch(url, { headers: { "Ocp-Apim-Subscription-Key": KEY } }); }
-    catch { await sleep(500 * (attempt + 1)); continue; }
-    if (res.ok) {
-      let text = (await res.text()).trim();
-      if (!text) text = '{"type":"FeatureCollection","features":[]}';
-      await fs.writeFile(cachePath, text);
-      return cachePath;
-    }
-    if (res.status === 429 || res.status >= 500) { await sleep(800 * (attempt + 1)); continue; }
-    throw new Error(`${api} z${z}/${x}/${y} -> HTTP ${res.status}`);
-  }
-  throw new Error(`${api} z${z}/${x}/${y} -> リトライ上限`);
-}
-function sleep(ms) { return new Promise((r) => setTimeout(r, ms)); }
-async function pool(items, n, fn) {
-  let i = 0;
-  await Promise.all(Array.from({ length: n }, async () => {
-    while (i < items.length) { await fn(items[i++]); }
-  }));
-}
-async function downloadAllTiles(api, polys) {
-  const tiles = tilesForPolys(polys, ZOOM);
-  let done = 0;
-  await pool(tiles, FETCH_CONCURRENCY, async (t) => {
-    await ensureTile(api, t.x, t.y, ZOOM);
-    done++;
-    if (done % 100 === 0 || done === tiles.length) process.stdout.write(`  ${api}: ${done}/${tiles.length}\r`);
-  });
-  console.log("");
-  return tiles;
-}
-
-async function loadMuniPolys() {
-  const muniGeo = JSON.parse(await fs.readFile(path.join(ROOT, `public/${pref.slug}.geojson`), "utf8"));
-  const wardsGeo = pref.hasWards
-    ? JSON.parse(await fs.readFile(path.join(ROOT, `public/${pref.slug}_wards.geojson`), "utf8"))
-    : { features: [] };
-  return [...muniGeo.features, ...wardsGeo.features].map((f) => ({
-    code: String(f.properties?.code ?? ""), feat: f, bbox: turf.bbox(f),
-    hasFlood: false, hasLandslide: false,
-  }));
-}
+const tiles = createTileFetcher({
+  cacheDir: path.join(ROOT, `.cache/reinfolib-tiles/${pref.slug}`),
+  apiKey: KEY,
+  zoom: ZOOM,
+});
 
 async function processHazardForApi(api, polys, riskField) {
-  const tiles = await downloadAllTiles(api, polys);
+  const tileList = await tiles.downloadAllTiles(api, polys);
   let processed = 0;
-  for (const t of tiles) {
+  for (const t of tileList) {
     const tb = tileBbox(t.x, t.y, ZOOM);
     const candidates = polys.filter((p) => !p[riskField] && bboxIntersects(p.bbox, tb));
     processed++;
-    if (processed % 50 === 0) process.stdout.write(`  ${api} check: ${processed}/${tiles.length}, pending: ${polys.filter((p) => !p[riskField]).length}\r`);
+    if (processed % 50 === 0) process.stdout.write(`  ${api} check: ${processed}/${tileList.length}, pending: ${polys.filter((p) => !p[riskField]).length}\r`);
     if (candidates.length === 0) continue;
-    const cachePath = path.join(CACHE_DIR, `${api}_z${ZOOM}_x${t.x}_y${t.y}.json`);
-    let fc;
-    try { fc = JSON.parse(await fs.readFile(cachePath, "utf8")); } catch { continue; }
+    const fc = await tiles.readTile(api, t.x, t.y);
     if (!fc?.features?.length) continue;
     for (const haz of fc.features) {
       let hbbox; try { hbbox = turf.bbox(haz); } catch { continue; }
@@ -151,13 +51,14 @@ async function processHazardForApi(api, polys, riskField) {
       }
       if (!candidates.some((c) => !c[riskField])) break;
     }
-    fc = null;
   }
   console.log("");
 }
 
 async function main() {
-  const polys = await loadMuniPolys();
+  const polys = await loadMuniPolys(ROOT, pref, {
+    decorate: (b) => ({ ...b, hasFlood: false, hasLandslide: false }),
+  });
   console.log(`polys: ${polys.length}`);
 
   console.log("\n[XKT026] 洪水"); await processHazardForApi("XKT026", polys, "hasFlood");
