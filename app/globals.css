@@ -943,3 +943,43 @@ button { font-family: inherit; }
 .related-rent { font-size: 12px; color: var(--text-muted); font-variant-numeric: tabular-nums; }
 .detail-back { font-size: 13px; color: var(--text-muted); display: inline-flex; align-items: center; gap: 4px; font-weight: 500; }
 .detail-back:hover { color: var(--accent); }
+
+/* 県ページ: 家賃ランキング */
+.pref-rank { list-style: none; margin: 12px 0 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+.pref-rank-item {
+  display: grid;
+  grid-template-columns: 28px 1fr auto;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  background: var(--surface-strong);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+}
+.pref-rank-item:hover { border-color: var(--accent); background: var(--accent-soft); text-decoration: none; }
+.pref-rank-no { font-size: 13px; font-weight: 800; color: var(--accent); text-align: center; font-variant-numeric: tabular-nums; }
+.pref-rank-name { font-size: 14.5px; font-weight: 700; color: var(--text); }
+.pref-rank-value { font-size: 13px; font-weight: 700; color: var(--text-muted); display: inline-flex; align-items: center; gap: 8px; font-variant-numeric: tabular-nums; }
+.pref-rank-band { font-size: 11px; font-weight: 700; color: var(--accent); background: var(--accent-soft); padding: 2px 7px; border-radius: var(--radius-pill); }
+
+/* 県ページ: 全自治体テーブル */
+.pref-table-wrap { margin-top: 12px; overflow-x: auto; border: 1px solid var(--border); border-radius: var(--radius-md); }
+.pref-table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+.pref-table thead th {
+  position: sticky; top: 0;
+  background: var(--bg-elev);
+  text-align: left;
+  font-size: 11.5px; font-weight: 700; letter-spacing: 0.03em;
+  color: var(--text-muted);
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--border-strong);
+  white-space: nowrap;
+}
+.pref-table th.num, .pref-table td.num { text-align: right; font-variant-numeric: tabular-nums; }
+.pref-table tbody tr { border-bottom: 1px solid var(--border); }
+.pref-table tbody tr:last-child { border-bottom: none; }
+.pref-table tbody tr:hover { background: var(--accent-soft); }
+.pref-table tbody th { font-weight: 700; text-align: left; padding: 9px 14px; white-space: nowrap; }
+.pref-table tbody td { padding: 9px 14px; color: var(--text-muted); white-space: nowrap; }
+.pref-table-link { color: var(--text); font-weight: 700; }
+.pref-table-link:hover { color: var(--accent); }

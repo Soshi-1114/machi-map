@@ -70,7 +70,7 @@ export default async function AreaPage({ params }: { params: Params }) {
 
   const breadcrumbItems: Array<{ name: string; item: string }> = [
     { name: SITE.name, item: absoluteUrl("/") },
-    { name: prefName, item: absoluteUrl(`/?pref=${m.pref}`) },
+    { name: prefName, item: absoluteUrl(`/area/${m.pref}`) },
   ];
   if (parent) {
     breadcrumbItems.push({ name: parent.name, item: absoluteUrl(`/area/${parent.pref}/${parent.code}`) });
@@ -109,7 +109,7 @@ export default async function AreaPage({ params }: { params: Params }) {
       <nav aria-label="パンくず" className="breadcrumb">
         <Link href="/" className="breadcrumb-link">{SITE.name}</Link>
         <span aria-hidden="true">/</span>
-        <span className="breadcrumb-current">{prefName}</span>
+        <Link href={`/area/${m.pref}`} className="breadcrumb-link">{prefName}</Link>
         {parent && (
           <>
             <span aria-hidden="true">/</span>
