@@ -3,6 +3,7 @@
 import Link from "next/link";
 import type { Municipality } from "@/lib/types";
 import { buildSummary } from "@/lib/summary";
+import { hasRent } from "@/lib/rentColor";
 
 type Props = {
   municipality: Municipality | null;
@@ -36,8 +37,11 @@ export default function AreaPanel({ municipality, onClose }: Props) {
 }
 
 export function MetricCards({ m }: { m: Municipality }) {
+  const rentHasData = hasRent(m.rent.value);
   const cards = [
-    { label: "家賃中央値", value: `${m.rent.value.toLocaleString()} ${m.rent.unit}`, source: m.rent.source, asOf: m.rent.asOf, est: m.rent.isEstimated },
+    rentHasData
+      ? { label: "家賃中央値", value: `${m.rent.value.toLocaleString()} ${m.rent.unit}`, source: m.rent.source, asOf: m.rent.asOf, est: m.rent.isEstimated }
+      : { label: "家賃中央値", value: "データなし", source: "住宅統計の集計対象外", asOf: "-", est: false },
     { label: "地価", value: `${m.landPrice.value.toLocaleString()} ${m.landPrice.unit}`, source: m.landPrice.source, asOf: m.landPrice.asOf, est: m.landPrice.isEstimated },
     { label: "待機児童", value: `${m.waitlistChildren.value} ${m.waitlistChildren.unit}`, source: m.waitlistChildren.source, asOf: m.waitlistChildren.asOf, est: m.waitlistChildren.isEstimated },
     { label: "災害リスク", value: m.hazard.hasFloodRisk ? "浸水想定あり" : "目立った想定なし", source: m.hazard.source, asOf: m.hazard.asOf, est: false },

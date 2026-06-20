@@ -5,6 +5,7 @@ import { getMunicipality, listAll, listAllAcrossPrefs } from "@/lib/metrics";
 import { buildSummary } from "@/lib/summary";
 import { findRelatedByRent } from "@/lib/related";
 import { SITE, PREF_NAMES_JA, absoluteUrl } from "@/lib/site";
+import { hasRent } from "@/lib/rentColor";
 import type { Municipality } from "@/lib/types";
 
 type Params = { pref: string; city: string };
@@ -19,10 +20,14 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
   if (!m) return { title: "見つかりません | MachiMap" };
   const prefName = PREF_NAMES_JA[m.pref] ?? m.pref;
   const fullName = m.displayName ?? m.name;
-  const rent = m.rent.value.toLocaleString();
   const pop = m.population.toLocaleString();
-  const title = `${fullName}の住みやすさ — 家賃${rent}円/月｜${SITE.name}`;
-  const description = `${fullName}（${prefName}）の住みやすさを地図でチェック。民営借家中央値${rent}円/月、人口${pop}人。地価・待機児童・災害リスクをまとめて比較できる${SITE.name}の自治体ページ。`;
+  const hasRentData = hasRent(m.rent.value);
+  const rent = m.rent.value.toLocaleString();
+  const title = hasRentData
+    ? `${fullName}の住みやすさ — 家賃${rent}円/月｜${SITE.name}`
+    : `${fullName}の住みやすさ｜${SITE.name}`;
+  const rentPhrase = hasRentData ? `民営借家中央値${rent}円/月、` : "";
+  const description = `${fullName}（${prefName}）の住みやすさを地図でチェック。${rentPhrase}人口${pop}人。地価・待機児童・災害リスクをまとめて比較できる${SITE.name}の自治体ページ。`;
   const url = absoluteUrl(`/area/${m.pref}/${m.code}`);
   const ogImage = absoluteUrl(`/api/og/${m.code}`);
   return {
@@ -119,7 +124,7 @@ export default async function AreaPage({ params }: { params: Params }) {
         </h1>
         <p className="detail-lead">{buildSummary(m)}</p>
         <ul className="hero-stats">
-          <HeroStat label="家賃中央値" value={`${m.rent.value.toLocaleString()}円/月`} highlight />
+          <HeroStat label="家賃中央値" value={hasRent(m.rent.value) ? `${m.rent.value.toLocaleString()}円/月` : "データなし"} highlight />
           <HeroStat label="人口" value={`${m.population.toLocaleString()}人`} sub={m.populationTrend} />
           <HeroStat label="地価" value={`${m.landPrice.value.toLocaleString()}円/㎡`} />
           <HeroStat label="待機児童" value={`${m.waitlistChildren.value}人`} />
@@ -129,11 +134,21 @@ export default async function AreaPage({ params }: { params: Params }) {
       <section className="detail-section">
         <h2 className="detail-h2">家賃・住居コスト</h2>
         <p className="detail-p">
-          {m.name}の民営借家中央値は <strong>{m.rent.value.toLocaleString()}円/月</strong>。
-          {prefName}全体の中で見ると、家賃水準は{rentBand(m.rent.value)}に位置します。
+          {hasRent(m.rent.value) ? (
+            <>
+              {m.name}の民営借家中央値は <strong>{m.rent.value.toLocaleString()}円/月</strong>。
+              {prefName}全体の中で見ると、家賃水準は{rentBand(m.rent.value)}に位置します。
+            </>
+          ) : (
+            <>
+              {m.name}の民営借家中央値は<strong>データなし</strong>です（住宅統計の集計対象外）。
+            </>
+          )}
           地価（住宅地）は <strong>{m.landPrice.value.toLocaleString()}円/㎡</strong> です。
         </p>
-        <SourceLine source={m.rent.source} asOf={m.rent.asOf} estimated={m.rent.isEstimated} />
+        {hasRent(m.rent.value) && (
+          <SourceLine source={m.rent.source} asOf={m.rent.asOf} estimated={m.rent.isEstimated} />
+        )}
       </section>
 
       <section className="detail-section">
@@ -182,7 +197,7 @@ export default async function AreaPage({ params }: { params: Params }) {
             <li key={r.code}>
               <Link href={`/area/${r.pref}/${r.code}`} className="related-card">
                 <span className="related-name">{r.name}</span>
-                <span className="related-rent">{r.rent.value.toLocaleString()} 円/月</span>
+                <span className="related-rent">{hasRent(r.rent.value) ? `${r.rent.value.toLocaleString()} 円/月` : "データなし"}</span>
               </Link>
             </li>
           ))}

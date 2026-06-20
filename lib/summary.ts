@@ -3,7 +3,11 @@ import type { Municipality } from "./types";
 // 将来はLLM生成に差し替える前提。シグネチャを変えないこと。
 export function buildSummary(m: Municipality): string {
   const name = m.displayName ?? m.name;
-  const rent = `民営借家中央値${m.rent.value.toLocaleString()}${m.rent.unit}`;
+  // 民営借家中央値が 0/未満は住宅統計の集計対象外（データなし）。
+  const rent =
+    m.rent.value > 0
+      ? `民営借家中央値${m.rent.value.toLocaleString()}${m.rent.unit}`
+      : "家賃データなし";
   const wait =
     m.waitlistChildren.value > 0
       ? `待機児童${m.waitlistChildren.value}人`

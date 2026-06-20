@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import type { Municipality } from "@/lib/types";
 import { buildSummary } from "@/lib/summary";
+import { hasRent } from "@/lib/rentColor";
 import { MetricCards } from "./AreaPanel";
 
 type Stage = "half" | "full";
@@ -132,7 +133,11 @@ export default function MobileSheet({ municipality, onClose }: Props) {
             <div style={{ minWidth: 0, flex: 1 }}>
               <h2 className="panel-title" style={{ fontSize: 17 }}>{heading}</h2>
               <p className="panel-sub" style={{ margin: "2px 0 0" }}>
-                家賃 <strong style={{ color: "var(--text)", fontVariantNumeric: "tabular-nums" }}>{m.rent.value.toLocaleString()}</strong> 円/月
+                {hasRent(m.rent.value) ? (
+                  <>家賃 <strong style={{ color: "var(--text)", fontVariantNumeric: "tabular-nums" }}>{m.rent.value.toLocaleString()}</strong> 円/月</>
+                ) : (
+                  <>家賃 <strong style={{ color: "var(--text-muted)" }}>データなし</strong></>
+                )}
                 <span className="trend-chip">{m.populationTrend}</span>
               </p>
             </div>

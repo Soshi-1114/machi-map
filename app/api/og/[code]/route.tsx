@@ -1,6 +1,7 @@
 import { ImageResponse } from "next/og";
 import { getMunicipality } from "@/lib/metrics";
 import { PREF_NAMES_JA } from "@/lib/site";
+import { hasRent } from "@/lib/rentColor";
 
 export const runtime = "edge";
 
@@ -19,6 +20,7 @@ export async function GET(
   const parent = m.parentCode ? await getMunicipality(m.parentCode) : null;
   const breadcrumbText = parent ? `${prefName} / ${parent.name}` : prefName;
   const heading = m.name;
+  const rentHasData = hasRent(m.rent.value);
   const rent = m.rent.value.toLocaleString();
   const pop = m.population.toLocaleString();
   // ImageResponse の組込フォントには U+33A1 (㎡) のグリフが無いため m² に置換
@@ -81,7 +83,11 @@ export async function GET(
 
         {/* Stats row */}
         <div style={{ marginTop: "auto", display: "flex", gap: 24 }}>
-          <Stat label="家賃中央値" value={`${rent}円/月`} accent />
+          {rentHasData ? (
+            <Stat label="家賃中央値" value={`${rent}円/月`} accent />
+          ) : (
+            <Stat label="人口増減" value={m.populationTrend} accent />
+          )}
           <Stat label="人口" value={`${pop}人`} />
           <Stat label="地価" value={land} />
         </div>

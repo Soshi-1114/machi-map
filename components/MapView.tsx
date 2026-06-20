@@ -5,7 +5,7 @@ import maplibregl, { Map as MapLibreMap, MapMouseEvent } from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
 import type { Municipality, MuniSummary } from "@/lib/types";
 import { PREFS, getPrefByCode } from "@/lib/prefs";
-import { rentStepExpression, RENT_COLORS, RENT_THRESHOLDS } from "@/lib/rentColor";
+import { rentStepExpression, RENT_COLORS, RENT_THRESHOLDS, RENT_NODATA_COLOR, hasRent } from "@/lib/rentColor";
 import AreaPanel from "./AreaPanel";
 import MobileSheet from "./MobileSheet";
 
@@ -540,7 +540,11 @@ export default function MapView({ summary }: Props) {
         >
           <div className="map-tooltip-name">{tooltip.name}</div>
           <div className="map-tooltip-rent">
-            家賃 <strong>{tooltip.rent.toLocaleString()}</strong> 円/月
+            {hasRent(tooltip.rent) ? (
+              <>家賃 <strong>{tooltip.rent.toLocaleString()}</strong> 円/月</>
+            ) : (
+              <>家賃 <strong>データなし</strong></>
+            )}
           </div>
         </div>
       )}
@@ -568,7 +572,7 @@ export default function MapView({ summary }: Props) {
                 <li key={m.code}>
                   <button onClick={() => flyToMuni(m)}>
                     <span>{m.name}</span>
-                    <span className="search-rent">{m.rent.toLocaleString()}円</span>
+                    <span className="search-rent">{hasRent(m.rent) ? `${m.rent.toLocaleString()}円` : "—"}</span>
                   </button>
                 </li>
               ))}
@@ -608,6 +612,10 @@ export default function MapView({ summary }: Props) {
             <span key={t}>{t / 10000}万</span>
           ))}
           <span>6.5万～</span>
+        </div>
+        <div className="legend-nodata">
+          <span className="legend-cell" style={{ background: RENT_NODATA_COLOR }} />
+          データなし（住宅統計の集計対象外）
         </div>
       </div>
 

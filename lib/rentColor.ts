@@ -11,7 +11,17 @@ export const RENT_COLORS = [
   "#1e3a8a", // blue-900
 ] as const;
 
+// 家賃データなし（住宅統計対象外の小町村など。value<=0 をセンチネルとする）の色。
+// 実際の民営借家中央値が 0 になることはないので 0/未満を欠損として扱える。
+export const RENT_NODATA_COLOR = "#d1d5db"; // gray-300
+
+/** 家賃が有効値（実データ）かどうか。0/未満はデータなしのプレースホルダ。 */
+export function hasRent(value: number): boolean {
+  return value > 0;
+}
+
 export function rentColor(value: number): string {
+  if (!hasRent(value)) return RENT_NODATA_COLOR;
   if (value < RENT_THRESHOLDS[0]) return RENT_COLORS[0];
   if (value < RENT_THRESHOLDS[1]) return RENT_COLORS[1];
   if (value < RENT_THRESHOLDS[2]) return RENT_COLORS[2];
@@ -20,14 +30,19 @@ export function rentColor(value: number): string {
 }
 
 // MapLibre `step` 表現として家賃 → 色を返す。
+// rent<=0（データなし）はグレー、それ以外を5段階のコロプレスで塗る。
 export function rentStepExpression(): unknown {
   return [
-    "step",
-    ["get", "rent"],
-    RENT_COLORS[0],
-    RENT_THRESHOLDS[0], RENT_COLORS[1],
-    RENT_THRESHOLDS[1], RENT_COLORS[2],
-    RENT_THRESHOLDS[2], RENT_COLORS[3],
-    RENT_THRESHOLDS[3], RENT_COLORS[4],
+    "case",
+    ["<=", ["to-number", ["get", "rent"], 0], 0], RENT_NODATA_COLOR,
+    [
+      "step",
+      ["get", "rent"],
+      RENT_COLORS[0],
+      RENT_THRESHOLDS[0], RENT_COLORS[1],
+      RENT_THRESHOLDS[1], RENT_COLORS[2],
+      RENT_THRESHOLDS[2], RENT_COLORS[3],
+      RENT_THRESHOLDS[3], RENT_COLORS[4],
+    ],
   ];
 }
