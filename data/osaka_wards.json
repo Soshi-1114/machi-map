@@ -16,7 +16,7 @@
       "isEstimated": false
     },
     "landPrice": {
-      "value": 425091,
+      "value": 480100,
       "unit": "円/㎡",
       "source": "地価公示（住宅地平均）",
       "asOf": "2025",
@@ -25,8 +25,8 @@
     "waitlistChildren": {
       "value": 0,
       "unit": "人",
-      "source": "区別非公表（大阪市全体で2人）／こども家庭庁 保育所等関連状況取りまとめ",
-      "asOf": "2024-04-01",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ（市総合より）",
+      "asOf": "2025-04-01",
       "isEstimated": false
     },
     "hazard": {
@@ -61,7 +61,7 @@
       "isEstimated": false
     },
     "landPrice": {
-      "value": 806667,
+      "value": 919200,
       "unit": "円/㎡",
       "source": "地価公示（住宅地平均）",
       "asOf": "2025",
@@ -70,8 +70,8 @@
     "waitlistChildren": {
       "value": 0,
       "unit": "人",
-      "source": "区別非公表（大阪市全体で2人）／こども家庭庁 保育所等関連状況取りまとめ",
-      "asOf": "2024-04-01",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ（市総合より）",
+      "asOf": "2025-04-01",
       "isEstimated": false
     },
     "hazard": {
@@ -106,7 +106,7 @@
       "isEstimated": false
     },
     "landPrice": {
-      "value": 228000,
+      "value": 244556,
       "unit": "円/㎡",
       "source": "地価公示（住宅地平均）",
       "asOf": "2025",
@@ -115,8 +115,8 @@
     "waitlistChildren": {
       "value": 0,
       "unit": "人",
-      "source": "区別非公表（大阪市全体で2人）／こども家庭庁 保育所等関連状況取りまとめ",
-      "asOf": "2024-04-01",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ（市総合より）",
+      "asOf": "2025-04-01",
       "isEstimated": false
     },
     "hazard": {
@@ -151,7 +151,7 @@
       "isEstimated": false
     },
     "landPrice": {
-      "value": 1582400,
+      "value": 1840200,
       "unit": "円/㎡",
       "source": "地価公示（住宅地平均）",
       "asOf": "2025",
@@ -160,8 +160,8 @@
     "waitlistChildren": {
       "value": 0,
       "unit": "人",
-      "source": "区別非公表（大阪市全体で2人）／こども家庭庁 保育所等関連状況取りまとめ",
-      "asOf": "2024-04-01",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ（市総合より）",
+      "asOf": "2025-04-01",
       "isEstimated": false
     },
     "hazard": {
@@ -196,7 +196,7 @@
       "isEstimated": false
     },
     "landPrice": {
-      "value": 287286,
+      "value": 305857,
       "unit": "円/㎡",
       "source": "地価公示（住宅地平均）",
       "asOf": "2025",
@@ -205,8 +205,8 @@
     "waitlistChildren": {
       "value": 0,
       "unit": "人",
-      "source": "区別非公表（大阪市全体で2人）／こども家庭庁 保育所等関連状況取りまとめ",
-      "asOf": "2024-04-01",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ（市総合より）",
+      "asOf": "2025-04-01",
       "isEstimated": false
     },
     "hazard": {
@@ -241,7 +241,7 @@
       "isEstimated": false
     },
     "landPrice": {
-      "value": 189678,
+      "value": 214571,
       "unit": "円/㎡",
       "source": "地価公示（住宅地平均）",
       "asOf": "2025",
@@ -250,8 +250,8 @@
     "waitlistChildren": {
       "value": 0,
       "unit": "人",
-      "source": "区別非公表（大阪市全体で2人）／こども家庭庁 保育所等関連状況取りまとめ",
-      "asOf": "2024-04-01",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ（市総合より）",
+      "asOf": "2025-04-01",
       "isEstimated": false
     },
     "hazard": {
@@ -286,7 +286,7 @@
       "isEstimated": false
     },
     "landPrice": {
-      "value": 744500,
+      "value": 869300,
       "unit": "円/㎡",
       "source": "地価公示（住宅地平均）",
       "asOf": "2025",
@@ -295,8 +295,8 @@
     "waitlistChildren": {
       "value": 0,
       "unit": "人",
-      "source": "区別非公表（大阪市全体で2人）／こども家庭庁 保育所等関連状況取りまとめ",
-      "asOf": "2024-04-01",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ（市総合より）",
+      "asOf": "2025-04-01",
       "isEstimated": false
     },
     "hazard": {
@@ -331,7 +331,7 @@
       "isEstimated": false
     },
     "landPrice": {
-      "value": 720500,
+      "value": 831833,
       "unit": "円/㎡",
       "source": "地価公示（住宅地平均）",
       "asOf": "2025",
@@ -340,8 +340,8 @@
     "waitlistChildren": {
       "value": 0,
       "unit": "人",
-      "source": "区別非公表（大阪市全体で2人）／こども家庭庁 保育所等関連状況取りまとめ",
-      "asOf": "2024-04-01",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ（市総合より）",
+      "asOf": "2025-04-01",
       "isEstimated": false
     },
     "hazard": {
@@ -376,7 +376,7 @@
       "isEstimated": false
     },
     "landPrice": {
-      "value": 186286,
+      "value": 196571,
       "unit": "円/㎡",
       "source": "地価公示（住宅地平均）",
       "asOf": "2025",
@@ -385,8 +385,8 @@
     "waitlistChildren": {
       "value": 0,
       "unit": "人",
-      "source": "区別非公表（大阪市全体で2人）／こども家庭庁 保育所等関連状況取りまとめ",
-      "asOf": "2024-04-01",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ（市総合より）",
+      "asOf": "2025-04-01",
       "isEstimated": false
     },
     "hazard": {
@@ -421,7 +421,7 @@
       "isEstimated": false
     },
     "landPrice": {
-      "value": 272042,
+      "value": 297125,
       "unit": "円/㎡",
       "source": "地価公示（住宅地平均）",
       "asOf": "2025",
@@ -430,8 +430,8 @@
     "waitlistChildren": {
       "value": 0,
       "unit": "人",
-      "source": "区別非公表（大阪市全体で2人）／こども家庭庁 保育所等関連状況取りまとめ",
-      "asOf": "2024-04-01",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ（市総合より）",
+      "asOf": "2025-04-01",
       "isEstimated": false
     },
     "hazard": {
@@ -466,7 +466,7 @@
       "isEstimated": false
     },
     "landPrice": {
-      "value": 307429,
+      "value": 335000,
       "unit": "円/㎡",
       "source": "地価公示（住宅地平均）",
       "asOf": "2025",
@@ -475,8 +475,8 @@
     "waitlistChildren": {
       "value": 0,
       "unit": "人",
-      "source": "区別非公表（大阪市全体で2人）／こども家庭庁 保育所等関連状況取りまとめ",
-      "asOf": "2024-04-01",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ（市総合より）",
+      "asOf": "2025-04-01",
       "isEstimated": false
     },
     "hazard": {
@@ -511,7 +511,7 @@
       "isEstimated": false
     },
     "landPrice": {
-      "value": 196667,
+      "value": 205133,
       "unit": "円/㎡",
       "source": "地価公示（住宅地平均）",
       "asOf": "2025",
@@ -520,8 +520,8 @@
     "waitlistChildren": {
       "value": 0,
       "unit": "人",
-      "source": "区別非公表（大阪市全体で2人）／こども家庭庁 保育所等関連状況取りまとめ",
-      "asOf": "2024-04-01",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ（市総合より）",
+      "asOf": "2025-04-01",
       "isEstimated": false
     },
     "hazard": {
@@ -556,7 +556,7 @@
       "isEstimated": false
     },
     "landPrice": {
-      "value": 248818,
+      "value": 264909,
       "unit": "円/㎡",
       "source": "地価公示（住宅地平均）",
       "asOf": "2025",
@@ -565,8 +565,8 @@
     "waitlistChildren": {
       "value": 0,
       "unit": "人",
-      "source": "区別非公表（大阪市全体で2人）／こども家庭庁 保育所等関連状況取りまとめ",
-      "asOf": "2024-04-01",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ（市総合より）",
+      "asOf": "2025-04-01",
       "isEstimated": false
     },
     "hazard": {
@@ -601,7 +601,7 @@
       "isEstimated": false
     },
     "landPrice": {
-      "value": 298235,
+      "value": 325706,
       "unit": "円/㎡",
       "source": "地価公示（住宅地平均）",
       "asOf": "2025",
@@ -610,8 +610,8 @@
     "waitlistChildren": {
       "value": 0,
       "unit": "人",
-      "source": "区別非公表（大阪市全体で2人）／こども家庭庁 保育所等関連状況取りまとめ",
-      "asOf": "2024-04-01",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ（市総合より）",
+      "asOf": "2025-04-01",
       "isEstimated": false
     },
     "hazard": {
@@ -646,7 +646,7 @@
       "isEstimated": false
     },
     "landPrice": {
-      "value": 690154,
+      "value": 770250,
       "unit": "円/㎡",
       "source": "地価公示（住宅地平均）",
       "asOf": "2025",
@@ -655,8 +655,8 @@
     "waitlistChildren": {
       "value": 0,
       "unit": "人",
-      "source": "区別非公表（大阪市全体で2人）／こども家庭庁 保育所等関連状況取りまとめ",
-      "asOf": "2024-04-01",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ（市総合より）",
+      "asOf": "2025-04-01",
       "isEstimated": false
     },
     "hazard": {
@@ -691,7 +691,7 @@
       "isEstimated": false
     },
     "landPrice": {
-      "value": 295476,
+      "value": 314900,
       "unit": "円/㎡",
       "source": "地価公示（住宅地平均）",
       "asOf": "2025",
@@ -700,8 +700,8 @@
     "waitlistChildren": {
       "value": 0,
       "unit": "人",
-      "source": "区別非公表（大阪市全体で2人）／こども家庭庁 保育所等関連状況取りまとめ",
-      "asOf": "2024-04-01",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ（市総合より）",
+      "asOf": "2025-04-01",
       "isEstimated": false
     },
     "hazard": {
@@ -736,7 +736,7 @@
       "isEstimated": false
     },
     "landPrice": {
-      "value": 252912,
+      "value": 267700,
       "unit": "円/㎡",
       "source": "地価公示（住宅地平均）",
       "asOf": "2025",
@@ -745,8 +745,8 @@
     "waitlistChildren": {
       "value": 0,
       "unit": "人",
-      "source": "区別非公表（大阪市全体で2人）／こども家庭庁 保育所等関連状況取りまとめ",
-      "asOf": "2024-04-01",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ（市総合より）",
+      "asOf": "2025-04-01",
       "isEstimated": false
     },
     "hazard": {
@@ -781,7 +781,7 @@
       "isEstimated": false
     },
     "landPrice": {
-      "value": 207464,
+      "value": 224929,
       "unit": "円/㎡",
       "source": "地価公示（住宅地平均）",
       "asOf": "2025",
@@ -790,8 +790,8 @@
     "waitlistChildren": {
       "value": 0,
       "unit": "人",
-      "source": "区別非公表（大阪市全体で2人）／こども家庭庁 保育所等関連状況取りまとめ",
-      "asOf": "2024-04-01",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ（市総合より）",
+      "asOf": "2025-04-01",
       "isEstimated": false
     },
     "hazard": {
@@ -826,7 +826,7 @@
       "isEstimated": false
     },
     "landPrice": {
-      "value": 439682,
+      "value": 501429,
       "unit": "円/㎡",
       "source": "地価公示（住宅地平均）",
       "asOf": "2025",
@@ -835,8 +835,8 @@
     "waitlistChildren": {
       "value": 0,
       "unit": "人",
-      "source": "区別非公表（大阪市全体で2人）／こども家庭庁 保育所等関連状況取りまとめ",
-      "asOf": "2024-04-01",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ（市総合より）",
+      "asOf": "2025-04-01",
       "isEstimated": false
     },
     "hazard": {
@@ -871,7 +871,7 @@
       "isEstimated": false
     },
     "landPrice": {
-      "value": 257313,
+      "value": 286333,
       "unit": "円/㎡",
       "source": "地価公示（住宅地平均）",
       "asOf": "2025",
@@ -880,8 +880,8 @@
     "waitlistChildren": {
       "value": 0,
       "unit": "人",
-      "source": "区別非公表（大阪市全体で2人）／こども家庭庁 保育所等関連状況取りまとめ",
-      "asOf": "2024-04-01",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ（市総合より）",
+      "asOf": "2025-04-01",
       "isEstimated": false
     },
     "hazard": {
@@ -916,7 +916,7 @@
       "isEstimated": false
     },
     "landPrice": {
-      "value": 209714,
+      "value": 221643,
       "unit": "円/㎡",
       "source": "地価公示（住宅地平均）",
       "asOf": "2025",
@@ -925,8 +925,8 @@
     "waitlistChildren": {
       "value": 0,
       "unit": "人",
-      "source": "区別非公表（大阪市全体で2人）／こども家庭庁 保育所等関連状況取りまとめ",
-      "asOf": "2024-04-01",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ（市総合より）",
+      "asOf": "2025-04-01",
       "isEstimated": false
     },
     "hazard": {
@@ -961,7 +961,7 @@
       "isEstimated": false
     },
     "landPrice": {
-      "value": 190458,
+      "value": 199565,
       "unit": "円/㎡",
       "source": "地価公示（住宅地平均）",
       "asOf": "2025",
@@ -970,8 +970,8 @@
     "waitlistChildren": {
       "value": 0,
       "unit": "人",
-      "source": "区別非公表（大阪市全体で2人）／こども家庭庁 保育所等関連状況取りまとめ",
-      "asOf": "2024-04-01",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ（市総合より）",
+      "asOf": "2025-04-01",
       "isEstimated": false
     },
     "hazard": {
@@ -1006,7 +1006,7 @@
       "isEstimated": false
     },
     "landPrice": {
-      "value": 3659588,
+      "value": 3980765,
       "unit": "円/㎡",
       "source": "地価公示（住宅地平均）",
       "asOf": "2025",
@@ -1015,8 +1015,8 @@
     "waitlistChildren": {
       "value": 0,
       "unit": "人",
-      "source": "区別非公表（大阪市全体で2人）／こども家庭庁 保育所等関連状況取りまとめ",
-      "asOf": "2024-04-01",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ（市総合より）",
+      "asOf": "2025-04-01",
       "isEstimated": false
     },
     "hazard": {
@@ -1051,7 +1051,7 @@
       "isEstimated": false
     },
     "landPrice": {
-      "value": 3921159,
+      "value": 4484419,
       "unit": "円/㎡",
       "source": "地価公示（住宅地平均）",
       "asOf": "2025",
@@ -1060,8 +1060,8 @@
     "waitlistChildren": {
       "value": 0,
       "unit": "人",
-      "source": "区別非公表（大阪市全体で2人）／こども家庭庁 保育所等関連状況取りまとめ",
-      "asOf": "2024-04-01",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ（市総合より）",
+      "asOf": "2025-04-01",
       "isEstimated": false
     },
     "hazard": {
@@ -1096,7 +1096,7 @@
       "isEstimated": false
     },
     "landPrice": {
-      "value": 197592,
+      "value": 211838,
       "unit": "円/㎡",
       "source": "地価公示（住宅地平均）",
       "asOf": "2025",
@@ -1106,7 +1106,7 @@
       "value": 0,
       "unit": "人",
       "source": "こども家庭庁 保育所等関連状況取りまとめ（市総合より）",
-      "asOf": "2024-04-01",
+      "asOf": "2025-04-01",
       "isEstimated": false
     },
     "hazard": {
@@ -1141,7 +1141,7 @@
       "isEstimated": false
     },
     "landPrice": {
-      "value": 121843,
+      "value": 129055,
       "unit": "円/㎡",
       "source": "地価公示（住宅地平均）",
       "asOf": "2025",
@@ -1151,7 +1151,7 @@
       "value": 0,
       "unit": "人",
       "source": "こども家庭庁 保育所等関連状況取りまとめ（市総合より）",
-      "asOf": "2024-04-01",
+      "asOf": "2025-04-01",
       "isEstimated": false
     },
     "hazard": {
@@ -1186,7 +1186,7 @@
       "isEstimated": false
     },
     "landPrice": {
-      "value": 136563,
+      "value": 144067,
       "unit": "円/㎡",
       "source": "地価公示（住宅地平均）",
       "asOf": "2025",
@@ -1196,7 +1196,7 @@
       "value": 0,
       "unit": "人",
       "source": "こども家庭庁 保育所等関連状況取りまとめ（市総合より）",
-      "asOf": "2024-04-01",
+      "asOf": "2025-04-01",
       "isEstimated": false
     },
     "hazard": {
@@ -1231,7 +1231,7 @@
       "isEstimated": false
     },
     "landPrice": {
-      "value": 143462,
+      "value": 159541,
       "unit": "円/㎡",
       "source": "地価公示（住宅地平均）",
       "asOf": "2025",
@@ -1241,7 +1241,7 @@
       "value": 0,
       "unit": "人",
       "source": "こども家庭庁 保育所等関連状況取りまとめ（市総合より）",
-      "asOf": "2024-04-01",
+      "asOf": "2025-04-01",
       "isEstimated": false
     },
     "hazard": {
@@ -1276,7 +1276,7 @@
       "isEstimated": false
     },
     "landPrice": {
-      "value": 101786,
+      "value": 107507,
       "unit": "円/㎡",
       "source": "地価公示（住宅地平均）",
       "asOf": "2025",
@@ -1286,7 +1286,7 @@
       "value": 0,
       "unit": "人",
       "source": "こども家庭庁 保育所等関連状況取りまとめ（市総合より）",
-      "asOf": "2024-04-01",
+      "asOf": "2025-04-01",
       "isEstimated": false
     },
     "hazard": {
@@ -1321,7 +1321,7 @@
       "isEstimated": false
     },
     "landPrice": {
-      "value": 248538,
+      "value": 262760,
       "unit": "円/㎡",
       "source": "地価公示（住宅地平均）",
       "asOf": "2025",
@@ -1331,7 +1331,7 @@
       "value": 0,
       "unit": "人",
       "source": "こども家庭庁 保育所等関連状況取りまとめ（市総合より）",
-      "asOf": "2024-04-01",
+      "asOf": "2025-04-01",
       "isEstimated": false
     },
     "hazard": {
@@ -1366,7 +1366,7 @@
       "isEstimated": false
     },
     "landPrice": {
-      "value": 79086,
+      "value": 82529,
       "unit": "円/㎡",
       "source": "地価公示（住宅地平均）",
       "asOf": "2025",
@@ -1376,7 +1376,7 @@
       "value": 0,
       "unit": "人",
       "source": "こども家庭庁 保育所等関連状況取りまとめ（市総合より）",
-      "asOf": "2024-04-01",
+      "asOf": "2025-04-01",
       "isEstimated": false
     },
     "hazard": {
