@@ -4,6 +4,8 @@ name: Data Update (annual / e-Stat + NLNI + CFA)
 # - e-Stat: 国勢調査 (人口) / 住宅・土地統計 (家賃)
 # - NLNI L01: 地価公示
 # - CFA Excel: 待機児童
+# データ取得と main への commit のみ行う。preview への反映が必要な時は
+# Deploy Preview ワークフローを手動実行する（自動 deploy はデプロイ数抑制のため廃止）。
 on:
   schedule:
     # 3/15 深夜（UTC 19:00 = JST 04:00）
@@ -110,49 +112,3 @@ jobs:
           else
             echo "No data diff for ${{ matrix.pref }}"
           fi
-
-  deploy:
-    needs: fetch
-    if: always()
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          ref: main
-          fetch-depth: 0
-
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: npm
-
-      - name: Install Vercel CLI
-        run: npm install --global vercel@latest
-
-      - name: Pull Vercel env (preview)
-        run: vercel pull --yes --environment=preview --token=$VERCEL_TOKEN
-        env:
-          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
-          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
-
-      - name: Build
-        run: vercel build --token=$VERCEL_TOKEN
-        env:
-          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
-          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
-
-      - name: Deploy preview
-        id: deploy
-        run: |
-          url=$(vercel deploy --prebuilt --token=$VERCEL_TOKEN)
-          echo "url=$url" >> "$GITHUB_OUTPUT"
-        env:
-          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
-          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
-
-      - name: Summary
-        run: |
-          echo "Preview: ${{ steps.deploy.outputs.url }}" >> "$GITHUB_STEP_SUMMARY"

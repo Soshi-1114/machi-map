@@ -1,16 +1,8 @@
 name: Deploy Preview
 
-# 人がコード変更を push した時に preview deploy を走らせる。
-# data/ のみの変更は data-update-* ワークフローが自身で deploy するため除外。
+# デプロイ数を抑えるため自動トリガー（main への push）は無効化。
+# preview を更新したい時は Actions 画面から手動実行（workflow_dispatch）する。
 on:
-  push:
-    branches: [main]
-    paths-ignore:
-      - "data/**"
-      - ".cache/**"
-      - "scripts/**"
-      - ".github/**"
-      - "README.md"
   workflow_dispatch:
 
 # 本番デプロイは絶対に走らせない（preview のみ）

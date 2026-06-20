@@ -1,7 +1,8 @@
 name: Data Update (quarterly / reinfolib)
 
 # reinfolib 由来データ（災害リスク + 駅・保育・医療）を四半期ごとに更新。
-# inline で preview deploy まで済ます（GITHUB_TOKEN による push は他 workflow を起動しないため）。
+# データ取得と main への commit のみ行う。preview への反映が必要な時は
+# Deploy Preview ワークフローを手動実行する（自動 deploy はデプロイ数抑制のため廃止）。
 on:
   schedule:
     # 1/1, 4/1, 7/1, 10/1 の日本時間早朝（UTC 19:00 = JST 04:00）
@@ -89,50 +90,3 @@ jobs:
             echo "No data diff for ${{ matrix.pref }}"
             echo "changed=false" >> "$GITHUB_OUTPUT"
           fi
-
-  deploy:
-    needs: fetch
-    if: always()  # 一部 pref が変更なしでも、deploy は最終的に走らせる
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          ref: main
-          # 直前で push したコミットを反映するため最新を取り直す
-          fetch-depth: 0
-
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: npm
-
-      - name: Install Vercel CLI
-        run: npm install --global vercel@latest
-
-      - name: Pull Vercel env (preview)
-        run: vercel pull --yes --environment=preview --token=$VERCEL_TOKEN
-        env:
-          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
-          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
-
-      - name: Build
-        run: vercel build --token=$VERCEL_TOKEN
-        env:
-          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
-          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
-
-      - name: Deploy preview
-        id: deploy
-        run: |
-          url=$(vercel deploy --prebuilt --token=$VERCEL_TOKEN)
-          echo "url=$url" >> "$GITHUB_OUTPUT"
-        env:
-          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
-          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
-
-      - name: Summary
-        run: |
-          echo "Preview: ${{ steps.deploy.outputs.url }}" >> "$GITHUB_STEP_SUMMARY"
