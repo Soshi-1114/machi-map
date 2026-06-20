@@ -4,12 +4,12 @@
 // 事前: curl -L -o /tmp/cfa_waitlist.xlsx https://www.cfa.go.jp/.../20240829_policies_hoiku_torimatome_r6_03.xlsx
 // 実行: node scripts/fetch-waitlist.mjs --pref=saitama
 
-import fs from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { existsSync } from "node:fs";
 import XLSX from "xlsx";
-import { resolvePref, dataPaths } from "./_lib/prefs.mjs";
+import { resolvePref } from "./_lib/prefs.mjs";
+import { loadMuni, saveMuni } from "./_lib/data.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, "..");
@@ -66,9 +66,7 @@ async function main() {
   }
   console.log(`\n${pref.nameJa}内 待機児童≠0 自治体: ${targetPref.size}`);
 
-  const paths = dataPaths(ROOT, pref);
-  const muni = JSON.parse(await fs.readFile(paths.muni, "utf8"));
-  const wards = paths.wards ? JSON.parse(await fs.readFile(paths.wards, "utf8")) : [];
+  const { muni, wards, paths } = await loadMuni(ROOT, pref);
 
   const META = {
     unit: "人",
@@ -104,8 +102,7 @@ async function main() {
     }
   }
 
-  await fs.writeFile(paths.muni, JSON.stringify(muni, null, 2) + "\n");
-  if (paths.wards) await fs.writeFile(paths.wards, JSON.stringify(wards, null, 2) + "\n");
+  await saveMuni(paths, muni, wards);
   console.log("data files 保存完了");
 }
 

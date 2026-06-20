@@ -11,7 +11,8 @@ import fs from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { existsSync } from "node:fs";
-import { resolvePref, dataPaths } from "./_lib/prefs.mjs";
+import { resolvePref } from "./_lib/prefs.mjs";
+import { loadMuni, saveMuni } from "./_lib/data.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, "..");
@@ -56,9 +57,7 @@ function groupResidential(features, { useField, codeField, priceField }) {
 }
 
 async function main() {
-  const paths = dataPaths(ROOT, pref);
-  const muni = JSON.parse(await fs.readFile(paths.muni, "utf8"));
-  const wards = paths.wards ? JSON.parse(await fs.readFile(paths.wards, "utf8")) : [];
+  const { muni, wards, paths } = await loadMuni(ROOT, pref);
 
   const raw = JSON.parse(await fs.readFile(L01_PATH, "utf8"));
   // L01: 住宅地 = L01_010===1, code=L01_001, 価格=L01_008
@@ -109,8 +108,7 @@ async function main() {
   console.log(`地価セット: 公示${fromL01} + 調査${fromL02} / 無し${missing.length}`);
   if (missing.length) console.warn(`地価データ無し (${missing.length}件):`, missing.join(", "));
 
-  await fs.writeFile(paths.muni, JSON.stringify(muni, null, 2) + "\n");
-  if (paths.wards) await fs.writeFile(paths.wards, JSON.stringify(wards, null, 2) + "\n");
+  await saveMuni(paths, muni, wards);
 }
 
 main().catch((e) => { console.error(e); process.exit(1); });

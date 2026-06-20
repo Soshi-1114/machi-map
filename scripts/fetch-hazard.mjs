@@ -3,11 +3,11 @@
 //
 // 実行: node --env-file=.env.local --max-old-space-size=4096 scripts/fetch-hazard.mjs --pref=saitama
 
-import fs from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import * as turf from "@turf/turf";
-import { resolvePref, dataPaths } from "./_lib/prefs.mjs";
+import { resolvePref } from "./_lib/prefs.mjs";
+import { loadMuni, saveMuni } from "./_lib/data.mjs";
 import {
   createTileFetcher,
   loadMuniPolys,
@@ -64,11 +64,8 @@ async function main() {
   console.log("\n[XKT026] 洪水"); await processHazardForApi("XKT026", polys, "hasFlood");
   console.log("\n[XKT029] 土砂"); await processHazardForApi("XKT029", polys, "hasLandslide");
 
-  const paths = dataPaths(ROOT, pref);
-  const muni = JSON.parse(await fs.readFile(paths.muni, "utf8"));
-  const wards = paths.wards ? JSON.parse(await fs.readFile(paths.wards, "utf8")) : [];
-  const byCode = new Map();
-  for (const m of [...muni, ...wards]) byCode.set(m.code, m);
+  const { muni, wards, all, paths } = await loadMuni(ROOT, pref);
+  const byCode = new Map(all.map((m) => [m.code, m]));
 
   for (const p of polys) {
     const t = byCode.get(p.code); if (!t) continue;
@@ -79,10 +76,8 @@ async function main() {
     };
   }
 
-  await fs.writeFile(paths.muni, JSON.stringify(muni, null, 2) + "\n");
-  if (paths.wards) await fs.writeFile(paths.wards, JSON.stringify(wards, null, 2) + "\n");
+  await saveMuni(paths, muni, wards);
 
-  const all = [...muni, ...wards];
   const f = all.filter((m) => m.hazard.hasFloodRisk).length;
   const l = all.filter((m) => m.hazard.hasLandslideRisk).length;
   console.log(`Total: flood=${f}/${all.length}, landslide=${l}/${all.length}`);

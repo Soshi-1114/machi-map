@@ -3,10 +3,10 @@
 //
 // 実行: node --env-file=.env.local scripts/fetch-rent.mjs --pref=saitama
 
-import fs from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { resolvePref, dataPaths } from "./_lib/prefs.mjs";
+import { resolvePref } from "./_lib/prefs.mjs";
+import { loadMuni, saveMuni } from "./_lib/data.mjs";
 import { requireEstatAppId, fetchStatsValues } from "./_lib/estat.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -49,13 +49,10 @@ function weightedMean(distribution) {
 }
 
 async function main() {
-  const paths = dataPaths(ROOT, pref);
-  const muni = JSON.parse(await fs.readFile(paths.muni, "utf8"));
-  const wards = paths.wards ? JSON.parse(await fs.readFile(paths.wards, "utf8")) : [];
-  const allCodes = [...muni.map((m) => m.code), ...wards.map((m) => m.code)];
+  const { muni, wards, codes, paths } = await loadMuni(ROOT, pref);
 
-  console.log(`Fetching rent dist for ${allCodes.length} areas...`);
-  const byArea = await fetchDistribution(allCodes);
+  console.log(`Fetching rent dist for ${codes.length} areas...`);
+  const byArea = await fetchDistribution(codes);
   console.log(`Got ${byArea.size} areas with data`);
 
   const missing = [];
@@ -75,8 +72,7 @@ async function main() {
   }
   if (missing.length) console.warn(`Missing ${missing.length}:`, missing.join(", "));
 
-  await fs.writeFile(paths.muni, JSON.stringify(muni, null, 2) + "\n");
-  if (paths.wards) await fs.writeFile(paths.wards, JSON.stringify(wards, null, 2) + "\n");
+  await saveMuni(paths, muni, wards);
 }
 
 main().catch((e) => { console.error(e); process.exit(1); });

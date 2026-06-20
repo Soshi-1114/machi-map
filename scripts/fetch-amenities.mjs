@@ -3,11 +3,11 @@
 //
 // 実行: node --env-file=.env.local --max-old-space-size=4096 scripts/fetch-amenities.mjs --pref=saitama
 
-import fs from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import * as turf from "@turf/turf";
-import { resolvePref, dataPaths } from "./_lib/prefs.mjs";
+import { resolvePref } from "./_lib/prefs.mjs";
+import { loadMuni, saveMuni } from "./_lib/data.mjs";
 import { createTileFetcher, loadMuniPolys } from "./_lib/reinfolib.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -112,11 +112,8 @@ async function main() {
     return n ? `m:${n}|${loc ?? ""}` : null;
   });
 
-  const paths = dataPaths(ROOT, pref);
-  const muni = JSON.parse(await fs.readFile(paths.muni, "utf8"));
-  const wards = paths.wards ? JSON.parse(await fs.readFile(paths.wards, "utf8")) : [];
-  const byCode = new Map();
-  for (const m of [...muni, ...wards]) byCode.set(m.code, m);
+  const { muni, wards, all, paths } = await loadMuni(ROOT, pref);
+  const byCode = new Map(all.map((m) => [m.code, m]));
 
   for (const p of polys) {
     const t = byCode.get(p.code); if (!t) continue;
@@ -129,8 +126,7 @@ async function main() {
     };
   }
 
-  await fs.writeFile(paths.muni, JSON.stringify(muni, null, 2) + "\n");
-  if (paths.wards) await fs.writeFile(paths.wards, JSON.stringify(wards, null, 2) + "\n");
+  await saveMuni(paths, muni, wards);
 }
 
 main().catch((e) => { console.error(e); process.exit(1); });

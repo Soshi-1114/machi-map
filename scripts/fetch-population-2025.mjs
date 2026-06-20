@@ -7,10 +7,10 @@
 // 実行: node --env-file=.env.local scripts/fetch-population-2025.mjs --pref=saitama
 //       node --env-file=.env.local scripts/fetch-population-2025.mjs --all
 
-import fs from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { PREFS, getPref, dataPaths } from "./_lib/prefs.mjs";
+import { PREFS, getPref } from "./_lib/prefs.mjs";
+import { loadMuni, saveMuni } from "./_lib/data.mjs";
 import { requireEstatAppId, fetchValueByArea } from "./_lib/estat.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -32,11 +32,7 @@ function trendOf(ratePct) {
 }
 
 async function runPref(pref) {
-  const paths = dataPaths(ROOT, pref);
-  const muni = JSON.parse(await fs.readFile(paths.muni, "utf8"));
-  const wards = paths.wards ? JSON.parse(await fs.readFile(paths.wards, "utf8")) : [];
-  const all = [...muni, ...wards];
-  const codes = all.map((m) => m.code);
+  const { muni, wards, all, codes, paths } = await loadMuni(ROOT, pref);
 
   const pop2025 = await fetchValueByArea(APP_ID, POP_2025, codes, { cdCat01: "0" });
   const rate = await fetchValueByArea(APP_ID, CHG_2025, codes, { cdTab: "2025_35" });
@@ -49,8 +45,7 @@ async function runPref(pref) {
     const t = trendOf(rate.get(m.code));
     if (t) { m.populationTrend = t; trendUpd++; dist[t] = (dist[t] || 0) + 1; }
   }
-  await fs.writeFile(paths.muni, JSON.stringify(muni, null, 2) + "\n");
-  if (paths.wards) await fs.writeFile(paths.wards, JSON.stringify(wards, null, 2) + "\n");
+  await saveMuni(paths, muni, wards);
   console.log(`${pref.slug}: pop更新${popUpd}/${all.length}(欠${miss}) trend${trendUpd} | ${JSON.stringify(dist)}`);
 }
 
