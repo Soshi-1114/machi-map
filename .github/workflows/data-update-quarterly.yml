@@ -84,9 +84,14 @@ jobs:
           if [[ -n "$(git status --porcelain data/${{ matrix.pref }}.json data/${{ matrix.pref }}_wards.json 2>/dev/null)" ]]; then
             git add data/${{ matrix.pref }}.json data/${{ matrix.pref }}_wards.json 2>/dev/null || true
             git commit -m "chore(data): ${{ matrix.pref }} quarterly reinfolib update"
-            # main を fast-forward push（並列 job のレース対策で rebase pull）
-            git pull --rebase origin main || true
-            git push origin HEAD:main
+            # 並列 job が同時に main へ push するため、rebase + push をリトライ（レース対策）
+            pushed=""
+            for i in $(seq 1 8); do
+              if git pull --rebase origin main && git push origin HEAD:main; then pushed=1; break; fi
+              echo "push attempt $i failed (likely concurrent push); retrying..."
+              sleep $(( (RANDOM % 6) + 2 ))
+            done
+            if [[ -z "$pushed" ]]; then echo "::error::push failed after retries for ${{ matrix.pref }}"; exit 1; fi
             echo "changed=true" >> "$GITHUB_OUTPUT"
           else
             echo "No data diff for ${{ matrix.pref }}"
