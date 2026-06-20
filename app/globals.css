@@ -495,6 +495,33 @@ button { font-family: inherit; }
 .map-tooltip-rent strong { color: #fff; font-weight: 700; }
 
 /* ========== AreaPanel (PC) ========== */
+/* 未選択時の操作ガイド（PC）。レイヤーパネル/凡例を避けて下部中央に控えめに置く */
+.area-hint {
+  position: absolute;
+  left: 50%;
+  bottom: calc(22px + env(safe-area-inset-bottom));
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  max-width: min(520px, 60vw);
+  padding: 10px 16px;
+  background: var(--surface);
+  backdrop-filter: saturate(180%) blur(16px);
+  -webkit-backdrop-filter: saturate(180%) blur(16px);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  box-shadow: var(--shadow-md);
+  color: var(--text-muted);
+  font-size: 13px;
+  font-weight: 500;
+  z-index: 5;
+  pointer-events: none;
+  animation: map-loading-fade .4s ease;
+}
+.area-hint svg { color: var(--accent); flex-shrink: 0; }
+.area-hint strong { color: var(--text); font-weight: 700; }
+
 .area-panel {
   position: absolute;
   top: calc(var(--header-h) + env(safe-area-inset-top) + 14px);

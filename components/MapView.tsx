@@ -660,7 +660,7 @@ export default function MapView({ summary }: Props) {
 
       {/* パネル / シート */}
       {!isMobile ? (
-        <AreaPanel municipality={selectedDetail} onClose={() => setSelectedCode(null)} />
+        <AreaPanel municipality={selectedDetail} selectedCode={selectedCode} onClose={() => setSelectedCode(null)} />
       ) : (
         <MobileSheet municipality={selectedDetail} onClose={() => setSelectedCode(null)} />
       )}
