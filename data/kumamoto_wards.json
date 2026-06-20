@@ -16,7 +16,7 @@
       "isEstimated": false
     },
     "landPrice": {
-      "value": 313043,
+      "value": 342806,
       "unit": "円/㎡",
       "source": "地価公示（住宅地平均）",
       "asOf": "2025",
@@ -26,7 +26,7 @@
       "value": 0,
       "unit": "人",
       "source": "こども家庭庁 保育所等関連状況取りまとめ（市総合より）",
-      "asOf": "2024-04-01",
+      "asOf": "2025-04-01",
       "isEstimated": false
     },
     "hazard": {
@@ -61,7 +61,7 @@
       "isEstimated": false
     },
     "landPrice": {
-      "value": 84447,
+      "value": 88133,
       "unit": "円/㎡",
       "source": "地価公示（住宅地平均）",
       "asOf": "2025",
@@ -71,7 +71,7 @@
       "value": 0,
       "unit": "人",
       "source": "こども家庭庁 保育所等関連状況取りまとめ（市総合より）",
-      "asOf": "2024-04-01",
+      "asOf": "2025-04-01",
       "isEstimated": false
     },
     "hazard": {
@@ -106,7 +106,7 @@
       "isEstimated": false
     },
     "landPrice": {
-      "value": 88752,
+      "value": 91405,
       "unit": "円/㎡",
       "source": "地価公示（住宅地平均）",
       "asOf": "2025",
@@ -116,7 +116,7 @@
       "value": 0,
       "unit": "人",
       "source": "こども家庭庁 保育所等関連状況取りまとめ（市総合より）",
-      "asOf": "2024-04-01",
+      "asOf": "2025-04-01",
       "isEstimated": false
     },
     "hazard": {
@@ -151,7 +151,7 @@
       "isEstimated": false
     },
     "landPrice": {
-      "value": 66310,
+      "value": 68557,
       "unit": "円/㎡",
       "source": "地価公示（住宅地平均）",
       "asOf": "2025",
@@ -161,7 +161,7 @@
       "value": 0,
       "unit": "人",
       "source": "こども家庭庁 保育所等関連状況取りまとめ（市総合より）",
-      "asOf": "2024-04-01",
+      "asOf": "2025-04-01",
       "isEstimated": false
     },
     "hazard": {
@@ -196,7 +196,7 @@
       "isEstimated": false
     },
     "landPrice": {
-      "value": 56630,
+      "value": 58305,
       "unit": "円/㎡",
       "source": "地価公示（住宅地平均）",
       "asOf": "2025",
@@ -206,7 +206,7 @@
       "value": 0,
       "unit": "人",
       "source": "こども家庭庁 保育所等関連状況取りまとめ（市総合より）",
-      "asOf": "2024-04-01",
+      "asOf": "2025-04-01",
       "isEstimated": false
     },
     "hazard": {

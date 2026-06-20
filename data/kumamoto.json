@@ -13,7 +13,7 @@
       "isEstimated": false
     },
     "landPrice": {
-      "value": 154509,
+      "value": 168743,
       "unit": "円/㎡",
       "source": "地価公示（住宅地平均）",
       "asOf": "2025",
@@ -23,7 +23,7 @@
       "value": 0,
       "unit": "人",
       "source": "こども家庭庁 保育所等関連状況取りまとめ",
-      "asOf": "2024-04-01",
+      "asOf": "2025-04-01",
       "isEstimated": false
     },
     "hazard": {
@@ -55,7 +55,7 @@
       "isEstimated": false
     },
     "landPrice": {
-      "value": 30667,
+      "value": 29540,
       "unit": "円/㎡",
       "source": "地価公示（住宅地平均）",
       "asOf": "2025",
@@ -65,7 +65,7 @@
       "value": 0,
       "unit": "人",
       "source": "こども家庭庁 保育所等関連状況取りまとめ",
-      "asOf": "2024-04-01",
+      "asOf": "2025-04-01",
       "isEstimated": false
     },
     "hazard": {
@@ -97,7 +97,7 @@
       "isEstimated": false
     },
     "landPrice": {
-      "value": 22620,
+      "value": 22460,
       "unit": "円/㎡",
       "source": "地価公示（住宅地平均）",
       "asOf": "2025",
@@ -107,7 +107,7 @@
       "value": 0,
       "unit": "人",
       "source": "こども家庭庁 保育所等関連状況取りまとめ",
-      "asOf": "2024-04-01",
+      "asOf": "2025-04-01",
       "isEstimated": false
     },
     "hazard": {
@@ -139,7 +139,7 @@
       "isEstimated": false
     },
     "landPrice": {
-      "value": 27538,
+      "value": 29922,
       "unit": "円/㎡",
       "source": "地価公示（住宅地平均）",
       "asOf": "2025",
@@ -149,7 +149,7 @@
       "value": 0,
       "unit": "人",
       "source": "こども家庭庁 保育所等関連状況取りまとめ",
-      "asOf": "2024-04-01",
+      "asOf": "2025-04-01",
       "isEstimated": false
     },
     "hazard": {
@@ -181,7 +181,7 @@
       "isEstimated": false
     },
     "landPrice": {
-      "value": 34160,
+      "value": 33700,
       "unit": "円/㎡",
       "source": "地価公示（住宅地平均）",
       "asOf": "2025",
@@ -191,7 +191,7 @@
       "value": 0,
       "unit": "人",
       "source": "こども家庭庁 保育所等関連状況取りまとめ",
-      "asOf": "2024-04-01",
+      "asOf": "2025-04-01",
       "isEstimated": false
     },
     "hazard": {
@@ -223,7 +223,7 @@
       "isEstimated": false
     },
     "landPrice": {
-      "value": 36920,
+      "value": 32120,
       "unit": "円/㎡",
       "source": "地価公示（住宅地平均）",
       "asOf": "2025",
@@ -233,7 +233,7 @@
       "value": 0,
       "unit": "人",
       "source": "こども家庭庁 保育所等関連状況取りまとめ",
-      "asOf": "2024-04-01",
+      "asOf": "2025-04-01",
       "isEstimated": false
     },
     "hazard": {
@@ -265,7 +265,7 @@
       "isEstimated": false
     },
     "landPrice": {
-      "value": 28540,
+      "value": 28660,
       "unit": "円/㎡",
       "source": "地価公示（住宅地平均）",
       "asOf": "2025",
@@ -275,7 +275,7 @@
       "value": 0,
       "unit": "人",
       "source": "こども家庭庁 保育所等関連状況取りまとめ",
-      "asOf": "2024-04-01",
+      "asOf": "2025-04-01",
       "isEstimated": false
     },
     "hazard": {
@@ -307,7 +307,7 @@
       "isEstimated": false
     },
     "landPrice": {
-      "value": 21386,
+      "value": 20300,
       "unit": "円/㎡",
       "source": "地価公示（住宅地平均）",
       "asOf": "2025",
@@ -317,7 +317,7 @@
       "value": 0,
       "unit": "人",
       "source": "こども家庭庁 保育所等関連状況取りまとめ",
-      "asOf": "2024-04-01",
+      "asOf": "2025-04-01",
       "isEstimated": false
     },
     "hazard": {
@@ -349,7 +349,7 @@
       "isEstimated": false
     },
     "landPrice": {
-      "value": 39000,
+      "value": 39500,
       "unit": "円/㎡",
       "source": "地価公示（住宅地平均）",
       "asOf": "2025",
@@ -359,7 +359,7 @@
       "value": 0,
       "unit": "人",
       "source": "こども家庭庁 保育所等関連状況取りまとめ",
-      "asOf": "2024-04-01",
+      "asOf": "2025-04-01",
       "isEstimated": false
     },
     "hazard": {
@@ -401,7 +401,7 @@
       "value": 0,
       "unit": "人",
       "source": "こども家庭庁 保育所等関連状況取りまとめ",
-      "asOf": "2024-04-01",
+      "asOf": "2025-04-01",
       "isEstimated": false
     },
     "hazard": {
@@ -433,7 +433,7 @@
       "isEstimated": false
     },
     "landPrice": {
-      "value": 33380,
+      "value": 33900,
       "unit": "円/㎡",
       "source": "地価公示（住宅地平均）",
       "asOf": "2025",
@@ -443,7 +443,7 @@
       "value": 0,
       "unit": "人",
       "source": "こども家庭庁 保育所等関連状況取りまとめ",
-      "asOf": "2024-04-01",
+      "asOf": "2025-04-01",
       "isEstimated": false
     },
     "hazard": {
@@ -475,7 +475,7 @@
       "isEstimated": false
     },
     "landPrice": {
-      "value": 14067,
+      "value": 14100,
       "unit": "円/㎡",
       "source": "地価公示（住宅地平均）",
       "asOf": "2025",
@@ -485,7 +485,7 @@
       "value": 0,
       "unit": "人",
       "source": "こども家庭庁 保育所等関連状況取りまとめ",
-      "asOf": "2024-04-01",
+      "asOf": "2025-04-01",
       "isEstimated": false
     },
     "hazard": {
@@ -517,7 +517,7 @@
       "isEstimated": false
     },
     "landPrice": {
-      "value": 42500,
+      "value": 42350,
       "unit": "円/㎡",
       "source": "地価公示（住宅地平均）",
       "asOf": "2025",
@@ -527,7 +527,7 @@
       "value": 0,
       "unit": "人",
       "source": "こども家庭庁 保育所等関連状況取りまとめ",
-      "asOf": "2024-04-01",
+      "asOf": "2025-04-01",
       "isEstimated": false
     },
     "hazard": {
@@ -559,7 +559,7 @@
       "isEstimated": false
     },
     "landPrice": {
-      "value": 58643,
+      "value": 61314,
       "unit": "円/㎡",
       "source": "地価公示（住宅地平均）",
       "asOf": "2025",
@@ -569,7 +569,7 @@
       "value": 0,
       "unit": "人",
       "source": "こども家庭庁 保育所等関連状況取りまとめ",
-      "asOf": "2024-04-01",
+      "asOf": "2025-04-01",
       "isEstimated": false
     },
     "hazard": {
@@ -611,7 +611,7 @@
       "value": 0,
       "unit": "人",
       "source": "こども家庭庁 保育所等関連状況取りまとめ",
-      "asOf": "2024-04-01",
+      "asOf": "2025-04-01",
       "isEstimated": false
     },
     "hazard": {
@@ -653,7 +653,7 @@
       "value": 0,
       "unit": "人",
       "source": "こども家庭庁 保育所等関連状況取りまとめ",
-      "asOf": "2024-04-01",
+      "asOf": "2025-04-01",
       "isEstimated": false
     },
     "hazard": {
@@ -695,7 +695,7 @@
       "value": 0,
       "unit": "人",
       "source": "こども家庭庁 保育所等関連状況取りまとめ",
-      "asOf": "2024-04-01",
+      "asOf": "2025-04-01",
       "isEstimated": false
     },
     "hazard": {
@@ -727,7 +727,7 @@
       "isEstimated": false
     },
     "landPrice": {
-      "value": 16433,
+      "value": 16400,
       "unit": "円/㎡",
       "source": "地価公示（住宅地平均）",
       "asOf": "2025",
@@ -737,7 +737,7 @@
       "value": 0,
       "unit": "人",
       "source": "こども家庭庁 保育所等関連状況取りまとめ",
-      "asOf": "2024-04-01",
+      "asOf": "2025-04-01",
       "isEstimated": false
     },
     "hazard": {
@@ -779,7 +779,7 @@
       "value": 0,
       "unit": "人",
       "source": "こども家庭庁 保育所等関連状況取りまとめ",
-      "asOf": "2024-04-01",
+      "asOf": "2025-04-01",
       "isEstimated": false
     },
     "hazard": {
@@ -811,7 +811,7 @@
       "isEstimated": false
     },
     "landPrice": {
-      "value": 55900,
+      "value": 61850,
       "unit": "円/㎡",
       "source": "地価公示（住宅地平均）",
       "asOf": "2025",
@@ -821,7 +821,7 @@
       "value": 0,
       "unit": "人",
       "source": "こども家庭庁 保育所等関連状況取りまとめ",
-      "asOf": "2024-04-01",
+      "asOf": "2025-04-01",
       "isEstimated": false
     },
     "hazard": {
@@ -853,17 +853,17 @@
       "isEstimated": false
     },
     "landPrice": {
-      "value": 74913,
+      "value": 85978,
       "unit": "円/㎡",
       "source": "地価公示（住宅地平均）",
       "asOf": "2025",
       "isEstimated": false
     },
     "waitlistChildren": {
-      "value": 4,
+      "value": 0,
       "unit": "人",
       "source": "こども家庭庁 保育所等関連状況取りまとめ",
-      "asOf": "2024-04-01",
+      "asOf": "2025-04-01",
       "isEstimated": false
     },
     "hazard": {
@@ -905,7 +905,7 @@
       "value": 0,
       "unit": "人",
       "source": "こども家庭庁 保育所等関連状況取りまとめ",
-      "asOf": "2024-04-01",
+      "asOf": "2025-04-01",
       "isEstimated": false
     },
     "hazard": {
@@ -947,7 +947,7 @@
       "value": 0,
       "unit": "人",
       "source": "こども家庭庁 保育所等関連状況取りまとめ",
-      "asOf": "2024-04-01",
+      "asOf": "2025-04-01",
       "isEstimated": false
     },
     "hazard": {
@@ -989,7 +989,7 @@
       "value": 0,
       "unit": "人",
       "source": "こども家庭庁 保育所等関連状況取りまとめ",
-      "asOf": "2024-04-01",
+      "asOf": "2025-04-01",
       "isEstimated": false
     },
     "hazard": {
@@ -1031,7 +1031,7 @@
       "value": 0,
       "unit": "人",
       "source": "こども家庭庁 保育所等関連状況取りまとめ",
-      "asOf": "2024-04-01",
+      "asOf": "2025-04-01",
       "isEstimated": false
     },
     "hazard": {
@@ -1070,10 +1070,10 @@
       "isEstimated": false
     },
     "waitlistChildren": {
-      "value": 0,
+      "value": 4,
       "unit": "人",
       "source": "こども家庭庁 保育所等関連状況取りまとめ",
-      "asOf": "2024-04-01",
+      "asOf": "2025-04-01",
       "isEstimated": false
     },
     "hazard": {
@@ -1115,7 +1115,7 @@
       "value": 0,
       "unit": "人",
       "source": "こども家庭庁 保育所等関連状況取りまとめ",
-      "asOf": "2024-04-01",
+      "asOf": "2025-04-01",
       "isEstimated": false
     },
     "hazard": {
@@ -1147,7 +1147,7 @@
       "isEstimated": false
     },
     "landPrice": {
-      "value": 29800,
+      "value": 30400,
       "unit": "円/㎡",
       "source": "地価公示（住宅地平均）",
       "asOf": "2025",
@@ -1157,7 +1157,7 @@
       "value": 0,
       "unit": "人",
       "source": "こども家庭庁 保育所等関連状況取りまとめ",
-      "asOf": "2024-04-01",
+      "asOf": "2025-04-01",
       "isEstimated": false
     },
     "hazard": {
@@ -1189,7 +1189,7 @@
       "isEstimated": false
     },
     "landPrice": {
-      "value": 39600,
+      "value": 40700,
       "unit": "円/㎡",
       "source": "地価公示（住宅地平均）",
       "asOf": "2025",
@@ -1199,7 +1199,7 @@
       "value": 0,
       "unit": "人",
       "source": "こども家庭庁 保育所等関連状況取りまとめ",
-      "asOf": "2024-04-01",
+      "asOf": "2025-04-01",
       "isEstimated": false
     },
     "hazard": {
@@ -1231,7 +1231,7 @@
       "isEstimated": false
     },
     "landPrice": {
-      "value": 43300,
+      "value": 45033,
       "unit": "円/㎡",
       "source": "地価公示（住宅地平均）",
       "asOf": "2025",
@@ -1241,7 +1241,7 @@
       "value": 0,
       "unit": "人",
       "source": "こども家庭庁 保育所等関連状況取りまとめ",
-      "asOf": "2024-04-01",
+      "asOf": "2025-04-01",
       "isEstimated": false
     },
     "hazard": {
@@ -1283,7 +1283,7 @@
       "value": 0,
       "unit": "人",
       "source": "こども家庭庁 保育所等関連状況取りまとめ",
-      "asOf": "2024-04-01",
+      "asOf": "2025-04-01",
       "isEstimated": false
     },
     "hazard": {
@@ -1325,7 +1325,7 @@
       "value": 0,
       "unit": "人",
       "source": "こども家庭庁 保育所等関連状況取りまとめ",
-      "asOf": "2024-04-01",
+      "asOf": "2025-04-01",
       "isEstimated": false
     },
     "hazard": {
@@ -1367,7 +1367,7 @@
       "value": 0,
       "unit": "人",
       "source": "こども家庭庁 保育所等関連状況取りまとめ",
-      "asOf": "2024-04-01",
+      "asOf": "2025-04-01",
       "isEstimated": false
     },
     "hazard": {
@@ -1399,7 +1399,7 @@
       "isEstimated": false
     },
     "landPrice": {
-      "value": 19450,
+      "value": 19300,
       "unit": "円/㎡",
       "source": "地価公示（住宅地平均）",
       "asOf": "2025",
@@ -1409,7 +1409,7 @@
       "value": 0,
       "unit": "人",
       "source": "こども家庭庁 保育所等関連状況取りまとめ",
-      "asOf": "2024-04-01",
+      "asOf": "2025-04-01",
       "isEstimated": false
     },
     "hazard": {
@@ -1451,7 +1451,7 @@
       "value": 0,
       "unit": "人",
       "source": "こども家庭庁 保育所等関連状況取りまとめ",
-      "asOf": "2024-04-01",
+      "asOf": "2025-04-01",
       "isEstimated": false
     },
     "hazard": {
@@ -1493,7 +1493,7 @@
       "value": 0,
       "unit": "人",
       "source": "こども家庭庁 保育所等関連状況取りまとめ",
-      "asOf": "2024-04-01",
+      "asOf": "2025-04-01",
       "isEstimated": false
     },
     "hazard": {
@@ -1535,7 +1535,7 @@
       "value": 0,
       "unit": "人",
       "source": "こども家庭庁 保育所等関連状況取りまとめ",
-      "asOf": "2024-04-01",
+      "asOf": "2025-04-01",
       "isEstimated": false
     },
     "hazard": {
@@ -1577,7 +1577,7 @@
       "value": 0,
       "unit": "人",
       "source": "こども家庭庁 保育所等関連状況取りまとめ",
-      "asOf": "2024-04-01",
+      "asOf": "2025-04-01",
       "isEstimated": false
     },
     "hazard": {
@@ -1619,7 +1619,7 @@
       "value": 0,
       "unit": "人",
       "source": "こども家庭庁 保育所等関連状況取りまとめ",
-      "asOf": "2024-04-01",
+      "asOf": "2025-04-01",
       "isEstimated": false
     },
     "hazard": {
@@ -1661,7 +1661,7 @@
       "value": 0,
       "unit": "人",
       "source": "こども家庭庁 保育所等関連状況取りまとめ",
-      "asOf": "2024-04-01",
+      "asOf": "2025-04-01",
       "isEstimated": false
     },
     "hazard": {
@@ -1703,7 +1703,7 @@
       "value": 0,
       "unit": "人",
       "source": "こども家庭庁 保育所等関連状況取りまとめ",
-      "asOf": "2024-04-01",
+      "asOf": "2025-04-01",
       "isEstimated": false
     },
     "hazard": {
@@ -1745,7 +1745,7 @@
       "value": 0,
       "unit": "人",
       "source": "こども家庭庁 保育所等関連状況取りまとめ",
-      "asOf": "2024-04-01",
+      "asOf": "2025-04-01",
       "isEstimated": false
     },
     "hazard": {
@@ -1787,7 +1787,7 @@
       "value": 0,
       "unit": "人",
       "source": "こども家庭庁 保育所等関連状況取りまとめ",
-      "asOf": "2024-04-01",
+      "asOf": "2025-04-01",
       "isEstimated": false
     },
     "hazard": {
@@ -1829,7 +1829,7 @@
       "value": 0,
       "unit": "人",
       "source": "こども家庭庁 保育所等関連状況取りまとめ",
-      "asOf": "2024-04-01",
+      "asOf": "2025-04-01",
       "isEstimated": false
     },
     "hazard": {
@@ -1871,7 +1871,7 @@
       "value": 0,
       "unit": "人",
       "source": "こども家庭庁 保育所等関連状況取りまとめ",
-      "asOf": "2024-04-01",
+      "asOf": "2025-04-01",
       "isEstimated": false
     },
     "hazard": {
