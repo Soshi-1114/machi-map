@@ -13,7 +13,7 @@
       "isEstimated": false
     },
     "landPrice": {
-      "value": 379386,
+      "value": 405628,
       "unit": "円/㎡",
       "source": "地価公示（住宅地平均）",
       "asOf": "2025",
@@ -22,8 +22,8 @@
     "waitlistChildren": {
       "value": 0,
       "unit": "人",
-      "source": "横浜市 保育所等利用待機児童数（令和6年4月1日）",
-      "asOf": "2024-04-01",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ（市総合より）",
+      "asOf": "2025-04-01",
       "isEstimated": false
     },
     "hazard": {
@@ -58,17 +58,17 @@
       "isEstimated": false
     },
     "landPrice": {
-      "value": 519912,
+      "value": 557194,
       "unit": "円/㎡",
       "source": "地価公示（住宅地平均）",
       "asOf": "2025",
       "isEstimated": false
     },
     "waitlistChildren": {
-      "value": 2,
+      "value": 0,
       "unit": "人",
-      "source": "横浜市 保育所等利用待機児童数（令和6年4月1日）",
-      "asOf": "2024-04-01",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ（市総合より）",
+      "asOf": "2025-04-01",
       "isEstimated": false
     },
     "hazard": {
@@ -103,7 +103,7 @@
       "isEstimated": false
     },
     "landPrice": {
-      "value": 1808654,
+      "value": 1883444,
       "unit": "円/㎡",
       "source": "地価公示（住宅地平均）",
       "asOf": "2025",
@@ -112,8 +112,8 @@
     "waitlistChildren": {
       "value": 0,
       "unit": "人",
-      "source": "横浜市 保育所等利用待機児童数（令和6年4月1日）",
-      "asOf": "2024-04-01",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ（市総合より）",
+      "asOf": "2025-04-01",
       "isEstimated": false
     },
     "hazard": {
@@ -148,7 +148,7 @@
       "isEstimated": false
     },
     "landPrice": {
-      "value": 755476,
+      "value": 847643,
       "unit": "円/㎡",
       "source": "地価公示（住宅地平均）",
       "asOf": "2025",
@@ -157,8 +157,8 @@
     "waitlistChildren": {
       "value": 0,
       "unit": "人",
-      "source": "横浜市 保育所等利用待機児童数（令和6年4月1日）",
-      "asOf": "2024-04-01",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ（市総合より）",
+      "asOf": "2025-04-01",
       "isEstimated": false
     },
     "hazard": {
@@ -193,7 +193,7 @@
       "isEstimated": false
     },
     "landPrice": {
-      "value": 308346,
+      "value": 326769,
       "unit": "円/㎡",
       "source": "地価公示（住宅地平均）",
       "asOf": "2025",
@@ -202,8 +202,8 @@
     "waitlistChildren": {
       "value": 0,
       "unit": "人",
-      "source": "横浜市 保育所等利用待機児童数（令和6年4月1日）",
-      "asOf": "2024-04-01",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ（市総合より）",
+      "asOf": "2025-04-01",
       "isEstimated": false
     },
     "hazard": {
@@ -238,7 +238,7 @@
       "isEstimated": false
     },
     "landPrice": {
-      "value": 241906,
+      "value": 257516,
       "unit": "円/㎡",
       "source": "地価公示（住宅地平均）",
       "asOf": "2025",
@@ -247,8 +247,8 @@
     "waitlistChildren": {
       "value": 0,
       "unit": "人",
-      "source": "横浜市 保育所等利用待機児童数（令和6年4月1日）",
-      "asOf": "2024-04-01",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ（市総合より）",
+      "asOf": "2025-04-01",
       "isEstimated": false
     },
     "hazard": {
@@ -283,7 +283,7 @@
       "isEstimated": false
     },
     "landPrice": {
-      "value": 229271,
+      "value": 241093,
       "unit": "円/㎡",
       "source": "地価公示（住宅地平均）",
       "asOf": "2025",
@@ -292,8 +292,8 @@
     "waitlistChildren": {
       "value": 0,
       "unit": "人",
-      "source": "横浜市 保育所等利用待機児童数（令和6年4月1日）",
-      "asOf": "2024-04-01",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ（市総合より）",
+      "asOf": "2025-04-01",
       "isEstimated": false
     },
     "hazard": {
@@ -328,7 +328,7 @@
       "isEstimated": false
     },
     "landPrice": {
-      "value": 207889,
+      "value": 229108,
       "unit": "円/㎡",
       "source": "地価公示（住宅地平均）",
       "asOf": "2025",
@@ -337,8 +337,8 @@
     "waitlistChildren": {
       "value": 0,
       "unit": "人",
-      "source": "横浜市 保育所等利用待機児童数（令和6年4月1日）",
-      "asOf": "2024-04-01",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ（市総合より）",
+      "asOf": "2025-04-01",
       "isEstimated": false
     },
     "hazard": {
@@ -373,17 +373,17 @@
       "isEstimated": false
     },
     "landPrice": {
-      "value": 448050,
+      "value": 480672,
       "unit": "円/㎡",
       "source": "地価公示（住宅地平均）",
       "asOf": "2025",
       "isEstimated": false
     },
     "waitlistChildren": {
-      "value": 1,
+      "value": 0,
       "unit": "人",
-      "source": "横浜市 保育所等利用待機児童数（令和6年4月1日）",
-      "asOf": "2024-04-01",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ（市総合より）",
+      "asOf": "2025-04-01",
       "isEstimated": false
     },
     "hazard": {
@@ -418,17 +418,17 @@
       "isEstimated": false
     },
     "landPrice": {
-      "value": 269382,
+      "value": 279132,
       "unit": "円/㎡",
       "source": "地価公示（住宅地平均）",
       "asOf": "2025",
       "isEstimated": false
     },
     "waitlistChildren": {
-      "value": 1,
+      "value": 0,
       "unit": "人",
-      "source": "横浜市 保育所等利用待機児童数（令和6年4月1日）",
-      "asOf": "2024-04-01",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ（市総合より）",
+      "asOf": "2025-04-01",
       "isEstimated": false
     },
     "hazard": {
@@ -463,17 +463,17 @@
       "isEstimated": false
     },
     "landPrice": {
-      "value": 248051,
+      "value": 299026,
       "unit": "円/㎡",
       "source": "地価公示（住宅地平均）",
       "asOf": "2025",
       "isEstimated": false
     },
     "waitlistChildren": {
-      "value": 1,
+      "value": 0,
       "unit": "人",
-      "source": "横浜市 保育所等利用待機児童数（令和6年4月1日）",
-      "asOf": "2024-04-01",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ（市総合より）",
+      "asOf": "2025-04-01",
       "isEstimated": false
     },
     "hazard": {
@@ -508,7 +508,7 @@
       "isEstimated": false
     },
     "landPrice": {
-      "value": 227384,
+      "value": 241014,
       "unit": "円/㎡",
       "source": "地価公示（住宅地平均）",
       "asOf": "2025",
@@ -517,8 +517,8 @@
     "waitlistChildren": {
       "value": 0,
       "unit": "人",
-      "source": "横浜市 保育所等利用待機児童数（令和6年4月1日）",
-      "asOf": "2024-04-01",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ（市総合より）",
+      "asOf": "2025-04-01",
       "isEstimated": false
     },
     "hazard": {
@@ -553,7 +553,7 @@
       "isEstimated": false
     },
     "landPrice": {
-      "value": 253727,
+      "value": 262545,
       "unit": "円/㎡",
       "source": "地価公示（住宅地平均）",
       "asOf": "2025",
@@ -562,8 +562,8 @@
     "waitlistChildren": {
       "value": 0,
       "unit": "人",
-      "source": "横浜市 保育所等利用待機児童数（令和6年4月1日）",
-      "asOf": "2024-04-01",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ（市総合より）",
+      "asOf": "2025-04-01",
       "isEstimated": false
     },
     "hazard": {
@@ -598,7 +598,7 @@
       "isEstimated": false
     },
     "landPrice": {
-      "value": 199400,
+      "value": 217704,
       "unit": "円/㎡",
       "source": "地価公示（住宅地平均）",
       "asOf": "2025",
@@ -607,8 +607,8 @@
     "waitlistChildren": {
       "value": 0,
       "unit": "人",
-      "source": "横浜市 保育所等利用待機児童数（令和6年4月1日）",
-      "asOf": "2024-04-01",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ（市総合より）",
+      "asOf": "2025-04-01",
       "isEstimated": false
     },
     "hazard": {
@@ -643,7 +643,7 @@
       "isEstimated": false
     },
     "landPrice": {
-      "value": 186035,
+      "value": 193284,
       "unit": "円/㎡",
       "source": "地価公示（住宅地平均）",
       "asOf": "2025",
@@ -652,8 +652,8 @@
     "waitlistChildren": {
       "value": 0,
       "unit": "人",
-      "source": "横浜市 保育所等利用待機児童数（令和6年4月1日）",
-      "asOf": "2024-04-01",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ（市総合より）",
+      "asOf": "2025-04-01",
       "isEstimated": false
     },
     "hazard": {
@@ -688,7 +688,7 @@
       "isEstimated": false
     },
     "landPrice": {
-      "value": 227517,
+      "value": 235414,
       "unit": "円/㎡",
       "source": "地価公示（住宅地平均）",
       "asOf": "2025",
@@ -697,8 +697,8 @@
     "waitlistChildren": {
       "value": 0,
       "unit": "人",
-      "source": "横浜市 保育所等利用待機児童数（令和6年4月1日）",
-      "asOf": "2024-04-01",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ（市総合より）",
+      "asOf": "2025-04-01",
       "isEstimated": false
     },
     "hazard": {
@@ -733,7 +733,7 @@
       "isEstimated": false
     },
     "landPrice": {
-      "value": 347059,
+      "value": 385302,
       "unit": "円/㎡",
       "source": "地価公示（住宅地平均）",
       "asOf": "2025",
@@ -742,8 +742,8 @@
     "waitlistChildren": {
       "value": 0,
       "unit": "人",
-      "source": "横浜市 保育所等利用待機児童数（令和6年4月1日）",
-      "asOf": "2024-04-01",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ（市総合より）",
+      "asOf": "2025-04-01",
       "isEstimated": false
     },
     "hazard": {
@@ -778,7 +778,7 @@
       "isEstimated": false
     },
     "landPrice": {
-      "value": 340882,
+      "value": 360909,
       "unit": "円/㎡",
       "source": "地価公示（住宅地平均）",
       "asOf": "2025",
@@ -787,8 +787,8 @@
     "waitlistChildren": {
       "value": 0,
       "unit": "人",
-      "source": "横浜市 保育所等利用待機児童数（令和6年4月1日）",
-      "asOf": "2024-04-01",
+      "source": "こども家庭庁 保育所等関連状況取りまとめ（市総合より）",
+      "asOf": "2025-04-01",
       "isEstimated": false
     },
     "hazard": {
@@ -823,7 +823,7 @@
       "isEstimated": false
     },
     "landPrice": {
-      "value": 634854,
+      "value": 742878,
       "unit": "円/㎡",
       "source": "地価公示（住宅地平均）",
       "asOf": "2025",
@@ -833,7 +833,7 @@
       "value": 0,
       "unit": "人",
       "source": "こども家庭庁 保育所等関連状況取りまとめ（市総合より）",
-      "asOf": "2024-04-01",
+      "asOf": "2025-04-01",
       "isEstimated": false
     },
     "hazard": {
@@ -868,7 +868,7 @@
       "isEstimated": false
     },
     "landPrice": {
-      "value": 749833,
+      "value": 818167,
       "unit": "円/㎡",
       "source": "地価公示（住宅地平均）",
       "asOf": "2025",
@@ -878,7 +878,7 @@
       "value": 0,
       "unit": "人",
       "source": "こども家庭庁 保育所等関連状況取りまとめ（市総合より）",
-      "asOf": "2024-04-01",
+      "asOf": "2025-04-01",
       "isEstimated": false
     },
     "hazard": {
@@ -913,7 +913,7 @@
       "isEstimated": false
     },
     "landPrice": {
-      "value": 685647,
+      "value": 736853,
       "unit": "円/㎡",
       "source": "地価公示（住宅地平均）",
       "asOf": "2025",
@@ -923,7 +923,7 @@
       "value": 0,
       "unit": "人",
       "source": "こども家庭庁 保育所等関連状況取りまとめ（市総合より）",
-      "asOf": "2024-04-01",
+      "asOf": "2025-04-01",
       "isEstimated": false
     },
     "hazard": {
@@ -958,7 +958,7 @@
       "isEstimated": false
     },
     "landPrice": {
-      "value": 439500,
+      "value": 467290,
       "unit": "円/㎡",
       "source": "地価公示（住宅地平均）",
       "asOf": "2025",
@@ -968,7 +968,7 @@
       "value": 0,
       "unit": "人",
       "source": "こども家庭庁 保育所等関連状況取りまとめ（市総合より）",
-      "asOf": "2024-04-01",
+      "asOf": "2025-04-01",
       "isEstimated": false
     },
     "hazard": {
@@ -1003,7 +1003,7 @@
       "isEstimated": false
     },
     "landPrice": {
-      "value": 298103,
+      "value": 312692,
       "unit": "円/㎡",
       "source": "地価公示（住宅地平均）",
       "asOf": "2025",
@@ -1013,7 +1013,7 @@
       "value": 0,
       "unit": "人",
       "source": "こども家庭庁 保育所等関連状況取りまとめ（市総合より）",
-      "asOf": "2024-04-01",
+      "asOf": "2025-04-01",
       "isEstimated": false
     },
     "hazard": {
@@ -1048,7 +1048,7 @@
       "isEstimated": false
     },
     "landPrice": {
-      "value": 300619,
+      "value": 320220,
       "unit": "円/㎡",
       "source": "地価公示（住宅地平均）",
       "asOf": "2025",
@@ -1058,7 +1058,7 @@
       "value": 0,
       "unit": "人",
       "source": "こども家庭庁 保育所等関連状況取りまとめ（市総合より）",
-      "asOf": "2024-04-01",
+      "asOf": "2025-04-01",
       "isEstimated": false
     },
     "hazard": {
@@ -1093,7 +1093,7 @@
       "isEstimated": false
     },
     "landPrice": {
-      "value": 288744,
+      "value": 310158,
       "unit": "円/㎡",
       "source": "地価公示（住宅地平均）",
       "asOf": "2025",
@@ -1103,7 +1103,7 @@
       "value": 0,
       "unit": "人",
       "source": "こども家庭庁 保育所等関連状況取りまとめ（市総合より）",
-      "asOf": "2024-04-01",
+      "asOf": "2025-04-01",
       "isEstimated": false
     },
     "hazard": {
@@ -1138,7 +1138,7 @@
       "isEstimated": false
     },
     "landPrice": {
-      "value": 182742,
+      "value": 195083,
       "unit": "円/㎡",
       "source": "地価公示（住宅地平均）",
       "asOf": "2025",
@@ -1183,7 +1183,7 @@
       "isEstimated": false
     },
     "landPrice": {
-      "value": 189341,
+      "value": 202830,
       "unit": "円/㎡",
       "source": "地価公示（住宅地平均）",
       "asOf": "2025",
@@ -1228,7 +1228,7 @@
       "isEstimated": false
     },
     "landPrice": {
-      "value": 258533,
+      "value": 275630,
       "unit": "円/㎡",
       "source": "地価公示（住宅地平均）",
       "asOf": "2025",
