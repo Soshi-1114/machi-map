@@ -5,8 +5,10 @@ name: Data Update (quarterly / reinfolib)
 # Deploy Preview ワークフローを手動実行する（自動 deploy はデプロイ数抑制のため廃止）。
 on:
   schedule:
-    # 1/1, 4/1, 7/1, 10/1 の日本時間早朝（UTC 19:00 = JST 04:00）
-    - cron: "0 19 31 12,3,6,9 *"
+    # 1/1・4/1・7/1・10/1 の 04:00 JST（= 各前日 19:00 UTC）。
+    # 月末日が異なるため2本に分割（6月/9月は31日が無く単一 cron では発火しないため）。
+    - cron: "0 19 31 12,3 *"   # 12/31・3/31 UTC → 1/1・4/1 JST
+    - cron: "0 19 30 6,9 *"    # 6/30・9/30 UTC → 7/1・10/1 JST
   workflow_dispatch:
     inputs:
       pref:

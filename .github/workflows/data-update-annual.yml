@@ -84,7 +84,7 @@ jobs:
         run: curl -sL -o /tmp/cfa_waitlist.xlsx "${{ env.CFA_XLSX_URL }}"
 
       - name: Fetch population (e-Stat)
-        run: node scripts/fetch-population.mjs --pref=${{ matrix.pref }}
+        run: node scripts/fetch-population-2025.mjs --pref=${{ matrix.pref }}
         env:
           ESTAT_APP_ID: ${{ secrets.ESTAT_APP_ID }}
 
