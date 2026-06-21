@@ -17,6 +17,7 @@ import type { Municipality, MuniSummary } from "@/lib/types";
 import { PREFS, getPrefByCode } from "@/lib/prefs";
 import { RENT_NODATA_COLOR, hasRent } from "@/lib/rentColor";
 import { MAP_METRICS, getMapMetric, DEFAULT_METRIC_KEY, TREND_PROPERTY, type MapMetricKey } from "@/lib/mapMetrics";
+import { trackSelectMunicipality, trackChangeMetric } from "@/lib/analytics";
 import AreaPanel from "./AreaPanel";
 import MobileSheet from "./MobileSheet";
 
@@ -334,6 +335,7 @@ export default function MapView({ summary, onMenuClick }: Props) {
           if (!f) return;
           const code = String(f.properties?.code ?? "");
           setSelectedCode(code);
+          trackSelectMunicipality(code, "map");
           flyToCode(code);
         };
         map.on("click", "muni-fill", onPolyClick);
@@ -624,6 +626,7 @@ export default function MapView({ summary, onMenuClick }: Props) {
 
   const flyToMuni = useCallback(async (m: MuniSummary) => {
     setSelectedCode(m.code);
+    trackSelectMunicipality(m.code, "search");
     setSearchQuery("");
     // 検索で他県を選んだ場合、その県がまだ遅延ロードされていなければ先に取得
     const pref = getPrefByCode(m.code);
@@ -748,7 +751,7 @@ export default function MapView({ summary, onMenuClick }: Props) {
                       type="radio"
                       name="map-metric"
                       checked={activeMetric === m.key}
-                      onChange={() => setActiveMetric(m.key)}
+                      onChange={() => { setActiveMetric(m.key); trackChangeMetric(m.key); }}
                     />
                     <span className="metric-radio-label">{m.label}</span>
                   </label>
