@@ -23,6 +23,7 @@ export type MapMetric = {
   key: MapMetricKey;
   label: string;        // レイヤーパネルのラジオ表示
   legendTitle: string;  // 凡例の見出し
+  description: string;  // レイヤーパネルで「今どの色か」を説明する1行（出典つき）
   nodataLabel: string;  // 凡例「データなし」行の補足
   legend: NumericLegend | CategoricalLegend;
   /** MapLibre の fill-color 式（feature properties を読む） */
@@ -71,6 +72,7 @@ export const MAP_METRICS: readonly MapMetric[] = [
     key: "rent",
     label: "家賃",
     legendTitle: "民営借家中央値（円/月）",
+    description: "民営借家の1か月あたり家賃の中央値（住宅・土地統計調査）。",
     nodataLabel: "データなし（住宅統計の集計対象外）",
     legend: {
       kind: "numeric",
@@ -89,6 +91,7 @@ export const MAP_METRICS: readonly MapMetric[] = [
     key: "landPrice",
     label: "地価",
     legendTitle: "住宅地地価（円/㎡）",
+    description: "住宅地の標準地1㎡あたりの地価公示価格（地価公示 L01）。",
     nodataLabel: "データなし（標準地なし等）",
     legend: {
       kind: "numeric",
@@ -104,6 +107,7 @@ export const MAP_METRICS: readonly MapMetric[] = [
     key: "populationTrend",
     label: "人口トレンド",
     legendTitle: "人口トレンド",
+    description: "国勢調査に基づく直近の人口増減の傾向（紫=減少／緑=増加）。",
     nodataLabel: "データなし",
     legend: {
       kind: "categorical",
