@@ -37,19 +37,13 @@ function stageHeightPx(stage: Stage): number {
 function stageTranslate(stage: Stage): number {
   return fullPx() - stageHeightPx(stage);
 }
-// 段に対応する可視高（凡例追従用の --sheet-h に流す calc 文字列）
-const STAGE_VISIBLE_H: Record<Stage, string> = {
-  peek: `calc(${PEEK_PX}px + env(safe-area-inset-bottom))`,
-  half: `calc(${HALF_PX}px + env(safe-area-inset-bottom))`,
-  full: SHEET_HEIGHT,
-};
-
 export default function MobileSheet({ municipality, onClose }: Props) {
   const [stage, setStage] = useState<Stage>("half");
   // ドラッグ中の translateY（null = 非ドラッグ）
   const [dragY, setDragY] = useState<number | null>(null);
   const dragStartY = useRef<number | null>(null);
   const dragStartTranslate = useRef(0);
+  const sheetRef = useRef<HTMLDivElement | null>(null);
 
   // 新規選択で half に戻す
   useEffect(() => {
@@ -57,14 +51,28 @@ export default function MobileSheet({ municipality, onClose }: Props) {
     setDragY(null);
   }, [municipality?.code]);
 
-  // 凡例・地図コントロールが現在の可視シート高に追従できるよう、祖先 .map-root に
-  // CSS変数 --sheet-h を書き込む（CSS は bottom: calc(var(--sheet-h)+16px) で読む）。
+  // 凡例・地図コントロール・レイヤーパネルが現在の可視シート高に追従できるよう、
+  // 祖先 .map-root に CSS変数 --sheet-h を書き込む（CSS は calc(var(--sheet-h)+…) で読む）。
+  // シートは height 固定（vh基準）＋ transform で段を切替えるが、iOS では CSS の vh と
+  // window.innerHeight が URLバーぶんズレるため、calc 文字列ではなく実測 px を流す:
+  // 可視高 = シートの実 offsetHeight − 適用中の translateY（どちらも単位非依存で厳密）。
   useEffect(() => {
     const root = document.querySelector(".map-root") as HTMLElement | null;
     if (!root) return;
-    if (municipality) root.style.setProperty("--sheet-h", STAGE_VISIBLE_H[stage]);
-    else root.style.removeProperty("--sheet-h");
+    if (!municipality) {
+      root.style.removeProperty("--sheet-h");
+      return;
+    }
+    const apply = () => {
+      const full = sheetRef.current?.offsetHeight ?? fullPx();
+      const visible = Math.max(0, full - stageTranslate(stage));
+      root.style.setProperty("--sheet-h", `${Math.round(visible)}px`);
+    };
+    apply();
+    // 回転・URLバー開閉で実寸が変わるため再計測
+    window.addEventListener("resize", apply);
     return () => {
+      window.removeEventListener("resize", apply);
       root.style.removeProperty("--sheet-h");
     };
   }, [stage, municipality]);
@@ -135,6 +143,7 @@ export default function MobileSheet({ municipality, onClose }: Props) {
         />
       )}
       <div
+        ref={sheetRef}
         className={`sheet sheet-stage-${stage}${dragging ? " is-dragging" : ""}`}
         style={{ height: SHEET_HEIGHT, transform: `translateY(${translate}px)` }}
         role={stage === "full" ? "dialog" : "region"}

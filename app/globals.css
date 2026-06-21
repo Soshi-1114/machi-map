@@ -365,6 +365,14 @@ button { font-family: inherit; }
   to { opacity: 1; transform: translateY(0); }
 }
 .is-panel-open .map-layers { right: calc(380px + 30px); }
+/* SP でボトムシート展開中は、上から伸びるレイヤーパネルがシートに潜り込まない
+   よう可視シート高（--sheet-h）ぶん上限を詰める。あふれは内部スクロールで読む
+   （トグルボタン44px＋余白を 64px で確保）。 */
+@media (max-width: 768px) {
+  .is-sheet-open .layers-panel {
+    max-height: calc(100dvh - var(--header-h) - env(safe-area-inset-top) - var(--sheet-h, 252px) - 64px);
+  }
+}
 /* レイヤーパネル(右上)・凡例(左下)はカード体裁を共通化。タイトルも
    下の .legend-title と同一スペックに揃え、両者の視覚的な一貫性を出す。
    ※モバイルではレイヤーパネルが閉のため凡例は独立配置が必須。よって
