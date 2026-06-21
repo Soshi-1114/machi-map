@@ -638,7 +638,8 @@ export default function MapView({ summary, onMenuClick }: Props) {
       {/* 統合ヘッダー（固定） */}
       <header className="app-header">
         <div className="app-header-brand">
-          <div className="brand-mark" />
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/logo.svg" alt="" className="brand-mark" width={30} height={30} />
           <div className="brand-name">KurashiMap</div>
         </div>
         <div className="app-header-search">

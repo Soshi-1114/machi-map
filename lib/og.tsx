@@ -8,6 +8,31 @@ import type { ReactNode } from "react";
 
 export const OG_SIZE = { width: 1200, height: 630 };
 
+// ブランドロゴ①（家ピン＋地図ベース）。satori はインライン SVG の clipPath/polygon を
+// 完全には描けないため、resvg が完全対応する data URI 画像として渡す（public/logo.svg と同一）。
+const LOGO_SVG =
+  `<svg width="64" height="64" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">` +
+  `<defs><clipPath id="tile"><rect width="64" height="64" rx="15"/></clipPath></defs>` +
+  `<rect width="64" height="64" rx="15" fill="#ffffff"/>` +
+  `<g clip-path="url(#tile)">` +
+  `<polygon points="0,47 20,42 30,53 6,64 0,64" fill="#94c97f"/>` +
+  `<polygon points="6,64 30,53 41,61 30,64" fill="#ecd382"/>` +
+  `<polygon points="20,42 39,39 47,50 30,53" fill="#c6e2a2"/>` +
+  `<polygon points="39,39 64,43 64,57 47,50" fill="#93c2e4"/>` +
+  `<polygon points="47,50 64,57 64,64 41,61" fill="#7fb1d9"/>` +
+  `<path d="M-2 50L66 45" stroke="#ffffff" stroke-width="2.4" fill="none"/>` +
+  `<path d="M26 40L34 64" stroke="#ffffff" stroke-width="2.4" fill="none"/>` +
+  `<path d="M44 40L55 64" stroke="#ffffff" stroke-width="2" fill="none"/>` +
+  `</g>` +
+  `<path d="M32 5.5C21.2 5.5 12.5 14 12.5 24.5C12.5 38.5 32 53.5 32 53.5C32 53.5 51.5 38.5 51.5 24.5C51.5 14 42.8 5.5 32 5.5Z" fill="#1d5c7e"/>` +
+  `<path d="M21.5 28L32 17.5L42.5 28Z" fill="#ffffff"/>` +
+  `<rect x="24.5" y="26.5" width="15" height="12.5" rx="0.6" fill="#ffffff"/>` +
+  `<rect x="27.6" y="29" width="8.8" height="8.8" fill="#1d5c7e"/>` +
+  `<rect x="31.5" y="29" width="1" height="8.8" fill="#ffffff"/>` +
+  `<rect x="27.6" y="32.9" width="8.8" height="1" fill="#ffffff"/>` +
+  `</svg>`;
+const LOGO_URI = `data:image/svg+xml;utf8,${encodeURIComponent(LOGO_SVG)}`;
+
 /** ブランドバッジ＋フッタ＋グラデ背景の共通枠。中身を children に流し込む。 */
 export function OgFrame({ children }: { children: ReactNode }) {
   return (
@@ -24,16 +49,9 @@ export function OgFrame({ children }: { children: ReactNode }) {
         position: "relative",
       }}
     >
-      <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
-        <div
-          style={{
-            width: 44,
-            height: 44,
-            borderRadius: 12,
-            background: "linear-gradient(135deg, #60a5fa, #2563eb 60%, #1e3a8a)",
-            boxShadow: "inset 0 -2px 6px rgba(0,0,0,0.18), 0 4px 12px rgba(37,99,235,0.4)",
-          }}
-        />
+      <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src={LOGO_URI} width="46" height="46" alt="" />
         <div style={{ fontSize: 28, fontWeight: 800, letterSpacing: "-0.01em" }}>KurashiMap</div>
       </div>
 
