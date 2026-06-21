@@ -49,6 +49,14 @@ const siteLdJson = {
       description: SITE.description,
       inLanguage: "ja",
       publisher: { "@id": absoluteUrl("/#org") },
+      potentialAction: {
+        "@type": "SearchAction",
+        target: {
+          "@type": "EntryPoint",
+          urlTemplate: `${SITE.baseUrl}/search?q={search_term_string}`,
+        },
+        "query-input": "required name=search_term_string",
+      },
     },
   ],
 };
