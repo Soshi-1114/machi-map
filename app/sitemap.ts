@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next";
 import type { Municipality } from "@/lib/types";
 import { listAllAcrossPrefs } from "@/lib/metrics";
 import { PREFS } from "@/lib/prefs";
-import { RANKINGS } from "@/lib/rankings";
+import { RANKINGS, muniLevelOnly } from "@/lib/rankings";
 import { latestLastModified, muniLastModified } from "@/lib/dataFreshness";
 import { SITE, absoluteUrl } from "@/lib/site";
 
@@ -45,6 +45,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: "monthly" as const,
       priority: 0.8,
     })),
+    // 県別ランキング（県 × 指標。該当データのある組み合わせのみ）
+    ...PREFS.flatMap((p) => {
+      const munis = muniLevelOnly(byPref.get(p.slug) ?? []);
+      return RANKINGS.filter((r) => munis.some((m) => r.qualifies(m))).map((r) => ({
+        url: absoluteUrl(`/ranking/${r.slug}/${p.slug}`),
+        lastModified: prefLatest.get(p.slug) ?? siteLatest,
+        changeFrequency: "monthly" as const,
+        priority: 0.6,
+      }));
+    }),
     // 県別ハブページ（全自治体への内部リンク集約・検索の入口）
     ...PREFS.map((p) => ({
       url: absoluteUrl(`/area/${p.slug}`),

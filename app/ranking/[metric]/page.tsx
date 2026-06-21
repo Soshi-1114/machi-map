@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { listAllAcrossPrefs } from "@/lib/metrics";
 import { RANKINGS, getRankingBySlug, muniLevelOnly, rankBy, type RankingDef } from "@/lib/rankings";
+import { PREFS } from "@/lib/prefs";
 import { SITE, prefNameOf, absoluteUrl } from "@/lib/site";
 
 type Params = { metric: string };
@@ -51,11 +52,14 @@ export default async function RankingPage({ params }: { params: Params }) {
   const def = getRankingBySlug(params.metric);
   if (!def) notFound();
 
-  const ranked = await rankedFor(def, TOP_TABLE);
+  const allMunis = muniLevelOnly(await listAllAcrossPrefs());
+  const ranked = rankBy(def, allMunis, TOP_TABLE);
   if (ranked.length === 0) notFound();
   const cards = ranked.slice(0, TOP_CARDS);
 
   const others = RANKINGS.filter((r) => r.slug !== def.slug);
+  // この指標に該当データがある都道府県（県別ランキングへの導線）
+  const prefsWithData = PREFS.filter((p) => allMunis.some((m) => m.pref === p.slug && def.qualifies(m)));
 
   const ldJson = {
     "@context": "https://schema.org",
@@ -155,6 +159,24 @@ export default async function RankingPage({ params }: { params: Params }) {
           </table>
         </div>
       </section>
+
+      {prefsWithData.length > 0 && (
+        <section className="detail-section">
+          <h2 className="detail-h2">都道府県別に見る</h2>
+          <p className="detail-p" style={{ color: "var(--text-muted)", fontSize: 13.5 }}>
+            {def.title}を都道府県ごとに絞り込めます。
+          </p>
+          <ul className="pref-chip-grid">
+            {prefsWithData.map((p) => (
+              <li key={p.slug}>
+                <Link href={`/ranking/${def.slug}/${p.slug}`} className="pref-chip">
+                  {p.nameJa}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
 
       <section className="detail-section">
         <h2 className="detail-h2">ほかのランキング</h2>
