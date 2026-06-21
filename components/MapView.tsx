@@ -62,7 +62,7 @@ export default function MapView({ summary, onMenuClick }: Props) {
   const [mapReady, setMapReady] = useState(false);
   // 初回ビューのポリゴンが描画され切るまで true にしない（凡例先行・白地図対策）
   const [firstPaintReady, setFirstPaintReady] = useState(false);
-  const [tooltip, setTooltip] = useState<{ x: number; y: number; name: string; label: string; value: string } | null>(null);
+  const [tooltip, setTooltip] = useState<{ x: number; y: number; name: string; label: string; value: string; flip: boolean } | null>(null);
   const [layersOpen, setLayersOpen] = useState(false);
   // 選択中自治体のフル詳細（/api/muni/[code] で取得）。サマリには無い人口/地価等を含む
   const [selectedDetail, setSelectedDetail] = useState<Municipality | null>(null);
@@ -398,12 +398,15 @@ export default function MapView({ summary, onMenuClick }: Props) {
             map.getCanvas().style.cursor = "pointer";
             const metric = getMapMetric(activeMetricRef.current);
             const propKey = metric.key === "populationTrend" ? TREND_PROPERTY : metric.key;
+            // 右端付近ではツールチップをカーソルの左側に出して見切れを防ぐ
+            const canvasW = map.getCanvas().clientWidth;
             setTooltip({
               x: e.point.x,
               y: e.point.y,
               name: String(f.properties?.name ?? ""),
               label: metric.label,
               value: metric.formatValue(f.properties?.[propKey]),
+              flip: e.point.x > canvasW - 200,
             });
           };
         map.on("mousemove", "muni-fill", onPolyMove("muni"));
@@ -481,6 +484,15 @@ export default function MapView({ summary, onMenuClick }: Props) {
         map.on("moveend", checkViewport);
 
         setMapReady(true);
+
+        // SP では出典（アトリビューション）を (i) ボタンに畳み、凡例・コントロールと
+        // の干渉や右端の見切れを防ぐ。タップで展開できライセンス表記は維持される。
+        if (typeof window !== "undefined" && window.innerWidth < 768) {
+          map
+            .getContainer()
+            .querySelector(".maplibregl-ctrl-attrib")
+            ?.classList.remove("maplibregl-compact-show");
+        }
 
         // 初期ビュー(東京付近)の県ポリゴンを await し、描画が落ち着いてから
         // ローディングオーバーレイを外す。idle が来ない環境向けに失敗保険も置く。
@@ -677,7 +689,7 @@ export default function MapView({ summary, onMenuClick }: Props) {
       {/* ホバーツールチップ */}
       {tooltip && !isMobile && (
         <div
-          className="map-tooltip"
+          className={`map-tooltip ${tooltip.flip ? "is-flipped" : ""}`}
           style={{ left: tooltip.x, top: tooltip.y }}
         >
           <div className="map-tooltip-name">{tooltip.name}</div>
@@ -813,9 +825,11 @@ function MetricLegend({ metricKey, hazardOn }: { metricKey: MapMetricKey; hazard
               <div key={c} className="legend-cell" style={{ background: c }} />
             ))}
           </div>
+          {/* 4つの境界ラベルを5セルの境界（20/40/60/80%）に整列。
+              space-between だと境界とラベル位置がずれて区切り値が曖昧になる。 */}
           <div className="legend-scale">
-            {legend.scaleLabels.map((s) => (
-              <span key={s}>{s}</span>
+            {legend.scaleLabels.map((s, i) => (
+              <span key={s} style={{ left: `${((i + 1) * 100) / legend.colors.length}%` }}>{s}</span>
             ))}
           </div>
         </>
