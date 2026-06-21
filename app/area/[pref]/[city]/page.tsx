@@ -5,6 +5,7 @@ import { getMunicipality, listAll, listAllAcrossPrefs } from "@/lib/metrics";
 import { buildSummary } from "@/lib/summary";
 import { findRelatedByRent } from "@/lib/related";
 import { RANKINGS } from "@/lib/rankings";
+import { buildFaq } from "@/lib/faq";
 import { SITE, prefNameOf, absoluteUrl } from "@/lib/site";
 import { hasRent, rentBand } from "@/lib/rentColor";
 import { isWaitlistDisclosed } from "@/lib/waitlist";
@@ -90,6 +91,9 @@ export default async function AreaPage({ params }: { params: Params }) {
   }
   breadcrumbItems.push({ name: m.name, item: absoluteUrl(`/area/${m.pref}/${m.code}`) });
 
+  // よくある質問（可視テキストと FAQPage 構造化データで同じソースを共有）
+  const faq = buildFaq(m, prefName);
+
   const ldJson = {
     "@context": "https://schema.org",
     "@graph": [
@@ -108,6 +112,14 @@ export default async function AreaPage({ params }: { params: Params }) {
           : { "@type": "AdministrativeArea", name: prefName },
         identifier: m.code,
         url: absoluteUrl(`/area/${m.pref}/${m.code}`),
+      },
+      {
+        "@type": "FAQPage",
+        mainEntity: faq.map(({ q, a }) => ({
+          "@type": "Question",
+          name: q,
+          acceptedAnswer: { "@type": "Answer", text: a },
+        })),
       },
     ],
   };
@@ -288,6 +300,18 @@ export default async function AreaPage({ params }: { params: Params }) {
             </li>
           ))}
         </ul>
+      </section>
+
+      <section className="detail-section">
+        <h2 className="detail-h2">{m.name}のよくある質問</h2>
+        <dl className="faq-list">
+          {faq.map(({ q, a }, i) => (
+            <div key={i} className="faq-item">
+              <dt className="faq-q">{q}</dt>
+              <dd className="faq-a">{a}</dd>
+            </div>
+          ))}
+        </dl>
       </section>
 
       <section className="detail-section">
