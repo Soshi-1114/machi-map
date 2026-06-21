@@ -114,7 +114,15 @@ export async function GET(
         </div>
       </div>
     ),
-    OG_SIZE,
+    {
+      ...OG_SIZE,
+      // OG 画像は対象データが更新（四半期/年次）→再デプロイされた時のみ変わる。
+      // 明示しないとリクエストごとに生成されうるため、長めにキャッシュする
+      // （ブラウザ1日／CDN7日。再デプロイで CDN は自動パージされる）。
+      headers: {
+        "Cache-Control": "public, max-age=86400, s-maxage=604800",
+      },
+    },
   );
 }
 
