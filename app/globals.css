@@ -488,13 +488,15 @@ button { font-family: inherit; }
     padding: 10px 12px 8px;
   }
 }
-/* SP で sheet open 時、凡例と MapLibre 標準コントロールを sheet 上に繰り上げる */
+/* SP で sheet open 時、凡例と MapLibre 標準コントロールを sheet 上に繰り上げる。
+   段（peek/half/full）の可視高は MobileSheet が --sheet-h に書き込み、ここで追従する
+   （未設定時は half 相当の 216px をフォールバック）。 */
 .is-sheet-open .legend {
-  bottom: calc(216px + env(safe-area-inset-bottom));
+  bottom: calc(var(--sheet-h, calc(200px + env(safe-area-inset-bottom))) + 16px);
 }
 .is-sheet-open .maplibregl-ctrl-bottom-left,
 .is-sheet-open .maplibregl-ctrl-bottom-right {
-  bottom: calc(216px + env(safe-area-inset-bottom)) !important;
+  bottom: calc(var(--sheet-h, calc(200px + env(safe-area-inset-bottom))) + 16px) !important;
   transition: bottom .25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 /* 凡例が「現在の塗り分けの凡例」だと示す小見出し。右上のレイヤーパネルと
@@ -865,8 +867,10 @@ button { font-family: inherit; }
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  /* Apple sheet 風のスムーズ ease。snap 時のスプリング感を演出 */
-  transition: height .38s cubic-bezier(0.32, 0.72, 0, 1);
+  /* 高さは full 固定で、段の切替は transform: translateY で行う（再レイアウトを
+     避けて GPU 合成。Apple sheet 風のスムーズ ease で snap のスプリング感を演出）。 */
+  transition: transform .38s cubic-bezier(0.32, 0.72, 0, 1);
+  will-change: transform;
   padding-bottom: env(safe-area-inset-bottom);
   touch-action: pan-y;
 }
@@ -877,7 +881,8 @@ button { font-family: inherit; }
 .sheet-handle-wrap {
   touch-action: pan-y;
 }
-/* half は persistent（地図と並列）なので影をやや軽く、full は深く */
+/* peek / half は persistent（地図と並列）なので影をやや軽く、full は深く */
+.sheet-stage-peek,
 .sheet-stage-half {
   box-shadow: 0 -6px 22px rgba(15, 23, 42, 0.12);
 }

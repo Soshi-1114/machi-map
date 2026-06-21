@@ -7,99 +7,122 @@ import { buildSummary } from "@/lib/summary";
 import { hasRent } from "@/lib/rentColor";
 import { MetricCards } from "./AreaPanel";
 
-type Stage = "half" | "full";
+type Stage = "peek" | "half" | "full";
 
 type Props = {
   municipality: Municipality | null;
   onClose: () => void;
 };
 
-// half: persistent / 200px、full: modal / 60vh。+ iOS safe-area。
-const STAGE_HEIGHTS: Record<Stage, string> = {
-  half: "calc(200px + env(safe-area-inset-bottom))",
-  full: "calc(60vh + env(safe-area-inset-bottom))",
-};
+// 3段ボトムシート: peek=最小化(地図優先) / half=主要指標(既定) / full=全情報(モーダル)。
+// シート高は full 固定にして transform: translateY で段を切替える。height アニメと違い
+// ドラッグ中の再レイアウトが無く GPU 合成で滑らか（旧実装の height 駆動を置換）。
+const STAGE_ORDER: readonly Stage[] = ["peek", "half", "full"];
+const PEEK_PX = 96;   // ハンドル＋自治体名＋家賃の1行が収まる高さ
+const HALF_PX = 252;  // ＋メトリクスカード（出典メタが2行に折返すぶんの余裕込み）
+const SHEET_HEIGHT = "calc(72vh + env(safe-area-inset-bottom))"; // 固定高（=full）
 
-const IS_MODAL: Record<Stage, boolean> = {
-  half: false,
-  full: true,
-};
-
-// half→full / full→half スナップしきい値。固定 px だと小型端末で誤発動し、
-// 大型端末では過敏になるため、画面高に対する比率（下限付き）で決める。
-function snapThresholds() {
+// full の実ピクセル高（translate 計算用）。CSS の 72vh とは厳密一致しないが、
+// full の translate は常に 0 になるため見た目の整合は保たれる。
+function fullPx(): number {
   const h = typeof window !== "undefined" ? window.innerHeight : 800;
-  return {
-    up: Math.max(56, h * 0.1), // half→full: これ以上上にスワイプ
-    down: Math.max(80, h * 0.14), // full→half: これ以上下にスワイプ
-  };
+  return Math.round(h * 0.72);
 }
+function stageHeightPx(stage: Stage): number {
+  if (stage === "peek") return PEEK_PX;
+  if (stage === "half") return HALF_PX;
+  return fullPx();
+}
+// 段ごとの translateY（0=full 全表示, 値が大きいほど下に隠れる）
+function stageTranslate(stage: Stage): number {
+  return fullPx() - stageHeightPx(stage);
+}
+// 段に対応する可視高（凡例追従用の --sheet-h に流す calc 文字列）
+const STAGE_VISIBLE_H: Record<Stage, string> = {
+  peek: `calc(${PEEK_PX}px + env(safe-area-inset-bottom))`,
+  half: `calc(${HALF_PX}px + env(safe-area-inset-bottom))`,
+  full: SHEET_HEIGHT,
+};
 
 export default function MobileSheet({ municipality, onClose }: Props) {
   const [stage, setStage] = useState<Stage>("half");
-  // 上方向 = -, 下方向 = + のドラッグ量
-  const [dragOffset, setDragOffset] = useState(0);
+  // ドラッグ中の translateY（null = 非ドラッグ）
+  const [dragY, setDragY] = useState<number | null>(null);
   const dragStartY = useRef<number | null>(null);
+  const dragStartTranslate = useRef(0);
 
+  // 新規選択で half に戻す
   useEffect(() => {
     setStage("half");
-    setDragOffset(0);
+    setDragY(null);
   }, [municipality?.code]);
+
+  // 凡例・地図コントロールが現在の可視シート高に追従できるよう、祖先 .map-root に
+  // CSS変数 --sheet-h を書き込む（CSS は bottom: calc(var(--sheet-h)+16px) で読む）。
+  useEffect(() => {
+    const root = document.querySelector(".map-root") as HTMLElement | null;
+    if (!root) return;
+    if (municipality) root.style.setProperty("--sheet-h", STAGE_VISIBLE_H[stage]);
+    else root.style.removeProperty("--sheet-h");
+    return () => {
+      root.style.removeProperty("--sheet-h");
+    };
+  }, [stage, municipality]);
 
   if (!municipality) return null;
   const m = municipality;
 
-  const toggle = () => setStage((s) => (s === "half" ? "full" : "half"));
+  // タップ: peek→half→full→half（peek へはドラッグで畳む）
+  const toggle = () =>
+    setStage((s) => (s === "full" ? "half" : s === "half" ? "full" : "half"));
   const collapse = () => setStage("half");
-  const expand = () => setStage("full");
 
-  // 双方向ドラッグ: half では上方向のみ、full では下方向のみ受け付ける
+  const maxTranslate = () => fullPx() - PEEK_PX; // peek が最も下
+
   const onTouchStart = (e: React.TouchEvent) => {
     dragStartY.current = e.touches[0].clientY;
+    dragStartTranslate.current = stageTranslate(stage);
+    setDragY(stageTranslate(stage));
   };
   const onTouchMove = (e: React.TouchEvent) => {
     if (dragStartY.current === null) return;
     const dy = e.touches[0].clientY - dragStartY.current;
-    if (stage === "half") {
-      setDragOffset(Math.min(0, dy)); // 上 (-) のみ
-    } else {
-      setDragOffset(Math.max(0, dy)); // 下 (+) のみ
-    }
+    // peek 未満 / full 超にクランプ
+    const t = Math.max(0, Math.min(maxTranslate(), dragStartTranslate.current + dy));
+    setDragY(t);
   };
   const onTouchEnd = () => {
     if (dragStartY.current === null) return;
-    const { up, down } = snapThresholds();
-    if (stage === "half" && dragOffset < -up) {
-      setStage("full");
-    } else if (stage === "full" && dragOffset > down) {
-      setStage("half");
+    const live = dragY ?? stageTranslate(stage);
+    // 最近傍の段へスナップ
+    let target = STAGE_ORDER.reduce<Stage>(
+      (best, s) =>
+        Math.abs(stageTranslate(s) - live) < Math.abs(stageTranslate(best) - live)
+          ? s
+          : best,
+      STAGE_ORDER[0],
+    );
+    // フリック補正: 同段に戻る小スワイプでも明確な方向には1段送る
+    const moved = live - stageTranslate(stage); // +下方向 / -上方向
+    const FLICK = 56;
+    if (target === stage) {
+      const idx = STAGE_ORDER.indexOf(stage);
+      if (moved > FLICK && idx > 0) target = STAGE_ORDER[idx - 1];
+      else if (moved < -FLICK && idx < STAGE_ORDER.length - 1) target = STAGE_ORDER[idx + 1];
     }
-    setDragOffset(0);
+    setStage(target);
+    setDragY(null);
     dragStartY.current = null;
   };
 
   const heading = m.displayName ?? m.name;
 
-  // ドラッグ中の動的な高さ計算
-  let heightStyle = STAGE_HEIGHTS[stage];
-  if (stage === "half" && dragOffset < 0) {
-    heightStyle = `calc(${STAGE_HEIGHTS.half} + ${-dragOffset}px)`;
-  } else if (stage === "full" && dragOffset > 0) {
-    heightStyle = `calc(${STAGE_HEIGHTS.full} - ${dragOffset}px)`;
-  }
+  const translate = dragY !== null ? dragY : stageTranslate(stage);
+  const dragging = dragY !== null;
 
-  // scrim は full スナップ完了後にだけ出す。
-  // ドラッグ中（dragOffset !== 0）は scrim を出さない方が地図が見える。
-  const showScrim = IS_MODAL[stage] && dragOffset === 0;
-  // ドラッグ中の scrim opacity 補間（より自然な遷移）
-  const scrimIntensity =
-    stage === "full" && dragOffset > 0
-      ? Math.max(0, 1 - dragOffset / 200)
-      : stage === "half" && dragOffset < 0
-      ? Math.min(1, -dragOffset / 150)
-      : showScrim
-      ? 1
-      : 0;
+  // scrim は full 付近のみ。full(translate=0)→half へ離れるほど薄くなる。
+  const halfT = stageTranslate("half");
+  const scrimIntensity = halfT > 0 ? Math.max(0, Math.min(1, 1 - translate / halfT)) : 0;
 
   return (
     <>
@@ -112,13 +135,13 @@ export default function MobileSheet({ municipality, onClose }: Props) {
         />
       )}
       <div
-        className={`sheet sheet-stage-${stage}${dragOffset !== 0 ? " is-dragging" : ""}`}
-        style={{ height: heightStyle }}
-        role="dialog"
-        aria-modal={IS_MODAL[stage]}
+        className={`sheet sheet-stage-${stage}${dragging ? " is-dragging" : ""}`}
+        style={{ height: SHEET_HEIGHT, transform: `translateY(${translate}px)` }}
+        role={stage === "full" ? "dialog" : "region"}
+        aria-modal={stage === "full" || undefined}
         aria-label={`${heading}の詳細`}
       >
-        {/* ハンドル + スワイプ受付エリア。タップでも toggle */}
+        {/* ハンドル + スワイプ受付エリア。タップでも段送り */}
         <div
           className="sheet-handle-wrap"
           onTouchStart={onTouchStart}
@@ -152,7 +175,7 @@ export default function MobileSheet({ municipality, onClose }: Props) {
               <button
                 className="panel-close"
                 aria-label={stage === "full" ? "シートを縮める" : "シートを拡大"}
-                onClick={stage === "full" ? collapse : expand}
+                onClick={toggle}
               >
                 {stage === "full" ? <ChevronDown /> : <ChevronUp />}
               </button>
@@ -160,9 +183,12 @@ export default function MobileSheet({ municipality, onClose }: Props) {
             </div>
           </div>
 
-          <div style={{ marginTop: 10 }}>
-            <MetricCards m={m} />
-          </div>
+          {/* peek では指標カードは隠す（地図優先・名称＋家賃のみ） */}
+          {stage !== "peek" && (
+            <div style={{ marginTop: 10 }}>
+              <MetricCards m={m} />
+            </div>
+          )}
 
           {stage === "full" && (
             <div style={{ marginTop: 14 }}>

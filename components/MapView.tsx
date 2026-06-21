@@ -355,7 +355,7 @@ export default function MapView({ summary, onMenuClick }: Props) {
           if (!bbox) return;
           const sp = typeof window !== "undefined" && window.innerWidth < 768;
           map.fitBounds(bbox, {
-            padding: sp ? { top: 80, bottom: 220, left: 24, right: 24 } : { top: 60, bottom: 60, left: 60, right: 60 },
+            padding: sp ? { top: 80, bottom: 264, left: 24, right: 24 } : { top: 60, bottom: 60, left: 60, right: 60 },
             maxZoom: 9.5,
             duration: 900,
           });
@@ -614,7 +614,7 @@ export default function MapView({ summary, onMenuClick }: Props) {
     // SP は header (~60px) + half シート (~200px) を避けて選択ポリゴンを画面内に収める。
     // full は modal で地図を覆うので fit は half 基準で OK。
     const padding = sp
-      ? { top: 80, bottom: 220, left: 24, right: 24 }
+      ? { top: 80, bottom: 264, left: 24, right: 24 }
       : { top: 80, bottom: 60, left: 60, right: 420 };
     // 区を選択した時は最低 z=11 まで寄せて区レイヤーが見える状態に
     const minZoom = wardFeat ? WARDS_MIN_ZOOM : 0;
