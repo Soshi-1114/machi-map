@@ -446,6 +446,14 @@ button { font-family: inherit; }
   border-width: 5px;
 }
 .metric-radio.is-active .metric-radio-label { font-weight: 700; color: var(--text); }
+/* 選択中指標の説明（出典つき）。ラジオと「オーバーレイ」見出しの間に置き、
+   今どの色を見ているかを文章で補う。 */
+.layers-desc {
+  margin: 2px 0 14px;
+  font-size: 11.5px;
+  line-height: 1.55;
+  color: var(--text-muted);
+}
 .layers-title-sub { margin-top: 2px; }
 
 /* 凡例 — シートに隠れないよう sheet open 時は繰り上げる */
@@ -481,6 +489,15 @@ button { font-family: inherit; }
 .is-sheet-open .maplibregl-ctrl-bottom-right {
   bottom: calc(216px + env(safe-area-inset-bottom)) !important;
   transition: bottom .25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+/* 凡例が「現在の塗り分けの凡例」だと示す小見出し。右上のレイヤーパネルと
+   左下の凡例が別位置にあるため、両者の関係を文言で結ぶ。 */
+.legend-eyebrow {
+  font-size: 9.5px;
+  font-weight: 800;
+  color: var(--accent);
+  letter-spacing: 0.08em;
+  margin-bottom: 3px;
 }
 .legend-title {
   font-size: 11px;

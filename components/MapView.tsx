@@ -757,6 +757,8 @@ export default function MapView({ summary, onMenuClick }: Props) {
                   </label>
                 ))}
               </div>
+              {/* 選択中の指標が「何の色か」を1行で説明（出典つき）。初見の文脈不足を補う */}
+              <p className="layers-desc">{getMapMetric(activeMetric).description}</p>
               <div className="layers-title layers-title-sub">オーバーレイ</div>
               <LayerToggle label="災害リスク" checked={hazardOn} onChange={setHazardOn} />
             </div>
@@ -793,6 +795,7 @@ function MetricLegend({ metricKey }: { metricKey: MapMetricKey }) {
   const { legend } = metric;
   return (
     <div className="legend">
+      <div className="legend-eyebrow">塗り分け中</div>
       <div className="legend-title">{metric.legendTitle}</div>
       {legend.kind === "numeric" ? (
         <>
