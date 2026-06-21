@@ -176,6 +176,10 @@ export default function MapView({ summary, onMenuClick }: Props) {
         // 地名ラベル等の symbol レイヤーより下にコロプレスを差し込む
         const firstSymbolId = allLayers.find((l) => l.type === "symbol")?.id;
 
+        // 災害リスク オーバーレイ用の斜線ハッチ画像を用意（コロプレスを塗り潰さず
+        // 重ねられる＝家賃/トレンドの色を保ったまま「浸水想定あり」を示せる）。
+        ensureHazardPattern(map);
+
         // ===== 都道府県レイヤー（低ズームで前面、高ズームでフェードアウト）=====
         map.addLayer({
           id: "pref-fill",
@@ -226,9 +230,9 @@ export default function MapView({ summary, onMenuClick }: Props) {
             "fill-color": getMapMetric(DEFAULT_METRIC_KEY).colorExpression() as DataDrivenPropertyValueSpecification<string>,
             "fill-opacity": [
               "case",
-              ["boolean", ["feature-state", "selected"], false], 0.62,
-              ["boolean", ["feature-state", "hover"], false], 0.52,
-              0.32,
+              ["boolean", ["feature-state", "selected"], false], 0.85,
+              ["boolean", ["feature-state", "hover"], false], 0.7,
+              0.55,
             ],
           },
         }, firstSymbolId);
@@ -240,8 +244,8 @@ export default function MapView({ summary, onMenuClick }: Props) {
           minzoom: MUNI_MIN_ZOOM,
           filter: ["==", ["get", "hasFloodRisk"], 1],
           paint: {
-            "fill-color": "#1d4ed8",
-            "fill-opacity": 0.08,
+            "fill-pattern": "hazard-hatch",
+            "fill-opacity": 0.5,
           },
         }, firstSymbolId);
         // 境界線
@@ -286,9 +290,9 @@ export default function MapView({ summary, onMenuClick }: Props) {
             "fill-color": getMapMetric(DEFAULT_METRIC_KEY).colorExpression() as DataDrivenPropertyValueSpecification<string>,
             "fill-opacity": [
               "case",
-              ["boolean", ["feature-state", "selected"], false], 0.62,
-              ["boolean", ["feature-state", "hover"], false], 0.52,
-              0.32,
+              ["boolean", ["feature-state", "selected"], false], 0.85,
+              ["boolean", ["feature-state", "hover"], false], 0.7,
+              0.55,
             ],
           },
         }, firstSymbolId);
@@ -298,7 +302,7 @@ export default function MapView({ summary, onMenuClick }: Props) {
           source: "wards",
           minzoom: WARDS_MIN_ZOOM,
           filter: ["==", ["get", "hasFloodRisk"], 1],
-          paint: { "fill-color": "#1d4ed8", "fill-opacity": 0.08 },
+          paint: { "fill-pattern": "hazard-hatch", "fill-opacity": 0.5 },
         }, firstSymbolId);
         map.addLayer({
           id: "wards-outline",
@@ -772,7 +776,7 @@ export default function MapView({ summary, onMenuClick }: Props) {
       )}
 
       {/* 凡例（選択中の指標に追従）。初回描画完了まで出さず「凡例だけ先行」を防ぐ */}
-      {firstPaintReady && <MetricLegend metricKey={activeMetric} />}
+      {firstPaintReady && <MetricLegend metricKey={activeMetric} hazardOn={hazardOn} />}
 
       {/* パネル / シート */}
       {!isMobile ? (
@@ -795,7 +799,7 @@ function searchContextLabel(m: MuniSummary): string {
   return prefName;
 }
 
-function MetricLegend({ metricKey }: { metricKey: MapMetricKey }) {
+function MetricLegend({ metricKey, hazardOn }: { metricKey: MapMetricKey; hazardOn: boolean }) {
   const metric = getMapMetric(metricKey);
   const { legend } = metric;
   return (
@@ -829,6 +833,12 @@ function MetricLegend({ metricKey }: { metricKey: MapMetricKey }) {
         <span className="legend-cell" style={{ background: RENT_NODATA_COLOR }} />
         {metric.nodataLabel}
       </div>
+      {hazardOn && (
+        <div className="legend-overlay">
+          <span className="legend-cell legend-hazard-cell" />
+          浸水想定あり（重ね表示）
+        </div>
+      )}
     </div>
   );
 }
@@ -875,6 +885,32 @@ function SearchIcon() {
       <line x1="21" y1="21" x2="16.65" y2="16.65" />
     </svg>
   );
+}
+
+// 災害リスク オーバーレイの色（amber-800）。寒色の家賃コロプレスや紫⇔緑の
+// 人口トレンド上でも沈まない警告色。凡例のハッチ見本とも共有する。
+const HAZARD_HATCH_COLOR = "#b45309";
+
+// 「浸水想定あり」を示す 45° 斜線ハッチ画像を map に登録する。fill-color の
+// ベタ塗りと違い、下のコロプレス色を保ったまま重ねられる。
+function ensureHazardPattern(map: MapLibreMap) {
+  if (map.hasImage("hazard-hatch")) return;
+  const size = 12;
+  const cnv = document.createElement("canvas");
+  cnv.width = cnv.height = size;
+  const ctx = cnv.getContext("2d");
+  if (!ctx) return;
+  ctx.strokeStyle = HAZARD_HATCH_COLOR;
+  ctx.lineWidth = 1.1;
+  ctx.lineCap = "round";
+  // タイル境界で斜線が連続するよう、隅を補う3本を引く
+  ctx.beginPath();
+  ctx.moveTo(0, size); ctx.lineTo(size, 0);
+  ctx.moveTo(-1, 1); ctx.lineTo(1, -1);
+  ctx.moveTo(size - 1, size + 1); ctx.lineTo(size + 1, size - 1);
+  ctx.stroke();
+  const img = ctx.getImageData(0, 0, size, size);
+  map.addImage("hazard-hatch", { width: size, height: size, data: new Uint8Array(img.data) });
 }
 
 function computeBbox(geom: GeoJSON.Geometry): [[number, number], [number, number]] | null {
