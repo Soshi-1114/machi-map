@@ -1,6 +1,10 @@
 import type { Metadata, Viewport } from "next";
+import Script from "next/script";
 import { SITE, absoluteUrl } from "@/lib/site";
 import "./globals.css";
+
+// Google Analytics 4 の測定ID（gtag.js による閲覧トラッキング）。
+const GA_MEASUREMENT_ID = "G-HL76L0RDWK";
 
 // サイト共通のメタデフォルト。各ページ（area/ranking）は title・description・canonical を
 // 上書きする。ここは主にトップページと、明示指定のないページのフォールバックを担う。
@@ -65,6 +69,19 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="ja">
       <body>
+        {/* Google tag (gtag.js) — GA4 閲覧トラッキング */}
+        <Script
+          src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
+          strategy="afterInteractive"
+        />
+        <Script id="gtag-init" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', '${GA_MEASUREMENT_ID}');
+          `}
+        </Script>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(siteLdJson) }}
