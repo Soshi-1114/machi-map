@@ -1,7 +1,13 @@
 <svg width="64" height="64" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="KurashiMap">
-  <rect width="64" height="64" rx="14" fill="#ffffff"/>
-  <circle cx="22" cy="17" r="6" fill="none" stroke="#2563eb" stroke-width="4"/>
-  <path d="M22 22V48" stroke="#2563eb" stroke-width="7" stroke-linecap="round"/>
-  <path d="M24 33L44 16" stroke="#1e3a8a" stroke-width="7" stroke-linecap="round"/>
-  <path d="M24 33L44 50" stroke="#10b981" stroke-width="7" stroke-linecap="round"/>
+  <defs>
+    <linearGradient id="pin" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#56b0ea"/><stop offset="1" stop-color="#2f6fb0"/></linearGradient>
+    <linearGradient id="up" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#234f78"/><stop offset="1" stop-color="#14304c"/></linearGradient>
+    <linearGradient id="lo" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#46b9a0"/><stop offset="1" stop-color="#2c8a82"/></linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="15" fill="#ffffff"/>
+  <rect x="17.5" y="17" width="9" height="33" rx="4.5" fill="url(#pin)"/>
+  <circle cx="22" cy="18" r="9.5" fill="url(#pin)"/>
+  <circle cx="22" cy="18" r="3.6" fill="#ffffff"/>
+  <path d="M25 33L45.5 14.5" stroke="url(#up)" stroke-width="9" stroke-linecap="round"/>
+  <path d="M25 33L45.5 51.5" stroke="url(#lo)" stroke-width="9" stroke-linecap="round"/>
 </svg>
