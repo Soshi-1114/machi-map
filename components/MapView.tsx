@@ -23,6 +23,9 @@ import {
   EMPTY_FILTERS, RENT_MAX_OPTIONS, LAND_MAX_OPTIONS, FLOOD_MAX_OPTIONS,
   isFilterActive, matchesFilter, buildMatchExpression, type MapFilters,
 } from "@/lib/mapFilters";
+import {
+  HAZARD_OVERLAYS, DEFAULT_HAZARD_KEY, getHazardOverlay, type HazardOverlayKey,
+} from "@/lib/mapHazards";
 import AreaPanel from "./AreaPanel";
 import MobileSheet from "./MobileSheet";
 
@@ -63,7 +66,7 @@ export default function MapView({ summary, onMenuClick }: Props) {
   });
 
   const [selectedCode, setSelectedCode] = useState<string | null>(null);
-  const [hazardOn, setHazardOn] = useState(true);
+  const [hazardKey, setHazardKey] = useState<HazardOverlayKey>(DEFAULT_HAZARD_KEY);
   const [activeMetric, setActiveMetric] = useState<MapMetricKey>(DEFAULT_METRIC_KEY);
   const [filters, setFilters] = useState<MapFilters>(EMPTY_FILTERS);
   const [isMobile, setIsMobile] = useState(false);
@@ -135,6 +138,9 @@ export default function MapView({ summary, onMenuClick }: Props) {
             [TREND_PROPERTY]: m.populationTrend ?? "",
             name: m.name,
             floodLevel: m.floodLevel, // -1=対象外, 0=なし, 1..6
+            tsunamiLevel: m.tsunamiLevel,
+            stormSurgeLevel: m.stormSurgeLevel,
+            liquefactionLevel: m.liquefactionLevel,
           };
         }
       };
@@ -560,12 +566,20 @@ export default function MapView({ summary, onMenuClick }: Props) {
     };
   }, [byCode]);
 
+  // 選択中のハザード種別に応じてオーバーレイ2層（市/区）の表示・対象・濃淡を切り替える。
   useEffect(() => {
     const map = mapRef.current;
     if (!map || !mapReady) return;
-    map.setLayoutProperty("muni-hazard", "visibility", hazardOn ? "visible" : "none");
-    map.setLayoutProperty("wards-hazard", "visibility", hazardOn ? "visible" : "none");
-  }, [hazardOn, mapReady]);
+    const overlay = getHazardOverlay(hazardKey);
+    const visible = overlay ? "visible" : "none";
+    for (const id of ["muni-hazard", "wards-hazard"]) {
+      map.setLayoutProperty(id, "visibility", visible);
+      if (overlay) {
+        map.setFilter(id, overlay.filter as FilterSpecification);
+        map.setPaintProperty(id, "fill-opacity", overlay.opacity as DataDrivenPropertyValueSpecification<number>);
+      }
+    }
+  }, [hazardKey, mapReady]);
 
   // 指標切替：muni/wards の fill-color を選択中メトリックの式に差し替える
   useEffect(() => {
@@ -880,8 +894,27 @@ export default function MapView({ summary, onMenuClick }: Props) {
               </div>
               {/* 選択中の指標が「何の色か」を1行で説明（出典つき）。初見の文脈不足を補う */}
               <p className="layers-desc">{getMapMetric(activeMetric).description}</p>
-              <div className="layers-title layers-title-sub">オーバーレイ</div>
-              <LayerToggle label="災害リスク" checked={hazardOn} onChange={setHazardOn} />
+              <div className="layers-title layers-title-sub">災害オーバーレイ</div>
+              <div className="filter-row">
+                <div className="filter-segments" role="radiogroup" aria-label="災害オーバーレイ">
+                  <button
+                    className={`filter-seg ${hazardKey === "none" ? "is-active" : ""}`}
+                    aria-pressed={hazardKey === "none"}
+                    onClick={() => setHazardKey("none")}
+                  >なし</button>
+                  {HAZARD_OVERLAYS.map((h) => (
+                    <button
+                      key={h.key}
+                      className={`filter-seg ${hazardKey === h.key ? "is-active" : ""}`}
+                      aria-pressed={hazardKey === h.key}
+                      onClick={() => setHazardKey(h.key)}
+                    >{h.label}</button>
+                  ))}
+                </div>
+              </div>
+              {getHazardOverlay(hazardKey) && (
+                <p className="layers-desc">{getHazardOverlay(hazardKey)!.legend}</p>
+              )}
 
               <div className="layers-title layers-title-sub">絞り込み</div>
               <SegmentedFilter
@@ -917,7 +950,7 @@ export default function MapView({ summary, onMenuClick }: Props) {
       )}
 
       {/* 凡例（選択中の指標に追従）。初回描画完了まで出さず「凡例だけ先行」を防ぐ */}
-      {firstPaintReady && <MetricLegend metricKey={activeMetric} hazardOn={hazardOn} />}
+      {firstPaintReady && <MetricLegend metricKey={activeMetric} hazardKey={hazardKey} />}
 
       {/* パネル / シート */}
       {!isMobile ? (
@@ -940,7 +973,8 @@ function searchContextLabel(m: MuniSummary): string {
   return prefName;
 }
 
-function MetricLegend({ metricKey, hazardOn }: { metricKey: MapMetricKey; hazardOn: boolean }) {
+function MetricLegend({ metricKey, hazardKey }: { metricKey: MapMetricKey; hazardKey: HazardOverlayKey }) {
+  const hazardOverlay = getHazardOverlay(hazardKey);
   const metric = getMapMetric(metricKey);
   const { legend } = metric;
   return (
@@ -976,10 +1010,10 @@ function MetricLegend({ metricKey, hazardOn }: { metricKey: MapMetricKey; hazard
         <span className="legend-cell" style={{ background: RENT_NODATA_COLOR }} />
         {metric.nodataLabel}
       </div>
-      {hazardOn && (
+      {hazardOverlay && (
         <div className="legend-overlay">
           <span className="legend-cell legend-hazard-cell" />
-          浸水想定（濃いほど深い・重ね表示）
+          {hazardOverlay.legend}
         </div>
       )}
     </div>
@@ -993,31 +1027,6 @@ function LayersIcon() {
       <polyline points="2 17 12 22 22 17" />
       <polyline points="2 12 12 17 22 12" />
     </svg>
-  );
-}
-
-function LayerToggle({
-  label,
-  checked,
-  onChange,
-  disabled,
-}: {
-  label: string;
-  checked: boolean;
-  onChange?: (v: boolean) => void;
-  disabled?: boolean;
-}) {
-  return (
-    <label className={`layer-toggle ${disabled ? "is-disabled" : ""}`}>
-      <input
-        type="checkbox"
-        checked={checked}
-        disabled={disabled}
-        onChange={(e) => onChange?.(e.target.checked)}
-      />
-      <span className="layer-switch" />
-      <span className="layer-label">{label}</span>
-    </label>
   );
 }
 

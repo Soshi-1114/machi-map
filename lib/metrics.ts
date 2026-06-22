@@ -5,7 +5,7 @@
 
 import { Municipality, MuniSummary } from "./types";
 import { PREFS, getPrefBySlug, getPrefByCode, loadPrefData } from "./prefs";
-import { floodLevelOf } from "./hazardScale";
+import { floodLevelOf, tsunamiLevelOf, stormSurgeLevelOf, liquefactionLevelOf } from "./hazardScale";
 
 // pref データのキャッシュ（同一 build/request 内で同じ pref を複数回呼んでも 1 度しかロードしない）
 const cache = new Map<string, Promise<{ muni: Municipality[]; wards: Municipality[] }>>();
@@ -72,6 +72,9 @@ export async function listSummaryAcrossPrefs(): Promise<MuniSummary[]> {
         landPrice: m.landPrice.value,
         populationTrend: m.populationTrend,
         floodLevel: floodLevelOf(m.hazard),
+        tsunamiLevel: tsunamiLevelOf(m.hazard),
+        stormSurgeLevel: stormSurgeLevelOf(m.hazard),
+        liquefactionLevel: liquefactionLevelOf(m.hazard),
       });
     }
   }

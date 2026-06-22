@@ -1,0 +1,74 @@
+// 地図のハザード・オーバーレイ定義。種別を1つ選んでアンバーのハッチで重ね、リスクが
+// 高いほど濃く（fill-opacity）表示する。可読性のため複数種別は同時に重ねず1種別ずつ。
+// 色は緑赤の価値判断を避け単一色相（amber）で強度のみを表す（#42 中立化方針に追従）。
+//
+// 各種別は MuniSummary の level フィールド（lib/hazardScale.ts のランク）を feature
+// property として読む:
+//   flood/tsunami/stormSurge: 大きいほど高リスク（0=なし, -1=対象外, >=1 を描画）
+//   liquefaction: 小さいほど高リスク（1=非常に〜5=しにくい, -1=未評価）。やや以上(1..3)のみ描画
+
+export type HazardOverlayKey = "none" | "flood" | "tsunami" | "stormSurge" | "liquefaction";
+
+export type HazardOverlay = {
+  key: Exclude<HazardOverlayKey, "none">;
+  label: string;       // セレクタ表示
+  prop: string;        // MuniSummary feature property 名
+  legend: string;      // 凡例の説明（出典の主旨）
+  filter: unknown;     // 描画対象（presence）の MapLibre 式
+  opacity: unknown;    // fill-opacity（リスクが高いほど濃い）の MapLibre 式
+};
+
+// 浸水深ランク 1..6 → 不透明度（既存の HAZARD_DEPTH_OPACITY と同値）。
+const FLOOD_OPACITY = [
+  "step", ["get", "floodLevel"],
+  0,
+  1, 0.34, 2, 0.44, 3, 0.54, 4, 0.64, 5, 0.74, 6, 0.82,
+];
+
+// 津波・高潮の深さランク 1..8 → 0.30..0.82 の線形。
+function bandOpacity(prop: string): unknown {
+  return ["interpolate", ["linear"], ["get", prop], 1, 0.30, 8, 0.82];
+}
+
+export const HAZARD_OVERLAYS: readonly HazardOverlay[] = [
+  {
+    key: "flood",
+    label: "浸水",
+    prop: "floodLevel",
+    legend: "洪水浸水想定（濃いほど深い）",
+    filter: [">", ["get", "floodLevel"], 0],
+    opacity: FLOOD_OPACITY,
+  },
+  {
+    key: "tsunami",
+    label: "津波",
+    prop: "tsunamiLevel",
+    legend: "津波浸水想定（濃いほど深い・沿岸のみ）",
+    filter: [">", ["get", "tsunamiLevel"], 0],
+    opacity: bandOpacity("tsunamiLevel"),
+  },
+  {
+    key: "stormSurge",
+    label: "高潮",
+    prop: "stormSurgeLevel",
+    legend: "高潮浸水想定（濃いほど深い・沿岸のみ）",
+    filter: [">", ["get", "stormSurgeLevel"], 0],
+    opacity: bandOpacity("stormSurgeLevel"),
+  },
+  {
+    key: "liquefaction",
+    label: "液状化",
+    prop: "liquefactionLevel",
+    legend: "液状化の傾向（濃いほど液状化しやすい）",
+    // 液状化はレベルが小さいほど高リスク。やや液状化しやすい以上（1..3）のみ描画。
+    filter: ["all", [">=", ["get", "liquefactionLevel"], 1], ["<=", ["get", "liquefactionLevel"], 3]],
+    // 1（非常に）=0.82 → 3（やや）=0.40 の逆順。
+    opacity: ["interpolate", ["linear"], ["get", "liquefactionLevel"], 1, 0.82, 3, 0.40],
+  },
+] as const;
+
+export const DEFAULT_HAZARD_KEY: HazardOverlayKey = "flood";
+
+export function getHazardOverlay(key: HazardOverlayKey): HazardOverlay | null {
+  return HAZARD_OVERLAYS.find((h) => h.key === key) ?? null;
+}

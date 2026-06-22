@@ -70,4 +70,9 @@ export type MuniSummary = {
   // 旧 hasFloodRisk(>0)・hazardEvaluated(>=0) を1フィールドに集約。地図の濃淡と
   // 「浸水深◯m以下」フィルタの単一ソース。
   floodLevel: number;
+  // 地図のハザード・オーバーレイ切替（lib/mapHazards.ts）用の数値レベルのみ。
+  // ラベル/深さ文字列は詳細ページ（フル Municipality）側に置きサマリは軽量に保つ。
+  tsunamiLevel: number;       // -1=対象外, 0=想定なし, 1..8（深いほど高リスク）
+  stormSurgeLevel: number;    // 同上
+  liquefactionLevel: number;  // -1=未評価, 1..5（小さいほど高リスク）
 };
