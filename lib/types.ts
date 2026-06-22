@@ -10,6 +10,10 @@ export type Metric = {
 export type HazardInfo = {
   hasFloodRisk: boolean;
   hasLandslideRisk: boolean;
+  // 段階値（順序尺度）。新データのみ持つ。未設定の旧データは has*Risk の boolean に
+  // フォールバックする（lib/hazardScale.ts のアクセサ参照）。
+  floodLevel?: number;     // 浸水深ランク 0=なし,1..6（reinfolib XKT026）
+  landslideLevel?: number; // 0=なし,1=警戒区域,2=特別警戒区域（reinfolib XKT029）
   note: string;          // "荒川沿いに浸水想定" など
   source: string;
   asOf: string;

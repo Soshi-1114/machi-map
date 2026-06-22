@@ -105,6 +105,12 @@ curl -s -o /dev/null -w "%{http_code}\n" -I \
 2. `fetch`（県ごとの matrix, `max-parallel: 3` = reinfolib 過負荷防止）:
    - reinfolib タイルキャッシュを `actions/cache` で復元（`.cache/reinfolib-tiles/{pref}`）
    - `fetch-hazard.mjs`（浸水想定/土砂災害, reinfolib XKT026/029）
+     - 浸水は浸水深ランク `floodLevel` 1..6（A31a_205 の市域内最大）、土砂は区域区分
+       `landslideLevel` 1=警戒/2=特別警戒（A33_002 の最大）を段階値で保持。note に河川名
+       （A31a_202）・現象種類（A33_001）を付す。段階の意味は `lib/hazardScale.ts` と同期。
+     - 評価対象外（北方領土など reinfolib 圏外）の `source` センチネルは上書きしない。
+     - reinfolib のハザード属性名を実データで確認するには `scripts/probe-hazard-attrs.mjs`
+       （`node --env-file=.env.local scripts/probe-hazard-attrs.mjs`）。
    - `fetch-amenities.mjs`（駅/保育・幼稚園/医療機関, reinfolib XKT015/007/010）
    - 変更後データをアーティファクト `data-{pref}` にアップロード（main へは push しない）
 3. `open-pr`（`needs: fetch`, `if: always()`）: 全アーティファクトを集約して単一 PR を作成。

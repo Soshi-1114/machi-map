@@ -12,6 +12,14 @@ import { hasRent, rentBand, RENT_BAND_LABELS } from "@/lib/rentColor";
 import { isWaitlistDisclosed } from "@/lib/waitlist";
 import { hasLandPrice } from "@/lib/landPrice";
 import { isHazardEvaluated, isAmenitiesCounted, coverageReason } from "@/lib/coverage";
+import {
+  floodLevelOf,
+  landslideLevelOf,
+  floodGraded,
+  landslideGraded,
+  floodLevelLabel,
+  landslideLevelLabel,
+} from "@/lib/hazardScale";
 import type { Municipality } from "@/lib/types";
 
 type Params = { pref: string; city: string };
@@ -284,18 +292,26 @@ export default async function AreaPage({ params }: { params: Params }) {
         {isHazardEvaluated(m.hazard.source) ? (
           <>
             <div className="hazard-grid">
-              <div className={`hazard-cell ${m.hazard.hasFloodRisk ? "is-risk" : ""}`}>
+              <div className={`hazard-cell ${floodLevelOf(m.hazard) > 0 ? "is-risk" : ""}`}>
                 <Icon name="droplet" size={24} />
                 <div>
-                  <div className="hazard-cell-label">浸水想定区域</div>
-                  <div className="hazard-cell-value">{m.hazard.hasFloodRisk ? "あり" : "なし"}</div>
+                  <div className="hazard-cell-label">{floodGraded(m.hazard) ? "浸水想定 最大深" : "浸水想定区域"}</div>
+                  <div className="hazard-cell-value">
+                    {floodGraded(m.hazard)
+                      ? floodLevelLabel(floodLevelOf(m.hazard))
+                      : m.hazard.hasFloodRisk ? "あり" : "なし"}
+                  </div>
                 </div>
               </div>
-              <div className={`hazard-cell ${m.hazard.hasLandslideRisk ? "is-risk" : ""}`}>
+              <div className={`hazard-cell ${landslideLevelOf(m.hazard) > 0 ? "is-risk" : ""}`}>
                 <Icon name="mountain" size={24} />
                 <div>
                   <div className="hazard-cell-label">土砂災害警戒区域</div>
-                  <div className="hazard-cell-value">{m.hazard.hasLandslideRisk ? "あり" : "なし"}</div>
+                  <div className="hazard-cell-value">
+                    {landslideGraded(m.hazard)
+                      ? landslideLevelLabel(landslideLevelOf(m.hazard))
+                      : m.hazard.hasLandslideRisk ? "あり" : "なし"}
+                  </div>
                 </div>
               </div>
             </div>
