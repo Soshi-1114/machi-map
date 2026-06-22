@@ -4,6 +4,14 @@
 //   土砂 landslideLevel : 区域区分 1=警戒/2=特別警戒（XKT029 属性 A33_002）の最大。0=なし
 // 段階の意味は lib/hazardScale.ts と同期（FLOOD_LABELS / 区域ラベル）。
 //
+// 結合は多角形×多角形の booleanIntersects で厳密に行う（市域に少しでも重なる区域を
+// 取りこぼさない）。素朴版は候補自治体をタイル bbox で絞っていたため、実形状がそのタイルに
+// 無い自治体（L字・対角形で bbox だけ重なる）が、タイル内の数万件のフィーチャすべてに対して
+// “不一致”の交差判定を繰り返し（reinfolib の浸水フィーチャは1タイル数万件と高密度）、特に
+// 散村型の県で極端に遅かった。対策として、候補をタイル矩形と自治体実形状が交差するものに
+// 限定する（タイルごとに1回判定。フィーチャ単位ではない）。これで厳密性を保ったまま無駄な
+// フィーチャ判定を排除する。
+//
 // 実行: node --env-file=.env.local --max-old-space-size=4096 scripts/fetch-hazard.mjs --pref=saitama
 
 import path from "node:path";
@@ -52,18 +60,29 @@ const tiles = createTileFetcher({
   zoom: ZOOM,
 });
 
-// 各 API のフィーチャを走査し、自治体ポリゴンに交差する区域の「最大レベル」を field に積む。
-// 真偽値版と違い最大値を取るため候補は maxLevel 未満の間だけ生かす（より高いレベルの
-// フィーチャだけ交差判定する＝ booleanIntersects を最小回数に抑える）。collect はメモ用に
-// 河川名・現象種類を拾う（レベルが上がった時のみ呼ばれる）。
+// タイル矩形の多角形（候補を実形状で絞るための交差判定用）。
+function tileSquare(tb) {
+  return turf.polygon([[[tb[0], tb[1]], [tb[2], tb[1]], [tb[2], tb[3]], [tb[0], tb[3]], [tb[0], tb[1]]]]);
+}
+
+// 各 API のフィーチャを走査し、自治体に交差する区域の「市域内最大レベル」を field に積む。
+// 候補は (1) maxLevel 未満 (2) タイル矩形と実形状が交差、の両方を満たすものに限定する
+// （実形状交差はタイルごとに1回だけ判定）。フィーチャ単位ではレベルが現在値より高いものだけ
+// booleanIntersects する。collect はメモ用に河川名・現象種類を拾う（レベル上昇時のみ）。
 async function processHazardForApi(api, polys, field, getLevel, maxLevel, collect) {
   const tileList = await tiles.downloadAllTiles(api, polys);
   let processed = 0;
   for (const t of tileList) {
     const tb = tileBbox(t.x, t.y, ZOOM);
-    const candidates = polys.filter((p) => p[field] < maxLevel && bboxIntersects(p.bbox, tb));
+    const bboxCands = polys.filter((p) => p[field] < maxLevel && bboxIntersects(p.bbox, tb));
     processed++;
     if (processed % 50 === 0) process.stdout.write(`  ${api} check: ${processed}/${tileList.length}, pending: ${polys.filter((p) => p[field] < maxLevel).length}\r`);
+    if (bboxCands.length === 0) continue;
+    // bbox候補のうち、タイル矩形と実形状が交差するものだけに絞る（無駄なフィーチャ判定を排除）。
+    const sq = tileSquare(tb);
+    const candidates = bboxCands.filter((p) => {
+      try { return turf.booleanIntersects(sq, p.feat); } catch { return true; }
+    });
     if (candidates.length === 0) continue;
     const fc = await tiles.readTile(api, t.x, t.y);
     if (!fc?.features?.length) continue;
@@ -72,7 +91,7 @@ async function processHazardForApi(api, polys, field, getLevel, maxLevel, collec
       if (lv <= 0) continue;
       let hbbox; try { hbbox = turf.bbox(haz); } catch { continue; }
       for (const c of candidates) {
-        if (c[field] >= lv) continue; // 既に同等以上 → 高レベル探索のみ続ける
+        if (c[field] >= lv) continue; // 既に同等以上 → 更新不要
         if (!bboxIntersects(c.bbox, hbbox)) continue;
         try {
           if (turf.booleanIntersects(c.feat, haz)) {
