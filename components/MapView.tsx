@@ -25,6 +25,7 @@ import {
 } from "@/lib/mapFilters";
 import {
   HAZARD_OVERLAYS, DEFAULT_HAZARD_KEY, getHazardOverlay, type HazardOverlayKey,
+  HAZARD_ZONE_ZOOM, GSI_HAZARD_ATTRIBUTION, gsiTileUrl,
 } from "@/lib/mapHazards";
 import AreaPanel from "./AreaPanel";
 import MobileSheet from "./MobileSheet";
@@ -269,6 +270,8 @@ export default function MapView({ summary, onMenuClick }: Props) {
           type: "fill",
           source: "muni",
           minzoom: MUNI_MIN_ZOOM,
+          // 自治体集計ハッチは比較用。拡大（HAZARD_ZONE_ZOOM 以上）では実区域ラスタに譲る。
+          maxzoom: HAZARD_ZONE_ZOOM,
           // 浸水深ランク>0 に重ね、深いほど不透明に（下のコロプレスは透ける範囲で）。
           filter: [">", ["get", "floodLevel"], 0],
           paint: {
@@ -337,9 +340,32 @@ export default function MapView({ summary, onMenuClick }: Props) {
           type: "fill",
           source: "wards",
           minzoom: WARDS_MIN_ZOOM,
+          maxzoom: HAZARD_ZONE_ZOOM,
           filter: [">", ["get", "floodLevel"], 0],
           paint: { "fill-pattern": "hazard-hatch", "fill-opacity": HAZARD_DEPTH_OPACITY },
         }, firstSymbolId);
+        // 実区域ラスタ（国土地理院ハザードマップポータルの公開タイル）。拡大時のみ表示し、
+        // 自治体集計ハッチに代わって実際の浸水想定区域ポリゴンを公式の深さ凡例で描く。
+        // API キー不要・CORS 可。種別ごとに1ソース/レイヤーを用意し、選択中のみ可視化。
+        for (const h of HAZARD_OVERLAYS) {
+          const sid = `gsi-${h.key}`;
+          map.addSource(sid, {
+            type: "raster",
+            tiles: [gsiTileUrl(h.gsiLayerId)],
+            tileSize: 256,
+            minzoom: 2,
+            maxzoom: 17,
+            attribution: GSI_HAZARD_ATTRIBUTION,
+          });
+          map.addLayer({
+            id: sid,
+            type: "raster",
+            source: sid,
+            minzoom: HAZARD_ZONE_ZOOM,
+            layout: { visibility: "none" },
+            paint: { "raster-opacity": 0.7 },
+          }, firstSymbolId);
+        }
         map.addLayer({
           id: "wards-outline",
           type: "line",
@@ -578,6 +604,10 @@ export default function MapView({ summary, onMenuClick }: Props) {
         map.setFilter(id, overlay.filter as FilterSpecification);
         map.setPaintProperty(id, "fill-opacity", overlay.opacity as DataDrivenPropertyValueSpecification<number>);
       }
+    }
+    // 実区域ラスタは選択中の種別のみ可視（ズーム閾値はレイヤーの minzoom が制御）。
+    for (const h of HAZARD_OVERLAYS) {
+      map.setLayoutProperty(`gsi-${h.key}`, "visibility", h.key === hazardKey ? "visible" : "none");
     }
   }, [hazardKey, mapReady]);
 
@@ -1011,10 +1041,15 @@ function MetricLegend({ metricKey, hazardKey }: { metricKey: MapMetricKey; hazar
         {metric.nodataLabel}
       </div>
       {hazardOverlay && (
-        <div className="legend-overlay">
-          <span className="legend-cell legend-hazard-cell" />
-          {hazardOverlay.legend}
-        </div>
+        <>
+          <div className="legend-overlay">
+            <span className="legend-cell legend-hazard-cell" />
+            {hazardOverlay.legend}
+          </div>
+          <div className="legend-overlay-note">
+            拡大すると実際の区域を表示（出典: ハザードマップポータル）
+          </div>
+        </>
       )}
     </div>
   );
