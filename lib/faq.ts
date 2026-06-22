@@ -10,6 +10,14 @@ import { hasRent, rentBand } from "./rentColor";
 import { hasLandPrice } from "./landPrice";
 import { isWaitlistDisclosed } from "./waitlist";
 import { isHazardEvaluated, coverageReason } from "./coverage";
+import {
+  floodLevelOf,
+  landslideLevelOf,
+  floodGraded,
+  landslideGraded,
+  floodLevelLabel,
+  landslideLevelLabel,
+} from "./hazardScale";
 
 export type QA = { q: string; a: string };
 
@@ -39,7 +47,11 @@ export function buildFaq(m: Municipality, prefName: string): QA[] {
   qa.push({
     q: `${name}の災害リスク（浸水・土砂災害）はどうですか？`,
     a: isHazardEvaluated(m.hazard.source)
-      ? `${name}の浸水想定区域は「${m.hazard.hasFloodRisk ? "あり" : "なし"}」、土砂災害警戒区域は「${m.hazard.hasLandslideRisk ? "あり" : "なし"}」です${m.hazard.note ? `（${m.hazard.note}）` : ""}。`
+      ? `${name}の${floodGraded(m.hazard)
+          ? `浸水想定区域は最大「${floodLevelLabel(floodLevelOf(m.hazard))}」`
+          : `浸水想定区域は「${m.hazard.hasFloodRisk ? "あり" : "なし"}」`}、${landslideGraded(m.hazard)
+          ? `土砂災害は「${landslideLevelLabel(landslideLevelOf(m.hazard))}」`
+          : `土砂災害警戒区域は「${m.hazard.hasLandslideRisk ? "あり" : "なし"}」`}です${m.hazard.note ? `（${m.hazard.note}）` : ""}。`
       : `${name}はハザード評価の対象外です（${coverageReason(m.hazard.source)}）。`,
   });
 

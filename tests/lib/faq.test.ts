@@ -20,6 +20,24 @@ describe("buildFaq", () => {
     expect(faq[3].a).toContain("200,000円/㎡");
   });
 
+  it("段階値データは浸水深・土砂区分を表示", () => {
+    const m = muni({
+      name: "富山市",
+      rent: metric({ value: 60000 }),
+      landPrice: metric({ value: 100000, unit: "円/㎡" }),
+      hazard: hazard({
+        hasFloodRisk: true,
+        hasLandslideRisk: true,
+        floodLevel: 6,
+        landslideLevel: 2,
+        note: "浸水想定 最大20m〜（神通川）",
+      }),
+    });
+    const faq = buildFaq(m, "富山県");
+    expect(faq[2].a).toContain("浸水想定区域は最大「20m〜」");
+    expect(faq[2].a).toContain("土砂災害は「特別警戒区域」");
+  });
+
   it("家賃データなしは対象外を明示し、地価なしは設問を出さない", () => {
     const m = muni({
       name: "○○村",

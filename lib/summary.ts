@@ -1,6 +1,7 @@
 import type { Municipality } from "./types";
 import { isWaitlistDisclosed } from "./waitlist";
 import { isHazardEvaluated } from "./coverage";
+import { floodLevelOf, floodGraded, floodLevelLabel } from "./hazardScale";
 
 // 将来はLLM生成に差し替える前提。シグネチャを変えないこと。
 export function buildSummary(m: Municipality): string {
@@ -17,8 +18,12 @@ export function buildSummary(m: Municipality): string {
       : "待機児童ゼロ";
   const hazard = !isHazardEvaluated(m.hazard.source)
     ? "ハザード評価は対象外"
-    : m.hazard.hasFloodRisk
-      ? `浸水想定あり（${m.hazard.note}）`
-      : "目立った浸水想定なし";
+    : floodGraded(m.hazard)
+      ? floodLevelOf(m.hazard) > 0
+        ? `浸水想定は最大${floodLevelLabel(floodLevelOf(m.hazard))}`
+        : "目立った浸水想定なし"
+      : m.hazard.hasFloodRisk
+        ? `浸水想定あり（${m.hazard.note}）`
+        : "目立った浸水想定なし";
   return `${name}は${rent}。${hazard}。${wait}。`;
 }
