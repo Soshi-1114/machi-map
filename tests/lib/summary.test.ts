@@ -45,6 +45,18 @@ describe("buildSummary", () => {
     ).toContain("待機児童12人");
   });
 
+  it("段階値データは浸水深を表示", () => {
+    const s = buildSummary(
+      muni({ hazard: hazard({ hasFloodRisk: true, floodLevel: 3, note: "x" }) }),
+    );
+    expect(s).toContain("浸水想定は最大3〜5m");
+  });
+
+  it("段階値データ・浸水なしは『目立った浸水想定なし』", () => {
+    const s = buildSummary(muni({ hazard: hazard({ floodLevel: 0 }) }));
+    expect(s).toContain("目立った浸水想定なし");
+  });
+
   it("ハザード対象外", () => {
     const s = buildSummary(
       muni({ hazard: hazard({ source: "対象外（北方領土）" }) }),

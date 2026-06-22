@@ -7,6 +7,7 @@ import { hasRent } from "@/lib/rentColor";
 import { isWaitlistDisclosed } from "@/lib/waitlist";
 import { hasLandPrice } from "@/lib/landPrice";
 import { isHazardEvaluated } from "@/lib/coverage";
+import { floodLevelOf, landslideLevelOf, floodGraded, floodLevelLabel, landslideLevelLabel } from "@/lib/hazardScale";
 
 type Props = {
   municipality: Municipality | null;
@@ -81,6 +82,19 @@ function PointerIcon() {
   );
 }
 
+// 災害リスクカードの値。段階値データは浸水深を見出しに（無ければ土砂区分）、
+// 旧 boolean データは「浸水想定あり/目立った想定なし」にフォールバックする。
+function hazardCardValue(h: Municipality["hazard"]): string {
+  if (floodGraded(h)) {
+    const f = floodLevelOf(h);
+    if (f > 0) return `浸水 最大${floodLevelLabel(f)}`;
+    const l = landslideLevelOf(h);
+    if (l > 0) return `土砂 ${landslideLevelLabel(l)}`;
+    return "目立った想定なし";
+  }
+  return h.hasFloodRisk ? "浸水想定あり" : "目立った想定なし";
+}
+
 export function MetricCards({ m }: { m: Municipality }) {
   const rentHasData = hasRent(m.rent.value);
   const cards = [
@@ -94,7 +108,7 @@ export function MetricCards({ m }: { m: Municipality }) {
       ? { label: "待機児童", value: `${m.waitlistChildren.value} ${m.waitlistChildren.unit}`, source: m.waitlistChildren.source, asOf: m.waitlistChildren.asOf, est: m.waitlistChildren.isEstimated }
       : { label: "待機児童", value: "データなし", source: m.waitlistChildren.source, asOf: m.waitlistChildren.asOf, est: false },
     isHazardEvaluated(m.hazard.source)
-      ? { label: "災害リスク", value: m.hazard.hasFloodRisk ? "浸水想定あり" : "目立った想定なし", source: m.hazard.source, asOf: m.hazard.asOf, est: false }
+      ? { label: "災害リスク", value: hazardCardValue(m.hazard), source: m.hazard.source, asOf: m.hazard.asOf, est: false }
       : { label: "災害リスク", value: "対象外", source: m.hazard.source, asOf: m.hazard.asOf, est: false },
   ];
   return (
