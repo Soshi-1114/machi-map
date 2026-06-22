@@ -68,6 +68,14 @@ function coastalLevel(band) {
   return band ? depthRank(bandLowerMeters(band)) : 0;
 }
 
+// 液状化（XKT025）: liquefaction_tendency_level は小さいほど高リスク（1=非常に〜5=しにくい）。
+// processHazardForApi は「最大」を採るため、最悪=最小レベルを採るには順位を反転する
+// （1→5, 5→1）。不正値は 0（メッシュなし扱い）。
+function liqRank(props) {
+  const v = Number(props?.liquefaction_tendency_level);
+  return v >= 1 && v <= 5 ? 6 - v : 0;
+}
+
 // 浸水深ランク 1..6 を取り出す。範囲外/欠損は 0（なし扱い）。
 function floodLevel(props) {
   const v = Number(props?.A31a_205);
@@ -136,6 +144,7 @@ async function main() {
     decorate: (b) => ({
       ...b, floodLevel: 0, landslideLevel: 0, rivers: new Set(), slideKinds: new Set(),
       tsunamiRank: 0, surgeRank: 0, tsunamiBand: "", surgeBand: "",
+      liqRank: 0, liqLevel: 0, liqNote: "",
     }),
   });
   console.log(`polys: ${polys.length}  (coastal=${isCoastal})`);
@@ -161,6 +170,11 @@ async function main() {
   } else {
     console.log("\n[XKT028/027] 津波・高潮: 内陸県のため対象外（スキップ）");
   }
+  console.log("\n[XKT025] 液状化");
+  await processHazardForApi("XKT025", polys, "liqRank", liqRank, 5, (c, p) => {
+    c.liqLevel = Number(p.liquefaction_tendency_level);
+    c.liqNote = String(p.note ?? "");
+  });
 
   const { muni, wards, all, paths } = await loadMuni(ROOT, pref);
   const byCode = new Map(all.map((m) => [m.code, m]));
@@ -179,10 +193,11 @@ async function main() {
       tsunamiDepth: isCoastal && p.tsunamiRank > 0 ? p.tsunamiBand : "",
       stormSurgeLevel: isCoastal ? p.surgeRank : -1,
       stormSurgeDepth: isCoastal && p.surgeRank > 0 ? p.surgeBand : "",
+      // 液状化: メッシュ無し(liqRank 0)は -1（未評価）、有れば元レベル(1=最悪..5)と傾向テキスト。
+      liquefactionLevel: p.liqRank > 0 ? p.liqLevel : -1,
+      liquefactionLabel: p.liqRank > 0 ? p.liqNote : "",
       note: buildNote(p),
-      source: isCoastal
-        ? "国土数値情報（reinfolib XKT026/027/028/029）"
-        : "国土数値情報（reinfolib XKT026/029）",
+      source: `国土数値情報（reinfolib ${isCoastal ? "XKT025/026/027/028/029" : "XKT025/026/029"}）`,
       asOf: HAZARD_AS_OF,
     };
   }
@@ -194,7 +209,8 @@ async function main() {
   const fMax = Math.max(0, ...all.map((m) => m.hazard.floodLevel ?? 0));
   const ts = all.filter((m) => (m.hazard.tsunamiLevel ?? -1) > 0).length;
   const ss = all.filter((m) => (m.hazard.stormSurgeLevel ?? -1) > 0).length;
-  console.log(`Total: flood=${f}/${all.length} (maxLevel=${fMax}), landslide=${l}/${all.length}, tsunami=${ts}, stormSurge=${ss}`);
+  const lq = all.filter((m) => { const v = m.hazard.liquefactionLevel ?? -1; return v >= 1 && v <= 3; }).length;
+  console.log(`Total: flood=${f}/${all.length} (maxLevel=${fMax}), landslide=${l}/${all.length}, tsunami=${ts}, stormSurge=${ss}, liquefaction(prone)=${lq}`);
 }
 
 // 段階値とメモ素材（河川名・現象種類）から note を組み立てる。
@@ -212,6 +228,8 @@ function buildNote(p) {
   }
   if (p.tsunamiRank > 0) parts.push(`津波浸水想定 最大${p.tsunamiBand}`);
   if (p.surgeRank > 0) parts.push(`高潮浸水想定 最大${p.surgeBand}`);
+  // 液状化は高リスク帯（レベル1..3＝やや以上）のみ note に出す。
+  if (p.liqRank > 0 && p.liqLevel >= 1 && p.liqLevel <= 3) parts.push(`液状化: ${p.liqNote}`);
   return parts.length === 0 ? "顕著な災害想定区域なし" : parts.join(" / ");
 }
 

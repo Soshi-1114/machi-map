@@ -20,6 +20,10 @@ export type HazardInfo = {
   tsunamiDepth?: string;
   stormSurgeLevel?: number;  // reinfolib XKT027（A49_003）
   stormSurgeDepth?: string;
+  // 液状化（reinfolib XKT025）。level は小さいほど高リスク（1=非常に〜5=しにくい）。
+  // -1=未評価（メッシュなし）。label は最悪メッシュの傾向テキスト（"非常に液状化しやすい" 等）。
+  liquefactionLevel?: number;
+  liquefactionLabel?: string;
   note: string;          // "荒川沿いに浸水想定" など
   source: string;
   asOf: string;

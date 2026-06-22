@@ -15,6 +15,9 @@ import {
   tsunamiLevelOf,
   stormSurgeLevelOf,
   coastalHazardLabel,
+  liquefactionLevelOf,
+  liquefactionLabel,
+  liquefactionIsRisk,
 } from "@/lib/hazardScale";
 
 const base: HazardInfo = {
@@ -125,5 +128,26 @@ describe("津波・高潮アクセサと表示", () => {
     expect(coastalHazardLabel(0)).toBe("想定なし");
     expect(coastalHazardLabel(7, "10m以上 ～ 15m未満")).toBe("最大 10m以上 ～ 15m未満");
     expect(coastalHazardLabel(3)).toBe("想定あり"); // depth 欠落時
+  });
+});
+
+describe("液状化（レベルは小さいほど高リスク）", () => {
+  const base = {
+    hasFloodRisk: false, hasLandslideRisk: false, note: "", source: "x", asOf: "2024",
+  };
+  it("level 未設定（メッシュなし/旧データ）は -1（未評価）", () => {
+    expect(liquefactionLevelOf({ ...base })).toBe(-1);
+    expect(liquefactionLevelOf({ ...base, liquefactionLevel: 1 })).toBe(1);
+  });
+  it("label は note 優先、欠落時はフォールバック表", () => {
+    expect(liquefactionLabel(-1)).toBe("対象外");
+    expect(liquefactionLabel(1, "非常に液状化しやすい")).toBe("非常に液状化しやすい");
+    expect(liquefactionLabel(2)).toBe("液状化しやすい"); // フォールバック
+  });
+  it("is-risk は level 1..3（やや以上）のみ", () => {
+    expect(liquefactionIsRisk(1)).toBe(true);
+    expect(liquefactionIsRisk(3)).toBe(true);
+    expect(liquefactionIsRisk(5)).toBe(false); // 液状化しにくい
+    expect(liquefactionIsRisk(-1)).toBe(false);
   });
 });

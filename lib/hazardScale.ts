@@ -123,3 +123,29 @@ export function coastalHazardLabel(level: number, depth?: string): string {
   if (level === 0) return "想定なし";
   return depth && depth.length > 0 ? `最大 ${depth}` : "想定あり";
 }
+
+// ---- 液状化（reinfolib XKT025）----
+// liquefaction_tendency_level は小さいほど高リスク（1=非常に液状化しやすい 〜 5=しにくい）。
+// 表示は最悪メッシュの note 文字列をそのまま使う（権威ある分類名）。下表は label 欠落時の
+// フォールバック（reinfolib XKT025 の実データ note と一致）。-1=未評価（メッシュなし）。
+const LIQUEFACTION_LABELS: Record<number, string> = {
+  1: "非常に液状化しやすい",
+  2: "液状化しやすい",
+  3: "やや液状化しやすい",
+  4: "やや液状化しにくい",
+  5: "液状化しにくい",
+};
+
+export function liquefactionLevelOf(h: HazardInfo): number {
+  return typeof h.liquefactionLevel === "number" ? h.liquefactionLevel : -1;
+}
+
+export function liquefactionLabel(level: number, label?: string): string {
+  if (level < 0) return "対象外";
+  return label && label.length > 0 ? label : (LIQUEFACTION_LABELS[level] ?? "評価あり");
+}
+
+// 注意喚起色を付ける高リスク帯（やや液状化しやすい 以上 = level 1..3）。
+export function liquefactionIsRisk(level: number): boolean {
+  return level >= 1 && level <= 3;
+}

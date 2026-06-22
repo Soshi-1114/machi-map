@@ -22,6 +22,9 @@ import {
   tsunamiLevelOf,
   stormSurgeLevelOf,
   coastalHazardLabel,
+  liquefactionLevelOf,
+  liquefactionLabel,
+  liquefactionIsRisk,
 } from "@/lib/hazardScale";
 import type { Municipality } from "@/lib/types";
 
@@ -340,6 +343,18 @@ export default async function AreaPage({ params }: { params: Params }) {
                   </div>
                 </div>
               )}
+              {/* 液状化は評価済み（メッシュあり level>=1）のみ。レベルが小さいほど高リスク */}
+              {liquefactionLevelOf(m.hazard) >= 1 && (
+                <div className={`hazard-cell ${liquefactionIsRisk(liquefactionLevelOf(m.hazard)) ? "is-risk" : ""}`}>
+                  <Icon name="ground" size={24} />
+                  <div>
+                    <div className="hazard-cell-label">液状化の傾向</div>
+                    <div className="hazard-cell-value">
+                      {liquefactionLabel(liquefactionLevelOf(m.hazard), m.hazard.liquefactionLabel)}
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
             {m.hazard.note && (
               <p className="detail-note">
@@ -573,7 +588,7 @@ type IconName =
   | "pin" | "home" | "users" | "yen" | "smile" | "info" | "trendUp" | "trendDown"
   | "alert" | "droplet" | "mountain" | "train" | "building" | "activity"
   | "minusCircle" | "arrowRight" | "arrowLeft" | "trophy" | "map"
-  | "waves" | "wind";
+  | "waves" | "wind" | "ground";
 
 const ICON_PATHS: Record<IconName, ReactNode> = {
   pin: <><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" /><circle cx="12" cy="10" r="3" /></>,
@@ -597,6 +612,7 @@ const ICON_PATHS: Record<IconName, ReactNode> = {
   map: <><path d="M9 4 3 6v14l6-2 6 2 6-2V4l-6 2-6-2Z" /><path d="M9 4v14M15 6v14" /></>,
   waves: <><path d="M2 7c2-2 4-2 6 0s4 2 6 0 4-2 6 0" /><path d="M2 12c2-2 4-2 6 0s4 2 6 0 4-2 6 0" /><path d="M2 17c2-2 4-2 6 0s4 2 6 0 4-2 6 0" /></>,
   wind: <><path d="M3 8h11a3 3 0 1 0-3-3" /><path d="M3 12h16a3 3 0 1 1-3 3" /><path d="M3 16h7a2.5 2.5 0 1 1-2.5 2.5" /></>,
+  ground: <><path d="M3 9h18M3 14h18M3 19h18" /><path d="M11 9l2 5-1.5 5" /></>,
 };
 
 function Icon({ name, size = 20 }: { name: IconName; size?: number }) {
