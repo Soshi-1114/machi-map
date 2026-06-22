@@ -12,6 +12,7 @@ import type {
   MapGeoJSONFeature,
   DataDrivenPropertyValueSpecification,
   FilterSpecification,
+  StyleSpecification,
 } from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
 import type { Municipality, MuniSummary } from "@/lib/types";
@@ -27,6 +28,7 @@ import {
   HAZARD_OVERLAYS, DEFAULT_HAZARD_KEY, getHazardOverlay, type HazardOverlayKey,
   HAZARD_ZONE_ZOOM, GSI_HAZARD_ATTRIBUTION, gsiTileUrl,
 } from "@/lib/mapHazards";
+import { BASEMAPS, DEFAULT_BASEMAP, getBasemap, type BasemapKey } from "@/lib/mapBasemaps";
 import AreaPanel from "./AreaPanel";
 import MobileSheet from "./MobileSheet";
 
@@ -37,9 +39,7 @@ const MUNI_MIN_ZOOM = 7.5;       // 市区町村レイヤーを出すズーム
 const PREF_FADE_END_ZOOM = 9;    // 都道府県レイヤーの fill が完全に消えるズーム
 const PREF_CLICK_MAX_ZOOM = 8;   // この zoom 以下で pref クリックを fly-in 扱い
 
-// OpenFreeMap の Positron スタイル（Mapbox Light 相当の軽量モノクロ基盤）
-// CORS 対応、トークン不要、Apache-2.0
-const BASEMAP_STYLE = "https://tiles.openfreemap.org/styles/positron";
+// ベース地図は lib/mapBasemaps.ts（シンプル=OpenFreeMap positron / 淡色=GSI）。
 // 初期表示は東京本土（23区＋多摩）を収める。島嶼部（大島〜小笠原, 緯度35.4以南）は
 // bbox が極端に縦長になり初期ズームが破綻するため、本土だけを枠に使う。
 const TOKYO_BBOX: [number, number, number, number] = [138.94, 35.5, 139.92, 35.9];
@@ -65,6 +65,11 @@ export default function MapView({ summary, onMenuClick }: Props) {
     text: new Map(),
     icon: new Map(),
   });
+
+  // ベース地図スタイル。state は UI 表示用、ref は地図初期化 effect が再実行されない
+  // よう現在値を保持する用。
+  const [basemap, setBasemap] = useState<BasemapKey>(DEFAULT_BASEMAP);
+  const basemapRef = useRef<BasemapKey>(DEFAULT_BASEMAP);
 
   const [selectedCode, setSelectedCode] = useState<string | null>(null);
   const [hazardKey, setHazardKey] = useState<HazardOverlayKey>(DEFAULT_HAZARD_KEY);
@@ -120,7 +125,7 @@ export default function MapView({ summary, onMenuClick }: Props) {
 
       const map = new maplibregl.Map({
         container: containerRef.current,
-        style: BASEMAP_STYLE,
+        style: getBasemap(basemapRef.current).style,
         center: [139.69, 35.69],
         zoom: 8.5,
         attributionControl: { compact: true },
@@ -179,14 +184,7 @@ export default function MapView({ summary, onMenuClick }: Props) {
 
         // 自治体選択時に減光する「道路名・水系名等」のラベル群を控えておく
         // （source-layer="place" の地名ラベルは選択中も読めるよう対象外）。
-        const dimIds = allLayers
-          .filter((l) => l.type === "symbol" && (l as { "source-layer"?: string })["source-layer"] !== "place")
-          .map((l) => l.id);
-        labelDimRef.current.ids = dimIds;
-        for (const id of dimIds) {
-          labelDimRef.current.text.set(id, map.getPaintProperty(id, "text-opacity"));
-          labelDimRef.current.icon.set(id, map.getPaintProperty(id, "icon-opacity"));
-        }
+        collectBaseLabels(map, labelDimRef.current);
 
         map.addSource("prefectures", { type: "geojson", data: prefGeo, promoteId: "code" });
         map.addSource("muni", { type: "geojson", data: geo, promoteId: "code" });
@@ -700,6 +698,42 @@ export default function MapView({ summary, onMenuClick }: Props) {
     if (isFilterActive(next)) trackApplyFilter(next);
   }, []);
 
+  // ベース地図の切替。setStyle はベースごと全レイヤーを破棄するため、transformStyle で
+  // 自前のソース/レイヤー（コロプレス・ハザード・実区域）を新ベースへ引き継ぐ。
+  // setStyle で消える「画像（ハッチ）・選択 feature-state・ラベル群」は styledata で再適用。
+  const switchBasemap = useCallback((key: BasemapKey) => {
+    const map = mapRef.current;
+    if (!map || key === basemapRef.current) return;
+    basemapRef.current = key;
+    setBasemap(key);
+    const sourceIsOurs = (id: string) =>
+      id === "prefectures" || id === "muni" || id === "wards" || id.startsWith("gsi-");
+    const layerIsOurs = (id: string) => /^(pref-|muni-|wards-|gsi-)/.test(id);
+    map.setStyle(getBasemap(key).style, {
+      transformStyle: (prev, next) => {
+        if (!prev) return next;
+        const keepSources = Object.fromEntries(
+          Object.entries(prev.sources).filter(([id]) => sourceIsOurs(id)),
+        );
+        const ours = prev.layers.filter((l) => layerIsOurs(l.id));
+        // 新ベースのラベル(symbol)より下に自前レイヤーを差し込む（ラスタは symbol 無し→末尾）。
+        const at = next.layers.findIndex((l) => l.type === "symbol");
+        const layers = [...next.layers];
+        layers.splice(at < 0 ? layers.length : at, 0, ...ours);
+        return { ...next, sources: { ...next.sources, ...keepSources }, layers } as StyleSpecification;
+      },
+    });
+    map.once("styledata", () => {
+      ensureHazardPattern(map);
+      collectBaseLabels(map, labelDimRef.current);
+      const sel = selectedCodeRef.current;
+      if (sel) {
+        map.setFeatureState({ source: "muni", id: sel }, { selected: true });
+        map.setFeatureState({ source: "wards", id: sel }, { selected: true });
+      }
+    });
+  }, []);
+
   // サイドパネル余白用：選択中自治体と同県・同階層で家賃中央値が近い上位3件。
   const relatedNearby = useMemo(() => {
     const m = selectedDetail;
@@ -929,6 +963,21 @@ export default function MapView({ summary, onMenuClick }: Props) {
               </div>
               {/* 選択中の指標が「何の色か」を1行で説明（出典つき）。初見の文脈不足を補う */}
               <p className="layers-desc">{getMapMetric(activeMetric).description}</p>
+
+              <div className="layers-title layers-title-sub">地図</div>
+              <div className="filter-row">
+                <div className="filter-segments" role="radiogroup" aria-label="地図スタイル">
+                  {BASEMAPS.map((b) => (
+                    <button
+                      key={b.key}
+                      className={`filter-seg ${basemap === b.key ? "is-active" : ""}`}
+                      aria-pressed={basemap === b.key}
+                      onClick={() => switchBasemap(b.key)}
+                    >{b.label}</button>
+                  ))}
+                </div>
+              </div>
+
               <div className="layers-title layers-title-sub">災害オーバーレイ</div>
               <div className="filter-row">
                 <div className="filter-segments" role="radiogroup" aria-label="災害オーバーレイ">
@@ -1130,6 +1179,25 @@ const HAZARD_DEPTH_OPACITY = [
 
 // 「浸水想定あり」を示す 45° 斜線ハッチ画像を map に登録する。fill-color の
 // ベタ塗りと違い、下のコロプレス色を保ったまま重ねられる。
+// 現ベース地図の「道路名・水系名等」ラベル群（place=地名は除く）を控える。
+// 選択時の減光に使う。スタイル切替後にも呼んで取り直す。
+function collectBaseLabels(
+  map: MapLibreMap,
+  ref: { ids: string[]; text: Map<string, unknown>; icon: Map<string, unknown> },
+) {
+  const layers = map.getStyle().layers ?? [];
+  const ids = layers
+    .filter((l) => l.type === "symbol" && (l as { "source-layer"?: string })["source-layer"] !== "place")
+    .map((l) => l.id);
+  ref.ids = ids;
+  ref.text.clear();
+  ref.icon.clear();
+  for (const id of ids) {
+    ref.text.set(id, map.getPaintProperty(id, "text-opacity"));
+    ref.icon.set(id, map.getPaintProperty(id, "icon-opacity"));
+  }
+}
+
 function ensureHazardPattern(map: MapLibreMap) {
   if (map.hasImage("hazard-hatch")) return;
   const size = 12;
