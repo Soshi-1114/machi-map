@@ -5,7 +5,7 @@
 
 import { Municipality, MuniSummary } from "./types";
 import { PREFS, getPrefBySlug, getPrefByCode, loadPrefData } from "./prefs";
-import { isHazardEvaluated } from "./coverage";
+import { floodLevelOf } from "./hazardScale";
 
 // pref データのキャッシュ（同一 build/request 内で同じ pref を複数回呼んでも 1 度しかロードしない）
 const cache = new Map<string, Promise<{ muni: Municipality[]; wards: Municipality[] }>>();
@@ -71,8 +71,7 @@ export async function listSummaryAcrossPrefs(): Promise<MuniSummary[]> {
         rent: m.rent.value,
         landPrice: m.landPrice.value,
         populationTrend: m.populationTrend,
-        hasFloodRisk: m.hazard.hasFloodRisk,
-        hazardEvaluated: isHazardEvaluated(m.hazard.source),
+        floodLevel: floodLevelOf(m.hazard),
       });
     }
   }

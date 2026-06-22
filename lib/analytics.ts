@@ -29,10 +29,10 @@ export function trackChangeMetric(metricKey: string): void {
 }
 
 /** 条件フィルタの適用。どの条件が有効かを送る。 */
-export function trackApplyFilter(params: { rentMax: number | null; landMax: number | null; noFlood: boolean }): void {
+export function trackApplyFilter(params: { rentMax: number | null; landMax: number | null; floodMax: number | null }): void {
   track("apply_filter", {
     rent_max: params.rentMax ?? 0,
     land_max: params.landMax ?? 0,
-    no_flood: params.noFlood,
+    flood_max: params.floodMax ?? -1, // -1=条件なし（0=浸水なしに限定と区別）
   });
 }

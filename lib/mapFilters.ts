@@ -7,10 +7,17 @@ import type { MuniSummary } from "./types";
 export type MapFilters = {
   rentMax: number | null;   // 家賃上限（円/月）。null=条件なし
   landMax: number | null;   // 地価上限（円/㎡）。null=条件なし
-  noFlood: boolean;         // 浸水リスクなしに限定
+  floodMax: number | null;  // 許容する最大浸水深ランク（0..6）。null=条件なし。0=浸水なしに限定
 };
 
-export const EMPTY_FILTERS: MapFilters = { rentMax: null, landMax: null, noFlood: false };
+export const EMPTY_FILTERS: MapFilters = { rentMax: null, landMax: null, floodMax: null };
+
+// 浸水深の上限セグメント。値は lib/hazardScale.ts の浸水深ランク（0=なし, 2=0.5〜3m, 3=3〜5m）。
+export const FLOOD_MAX_OPTIONS = [
+  { label: "浸水なし", value: 0 },
+  { label: "〜3m", value: 2 },
+  { label: "〜5m", value: 3 },
+] as const;
 
 // セグメント選択肢（離散値の方がスライダーよりデータスケールに合い操作も明確）
 export const RENT_MAX_OPTIONS = [
@@ -26,16 +33,17 @@ export const LAND_MAX_OPTIONS = [
 ] as const;
 
 export function isFilterActive(f: MapFilters): boolean {
-  return f.rentMax != null || f.landMax != null || f.noFlood;
+  return f.rentMax != null || f.landMax != null || f.floodMax != null;
 }
 
 // 件数カウント用の JS 判定。欠損（rent/landPrice<=0）は「条件を満たすと確認できない」
-// ため、その指標で絞り込み中なら非該当扱い。noFlood は「ハザード評価済み かつ
-// 浸水なし」のみ該当とし、reinfolib 圏外で未評価の自治体を“安全”扱いしない（honesty）。
+// ため、その指標で絞り込み中なら非該当扱い。floodMax は「評価済み（floodLevel>=0）かつ
+// 浸水深ランクが上限以下」のみ該当とし、reinfolib 圏外で未評価（-1）の自治体を“安全”扱い
+// しない（honesty）。floodMax=0 は浸水なしに限定（旧 noFlood 相当）。
 export function matchesFilter(m: MuniSummary, f: MapFilters): boolean {
   if (f.rentMax != null && !(m.rent > 0 && m.rent <= f.rentMax)) return false;
   if (f.landMax != null && !(m.landPrice > 0 && m.landPrice <= f.landMax)) return false;
-  if (f.noFlood && !(m.hazardEvaluated && !m.hasFloodRisk)) return false;
+  if (f.floodMax != null && !(m.floodLevel >= 0 && m.floodLevel <= f.floodMax)) return false;
   return true;
 }
 
@@ -52,9 +60,10 @@ export function buildMatchExpression(f: MapFilters): unknown | null {
     const land = ["to-number", ["get", "landPrice"], 0];
     clauses.push(["all", [">", land, 0], ["<=", land, f.landMax]]);
   }
-  if (f.noFlood) {
-    // hazardEvaluated==1 かつ hasFloodRisk==0（未評価＝0 は非該当として減光側へ）
-    clauses.push(["all", ["==", ["get", "hazardEvaluated"], 1], ["==", ["get", "hasFloodRisk"], 0]]);
+  if (f.floodMax != null) {
+    // floodLevel>=0（評価済み）かつ <=上限。未評価(-1)は非該当として減光側へ（honesty）。
+    const lvl = ["to-number", ["get", "floodLevel"], -1];
+    clauses.push(["all", [">=", lvl, 0], ["<=", lvl, f.floodMax]]);
   }
   return ["all", ...clauses];
 }

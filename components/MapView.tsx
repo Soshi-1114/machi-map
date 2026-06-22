@@ -20,7 +20,7 @@ import { RENT_NODATA_COLOR, hasRent } from "@/lib/rentColor";
 import { MAP_METRICS, getMapMetric, DEFAULT_METRIC_KEY, TREND_PROPERTY, type MapMetricKey } from "@/lib/mapMetrics";
 import { trackSelectMunicipality, trackChangeMetric, trackApplyFilter } from "@/lib/analytics";
 import {
-  EMPTY_FILTERS, RENT_MAX_OPTIONS, LAND_MAX_OPTIONS,
+  EMPTY_FILTERS, RENT_MAX_OPTIONS, LAND_MAX_OPTIONS, FLOOD_MAX_OPTIONS,
   isFilterActive, matchesFilter, buildMatchExpression, type MapFilters,
 } from "@/lib/mapFilters";
 import AreaPanel from "./AreaPanel";
@@ -134,8 +134,7 @@ export default function MapView({ summary, onMenuClick }: Props) {
             landPrice: m.landPrice,
             [TREND_PROPERTY]: m.populationTrend ?? "",
             name: m.name,
-            hasFloodRisk: m.hasFloodRisk ? 1 : 0,
-            hazardEvaluated: m.hazardEvaluated ? 1 : 0,
+            floodLevel: m.floodLevel, // -1=対象外, 0=なし, 1..6
           };
         }
       };
@@ -264,10 +263,11 @@ export default function MapView({ summary, onMenuClick }: Props) {
           type: "fill",
           source: "muni",
           minzoom: MUNI_MIN_ZOOM,
-          filter: ["==", ["get", "hasFloodRisk"], 1],
+          // 浸水深ランク>0 に重ね、深いほど不透明に（下のコロプレスは透ける範囲で）。
+          filter: [">", ["get", "floodLevel"], 0],
           paint: {
             "fill-pattern": "hazard-hatch",
-            "fill-opacity": 0.5,
+            "fill-opacity": HAZARD_DEPTH_OPACITY,
           },
         }, firstSymbolId);
         // 境界線
@@ -331,8 +331,8 @@ export default function MapView({ summary, onMenuClick }: Props) {
           type: "fill",
           source: "wards",
           minzoom: WARDS_MIN_ZOOM,
-          filter: ["==", ["get", "hasFloodRisk"], 1],
-          paint: { "fill-pattern": "hazard-hatch", "fill-opacity": 0.5 },
+          filter: [">", ["get", "floodLevel"], 0],
+          paint: { "fill-pattern": "hazard-hatch", "fill-opacity": HAZARD_DEPTH_OPACITY },
         }, firstSymbolId);
         map.addLayer({
           id: "wards-outline",
@@ -896,10 +896,11 @@ export default function MapView({ summary, onMenuClick }: Props) {
                 value={filters.landMax}
                 onChange={(v) => updateFilters({ ...filters, landMax: v })}
               />
-              <LayerToggle
-                label="浸水リスクなしに限定"
-                checked={filters.noFlood}
-                onChange={(v) => updateFilters({ ...filters, noFlood: v })}
+              <SegmentedFilter
+                label="浸水深上限"
+                options={FLOOD_MAX_OPTIONS}
+                value={filters.floodMax}
+                onChange={(v) => updateFilters({ ...filters, floodMax: v })}
               />
               {filterActive && (
                 <div className="filter-summary" aria-live="polite">
@@ -978,7 +979,7 @@ function MetricLegend({ metricKey, hazardOn }: { metricKey: MapMetricKey; hazard
       {hazardOn && (
         <div className="legend-overlay">
           <span className="legend-cell legend-hazard-cell" />
-          浸水想定あり（重ね表示）
+          浸水想定（濃いほど深い・重ね表示）
         </div>
       )}
     </div>
@@ -1069,6 +1070,14 @@ function SearchIcon() {
 // 災害リスク オーバーレイの色（amber-800）。寒色の家賃コロプレスや紫⇔緑の
 // 人口トレンド上でも沈まない警告色。凡例のハッチ見本とも共有する。
 const HAZARD_HATCH_COLOR = "#b45309";
+
+// 浸水深ランク（floodLevel 1..6）に応じてハッチの不透明度を段階化（深いほど濃い）。
+// 下のコロプレスが透ける上限（0.82）に抑える。filter で floodLevel>0 のみ描画。
+const HAZARD_DEPTH_OPACITY = [
+  "step", ["get", "floodLevel"],
+  0,
+  1, 0.34, 2, 0.44, 3, 0.54, 4, 0.64, 5, 0.74, 6, 0.82,
+] as unknown as DataDrivenPropertyValueSpecification<number>;
 
 // 「浸水想定あり」を示す 45° 斜線ハッチ画像を map に登録する。fill-color の
 // ベタ塗りと違い、下のコロプレス色を保ったまま重ねられる。
