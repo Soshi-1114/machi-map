@@ -44,6 +44,11 @@ const PREF_CLICK_MAX_ZOOM = 8;   // この zoom 以下で pref クリックを f
 // bbox が極端に縦長になり初期ズームが破綻するため、本土だけを枠に使う。
 const TOKYO_BBOX: [number, number, number, number] = [138.94, 35.5, 139.92, 35.9];
 
+// 地図の初期既定: 塗り分けは「なし」（地図＋災害オーバーレイだけ見える素の状態）。
+// 災害=なし は DEFAULT_HAZARD_KEY、地図=シンプル は DEFAULT_BASEMAP、絞り込み=なしは
+// EMPTY_FILTERS、レイヤーパネルは初期で開く（layersOpen 初期 true）。
+const DEFAULT_MAP_METRIC: MapMetricKey | "none" = "none";
+
 export default function MapView({ summary, onMenuClick }: Props) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const mapRef = useRef<MapLibreMap | null>(null);
@@ -57,7 +62,7 @@ export default function MapView({ summary, onMenuClick }: Props) {
   const prevSelectedRef = useRef<string | null>(null);
   const hoveredCodeRef = useRef<string | null>(null);
   const hoveredSourceRef = useRef<"muni" | "wards" | null>(null);
-  const activeMetricRef = useRef<MapMetricKey | "none">(DEFAULT_METRIC_KEY);
+  const activeMetricRef = useRef<MapMetricKey | "none">(DEFAULT_MAP_METRIC);
   // 選択時に減光するベース地図ラベル（道路名・水系名等。place=地名は残す）。
   // 元の opacity を保存し、選択解除で復元する。
   const labelDimRef = useRef<{ ids: string[]; text: Map<string, unknown>; icon: Map<string, unknown> }>({
@@ -73,7 +78,7 @@ export default function MapView({ summary, onMenuClick }: Props) {
 
   const [selectedCode, setSelectedCode] = useState<string | null>(null);
   const [hazardKey, setHazardKey] = useState<HazardOverlayKey>(DEFAULT_HAZARD_KEY);
-  const [activeMetric, setActiveMetric] = useState<MapMetricKey | "none">(DEFAULT_METRIC_KEY);
+  const [activeMetric, setActiveMetric] = useState<MapMetricKey | "none">(DEFAULT_MAP_METRIC);
   const [filters, setFilters] = useState<MapFilters>(EMPTY_FILTERS);
   const [isMobile, setIsMobile] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
@@ -83,7 +88,7 @@ export default function MapView({ summary, onMenuClick }: Props) {
   // 初回ビューのポリゴンが描画され切るまで true にしない（凡例先行・白地図対策）
   const [firstPaintReady, setFirstPaintReady] = useState(false);
   const [tooltip, setTooltip] = useState<{ x: number; y: number; name: string; label: string; value: string; flip: boolean } | null>(null);
-  const [layersOpen, setLayersOpen] = useState(false);
+  const [layersOpen, setLayersOpen] = useState(true);
   // 選択中自治体のフル詳細（/api/muni/[code] で取得）。サマリには無い人口/地価等を含む
   const [selectedDetail, setSelectedDetail] = useState<Municipality | null>(null);
 
@@ -105,12 +110,6 @@ export default function MapView({ summary, onMenuClick }: Props) {
     detect();
     window.addEventListener("resize", detect);
     return () => window.removeEventListener("resize", detect);
-  }, []);
-
-  // PC は塗り分け指標が核なのでレイヤーパネルを初期表示（発見性向上）。
-  // SP は画面が狭いため閉じたまま。マウント後に一度だけ設定し hydration 不一致を避ける。
-  useEffect(() => {
-    if (window.innerWidth >= 768) setLayersOpen(true);
   }, []);
 
   useEffect(() => {
@@ -245,7 +244,7 @@ export default function MapView({ summary, onMenuClick }: Props) {
           minzoom: MUNI_MIN_ZOOM,
           paint: {
             "fill-color": getMapMetric(DEFAULT_METRIC_KEY).colorExpression() as DataDrivenPropertyValueSpecification<string>,
-            "fill-opacity": MUNI_FILL_OPACITY,
+            "fill-opacity": DEFAULT_MAP_METRIC === "none" ? 0 : MUNI_FILL_OPACITY,
           },
         }, firstSymbolId);
         // 絞り込み減光：条件に該当しない自治体を白でマスク（既定は非表示。
@@ -266,6 +265,8 @@ export default function MapView({ summary, onMenuClick }: Props) {
           minzoom: MUNI_MIN_ZOOM,
           // 自治体集計ハッチは比較用。拡大（HAZARD_ZONE_ZOOM 以上）では実区域ラスタに譲る。
           maxzoom: HAZARD_ZONE_ZOOM,
+          // 初期既定が「なし」なら非表示で開始（選択で hazardKey effect が可視化）。
+          layout: { visibility: DEFAULT_HAZARD_KEY === "none" ? "none" : "visible" },
           // 浸水深ランク>0 に重ね、深いほど不透明に（下のコロプレスは透ける範囲で）。
           filter: [">", ["get", "floodLevel"], 0],
           paint: {
@@ -313,7 +314,7 @@ export default function MapView({ summary, onMenuClick }: Props) {
           minzoom: WARDS_MIN_ZOOM,
           paint: {
             "fill-color": getMapMetric(DEFAULT_METRIC_KEY).colorExpression() as DataDrivenPropertyValueSpecification<string>,
-            "fill-opacity": MUNI_FILL_OPACITY,
+            "fill-opacity": DEFAULT_MAP_METRIC === "none" ? 0 : MUNI_FILL_OPACITY,
           },
         }, firstSymbolId);
         map.addLayer({
@@ -330,6 +331,7 @@ export default function MapView({ summary, onMenuClick }: Props) {
           source: "wards",
           minzoom: WARDS_MIN_ZOOM,
           maxzoom: HAZARD_ZONE_ZOOM,
+          layout: { visibility: DEFAULT_HAZARD_KEY === "none" ? "none" : "visible" },
           filter: [">", ["get", "floodLevel"], 0],
           paint: { "fill-pattern": "hazard-hatch", "fill-opacity": HAZARD_DEPTH_OPACITY },
         }, firstSymbolId);

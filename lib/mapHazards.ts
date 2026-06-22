@@ -98,7 +98,7 @@ export const HAZARD_OVERLAYS: readonly HazardOverlay[] = [
   },
 ] as const;
 
-export const DEFAULT_HAZARD_KEY: HazardOverlayKey = "flood";
+export const DEFAULT_HAZARD_KEY: HazardOverlayKey = "none";
 
 export function getHazardOverlay(key: HazardOverlayKey): HazardOverlay | null {
   return HAZARD_OVERLAYS.find((h) => h.key === key) ?? null;

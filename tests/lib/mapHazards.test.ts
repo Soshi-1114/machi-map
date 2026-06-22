@@ -12,8 +12,8 @@ describe("mapHazards", () => {
     ]);
   });
 
-  it("既定は浸水", () => {
-    expect(DEFAULT_HAZARD_KEY).toBe("flood");
+  it("既定はオーバーレイなし", () => {
+    expect(DEFAULT_HAZARD_KEY).toBe("none");
   });
 
   it("getHazardOverlay: none は null、種別は定義を返す", () => {
