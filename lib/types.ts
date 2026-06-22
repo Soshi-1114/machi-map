@@ -72,6 +72,7 @@ export type MuniSummary = {
   floodLevel: number;
   // 地図のハザード・オーバーレイ切替（lib/mapHazards.ts）用の数値レベルのみ。
   // ラベル/深さ文字列は詳細ページ（フル Municipality）側に置きサマリは軽量に保つ。
+  landslideLevel: number;     // -1=対象外, 0=なし, 1=警戒区域, 2=特別警戒区域
   tsunamiLevel: number;       // -1=対象外, 0=想定なし, 1..8（深いほど高リスク）
   stormSurgeLevel: number;    // 同上
   liquefactionLevel: number;  // -1=未評価, 1..5（小さいほど高リスク）

@@ -6,14 +6,14 @@ import {
 } from "@/lib/mapHazards";
 
 describe("mapHazards", () => {
-  it("4種別（浸水/津波/高潮/液状化）を持つ", () => {
+  it("5種別（浸水/土砂/津波/高潮/液状化）を持つ", () => {
     expect(HAZARD_OVERLAYS.map((h) => h.key)).toEqual([
-      "flood", "tsunami", "stormSurge", "liquefaction",
+      "flood", "landslide", "tsunami", "stormSurge", "liquefaction",
     ]);
   });
 
-  it("既定は浸水", () => {
-    expect(DEFAULT_HAZARD_KEY).toBe("flood");
+  it("既定はオーバーレイなし", () => {
+    expect(DEFAULT_HAZARD_KEY).toBe("none");
   });
 
   it("getHazardOverlay: none は null、種別は定義を返す", () => {
@@ -27,7 +27,14 @@ describe("mapHazards", () => {
       expect(Array.isArray(h.filter)).toBe(true);
       expect(Array.isArray(h.opacity)).toBe(true);
       expect(h.legend.length).toBeGreaterThan(0);
+      expect(h.gsiLayerIds.length).toBeGreaterThan(0);
     }
+  });
+
+  it("土砂は GSI 3レイヤー（土石流/急傾斜/地すべり）を重ねる", () => {
+    expect(getHazardOverlay("landslide")?.gsiLayerIds).toEqual([
+      "05_dosekiryukeikaikuiki", "05_kyukeishakeikaikuiki", "05_jisuberikeikaikuiki",
+    ]);
   });
 
   it("液状化は presence を 1..3（やや以上）に限定する（逆順レベル）", () => {

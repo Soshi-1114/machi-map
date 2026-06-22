@@ -17,6 +17,7 @@ function summary(partial: Partial<MuniSummary> = {}): MuniSummary {
     landPrice: 200000,
     populationTrend: "横ばい",
     floodLevel: 0,
+    landslideLevel: -1,
     tsunamiLevel: -1,
     stormSurgeLevel: -1,
     liquefactionLevel: -1,
