@@ -57,7 +57,7 @@ export default function MapView({ summary, onMenuClick }: Props) {
   const prevSelectedRef = useRef<string | null>(null);
   const hoveredCodeRef = useRef<string | null>(null);
   const hoveredSourceRef = useRef<"muni" | "wards" | null>(null);
-  const activeMetricRef = useRef<MapMetricKey>(DEFAULT_METRIC_KEY);
+  const activeMetricRef = useRef<MapMetricKey | "none">(DEFAULT_METRIC_KEY);
   // 選択時に減光するベース地図ラベル（道路名・水系名等。place=地名は残す）。
   // 元の opacity を保存し、選択解除で復元する。
   const labelDimRef = useRef<{ ids: string[]; text: Map<string, unknown>; icon: Map<string, unknown> }>({
@@ -73,7 +73,7 @@ export default function MapView({ summary, onMenuClick }: Props) {
 
   const [selectedCode, setSelectedCode] = useState<string | null>(null);
   const [hazardKey, setHazardKey] = useState<HazardOverlayKey>(DEFAULT_HAZARD_KEY);
-  const [activeMetric, setActiveMetric] = useState<MapMetricKey>(DEFAULT_METRIC_KEY);
+  const [activeMetric, setActiveMetric] = useState<MapMetricKey | "none">(DEFAULT_METRIC_KEY);
   const [filters, setFilters] = useState<MapFilters>(EMPTY_FILTERS);
   const [isMobile, setIsMobile] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
@@ -245,12 +245,7 @@ export default function MapView({ summary, onMenuClick }: Props) {
           minzoom: MUNI_MIN_ZOOM,
           paint: {
             "fill-color": getMapMetric(DEFAULT_METRIC_KEY).colorExpression() as DataDrivenPropertyValueSpecification<string>,
-            "fill-opacity": [
-              "case",
-              ["boolean", ["feature-state", "selected"], false], 0.85,
-              ["boolean", ["feature-state", "hover"], false], 0.7,
-              0.55,
-            ],
+            "fill-opacity": MUNI_FILL_OPACITY,
           },
         }, firstSymbolId);
         // 絞り込み減光：条件に該当しない自治体を白でマスク（既定は非表示。
@@ -318,12 +313,7 @@ export default function MapView({ summary, onMenuClick }: Props) {
           minzoom: WARDS_MIN_ZOOM,
           paint: {
             "fill-color": getMapMetric(DEFAULT_METRIC_KEY).colorExpression() as DataDrivenPropertyValueSpecification<string>,
-            "fill-opacity": [
-              "case",
-              ["boolean", ["feature-state", "selected"], false], 0.85,
-              ["boolean", ["feature-state", "hover"], false], 0.7,
-              0.55,
-            ],
+            "fill-opacity": MUNI_FILL_OPACITY,
           },
         }, firstSymbolId);
         map.addLayer({
@@ -460,16 +450,18 @@ export default function MapView({ summary, onMenuClick }: Props) {
             hoveredSourceRef.current = sourceId;
             map.setFeatureState({ source: sourceId, id: code }, { hover: true });
             map.getCanvas().style.cursor = "pointer";
-            const metric = getMapMetric(activeMetricRef.current);
-            const propKey = metric.key === "populationTrend" ? TREND_PROPERTY : metric.key;
+            const choice = activeMetricRef.current;
             // 右端付近ではツールチップをカーソルの左側に出して見切れを防ぐ
             const canvasW = map.getCanvas().clientWidth;
+            // 塗り分け「なし」は自治体名だけ表示（指標値は出さない）。
+            const metric = choice === "none" ? null : getMapMetric(choice);
+            const propKey = metric && metric.key === "populationTrend" ? TREND_PROPERTY : metric?.key;
             setTooltip({
               x: e.point.x,
               y: e.point.y,
               name: String(f.properties?.name ?? ""),
-              label: metric.label,
-              value: metric.formatValue(f.properties?.[propKey]),
+              label: metric ? metric.label : "",
+              value: metric && propKey ? metric.formatValue(f.properties?.[propKey]) : "",
               flip: e.point.x > canvasW - 200,
             });
           };
@@ -614,14 +606,20 @@ export default function MapView({ summary, onMenuClick }: Props) {
     }
   }, [hazardKey, mapReady]);
 
-  // 指標切替：muni/wards の fill-color を選択中メトリックの式に差し替える
+  // 指標切替：muni/wards の fill-color を選択中メトリックの式に差し替える。
+  // 「なし」は塗りの不透明度を 0 にして非表示（クリック判定は残す）。
   useEffect(() => {
     activeMetricRef.current = activeMetric;
     const map = mapRef.current;
     if (!map || !mapReady) return;
-    const expr = getMapMetric(activeMetric).colorExpression() as DataDrivenPropertyValueSpecification<string>;
-    map.setPaintProperty("muni-fill", "fill-color", expr);
-    map.setPaintProperty("wards-fill", "fill-color", expr);
+    for (const id of ["muni-fill", "wards-fill"]) {
+      if (activeMetric === "none") {
+        map.setPaintProperty(id, "fill-opacity", 0);
+      } else {
+        map.setPaintProperty(id, "fill-color", getMapMetric(activeMetric).colorExpression() as DataDrivenPropertyValueSpecification<string>);
+        map.setPaintProperty(id, "fill-opacity", MUNI_FILL_OPACITY);
+      }
+    }
   }, [activeMetric, mapReady]);
 
   // 条件フィルタ：非該当を減光レイヤーで覆う（フィルタ式の否定を filter に設定）。
@@ -862,9 +860,11 @@ export default function MapView({ summary, onMenuClick }: Props) {
           style={{ left: tooltip.x, top: tooltip.y }}
         >
           <div className="map-tooltip-name">{tooltip.name}</div>
-          <div className="map-tooltip-rent">
-            {tooltip.label} <strong>{tooltip.value}</strong>
-          </div>
+          {tooltip.value && (
+            <div className="map-tooltip-rent">
+              {tooltip.label} <strong>{tooltip.value}</strong>
+            </div>
+          )}
         </div>
       )}
 
@@ -938,12 +938,12 @@ export default function MapView({ summary, onMenuClick }: Props) {
         <div className={`map-layers ${layersOpen ? "is-open" : ""}`}>
           <button
             className={`map-layers-btn ${layersOpen ? "is-active" : ""}`}
-            aria-label={`塗り分け指標を切り替え（現在: ${getMapMetric(activeMetric).label}）`}
+            aria-label={`塗り分け指標を切り替え（現在: ${activeMetric === "none" ? "なし" : getMapMetric(activeMetric).label}）`}
             aria-expanded={layersOpen}
             onClick={() => setLayersOpen((v) => !v)}
           >
             <LayersIcon />
-            <span className="map-layers-btn-label">{getMapMetric(activeMetric).label}</span>
+            <span className="map-layers-btn-label">{activeMetric === "none" ? "なし" : getMapMetric(activeMetric).label}</span>
           </button>
           {layersOpen && (
             <div className="layers-panel">
@@ -960,9 +960,23 @@ export default function MapView({ summary, onMenuClick }: Props) {
                     <span className="metric-radio-label">{m.label}</span>
                   </label>
                 ))}
+                {/* 塗り分けなし（地図とオーバーレイだけ見たい時） */}
+                <label className={`metric-radio ${activeMetric === "none" ? "is-active" : ""}`}>
+                  <input
+                    type="radio"
+                    name="map-metric"
+                    checked={activeMetric === "none"}
+                    onChange={() => setActiveMetric("none")}
+                  />
+                  <span className="metric-radio-label">なし</span>
+                </label>
               </div>
               {/* 選択中の指標が「何の色か」を1行で説明（出典つき）。初見の文脈不足を補う */}
-              <p className="layers-desc">{getMapMetric(activeMetric).description}</p>
+              <p className="layers-desc">
+                {activeMetric === "none"
+                  ? "自治体は塗り分けません（地図・災害オーバーレイのみ）。"
+                  : getMapMetric(activeMetric).description}
+              </p>
 
               <div className="layers-title layers-title-sub">地図</div>
               <div className="filter-row">
@@ -1057,8 +1071,23 @@ function searchContextLabel(m: MuniSummary): string {
   return prefName;
 }
 
-function MetricLegend({ metricKey, hazardKey }: { metricKey: MapMetricKey; hazardKey: HazardOverlayKey }) {
+function MetricLegend({ metricKey, hazardKey }: { metricKey: MapMetricKey | "none"; hazardKey: HazardOverlayKey }) {
   const hazardOverlay = getHazardOverlay(hazardKey);
+  // 塗り分け「なし」: コロプレス凡例は出さず、ハザードを選んでいればその凡例だけ出す。
+  if (metricKey === "none") {
+    if (!hazardOverlay) return null;
+    return (
+      <div className="legend">
+        <div className="legend-overlay">
+          <span className="legend-cell legend-hazard-cell" />
+          {hazardOverlay.legend}
+        </div>
+        <div className="legend-overlay-note">
+          拡大すると実際の区域を表示（出典: ハザードマップポータル）
+        </div>
+      </div>
+    );
+  }
   const metric = getMapMetric(metricKey);
   const { legend } = metric;
   return (
@@ -1175,6 +1204,15 @@ const HAZARD_DEPTH_OPACITY = [
   "step", ["get", "floodLevel"],
   0,
   1, 0.34, 2, 0.44, 3, 0.54, 4, 0.64, 5, 0.74, 6, 0.82,
+] as unknown as DataDrivenPropertyValueSpecification<number>;
+
+// コロプレス塗りの不透明度（選択0.85 / ホバー0.7 / 既定0.55）。塗り分け「なし」では
+// 0 に差し替えて非表示にする（visibility:none と違いクリック判定は残すため opacity で制御）。
+const MUNI_FILL_OPACITY = [
+  "case",
+  ["boolean", ["feature-state", "selected"], false], 0.85,
+  ["boolean", ["feature-state", "hover"], false], 0.7,
+  0.55,
 ] as unknown as DataDrivenPropertyValueSpecification<number>;
 
 // 「浸水想定あり」を示す 45° 斜線ハッチ画像を map に登録する。fill-color の
