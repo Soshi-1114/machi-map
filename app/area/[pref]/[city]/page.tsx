@@ -195,7 +195,7 @@ export default async function AreaPage({ params }: { params: Params }) {
             unit="人"
             badge={
               isWaitlistDisclosed(m.waitlistChildren) && m.waitlistChildren.value === 0
-                ? { text: "待機児童ゼロ", tone: "good" }
+                ? { text: "待機児童ゼロ", tone: "muted" }
                 : undefined
             }
             nodataLabel="非公表"
@@ -231,7 +231,7 @@ export default async function AreaPage({ params }: { params: Params }) {
           {hasRent(m.rent.value) && (
             <div className="rent-bar">
               <div className="rent-bar-scale">
-                <span>県内で安い</span>
+                <span>県内で低い</span>
                 <span>県内で高い</span>
               </div>
               <div className="rent-bar-track">
@@ -254,7 +254,7 @@ export default async function AreaPage({ params }: { params: Params }) {
               <div className="mini-card-value">
                 {m.waitlistChildren.value}
                 <span className="unit"> 人</span>
-                {m.waitlistChildren.value === 0 && <span className="mini-card-flag">待機児童ゼロ</span>}
+                {m.waitlistChildren.value === 0 && <span className="mini-card-flag flag-muted">待機児童ゼロ</span>}
               </div>
               <p className="mini-card-sub">出典: {m.waitlistChildren.source}（{m.waitlistChildren.asOf}）</p>
             </li>
