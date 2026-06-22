@@ -56,6 +56,8 @@ export type MuniSummary = {
   rent: number;          // rent.value（円/月）
   landPrice: number;     // landPrice.value（円/㎡）。<=0 はデータなし
   populationTrend: Municipality["populationTrend"]; // 人口トレンド（地図の塗り分け用）
-  hasFloodRisk: boolean;  // hazard.hasFloodRisk
-  hazardEvaluated: boolean;  // hazard が reinfolib で評価済みか（未評価=浸水フィルタから除外）
+  // 浸水深ランク。-1=評価対象外（reinfolib圏外）, 0=なし, 1..6（lib/hazardScale.ts）。
+  // 旧 hasFloodRisk(>0)・hazardEvaluated(>=0) を1フィールドに集約。地図の濃淡と
+  // 「浸水深◯m以下」フィルタの単一ソース。
+  floodLevel: number;
 };
