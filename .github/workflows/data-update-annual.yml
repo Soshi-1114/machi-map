@@ -49,10 +49,18 @@ jobs:
 
       - name: スコープ決定（pref 入力 or 全県）
         id: scope
+        # workflow_dispatch 入力は信頼境界の外。${{ }} を run: に直接展開せず env 経由で
+        # 受け取り、英小文字スラッグ（^[a-z]+$）に厳格検証してからのみ使用する。
+        env:
+          PREF_INPUT: ${{ inputs.pref }}
         run: |
-          if [[ -n "${{ inputs.pref }}" ]]; then
-            echo "estat=--pref=${{ inputs.pref }}" >> "$GITHUB_OUTPUT"
-            echo "prefs=${{ inputs.pref }}" >> "$GITHUB_OUTPUT"
+          input="$PREF_INPUT"
+          if [[ -n "$input" ]]; then
+            if [[ ! "$input" =~ ^[a-z]+$ ]]; then
+              echo "::error::invalid pref slug (allowed: ^[a-z]+$): '$input'"; exit 1
+            fi
+            echo "estat=--pref=$input" >> "$GITHUB_OUTPUT"
+            echo "prefs=$input" >> "$GITHUB_OUTPUT"
           else
             echo "estat=--all" >> "$GITHUB_OUTPUT"
             echo "prefs=$(node -e 'import("./scripts/_lib/prefs.mjs").then(m=>console.log(Object.keys(m.PREFS).join(" ")))')" >> "$GITHUB_OUTPUT"
@@ -62,21 +70,27 @@ jobs:
         run: curl -sL -o /tmp/cfa_waitlist.xlsx "${{ env.CFA_XLSX_URL }}"
 
       - name: 人口（e-Stat 全国一括）
-        run: node scripts/fetch-population-2025.mjs ${{ steps.scope.outputs.estat }}
+        run: node scripts/fetch-population-2025.mjs $ESTAT
         env:
+          ESTAT: ${{ steps.scope.outputs.estat }}
           ESTAT_APP_ID: ${{ secrets.ESTAT_APP_ID }}
 
       - name: 家賃（e-Stat 全国一括）
-        run: node scripts/fetch-rent.mjs ${{ steps.scope.outputs.estat }}
+        run: node scripts/fetch-rent.mjs $ESTAT
         env:
+          ESTAT: ${{ steps.scope.outputs.estat }}
           ESTAT_APP_ID: ${{ secrets.ESTAT_APP_ID }}
 
       - name: 待機児童（CFA 全国一括）
-        run: WAITLIST_XLSX=/tmp/cfa_waitlist.xlsx node scripts/fetch-waitlist.mjs ${{ steps.scope.outputs.estat }}
+        run: WAITLIST_XLSX=/tmp/cfa_waitlist.xlsx node scripts/fetch-waitlist.mjs $ESTAT
+        env:
+          ESTAT: ${{ steps.scope.outputs.estat }}
 
       - name: 地価（L01 県別 zip・逐次, DL リトライ＋県別失敗は警告で継続）
+        env:
+          PREFS: ${{ steps.scope.outputs.prefs }}
         run: |
-          for pref in ${{ steps.scope.outputs.prefs }}; do
+          for pref in $PREFS; do
             code=$(node -e "import('./scripts/_lib/prefs.mjs').then(m=>console.log(m.getPref('$pref').code))")
             url="https://nlftp.mlit.go.jp/ksj/gml/data/L01/L01-${L01_VERSION}/L01-${L01_VERSION}_${code}_GML.zip"
             ok=""

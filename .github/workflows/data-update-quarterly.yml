@@ -33,9 +33,17 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - id: set
+        # workflow_dispatch 入力は信頼境界の外。${{ }} を run: に直接展開せず env 経由で
+        # 受け取り、英小文字スラッグ（^[a-z]+$）に厳格検証してからのみ使用する
+        # （シェルインジェクション防止）。
+        env:
+          PREF_INPUT: ${{ inputs.pref }}
         run: |
-          input="${{ inputs.pref }}"
+          input="$PREF_INPUT"
           if [[ -n "$input" ]]; then
+            if [[ ! "$input" =~ ^[a-z]+$ ]]; then
+              echo "::error::invalid pref slug (allowed: ^[a-z]+$): '$input'"; exit 1
+            fi
             echo "prefs=[\"$input\"]" >> "$GITHUB_OUTPUT"
           else
             # scripts/_lib/prefs.mjs から slug を抽出（key 名）
@@ -68,13 +76,15 @@ jobs:
           key: reinfolib-tiles-${{ matrix.pref }}-v1
 
       - name: Fetch hazard (XKT026/029)
-        run: node --max-old-space-size=4096 scripts/fetch-hazard.mjs --pref=${{ matrix.pref }}
+        run: node --max-old-space-size=4096 scripts/fetch-hazard.mjs --pref="$PREF"
         env:
+          PREF: ${{ matrix.pref }}
           REINFOLIB_API_KEY: ${{ secrets.REINFOLIB_API_KEY }}
 
       - name: Fetch amenities (XKT015/007/010)
-        run: node --max-old-space-size=4096 scripts/fetch-amenities.mjs --pref=${{ matrix.pref }}
+        run: node --max-old-space-size=4096 scripts/fetch-amenities.mjs --pref="$PREF"
         env:
+          PREF: ${{ matrix.pref }}
           REINFOLIB_API_KEY: ${{ secrets.REINFOLIB_API_KEY }}
 
       # main へは push せず、変更後データをアーティファクトに退避（集約ジョブが回収）。
