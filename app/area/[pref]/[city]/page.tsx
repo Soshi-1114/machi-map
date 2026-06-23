@@ -48,7 +48,7 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
     ? `${fullName}の住みやすさ — 家賃${rent}円/月｜${SITE.name}`
     : `${fullName}の住みやすさ｜${SITE.name}`;
   const rentPhrase = hasRentData ? `民営借家中央値${rent}円/月、` : "";
-  const description = `${fullName}（${prefName}）の住みやすさを地図でチェック。${rentPhrase}人口${pop}人。地価・待機児童・災害リスクをまとめて比較できる${SITE.name}の自治体ページ。`;
+  const description = `${fullName}（${prefName}）の住みやすさを地図でチェック。${rentPhrase}人口${pop}人。地価・待機児童・災害リスク・外国人比率をまとめて比較できる${SITE.name}の自治体ページ。`;
   const url = absoluteUrl(`/area/${m.pref}/${m.code}`);
   const ogImage = absoluteUrl(`/api/og/${m.code}`);
   return {
@@ -110,6 +110,35 @@ export default async function AreaPage({ params }: { params: Params }) {
   // よくある質問（可視テキストと FAQPage 構造化データで同じソースを共有）
   const faq = buildFaq(m, prefName);
 
+  // Dataset 構造化データ（政府統計の実データを地理単位で提示する性質に適合）。
+  // variableMeasured は実データのある指標のみ載せる（欠損は推計しない honesty 方針）。
+  // ※ Dataset は通常の検索リッチリザルトには出ず Dataset Search 用。E-E-A-T/LLM 引用適性向け。
+  const variableMeasured = [
+    hasRent(m.rent.value) && { "@type": "PropertyValue", name: "民営借家家賃中央値", unitText: "JPY/月", value: m.rent.value },
+    hasLandPrice(m.landPrice.value) && { "@type": "PropertyValue", name: "住宅地地価（公示地価）", unitText: "JPY/m2", value: m.landPrice.value },
+    { "@type": "PropertyValue", name: "人口", unitText: "人", value: m.population },
+    isWaitlistDisclosed(m.waitlistChildren) && { "@type": "PropertyValue", name: "待機児童数", unitText: "人", value: m.waitlistChildren.value },
+    hasForeignData(m.foreignResidents.source) && { "@type": "PropertyValue", name: "外国人住民比率", unitText: "%", value: Number(foreignRatioPct(m).toFixed(2)) },
+  ].filter(Boolean);
+
+  const dataset = {
+    "@type": "Dataset",
+    name: `${prefName}${heading}の生活統計データ（家賃・地価・人口・災害リスク・外国人比率）`,
+    description: `${prefName}${heading}の家賃中央値・公示地価・人口・待機児童数・災害リスク（浸水／土砂／津波／高潮／液状化）・在留外国人比率を、政府統計（総務省・国土交通省・こども家庭庁・出入国在留管理庁）および国土数値情報の実データでまとめた統計データセット。推計値は使用していません。`,
+    url: absoluteUrl(`/area/${m.pref}/${m.code}`),
+    identifier: m.code,
+    keywords: ["家賃中央値", "公示地価", "人口", "待機児童", "災害リスク", "外国人住民比率", heading, prefName],
+    isAccessibleForFree: true,
+    creator: { "@type": "Organization", name: SITE.name, url: SITE.baseUrl },
+    includedInDataCatalog: { "@type": "DataCatalog", name: "e-Stat 政府統計の総合窓口", url: "https://www.e-stat.go.jp/" },
+    spatialCoverage: {
+      "@type": "Place",
+      name: `${prefName}${heading}`,
+      containedInPlace: { "@type": "AdministrativeArea", name: prefName },
+    },
+    variableMeasured,
+  };
+
   const ldJson = {
     "@context": "https://schema.org",
     "@graph": [
@@ -129,6 +158,7 @@ export default async function AreaPage({ params }: { params: Params }) {
         identifier: m.code,
         url: absoluteUrl(`/area/${m.pref}/${m.code}`),
       },
+      dataset,
       {
         "@type": "FAQPage",
         mainEntity: faq.map(({ q, a }) => ({
