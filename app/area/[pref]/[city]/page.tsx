@@ -8,6 +8,7 @@ import { findRelatedByRent } from "@/lib/related";
 import { RANKINGS } from "@/lib/rankings";
 import { buildFaq } from "@/lib/faq";
 import { SITE, prefNameOf, absoluteUrl } from "@/lib/site";
+import { jsonLdHtml } from "@/lib/jsonLd";
 import { hasRent, rentBand, RENT_BAND_LABELS } from "@/lib/rentColor";
 import { isWaitlistDisclosed } from "@/lib/waitlist";
 import { hasLandPrice } from "@/lib/landPrice";
@@ -183,7 +184,7 @@ export default async function AreaPage({ params }: { params: Params }) {
     <div className="detail-root">
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(ldJson) }}
+        dangerouslySetInnerHTML={{ __html: jsonLdHtml(ldJson) }}
       />
 
       <nav aria-label="パンくず" className="breadcrumb">

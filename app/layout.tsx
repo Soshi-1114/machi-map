@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import Script from "next/script";
 import { SITE, absoluteUrl } from "@/lib/site";
+import { jsonLdHtml } from "@/lib/jsonLd";
 import WebVitals from "@/components/WebVitals";
 import "./globals.css";
 
@@ -89,7 +90,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </Script>
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(siteLdJson) }}
+          dangerouslySetInnerHTML={{ __html: jsonLdHtml(siteLdJson) }}
         />
         <WebVitals />
         {children}

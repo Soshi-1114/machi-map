@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { listMunicipalities, listAll } from "@/lib/metrics";
 import { PREFS, getPrefBySlug } from "@/lib/prefs";
 import { SITE, absoluteUrl } from "@/lib/site";
+import { jsonLdHtml } from "@/lib/jsonLd";
 import { hasRent, rentBand } from "@/lib/rentColor";
 import { hasLandPrice } from "@/lib/landPrice";
 import { isWaitlistDisclosed } from "@/lib/waitlist";
@@ -121,7 +122,7 @@ export default async function PrefPage({ params }: { params: Params }) {
     <div className="detail-root">
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(ldJson) }}
+        dangerouslySetInnerHTML={{ __html: jsonLdHtml(ldJson) }}
       />
 
       <nav aria-label="パンくず" className="breadcrumb">

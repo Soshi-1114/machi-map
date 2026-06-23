@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { listAllAcrossPrefs } from "@/lib/metrics";
 import { RANKINGS, muniLevelOnly, rankBy } from "@/lib/rankings";
 import { SITE, prefNameOf, absoluteUrl } from "@/lib/site";
+import { jsonLdHtml } from "@/lib/jsonLd";
 
 export function generateMetadata(): Metadata {
   const title = `住みやすさ・家賃ランキング一覧｜全国の市区町村を比較｜${SITE.name}`;
@@ -61,7 +62,7 @@ export default async function RankingIndexPage() {
 
   return (
     <div className="detail-root">
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(ldJson) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLdHtml(ldJson) }} />
 
       <nav aria-label="パンくず" className="breadcrumb">
         <Link href="/" className="breadcrumb-link">{SITE.name}</Link>

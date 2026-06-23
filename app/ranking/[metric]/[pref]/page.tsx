@@ -5,6 +5,7 @@ import { listMunicipalities } from "@/lib/metrics";
 import { RANKINGS, getRankingBySlug, rankBy, type RankingDef } from "@/lib/rankings";
 import { PREFS, getPrefBySlug } from "@/lib/prefs";
 import { SITE, absoluteUrl } from "@/lib/site";
+import { jsonLdHtml } from "@/lib/jsonLd";
 import type { Municipality } from "@/lib/types";
 
 type Params = { metric: string; pref: string };
@@ -103,7 +104,7 @@ export default async function PrefRankingPage({ params }: { params: Params }) {
 
   return (
     <div className="detail-root">
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(ldJson) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLdHtml(ldJson) }} />
 
       <nav aria-label="パンくず" className="breadcrumb">
         <Link href="/" className="breadcrumb-link">{SITE.name}</Link>
