@@ -47,7 +47,7 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
   const { count, rentMedian } = prefStats(muni);
   const medPhrase = rentMedian > 0 ? `家賃中央値${rentMedian.toLocaleString()}円/月、` : "";
   const title = `${pref.nameJa}の住みやすさ・家賃相場ランキング｜${count}市区町村を比較｜${SITE.name}`;
-  const description = `${pref.nameJa}の全${count}市区町村の${medPhrase}地価・人口・待機児童・災害リスクを一覧で比較。家賃が安い自治体ランキングや子育て環境を、政府統計の実データでチェックできる${SITE.name}の都道府県ページ。`;
+  const description = `${pref.nameJa}の全${count}市区町村の${medPhrase}地価・人口・待機児童・災害リスク・外国人比率を一覧で比較。家賃が安い自治体ランキングや子育て環境を、政府統計の実データでチェックできる${SITE.name}の都道府県ページ。`;
   const url = absoluteUrl(`/area/${pref.slug}`);
   const ogImage = absoluteUrl(`/api/og/pref/${pref.slug}`);
   return {
