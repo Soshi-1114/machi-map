@@ -1,10 +1,13 @@
 import { ImageResponse } from "next/og";
 import { OgFrame, OgHeading, Pill, OG_SIZE } from "@/lib/og";
+import { rejectQueryBusting, OG_IMAGE_HEADERS } from "@/lib/apiGuard";
 
 export const runtime = "edge";
 
 // トップ／既定の OG 画像。データ取得なしの固定意匠。
-export function GET() {
+export function GET(req: Request) {
+  const rejected = rejectQueryBusting(req);
+  if (rejected) return rejected;
   return new ImageResponse(
     (
       <OgFrame>
@@ -20,6 +23,6 @@ export function GET() {
         </div>
       </OgFrame>
     ),
-    OG_SIZE,
+    { ...OG_SIZE, headers: OG_IMAGE_HEADERS },
   );
 }

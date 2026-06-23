@@ -2,10 +2,14 @@ import { ImageResponse } from "next/og";
 import { listMunicipalities } from "@/lib/metrics";
 import { getPrefBySlug } from "@/lib/prefs";
 import { OgFrame, OgHeading, Pill, OG_SIZE } from "@/lib/og";
+import { PREF_SLUG_RE, rejectQueryBusting, OG_IMAGE_HEADERS } from "@/lib/apiGuard";
 
 export const runtime = "edge";
 
-export async function GET(_req: Request, { params }: { params: { slug: string } }) {
+export async function GET(req: Request, { params }: { params: { slug: string } }) {
+  const rejected = rejectQueryBusting(req);
+  if (rejected) return rejected;
+  if (!PREF_SLUG_RE.test(params.slug)) return new Response("invalid slug", { status: 400 });
   const pref = getPrefBySlug(params.slug);
   if (!pref) return new Response("not found", { status: 404 });
   const count = (await listMunicipalities(params.slug)).length;
@@ -26,6 +30,6 @@ export async function GET(_req: Request, { params }: { params: { slug: string } 
         </div>
       </OgFrame>
     ),
-    OG_SIZE,
+    { ...OG_SIZE, headers: OG_IMAGE_HEADERS },
   );
 }

@@ -1,12 +1,16 @@
 import { ImageResponse } from "next/og";
 import { getRankingBySlug } from "@/lib/rankings";
 import { OgFrame, OgHeading, Pill, OG_SIZE } from "@/lib/og";
+import { METRIC_SLUG_RE, rejectQueryBusting, OG_IMAGE_HEADERS } from "@/lib/apiGuard";
 
 export const runtime = "edge";
 
 // ランキングOG。全国集計はデータ全量ロードになり edge では重いため、画像は
 // タイトル中心の意匠とし、1位などの動的値は載せない。
-export function GET(_req: Request, { params }: { params: { metric: string } }) {
+export function GET(req: Request, { params }: { params: { metric: string } }) {
+  const rejected = rejectQueryBusting(req);
+  if (rejected) return rejected;
+  if (!METRIC_SLUG_RE.test(params.metric)) return new Response("invalid metric", { status: 400 });
   const def = getRankingBySlug(params.metric);
   if (!def) return new Response("not found", { status: 404 });
 
@@ -25,6 +29,6 @@ export function GET(_req: Request, { params }: { params: { metric: string } }) {
         </div>
       </OgFrame>
     ),
-    OG_SIZE,
+    { ...OG_SIZE, headers: OG_IMAGE_HEADERS },
   );
 }

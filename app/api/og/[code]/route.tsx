@@ -3,15 +3,22 @@ import { getMunicipality } from "@/lib/metrics";
 import { prefNameOf } from "@/lib/site";
 import { hasRent } from "@/lib/rentColor";
 import { hasLandPrice } from "@/lib/landPrice";
+import { MUNI_CODE_RE, rejectQueryBusting, OG_IMAGE_HEADERS } from "@/lib/apiGuard";
 
 export const runtime = "edge";
 
 const OG_SIZE = { width: 1200, height: 630 };
 
 export async function GET(
-  _req: Request,
+  req: Request,
   { params }: { params: { code: string } },
 ) {
+  // 重い ImageResponse レンダリングの前に、クエリバスティングと不正コードを安価に弾く。
+  const rejected = rejectQueryBusting(req);
+  if (rejected) return rejected;
+  if (!MUNI_CODE_RE.test(params.code)) {
+    return new Response("invalid code", { status: 400 });
+  }
   const m = await getMunicipality(params.code);
   if (!m) {
     return new Response("not found", { status: 404 });
@@ -118,10 +125,8 @@ export async function GET(
       ...OG_SIZE,
       // OG 画像は対象データが更新（四半期/年次）→再デプロイされた時のみ変わる。
       // 明示しないとリクエストごとに生成されうるため、長めにキャッシュする
-      // （ブラウザ1日／CDN7日。再デプロイで CDN は自動パージされる）。
-      headers: {
-        "Cache-Control": "public, max-age=86400, s-maxage=604800",
-      },
+      // （再デプロイで CDN は自動パージされる）。共通定義に集約（lib/apiGuard）。
+      headers: OG_IMAGE_HEADERS,
     },
   );
 }
