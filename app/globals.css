@@ -730,6 +730,11 @@ button { font-family: inherit; }
 }
 .maplibregl-ctrl-group button {
   background-color: rgba(255,255,255,0.97) !important;
+  /* MapLibre 既定の 29px は、隣接する +/- ボタン間の間隔が 0 のため
+     WCAG 2.5.8 / Lighthouse target-size（24〜44px は十分な間隔が必要）に抵触する。
+     44px 以上にすれば間隔要件が不要になり、タッチ操作性も上がる。 */
+  width: 44px !important;
+  height: 44px !important;
 }
 
 /* ホバーツールチップ */
