@@ -4,7 +4,7 @@ import { listAllAcrossPrefs } from "@/lib/metrics";
 import { PREFS } from "@/lib/prefs";
 import { RANKINGS, muniLevelOnly } from "@/lib/rankings";
 import { latestLastModified, muniLastModified } from "@/lib/dataFreshness";
-import { SITE, absoluteUrl } from "@/lib/site";
+import { absoluteUrl } from "@/lib/site";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const all = await listAllAcrossPrefs();
@@ -27,7 +27,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   const entries: MetadataRoute.Sitemap = [
     {
-      url: SITE.baseUrl,
+      // トップの canonical は末尾スラッシュ付き（absoluteUrl("/") = https://kurashimap.jp/）。
+      // sitemap の loc も揃えて重複（slash有無）判定のノイズを避ける。
+      url: absoluteUrl("/"),
       lastModified: siteLatest,
       changeFrequency: "weekly",
       priority: 1,

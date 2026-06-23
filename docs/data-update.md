@@ -233,3 +233,24 @@ PR を作る運用**とする（理由は下記の Excel の制約と、statInfI
 ### asOf の同期（誠実性方針）
 期を更新したら `FOREIGN_ASOF` を新しい基準時点（例 `2025-06`）に合わせる。出典年と実データが
 食い違わないようにする（家賃・待機児童と同じ方針）。
+
+---
+
+## 8. IndexNow（Bing / Yandex 等への早期インデックス）
+
+Google は IndexNow 非対応（Search Console とサイトマップで発見）だが、Bing 系・Yandex 等は
+IndexNow で即時クロールを促せる。Bing 系は AI 検索（Copilot / ChatGPT 連携）の母体でもある。
+
+- 所有権確認キー: `public/538ebed6e4254171636c18b0583f02eb.txt`（内容は同じキー文字列）。
+  デプロイ後に `https://kurashimap.jp/538ebed6e4254171636c18b0583f02eb.txt` で配信される。
+  キーを変える場合はこのファイル名・内容と `scripts/indexnow-submit.mjs` の `KEY` を必ず一致させる。
+- 送信スクリプト: `scripts/indexnow-submit.mjs`（公開中の `sitemap.xml` の URL を収集して送信）。
+
+### 実行手順（重要: キーファイルが本番に配信済みであること）
+```bash
+npm run indexnow -- --dry-run     # 送信対象URLの確認（送信しない）
+npm run indexnow                  # sitemap.xml の全URLを送信
+npm run indexnow -- --url=https://kurashimap.jp/area/saitama/11203   # 個別URL
+```
+- データ更新→本番デプロイの後に実行するのが基本（新URL/更新URLを通知）。
+- キーファイルが未デプロイだと IndexNow は `403`（キー不一致）を返す。先にデプロイすること。
