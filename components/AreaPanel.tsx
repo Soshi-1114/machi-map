@@ -8,6 +8,7 @@ import { isWaitlistDisclosed } from "@/lib/waitlist";
 import { hasLandPrice } from "@/lib/landPrice";
 import { isHazardEvaluated } from "@/lib/coverage";
 import { hasForeignData, foreignRatioPct } from "@/lib/foreignResidents";
+import { hasShelterData, SHELTER_NODATA } from "@/lib/shelters";
 import { floodLevelOf, landslideLevelOf, floodGraded, floodLevelLabel, landslideLevelLabel } from "@/lib/hazardScale";
 
 type Props = {
@@ -114,6 +115,9 @@ export function MetricCards({ m }: { m: Municipality }) {
     hasForeignData(m.foreignResidents.source)
       ? { label: "外国人比率", value: `${foreignRatioPct(m).toFixed(1)} %`, source: m.foreignResidents.source, asOf: m.foreignResidents.asOf, est: false }
       : { label: "外国人比率", value: "対象外", source: m.foreignResidents.source, asOf: m.foreignResidents.asOf, est: false },
+    m.shelters && hasShelterData(m.shelters.source)
+      ? { label: "指定緊急避難場所", value: `${m.shelters.count.toLocaleString()} 件`, source: m.shelters.source, asOf: m.shelters.asOf, est: false }
+      : { label: "指定緊急避難場所", value: "未収録", source: m.shelters?.source ?? SHELTER_NODATA, asOf: m.shelters?.asOf ?? "-", est: false },
   ];
   return (
     <div className="metric-grid">

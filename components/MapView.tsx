@@ -28,6 +28,7 @@ import {
   HAZARD_OVERLAYS, DEFAULT_HAZARD_KEY, getHazardOverlay, type HazardOverlayKey,
   HAZARD_ZONE_ZOOM, GSI_HAZARD_ATTRIBUTION, gsiTileUrl,
 } from "@/lib/mapHazards";
+import { SHELTER_ATTRIBUTION } from "@/lib/shelters";
 import { BASEMAPS, DEFAULT_BASEMAP, getBasemap, type BasemapKey } from "@/lib/mapBasemaps";
 import AreaPanel from "./AreaPanel";
 import MobileSheet from "./MobileSheet";
@@ -49,6 +50,8 @@ const TOKYO_BAY_BBOX: [number, number, number, number] = [139.45, 35.1, 140.2, 3
 // EMPTY_FILTERS、レイヤーパネルは初期で開く（layersOpen 初期 true）。
 const DEFAULT_MAP_METRIC: MapMetricKey | "none" = "none";
 
+const EMPTY_FC: GeoJSON.FeatureCollection = { type: "FeatureCollection", features: [] };
+
 export default function MapView({ summary, onMenuClick }: Props) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const mapRef = useRef<MapLibreMap | null>(null);
@@ -62,6 +65,11 @@ export default function MapView({ summary, onMenuClick }: Props) {
   const prevSelectedRef = useRef<string | null>(null);
   const hoveredCodeRef = useRef<string | null>(null);
   const hoveredSourceRef = useRef<"muni" | "wards" | null>(null);
+  // 避難場所の取得結果キャッシュ（code → 全点FC、未収録は null）。ハザード種別の切替で
+  // 再取得せず同じFCを種別フィルタし直すために全点を保持する。
+  const shelterCacheRef = useRef<Map<string, GeoJSON.FeatureCollection | null>>(new Map());
+  // 避難場所の点クリックが直後の muni 選択クリックへ伝播し再センタリングするのを防ぐフラグ。
+  const shelterClickRef = useRef(false);
   const activeMetricRef = useRef<MapMetricKey | "none">(DEFAULT_MAP_METRIC);
   // 選択時に減光するベース地図ラベル（道路名・水系名等。place=地名は残す）。
   // 元の opacity を保存し、選択解除で復元する。
@@ -391,7 +399,76 @@ export default function MapView({ summary, onMenuClick }: Props) {
           },
         }, firstSymbolId);
 
+        // ===== 指定緊急避難場所のポイント層 =====
+        // 「災害オーバーレイON かつ 市区町村選択中」のときだけ、その災害に有効な避難場所を
+        // /api/shelters/[code] から取得して点を描く（下の shelters effect が setData する）。
+        // 初期は空。symbol ラベルより前面に出すため beforeId を付けず最前面へ積む。
+        map.addSource("shelters", {
+          type: "geojson",
+          data: { type: "FeatureCollection", features: [] },
+          attribution: SHELTER_ATTRIBUTION,
+        });
+        map.addLayer({
+          id: "shelter-points",
+          type: "circle",
+          source: "shelters",
+          minzoom: MUNI_MIN_ZOOM,
+          layout: { visibility: "none" },
+          paint: {
+            // 避難場所の慣用色（緑）。家賃/ハザード(amber)と色相を分け点だと分かるように。
+            "circle-color": "#0f9d58",
+            "circle-stroke-color": "#ffffff",
+            "circle-stroke-width": 1.4,
+            "circle-radius": [
+              "interpolate", ["linear"], ["zoom"],
+              10, 3.5,
+              13, 5.5,
+              16, 8,
+            ],
+            "circle-opacity": 0.92,
+          },
+        });
+        map.addLayer({
+          id: "shelter-labels",
+          type: "symbol",
+          source: "shelters",
+          minzoom: 14, // 名称は十分拡大してから（密集時の被り防止）
+          layout: {
+            visibility: "none",
+            "text-field": ["get", "name"],
+            "text-size": 11,
+            "text-offset": [0, 1.1],
+            "text-anchor": "top",
+            "text-optional": true,
+            "text-allow-overlap": false,
+          },
+          paint: {
+            "text-color": "#065f3a",
+            "text-halo-color": "#ffffff",
+            "text-halo-width": 1.4,
+          },
+        });
+        // 避難場所クリックで名称をツールチップ表示（指標ツールチップを流用）。
+        map.on("click", "shelter-points", (e) => {
+          const f = e.features?.[0];
+          if (!f) return;
+          // 同クリックで下の muni-fill ハンドラが走り再センタリングするのを抑止。
+          shelterClickRef.current = true;
+          const canvasW = map.getCanvas().clientWidth;
+          setTooltip({
+            x: e.point.x,
+            y: e.point.y,
+            name: String(f.properties?.name ?? "避難場所"),
+            label: "指定緊急避難場所",
+            value: String(f.properties?.address ?? ""),
+            flip: e.point.x > canvasW - 200,
+          });
+        });
+        map.on("mouseenter", "shelter-points", () => { map.getCanvas().style.cursor = "pointer"; });
+        map.on("mouseleave", "shelter-points", () => { map.getCanvas().style.cursor = ""; });
+
         const onPolyClick = (e: MapMouseEvent & { features?: MapGeoJSONFeature[] }) => {
+          if (shelterClickRef.current) { shelterClickRef.current = false; return; }
           const f = e.features?.[0];
           if (!f) return;
           const code = String(f.properties?.code ?? "");
@@ -626,6 +703,54 @@ export default function MapView({ summary, onMenuClick }: Props) {
       h.gsiLayerIds.forEach((_, i) => map.setLayoutProperty(`gsi-${h.key}-${i}`, "visibility", vis));
     }
   }, [hazardKey, mapReady]);
+
+  // 指定緊急避難場所のプロット：災害オーバーレイON かつ 自治体選択中のときだけ、選択中の
+  // 自治体の避難場所を取得し、その災害種別に有効な点だけを地図に出す。種別の切替は
+  // キャッシュ済みFCの再フィルタで賄い再取得しない。条件を外れたら点を消す。
+  useEffect(() => {
+    const map = mapRef.current;
+    if (!map || !mapReady) return;
+    const setVisible = (v: boolean) => {
+      for (const id of ["shelter-points", "shelter-labels"]) {
+        if (map.getLayer(id)) map.setLayoutProperty(id, "visibility", v ? "visible" : "none");
+      }
+    };
+    const src = () => map.getSource("shelters") as GeoJSONSource | undefined;
+    const active = !!selectedCode && hazardKey !== "none";
+    if (!active) {
+      src()?.setData(EMPTY_FC);
+      setVisible(false);
+      return;
+    }
+    let aborted = false;
+    const key = hazardKey as Exclude<HazardOverlayKey, "none">;
+    const apply = (fc: GeoJSON.FeatureCollection | null) => {
+      if (aborted) return;
+      const s = src();
+      if (!s) return;
+      if (!fc || fc.features.length === 0) { s.setData(EMPTY_FC); setVisible(false); return; }
+      const feats = fc.features.filter((f) => f.properties?.[key] === true);
+      s.setData({ type: "FeatureCollection", features: feats });
+      setVisible(feats.length > 0);
+    };
+    const code = selectedCode!;
+    const cached = shelterCacheRef.current.get(code);
+    if (cached !== undefined) {
+      apply(cached);
+    } else {
+      fetch(`/api/shelters/${code}`)
+        .then((r) => (r.ok ? r.json() : null))
+        .then((d: { features?: GeoJSON.Feature[] } | null) => {
+          const fc: GeoJSON.FeatureCollection | null = d
+            ? { type: "FeatureCollection", features: (d.features ?? []) as GeoJSON.Feature[] }
+            : null;
+          shelterCacheRef.current.set(code, fc);
+          apply(fc);
+        })
+        .catch(() => { shelterCacheRef.current.set(code, null); apply(null); });
+    }
+    return () => { aborted = true; };
+  }, [selectedCode, hazardKey, mapReady]);
 
   // 指標切替：muni/wards の fill-color を選択中メトリックの式に差し替える。
   // 「なし」は塗りの不透明度を 0 にして非表示（クリック判定は残す）。

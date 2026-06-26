@@ -254,3 +254,53 @@ npm run indexnow -- --url=https://kurashimap.jp/area/saitama/11203   # 個別URL
 ```
 - データ更新→本番デプロイの後に実行するのが基本（新URL/更新URLを通知）。
 - キーファイルが未デプロイだと IndexNow は `403`（キー不一致）を返す。先にデプロイすること。
+
+## 9. 指定緊急避難場所（地図プロット）の更新
+
+地図で「災害オーバーレイON かつ 市区町村を選択中」のとき、その災害に有効な**指定緊急避難場所**を
+点でプロットする（家賃等のような自治体集計のコロプレスではない）。出典は国土地理院
+「**指定緊急避難場所データ**」。全国版CSV（緯度経度＋災害種別フラグ8種を持つ点データ）を
+1ファイルで配布している。
+
+### データの流れ
+- 取得スクリプト: `scripts/fetch-shelters.mjs`。全国版CSVを読み、各点を市区町村ポリゴンへ
+  point-in-polygon で割り当て（政令市は区へ、親市にも合算）、以下を書き出す:
+  - `data/{slug}_shelters.json` … 地図プロット用の点データ（自治体コード → 点配列。座標と
+    災害種別 bitmask `h`）。`/api/shelters/[code]` がこの1自治体ぶんを GeoJSON で返す。
+  - `data/{slug}.json` の各自治体 `shelters: { count, source, asOf }` … 詳細パネルの件数表示用。
+- ドメインロジックは `lib/shelters.ts`（災害種別ビット、ハザード種別→有効フラグの対応、
+  収録判定 `hasShelterData`）。地図連動は `components/MapView.tsx` の `shelter-points` 層。
+- **誠実性**: 市町村がCSV対象外の県は `source` にセンチネル `未収録` を入れ、UIは「0件」と
+  「未収録」を区別する（`lib/shelters.ts hasShelterData`。`isHazardEvaluated` 等と同方針）。
+
+### 災害種別の対応（地図オーバーレイ → 避難場所フラグ）
+| 地図オーバーレイ | 有効と判定する避難場所フラグ |
+|---|---|
+| 浸水(flood) | 洪水 または 内水氾濫 |
+| 土砂(landslide) | 崖崩れ・土石流・地滑り |
+| 津波(tsunami) | 津波 |
+| 高潮(stormSurge) | 高潮 |
+| 液状化(liquefaction) | 地震（避難場所に液状化種別が無いため起因の地震で代替） |
+
+### annual ワークフローでの取得（手動 env）
+`data-update-annual.yml` に取得ステップがある。以下の env を**公開更新時に手動で書き換える**:
+- `GSI_SHELTER_URL` … 国土地理院の全国版 zip の直リンク。**空のままだとステップはスキップ**
+  （警告のみ）。配布ページ（`https://www.gsi.go.jp/bousaichiri/hinanbasho.html` ／ ダウンロード
+  サイト `hinanmap.gsi.go.jp`）で全国版CSVの zip URL を確認して設定する。
+- `GSI_SHELTER_ASOF` … 出典表示の基準時点（例 `2025`）。CSV の公開・更新時期に合わせる。
+
+> 注意: 配布URL・ファイル名は更新で変わりうる（L01_VERSION / CFA_XLSX_URL と同様に毎回確認）。
+> 現状リポジトリには各県の `data/{slug}_shelters.json` は未生成（`data/saitama_shelters.json` の
+> 空 `{}` のみ。dynamic import の解決用プレースホルダ）。ワークフロー実行で全県ぶんが生成される。
+
+### 手動実行
+```bash
+# 1. 全国版 zip を取得・展開（URLは配布ページで確認）
+curl -L -o /tmp/hinanbasho.zip "<全国版zipのURL>"
+unzip -o /tmp/hinanbasho.zip -d /tmp/hinanbasho
+# 2. CSV を指定して実行（全県 or 単一県）
+GSI_SHELTER_CSV=/tmp/hinanbasho/<全国データ>.csv node --max-old-space-size=4096 scripts/fetch-shelters.mjs --all
+GSI_SHELTER_CSV=/tmp/hinanbasho/<全国データ>.csv node scripts/fetch-shelters.mjs --pref=saitama
+```
+- CSV は Shift_JIS 想定（スクリプトが自動判定で UTF-8 にフォールバック）。
+- ヘッダ名で列を解決する（施設・場所名 / 住所 / 緯度 / 経度 / 各災害種別）。表記ゆれに部分一致で対応。

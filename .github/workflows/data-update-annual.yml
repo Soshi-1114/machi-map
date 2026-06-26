@@ -33,6 +33,10 @@ env:
   # 国土数値情報 L01 地価公示の年度（年度ごとに書換。VERSION=zip 版、ASOF=出典表示の年。必ず同期）
   L01_VERSION: "26"
   L01_ASOF: "2026"
+  # 国土地理院「指定緊急避難場所データ」全国版 zip の URL と基準時点（公開更新時に手動で書換）。
+  # 空のままだと避難場所ステップはスキップ（警告のみ）。取得元 URL は docs/data-update.md §9 参照。
+  GSI_SHELTER_URL: ""
+  GSI_SHELTER_ASOF: "2025"
 
 jobs:
   update:
@@ -89,6 +93,24 @@ jobs:
             GEOJSON="/tmp/l01/L01-${L01_VERSION}_${code}_GML/L01-${L01_VERSION}_${code}.geojson"
             L01_GEOJSON="$GEOJSON" node scripts/fetch-land-price.mjs --pref="$pref" || echo "::warning::land price failed for $pref"
           done
+
+      - name: 指定緊急避難場所（国土地理院 全国版CSV・全国一括）
+        run: |
+          if [[ -z "${GSI_SHELTER_URL}" ]]; then
+            echo "::warning::GSI_SHELTER_URL 未設定のため避難場所更新をスキップ（docs/data-update.md §9）"
+            exit 0
+          fi
+          ok=""
+          for i in 1 2 3; do
+            if curl -fsSL -o /tmp/hinanbasho.zip "${GSI_SHELTER_URL}"; then ok=1; break; fi
+            echo "GSI shelter DL retry $i"; sleep 3
+          done
+          if [[ -z "$ok" ]]; then echo "::warning::GSI shelter download failed"; exit 0; fi
+          rm -rf /tmp/hinanbasho && unzip -oq /tmp/hinanbasho.zip -d /tmp/hinanbasho
+          CSV=$(find /tmp/hinanbasho -iname '*.csv' | head -1)
+          if [[ -z "$CSV" ]]; then echo "::warning::shelter CSV not found in zip"; exit 0; fi
+          GSI_SHELTER_CSV="$CSV" node --max-old-space-size=4096 scripts/fetch-shelters.mjs ${{ steps.scope.outputs.estat }} \
+            || echo "::warning::fetch-shelters failed"
 
       - name: 差分があれば単一 PR を作成
         env:

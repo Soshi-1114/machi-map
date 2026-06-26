@@ -58,6 +58,14 @@ export type Municipality = {
     source: string;
     asOf: string;
   };
+  // 指定緊急避難場所の件数サマリ（点の座標は別ファイル data/{slug}_shelters.json に置き
+  // 地図選択時に /api/shelters/[code] で取得する）。未収録は source にセンチネルを持つ
+  // （lib/shelters.ts hasShelterData 参照）。詳細パネルの件数表示用。
+  shelters?: {
+    count: number;               // 自治体内の指定緊急避難場所の総数
+    source: string;
+    asOf: string;
+  };
 };
 
 // トップ地図の初期配信用の軽量サマリ。検索・地図の色付け・自治体分割に必要な
