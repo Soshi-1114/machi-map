@@ -99,7 +99,20 @@ html, body {
    ヘッダーの「エリア・ランキング」メニューから右ドロワーでリンク帯を重ねる
    （地図のパン操作とスクロールを競合させない）。リンク帯(HomeLinks)は閉状態でも
    常に DOM に存在＝クロール可能（display:none にはせず画面外へ退避させるだけ）。 */
-.home-main { position: relative; width: 100%; overflow: hidden; }
+/* 地図ページ（トップ／割合マップ）はベースカラーをブルーのまま据え置く。
+   他ページ（エリア詳細・ランキング等）はアイボリー＋テラコッタ。CSS変数を
+   .home-main にローカル上書きして配下（ヘッダー・検索・地図UI・パネル）へ伝播。 */
+.home-main {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  --bg: #f5f8fc;
+  --accent: #2563eb;
+  --accent-hover: #1d4ed8;
+  --accent-soft: rgba(37, 99, 235, 0.10);
+  --accent-glow: rgba(37, 99, 235, 0.25);
+  background: var(--bg);
+}
 .home-root { position: relative; width: 100%; }
 .home-map { position: relative; width: 100%; height: 100vh; height: 100dvh; }
 
