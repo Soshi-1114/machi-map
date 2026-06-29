@@ -1,6 +1,6 @@
 * { box-sizing: border-box; }
 :root {
-  --bg: #f5f8fc;
+  --bg: #fbfaf6; /* アイボリー（白〜アイボリー系で柔らかい印象に。旧: 薄ブルー #f5f8fc） */
   --bg-elev: #ffffff;
   --surface: rgba(255, 255, 255, 0.96);
   --surface-strong: #ffffff;
@@ -14,10 +14,10 @@
   --text: #0f172a;
   --text-muted: #475569;
   --text-faint: #94a3b8;
-  --accent: #2563eb;
-  --accent-hover: #1d4ed8;
-  --accent-soft: rgba(37, 99, 235, 0.10);
-  --accent-glow: rgba(37, 99, 235, 0.25);
+  --accent: #c75b39; /* テラコッタ（ブルーから刷新。アイボリー地色に合う暖色アクセント。旧: #2563eb） */
+  --accent-hover: #a84a2d;
+  --accent-soft: rgba(199, 91, 57, 0.10);
+  --accent-glow: rgba(199, 91, 57, 0.25);
   --warn: #d97706;
   --warn-soft: rgba(217, 119, 6, 0.12);
   --radius-xs: 6px;
@@ -943,7 +943,7 @@ button { font-family: inherit; }
   gap: 8px;
   margin-top: 18px;
   padding: 13px 22px;
-  background: linear-gradient(180deg, #3b82f6, var(--accent));
+  background: linear-gradient(180deg, #e08a6b, var(--accent));
   color: white;
   border-radius: var(--radius-pill);
   font-size: var(--text-base);
@@ -986,7 +986,7 @@ button { font-family: inherit; }
   border-radius: var(--radius-md);
   transition: border-color .15s ease, background .15s ease;
 }
-.panel-related-item:hover { background: var(--accent-soft); border-color: rgba(37,99,235,0.2); text-decoration: none; }
+.panel-related-item:hover { background: var(--accent-soft); border-color: var(--accent-glow); text-decoration: none; }
 .panel-related-name { font-size: var(--text-base); font-weight: 700; color: var(--text); }
 .panel-related-rent { font-size: var(--text-xs); color: var(--text-muted); font-variant-numeric: tabular-nums; }
 
