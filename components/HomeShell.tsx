@@ -11,20 +11,26 @@ import { useState } from "react";
 import type { ReactNode } from "react";
 import MapView from "@/components/MapView";
 import type { MuniSummary } from "@/lib/types";
+import type { MapMetricKey } from "@/lib/mapMetrics";
 
 export default function HomeShell({
   summary,
   children,
+  initialMetric,
+  navLabel = "エリア・ランキングから探す",
 }: {
   summary: MuniSummary[];
   children: ReactNode;
+  /** 地図の初期コロプレス指標（ピラーページで "foreignRatio" を指定）。既定は未塗り。 */
+  initialMetric?: MapMetricKey | "none";
+  navLabel?: string;
 }) {
   const [navOpen, setNavOpen] = useState(false);
 
   return (
     <div className={`home-root ${navOpen ? "is-nav-open" : ""}`}>
       <div className="home-map">
-        <MapView summary={summary} onMenuClick={() => setNavOpen(true)} />
+        <MapView summary={summary} onMenuClick={() => setNavOpen(true)} initialMetric={initialMetric} />
       </div>
 
       <div
@@ -33,7 +39,7 @@ export default function HomeShell({
         aria-hidden="true"
       />
 
-      <aside className="home-links" aria-label="エリア・ランキングから探す">
+      <aside className="home-links" aria-label={navLabel}>
         <button
           type="button"
           className="home-nav-close"

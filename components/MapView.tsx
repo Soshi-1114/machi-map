@@ -34,7 +34,7 @@ import { BASEMAPS, DEFAULT_BASEMAP, getBasemap, type BasemapKey } from "@/lib/ma
 import AreaPanel from "./AreaPanel";
 import MobileSheet from "./MobileSheet";
 
-type Props = { summary: MuniSummary[]; onMenuClick?: () => void };
+type Props = { summary: MuniSummary[]; onMenuClick?: () => void; initialMetric?: MapMetricKey | "none" };
 
 const WARDS_MIN_ZOOM = 11;
 const MUNI_MIN_ZOOM = 7.5;       // 市区町村レイヤーを出すズーム
@@ -59,7 +59,7 @@ const EMPTY_FC: GeoJSON.FeatureCollection = { type: "FeatureCollection", feature
 type OverlayKey = Exclude<HazardOverlayKey, "none"> | "shelter";
 const SHELTER_KEY: OverlayKey = "shelter";
 
-export default function MapView({ summary, onMenuClick }: Props) {
+export default function MapView({ summary, onMenuClick, initialMetric = DEFAULT_MAP_METRIC }: Props) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const mapRef = useRef<MapLibreMap | null>(null);
   const muniGeoRef = useRef<GeoJSON.FeatureCollection | null>(null);
@@ -82,7 +82,7 @@ export default function MapView({ summary, onMenuClick }: Props) {
   const shelterRefreshRef = useRef<(() => void) | null>(null);
   // 避難場所取得の世代トークン（パン連打時に古い結果で上書きしないため）。
   const shelterReqRef = useRef(0);
-  const activeMetricRef = useRef<MapMetricKey | "none">(DEFAULT_MAP_METRIC);
+  const activeMetricRef = useRef<MapMetricKey | "none">(initialMetric);
   // 選択時に減光するベース地図ラベル（道路名・水系名等。place=地名は残す）。
   // 元の opacity を保存し、選択解除で復元する。
   const labelDimRef = useRef<{ ids: string[]; text: Map<string, unknown>; icon: Map<string, unknown> }>({
@@ -112,7 +112,7 @@ export default function MapView({ summary, onMenuClick }: Props) {
       return next;
     });
   }, []);
-  const [activeMetric, setActiveMetric] = useState<MapMetricKey | "none">(DEFAULT_MAP_METRIC);
+  const [activeMetric, setActiveMetric] = useState<MapMetricKey | "none">(initialMetric);
   const [filters, setFilters] = useState<MapFilters>(EMPTY_FILTERS);
   const [isMobile, setIsMobile] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");

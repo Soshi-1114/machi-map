@@ -24,3 +24,6 @@ yarn-error.log*
 next-env.d.ts
 .vercel
 .cache/
+
+# ローカルのレビュー用スクショ（リポジトリには含めない）
+screenshots/

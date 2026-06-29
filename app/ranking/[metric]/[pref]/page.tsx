@@ -5,6 +5,7 @@ import { listMunicipalities } from "@/lib/metrics";
 import { RANKINGS, getRankingBySlug, rankBy, type RankingDef } from "@/lib/rankings";
 import { PREFS, getPrefBySlug } from "@/lib/prefs";
 import { SITE, absoluteUrl } from "@/lib/site";
+import { getForeignStats } from "@/lib/foreignStats";
 import type { Municipality } from "@/lib/types";
 
 type Params = { metric: string; pref: string };
@@ -37,7 +38,9 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
   if (!def || !pref) return { title: "見つかりません | KurashiMap" };
   const ranked = await rankedFor(def, params.pref);
   const top1 = ranked[0] ? (ranked[0].displayName ?? ranked[0].name) : "—";
-  const title = `${pref.nameJa}の${def.title}｜市区町村を比較｜${SITE.name}`;
+  const freshness = def.freshnessLabel?.(ranked[0] ?? null) ?? null;
+  const fresh = freshness ? `【${freshness}】` : "";
+  const title = `${pref.nameJa}の${def.title}${fresh}｜市区町村を比較｜${SITE.name}`;
   const description = `${pref.nameJa}の${def.title}。1位は${top1}。${pref.nameJa}内の${ranked.length}市区町村を政府統計の実データで比較できる${SITE.name}。`;
   const url = absoluteUrl(`/ranking/${def.slug}/${pref.slug}`);
   const ogImage = absoluteUrl(`/api/og/ranking/${def.slug}`);
@@ -70,6 +73,20 @@ export default async function PrefRankingPage({ params }: { params: Params }) {
   const cards = ranked.slice(0, TOP_CARDS);
   const prefName = pref.nameJa;
 
+  // データ鮮度ラベル・導入文・FAQ（定義のある指標のみ）。
+  const freshness = def.freshnessLabel?.(ranked[0] ?? null) ?? null;
+  const headingSub = freshness ? `【${freshness}】` : null;
+  const intro = def.prefIntro?.(prefName) ?? [];
+  const faq = def.faq ?? [];
+
+  // 外国人住民比率ランキングのベンチマーク（県平均・全国平均）。すべて実データ由来。
+  // fc は県平均・全国平均が定数なので、ランキング先頭自治体の集計値から1件取得すれば足りる。
+  let benchmark: { prefAvg: number; nationalAvg: number } | null = null;
+  if (def.compareForeignAvg) {
+    const fc = (await getForeignStats()).get(ranked[0].code);
+    if (fc) benchmark = { prefAvg: fc.prefAvg, nationalAvg: fc.nationalAvg };
+  }
+
   // 同じ県の「ほかの指標」リンク（データのある指標のみ）
   const otherMetrics = RANKINGS.filter(
     (r) => r.slug !== def.slug && rankBy(r, munis, 1).length > 0,
@@ -98,6 +115,18 @@ export default async function PrefRankingPage({ params }: { params: Params }) {
           url: absoluteUrl(`/area/${m.pref}/${m.code}`),
         })),
       },
+      ...(faq.length > 0
+        ? [
+            {
+              "@type": "FAQPage",
+              mainEntity: faq.map(({ q, a }) => ({
+                "@type": "Question",
+                name: q,
+                acceptedAnswer: { "@type": "Answer", text: a },
+              })),
+            },
+          ]
+        : []),
     ],
   };
 
@@ -118,6 +147,7 @@ export default async function PrefRankingPage({ params }: { params: Params }) {
       <header className="detail-hero">
         <h1 className="detail-title">
           {prefName}の{def.title}
+          {headingSub && <span className="detail-title-sub">{headingSub}</span>}
         </h1>
         <p className="detail-lead">
           {def.lead.replace("全国の", `${prefName}の`)}データのある{ranked.length}市区町村を、政府統計の実データで集計しています（推計値は含みません）。
@@ -132,6 +162,32 @@ export default async function PrefRankingPage({ params }: { params: Params }) {
           </Link>
         </div>
       </header>
+
+      {intro.length > 0 && (
+        <section className="detail-intro">
+          {intro.map((p, i) => (
+            <p key={i} className="detail-p">{p}</p>
+          ))}
+        </section>
+      )}
+
+      {benchmark && (
+        <section className="detail-section">
+          <h2 className="detail-h2">ベンチマーク（平均との比較）</h2>
+          <ul className="mini-cards cols-2">
+            <li className="mini-card">
+              <div className="mini-card-label">{prefName}平均</div>
+              <div className="mini-card-value">{benchmark.prefAvg.toFixed(2)}<span className="unit"> %</span></div>
+              <p className="mini-card-sub">{prefName}内 全市区町村の加重平均</p>
+            </li>
+            <li className="mini-card">
+              <div className="mini-card-label">全国平均</div>
+              <div className="mini-card-value">{benchmark.nationalAvg.toFixed(2)}<span className="unit"> %</span></div>
+              <p className="mini-card-sub">全国 全市区町村の加重平均</p>
+            </li>
+          </ul>
+        </section>
+      )}
 
       <section className="detail-section">
         <h2 className="detail-h2">トップ{cards.length}</h2>
@@ -188,6 +244,20 @@ export default async function PrefRankingPage({ params }: { params: Params }) {
               </li>
             ))}
           </ul>
+        </section>
+      )}
+
+      {faq.length > 0 && (
+        <section className="detail-section">
+          <h2 className="detail-h2">よくある質問</h2>
+          <dl className="faq-list">
+            {faq.map(({ q, a }, i) => (
+              <div key={i} className="faq-item">
+                <dt className="faq-q">{q}</dt>
+                <dd className="faq-a">{a}</dd>
+              </div>
+            ))}
+          </dl>
         </section>
       )}
 

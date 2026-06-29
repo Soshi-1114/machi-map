@@ -43,13 +43,29 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
   const prefName = prefNameOf(m.pref);
   const fullName = m.displayName ?? m.name;
   const pop = m.population.toLocaleString();
-  const hasRentData = hasRent(m.rent.value);
-  const rent = m.rent.value.toLocaleString();
-  const title = hasRentData
-    ? `${fullName}の住みやすさ — 家賃${rent}円/月｜${SITE.name}`
-    : `${fullName}の住みやすさ｜${SITE.name}`;
-  const rentPhrase = hasRentData ? `民営借家中央値${rent}円/月、` : "";
-  const description = `${fullName}（${prefName}）の住みやすさを地図でチェック。${rentPhrase}人口${pop}人。地価・待機児童・災害リスク・外国人比率をまとめて比較できる${SITE.name}の自治体ページ。`;
+
+  // SEO 主軸: 大手が手薄な「{自治体} 外国人 割合」「{自治体} 在留外国人」を狙う。
+  // 在留外国人統計の対象（北方領土6村など対象外を除く）かつ人口が有効な自治体は
+  // 比率を主軸に据え、対象外は人口・住環境にフォールバックする（honesty 方針）。
+  const foreignAvailable = hasForeignData(m.foreignResidents.source) && m.population > 0;
+  const fc = foreignAvailable ? (await getForeignStats()).get(m.code) ?? null : null;
+
+  const title = foreignAvailable
+    ? `${fullName}の在留外国人割合・人口データ｜地図で見る住環境 - ${SITE.name}`
+    : `${fullName}の人口・住環境データ｜地図で見る - ${SITE.name}`;
+
+  // description には実数値を2〜3個含める。比較統計（全国平均・順位）が取れる場合は
+  // それを優先し、取れない場合は段階的にフォールバックする（数値はビルド時データ由来）。
+  let description: string;
+  if (foreignAvailable && fc) {
+    description = `${fullName}（${prefName}）の在留外国人割合は${fc.ratio.toFixed(2)}%（全国平均${fc.nationalAvg.toFixed(2)}%、全国${fc.nationalRank.toLocaleString()}位）。人口${pop}人などの住環境データを地図とランキングで確認できます。出典: 出入国在留管理庁「在留外国人統計」。`;
+  } else if (foreignAvailable) {
+    description = `${fullName}（${prefName}）の在留外国人割合は${foreignRatioPct(m).toFixed(2)}%、人口${pop}人。家賃・地価・災害リスクなどの住環境データを地図とランキングで確認できます。出典: 出入国在留管理庁「在留外国人統計」。`;
+  } else {
+    const rentPhrase = hasRent(m.rent.value) ? `家賃中央値${m.rent.value.toLocaleString()}円/月、` : "";
+    const popPhrase = m.population > 0 ? `人口${pop}人、` : "";
+    description = `${fullName}（${prefName}）の住環境データ。${popPhrase}${rentPhrase}地価・待機児童・災害リスクなどをまとめて地図とランキングで比較できる${SITE.name}の自治体ページ。`;
+  }
   const url = absoluteUrl(`/area/${m.pref}/${m.code}`);
   const ogImage = absoluteUrl(`/api/og/${m.code}`);
   return {
@@ -492,6 +508,11 @@ export default async function AreaPage({ params }: { params: Params }) {
               <p className="mini-card-sub" style={{ marginTop: 6 }}>
                 <Link href="/ranking/foreign-ratio-high" className="pref-table-link">
                   外国人住民比率が高い市区町村ランキングを見る →
+                </Link>
+              </p>
+              <p className="mini-card-sub" style={{ marginTop: 4 }}>
+                <Link href="/map/foreign-ratio" className="pref-table-link">
+                  全国の外国人住民の割合を地図で見る →
                 </Link>
               </p>
             </div>

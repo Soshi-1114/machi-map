@@ -5,6 +5,7 @@ import { listAllAcrossPrefs } from "@/lib/metrics";
 import { RANKINGS, getRankingBySlug, muniLevelOnly, rankBy, type RankingDef } from "@/lib/rankings";
 import { PREFS } from "@/lib/prefs";
 import { SITE, prefNameOf, absoluteUrl } from "@/lib/site";
+import PrefRegionLinks from "@/components/PrefRegionLinks";
 
 type Params = { metric: string };
 
@@ -26,7 +27,8 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
   if (!def) return { title: "見つかりません | KurashiMap" };
   const top = await rankedFor(def, 1);
   const top1 = top[0] ? `${prefNameOf(top[0].pref)}${top[0].displayName ?? top[0].name}` : "—";
-  const title = `${def.title}【全国】｜${SITE.name}`;
+  const freshness = def.freshnessLabel?.(top[0] ?? null) ?? null;
+  const title = `${def.title}${freshness ? `【${freshness}】` : "【全国】"}｜${SITE.name}`;
   const description = def.metaDescription
     ? def.metaDescription(top[0] ?? null)
     : def.description.replace("{top1}", top1);
@@ -63,6 +65,15 @@ export default async function RankingPage({ params }: { params: Params }) {
   // この指標に該当データがある都道府県（県別ランキングへの導線）
   const prefsWithData = PREFS.filter((p) => allMunis.some((m) => m.pref === p.slug && def.qualifies(m)));
 
+  // データ鮮度ラベル（指標の asOf 由来）。無ければ「全国」を見出しサブに使う。
+  const top1 = ranked[0] ?? null;
+  const top1Name = top1 ? `${prefNameOf(top1.pref)}${top1.displayName ?? top1.name}` : "—";
+  const freshness = def.freshnessLabel?.(top1) ?? null;
+  const headingSub = freshness ? `【${freshness}】` : "【全国】";
+  // 薄ページ対策の導入文・FAQ（定義があるランキングのみ）。{top1} は1位自治体名に置換。
+  const intro = def.intro?.map((p) => p.replace(/\{top1\}/g, top1Name)) ?? [];
+  const faq = def.faq?.map(({ q, a }) => ({ q, a: a.replace(/\{top1\}/g, top1Name) })) ?? [];
+
   const ldJson = {
     "@context": "https://schema.org",
     "@graph": [
@@ -76,7 +87,7 @@ export default async function RankingPage({ params }: { params: Params }) {
       },
       {
         "@type": "ItemList",
-        name: `${def.title}【全国】`,
+        name: `${def.title}${headingSub}`,
         numberOfItems: ranked.length,
         itemListElement: ranked.map((m, i) => ({
           "@type": "ListItem",
@@ -85,6 +96,18 @@ export default async function RankingPage({ params }: { params: Params }) {
           url: absoluteUrl(`/area/${m.pref}/${m.code}`),
         })),
       },
+      ...(faq.length > 0
+        ? [
+            {
+              "@type": "FAQPage",
+              mainEntity: faq.map(({ q, a }) => ({
+                "@type": "Question",
+                name: q,
+                acceptedAnswer: { "@type": "Answer", text: a },
+              })),
+            },
+          ]
+        : []),
     ],
   };
 
@@ -103,13 +126,28 @@ export default async function RankingPage({ params }: { params: Params }) {
       <header className="detail-hero">
         <h1 className="detail-title">
           {def.title}
-          <span className="detail-title-sub">【全国】</span>
+          <span className="detail-title-sub">{headingSub}</span>
         </h1>
         <p className="detail-lead">
           {def.lead}データのある自治体のみを対象に、政府統計の実データで集計しています（推計値は含みません）。
         </p>
         {def.note && <p className="detail-note">{def.note}</p>}
       </header>
+
+      {intro.length > 0 && (
+        <section className="detail-intro">
+          {intro.map((p, i) => (
+            <p key={i} className="detail-p">{p}</p>
+          ))}
+          {def.compareForeignAvg && (
+            <p className="detail-p">
+              <Link href="/map/foreign-ratio" className="pref-table-link">
+                🗺 全国の外国人住民の割合を地図（コロプレス）で見る →
+              </Link>
+            </p>
+          )}
+        </section>
+      )}
 
       <section className="detail-section">
         <h2 className="detail-h2">トップ{cards.length}</h2>
@@ -169,15 +207,12 @@ export default async function RankingPage({ params }: { params: Params }) {
           <p className="detail-p" style={{ color: "var(--text-muted)", fontSize: 13.5 }}>
             {def.title}を都道府県ごとに絞り込めます。
           </p>
-          <ul className="pref-chip-grid">
-            {prefsWithData.map((p) => (
-              <li key={p.slug}>
-                <Link href={`/ranking/${def.slug}/${p.slug}`} className="pref-chip">
-                  {p.nameJa}
-                </Link>
-              </li>
-            ))}
-          </ul>
+          <PrefRegionLinks
+            href={(slug) => `/ranking/${def.slug}/${slug}`}
+            linkClassName="pref-chip"
+            gridClassName="pref-chip-grid"
+            prefs={prefsWithData}
+          />
         </section>
       )}
 
@@ -193,6 +228,20 @@ export default async function RankingPage({ params }: { params: Params }) {
           ))}
         </ul>
       </section>
+
+      {faq.length > 0 && (
+        <section className="detail-section">
+          <h2 className="detail-h2">よくある質問</h2>
+          <dl className="faq-list">
+            {faq.map(({ q, a }, i) => (
+              <div key={i} className="faq-item">
+                <dt className="faq-q">{q}</dt>
+                <dd className="faq-a">{a}</dd>
+              </div>
+            ))}
+          </dl>
+        </section>
+      )}
 
       <section className="detail-section">
         <h2 className="detail-h2">出典・データについて</h2>
