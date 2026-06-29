@@ -2,8 +2,8 @@
 // PC ではマップ下のコンテンツ、SP ではドロワー内に同じDOMを表示する（HomeShell が制御）。
 
 import Link from "next/link";
-import { PREFS } from "@/lib/prefs";
 import { RANKINGS } from "@/lib/rankings";
+import PrefRegionLinks from "@/components/PrefRegionLinks";
 
 export type PopularMuni = { pref: string; code: string; name: string };
 
@@ -17,13 +17,11 @@ export default function HomeLinks({ popular }: { popular: PopularMuni[] }) {
 
       <section className="home-links-block">
         <h2 className="home-links-h">都道府県から探す</h2>
-        <ul className="home-pref-grid">
-          {PREFS.map((p) => (
-            <li key={p.slug}>
-              <Link href={`/area/${p.slug}`} className="home-pref-link">{p.nameJa}</Link>
-            </li>
-          ))}
-        </ul>
+        <PrefRegionLinks
+          href={(slug) => `/area/${slug}`}
+          linkClassName="home-pref-link"
+          gridClassName="home-pref-grid"
+        />
       </section>
 
       <section className="home-links-block">

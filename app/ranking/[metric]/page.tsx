@@ -5,6 +5,7 @@ import { listAllAcrossPrefs } from "@/lib/metrics";
 import { RANKINGS, getRankingBySlug, muniLevelOnly, rankBy, type RankingDef } from "@/lib/rankings";
 import { PREFS } from "@/lib/prefs";
 import { SITE, prefNameOf, absoluteUrl } from "@/lib/site";
+import PrefRegionLinks from "@/components/PrefRegionLinks";
 
 type Params = { metric: string };
 
@@ -134,7 +135,7 @@ export default async function RankingPage({ params }: { params: Params }) {
       </header>
 
       {intro.length > 0 && (
-        <section className="detail-section">
+        <section className="detail-intro">
           {intro.map((p, i) => (
             <p key={i} className="detail-p">{p}</p>
           ))}
@@ -206,15 +207,12 @@ export default async function RankingPage({ params }: { params: Params }) {
           <p className="detail-p" style={{ color: "var(--text-muted)", fontSize: 13.5 }}>
             {def.title}を都道府県ごとに絞り込めます。
           </p>
-          <ul className="pref-chip-grid">
-            {prefsWithData.map((p) => (
-              <li key={p.slug}>
-                <Link href={`/ranking/${def.slug}/${p.slug}`} className="pref-chip">
-                  {p.nameJa}
-                </Link>
-              </li>
-            ))}
-          </ul>
+          <PrefRegionLinks
+            href={(slug) => `/ranking/${def.slug}/${slug}`}
+            linkClassName="pref-chip"
+            gridClassName="pref-chip-grid"
+            prefs={prefsWithData}
+          />
         </section>
       )}
 

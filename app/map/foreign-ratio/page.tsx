@@ -9,6 +9,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import ReactDOM from "react-dom";
 import HomeShell from "@/components/HomeShell";
+import PrefRegionLinks from "@/components/PrefRegionLinks";
 import { listSummaryAcrossPrefs, listAllAcrossPrefs } from "@/lib/metrics";
 import { getRankingBySlug, rankBy, muniLevelOnly, formatAsOfJa } from "@/lib/rankings";
 import { foreignRatioPct } from "@/lib/foreignResidents";
@@ -160,13 +161,12 @@ function ForeignRatioHub({
 
       <section className="home-links-block">
         <h2 className="home-links-h">都道府県別に見る</h2>
-        <ul className="home-pref-grid">
-          {prefsWithData.map((p) => (
-            <li key={p.slug}>
-              <Link href={`/ranking/foreign-ratio-high/${p.slug}`} className="home-pref-link">{p.nameJa}</Link>
-            </li>
-          ))}
-        </ul>
+        <PrefRegionLinks
+          href={(slug) => `/ranking/foreign-ratio-high/${slug}`}
+          linkClassName="home-pref-link"
+          gridClassName="home-pref-grid"
+          prefs={prefsWithData}
+        />
       </section>
 
       <p className="home-links-foot">

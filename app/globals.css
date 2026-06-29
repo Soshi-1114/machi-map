@@ -145,8 +145,14 @@ html, body {
 
 .home-links-lead-title { font-size: var(--text-xl); font-weight: 800; letter-spacing: -0.02em; margin: 0 0 6px; padding-right: 40px; color: var(--text); }
 .home-links-lead { font-size: var(--text-sm); color: var(--text-muted); line-height: var(--leading-normal); margin: 0 0 8px; }
-.home-links-block { margin-top: 24px; }
-.home-links-h { font-size: var(--text-base); font-weight: 800; color: var(--text); margin: 0 0 10px; }
+/* メニュー内の各ブロックを細いディバイダで区切る（先頭ブロックは線なし）。 */
+.home-links-block { margin-top: 22px; padding-top: 20px; border-top: 1px solid var(--border); }
+.home-links-block:first-of-type { margin-top: 20px; padding-top: 0; border-top: none; }
+/* 見出しにアクセントバーを付け、単一色の羅列にメリハリを出す。 */
+.home-links-h {
+  font-size: var(--text-base); font-weight: 800; color: var(--text); margin: 0 0 12px;
+  border-left: 3px solid var(--accent); padding-left: 9px;
+}
 .home-pref-grid { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(90px, 1fr)); gap: 7px; }
 .home-pref-link {
   display: block; text-align: center; font-size: var(--text-sm); font-weight: 600;
@@ -1210,7 +1216,32 @@ button { font-family: inherit; }
 }
 .detail-honesty-note svg { flex-shrink: 0; color: var(--text-faint); }
 
-.detail-section { margin-top: 30px; }
+/* セクション間に細いディバイダを入れて区切りを明確化（先頭セクションは線なし）。 */
+.detail-section { margin-top: 28px; padding-top: 26px; border-top: 1px solid var(--border); }
+.detail-section:first-of-type { margin-top: 22px; padding-top: 0; border-top: none; }
+/* ランキング系ページの素の見出し（アイコンチップを持たない h2）にアクセントバーを
+   付けて、単調な黒文字の羅列にメリハリを出す。アイコン付きの自治体ページ見出しは
+   .detail-shead 配下なのでこの直下セレクタには当たらない。 */
+.detail-section > .detail-h2 {
+  border-left: 4px solid var(--accent);
+  padding-left: 12px;
+}
+/* 導入文（リード）カード。本文の黒文字ブロックと視覚的に分け、補足情報として読ませる。 */
+.detail-intro {
+  margin-top: 22px;
+  padding: 18px 20px;
+  background: var(--surface-subtle);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.detail-intro .detail-p {
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+  line-height: var(--leading-relaxed);
+}
 .detail-shead {
   display: flex;
   align-items: center;
@@ -1496,6 +1527,22 @@ button { font-family: inherit; }
   padding: 7px 15px;
 }
 .pref-chip:hover { border-color: var(--accent); background: var(--accent-soft); color: var(--accent); text-decoration: none; }
+
+/* 都道府県の地方区分グルーピング（メニュー・ピラー・ランキングの「都道府県別に見る」共通）。
+   全国の県が分類なしに並ぶ探しづらさを解消する。 */
+.pref-regions { display: flex; flex-direction: column; gap: 16px; }
+.pref-region-label {
+  display: flex; align-items: center; gap: 7px;
+  font-size: var(--text-xs); font-weight: 800; color: var(--text-muted);
+  letter-spacing: 0.03em; margin: 0 0 8px;
+}
+.pref-region-label::before {
+  content: ""; width: 7px; height: 7px; border-radius: 2px;
+  background: var(--accent); flex-shrink: 0;
+}
+/* グループ内のグリッド/チップ行は親のラベルからの間隔で十分なので上マージンを消す。 */
+.pref-region-group .pref-chip-grid,
+.pref-region-group .home-pref-grid { margin-top: 0; }
 
 /* 詳細ページ: よくある質問（FAQ） */
 .faq-list { margin: 12px 0 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }

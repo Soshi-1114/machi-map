@@ -78,6 +78,41 @@ export const PREFS: PrefEntry[] = [
   { slug: "hokkaido", nameJa: "北海道", codePrefix: "01", hasWards: true },
 ];
 
+// 地方区分（全国地方公共団体コード先頭2桁で機械的に分類）。PREFS の並びは
+// データ整備順なので、UI で「全国の都道府県が分類なしに並ぶ」のを避けるため
+// ここで地方ごとにまとめ直す。中部は北陸・甲信越を含め、東海を独立させる
+// （一般的な9地方区分。利用者が地理的に探しやすい粒度）。
+export type RegionGroup = { key: string; nameJa: string; prefixes: string[] };
+
+export const REGIONS: RegionGroup[] = [
+  { key: "hokkaido", nameJa: "北海道", prefixes: ["01"] },
+  { key: "tohoku", nameJa: "東北", prefixes: ["02", "03", "04", "05", "06", "07"] },
+  { key: "kanto", nameJa: "関東", prefixes: ["08", "09", "10", "11", "12", "13", "14"] },
+  { key: "chubu", nameJa: "中部・北陸", prefixes: ["15", "16", "17", "18", "19", "20"] },
+  { key: "tokai", nameJa: "東海", prefixes: ["21", "22", "23", "24"] },
+  { key: "kinki", nameJa: "近畿", prefixes: ["25", "26", "27", "28", "29", "30"] },
+  { key: "chugoku", nameJa: "中国", prefixes: ["31", "32", "33", "34", "35"] },
+  { key: "shikoku", nameJa: "四国", prefixes: ["36", "37", "38", "39"] },
+  { key: "kyushu", nameJa: "九州・沖縄", prefixes: ["40", "41", "42", "43", "44", "45", "46", "47"] },
+];
+
+export type PrefsByRegion = { key: string; nameJa: string; prefs: PrefEntry[] };
+
+/**
+ * 与えた pref 配列（既定は PREFS 全件）を地方区分ごとにまとめ、地方は北→南、
+ * 地方内は団体コード順に整列して返す。該当 pref が無い地方は省く（県別ページの
+ * 「データのある県だけ」表示にも使えるよう、空グループは落とす）。
+ */
+export function prefsByRegion(prefs: PrefEntry[] = PREFS): PrefsByRegion[] {
+  return REGIONS.map((r) => ({
+    key: r.key,
+    nameJa: r.nameJa,
+    prefs: r.prefixes
+      .map((px) => prefs.find((p) => p.codePrefix === px))
+      .filter((p): p is PrefEntry => Boolean(p)),
+  })).filter((g) => g.prefs.length > 0);
+}
+
 const BY_SLUG = new Map(PREFS.map((p) => [p.slug, p]));
 const BY_PREFIX = new Map(PREFS.map((p) => [p.codePrefix, p]));
 

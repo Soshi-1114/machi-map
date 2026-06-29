@@ -164,7 +164,7 @@ export default async function PrefRankingPage({ params }: { params: Params }) {
       </header>
 
       {intro.length > 0 && (
-        <section className="detail-section">
+        <section className="detail-intro">
           {intro.map((p, i) => (
             <p key={i} className="detail-p">{p}</p>
           ))}
