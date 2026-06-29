@@ -1,11 +1,11 @@
-// 地図のハザード・オーバーレイ定義。種別を1つ選んでアンバーのハッチで重ね、リスクが
-// 高いほど濃く（fill-opacity）表示する。可読性のため複数種別は同時に重ねず1種別ずつ。
-// 色は緑赤の価値判断を避け単一色相（amber）で強度のみを表す（#42 中立化方針に追従）。
+// 地図のハザード・オーバーレイ定義。種別は複数選択でき、拡大時（HAZARD_ZONE_ZOOM 以上）に
+// 国土地理院の実区域ラスタタイルで重ねて表示する。低ズームの自治体集計ハッチ（斜線）は
+// 「ほぼ全自治体に乗り意味を成さない」ため廃止し、閾値未満では UI 側でズーム誘導を出す。
 //
-// 各種別は MuniSummary の level フィールド（lib/hazardScale.ts のランク）を feature
-// property として読む:
+// filter/opacity 式は MuniSummary の level フィールド（lib/hazardScale.ts のランク）を
+// feature property として読む。現状ラスタ主体の描画では実描画には使わないが、将来の
+// 自治体単位の絞り込み等に備えて定義として保持する:
 //   flood/tsunami/stormSurge: 大きいほど高リスク（0=なし, -1=対象外, >=1 を描画）
-//   liquefaction: 小さいほど高リスク（1=非常に〜5=しにくい, -1=未評価）。やや以上(1..3)のみ描画
 
 export type HazardOverlayKey = "none" | "flood" | "landslide" | "tsunami" | "stormSurge" | "liquefaction";
 
@@ -21,8 +21,8 @@ export type HazardOverlay = {
   gsiLayerIds: readonly string[];
 };
 
-// 自治体集計ハッチ（比較用）→ 実区域ラスタ（GSI公式タイル）に切り替えるズーム閾値。
-// これ未満は自治体ハッチ、以上は実際の浸水想定区域ポリゴンを描く。
+// 実区域ラスタ（GSI公式タイル）を表示し始めるズーム閾値。これ未満は地図に何も重ねず、
+// 凡例で「ズームすると災害リスク区域を表示します」と誘導する。
 export const HAZARD_ZONE_ZOOM = 12;
 
 // 国土地理院 ハザードマップポータルの公開ラスタタイル（APIキー不要・CORS可）。
@@ -85,20 +85,21 @@ export const HAZARD_OVERLAYS: readonly HazardOverlay[] = [
     opacity: bandOpacity("stormSurgeLevel"),
     gsiLayerIds: ["03_hightide_l2_shinsuishin_data"],
   },
-  {
-    key: "liquefaction",
-    label: "液状化",
-    prop: "liquefactionLevel",
-    legend: "液状化の傾向（濃いほど液状化しやすい）",
-    // 液状化はレベルが小さいほど高リスク。やや液状化しやすい以上（1..3）のみ描画。
-    filter: ["all", [">=", ["get", "liquefactionLevel"], 1], ["<=", ["get", "liquefactionLevel"], 3]],
-    // 1（非常に）=0.82 → 3（やや）=0.40 の逆順。
-    opacity: ["interpolate", ["linear"], ["get", "liquefactionLevel"], 1, 0.82, 3, 0.40],
-    gsiLayerIds: ["ekijouka_zenkoku"],
-  },
+  // 液状化（液状化傾向）は地図プロットに反映できる実区域タイルが安定して取得できず、
+  // 選択しても地図に何も出ないため、オーバーレイの選択肢からは外している。
+  // 種別キー自体（避難所の対応災害フラグ等）は lib/shelters.ts で引き続き利用する。
 ] as const;
 
 export const DEFAULT_HAZARD_KEY: HazardOverlayKey = "none";
+
+// 浸水・津波・高潮は国（国交省）の同一「浸水深」カラースケールで描かれる公式ラスタの
+// ため、地図上で重ねると色で区別できない。UI ではこの3種を排他選択にする（土砂・避難所は
+// 併用可）。凡例も「浸水深」共通スケールを1つだけ表示する。
+export const INUNDATION_KEYS = ["flood", "tsunami", "stormSurge"] as const;
+
+export function isInundationKey(key: string): boolean {
+  return (INUNDATION_KEYS as readonly string[]).includes(key);
+}
 
 export function getHazardOverlay(key: HazardOverlayKey): HazardOverlay | null {
   return HAZARD_OVERLAYS.find((h) => h.key === key) ?? null;

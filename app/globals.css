@@ -335,11 +335,12 @@ button { font-family: inherit; }
 }
 .map-layers-btn:hover { color: var(--text); border-color: var(--border-strong); }
 .map-layers-btn.is-active {
-  background: var(--accent-soft);
-  color: var(--accent);
-  border-color: rgba(37, 99, 235, 0.2);
+  background: var(--surface-muted);
+  color: var(--text);
+  border-color: var(--border-strong);
 }
-.map-layers-btn-label { white-space: nowrap; }
+/* アイコンのみの正方形ボタン（テキストは常時「なし」で情報量が乏しいため省く）。 */
+.map-layers-btn-icon { width: 44px; padding: 0; }
 
 /* 検索ドロップダウン — ヘッダーの検索欄直下に */
 .search-results {
@@ -645,7 +646,7 @@ button { font-family: inherit; }
   border-radius: 3px;
   box-shadow: inset 0 0 0 1px rgba(15,23,42,0.08);
 }
-/* 災害リスク オーバーレイの凡例キー（地図の amber 斜線ハッチに対応） */
+/* ハザードマップの凡例キー（地図の実際の配色に対応） */
 .legend-overlay {
   display: flex;
   align-items: center;
@@ -661,9 +662,13 @@ button { font-family: inherit; }
   border-radius: 3px;
   box-shadow: inset 0 0 0 1px rgba(15,23,42,0.08);
 }
-.legend-hazard-cell {
-  background-color: #fff;
-  background-image: repeating-linear-gradient(45deg, rgba(180,83,9,0.65) 0 1px, transparent 1px 5px);
+/* 種別ごとの凡例ブロック（浸水深の段彩 / 土砂の2色 をまとめる） */
+.legend-overlay-group { margin-top: 10px; }
+.legend-overlay-title {
+  font-size: var(--text-3xs);
+  font-weight: 700;
+  color: var(--text-muted);
+  margin-bottom: 5px;
 }
 .legend-overlay-note {
   font-size: var(--text-3xs);

@@ -35,8 +35,8 @@ function gsiRasterStyle(layer: string, maxzoom: number): StyleSpecification {
 export type Basemap = { key: BasemapKey; label: string; style: string | StyleSpecification };
 
 export const BASEMAPS: readonly Basemap[] = [
-  { key: "simple", label: "シンプル", style: "https://tiles.openfreemap.org/styles/positron" },
-  { key: "pale", label: "淡色地図", style: gsiRasterStyle("pale", 18) },
+  { key: "simple", label: "標準", style: "https://tiles.openfreemap.org/styles/positron" },
+  { key: "pale", label: "淡色", style: gsiRasterStyle("pale", 18) },
 ];
 
 export const DEFAULT_BASEMAP: BasemapKey = "simple";
