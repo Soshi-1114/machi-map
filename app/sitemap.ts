@@ -34,6 +34,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: "weekly",
       priority: 1,
     },
+    // ピラーページ（「外国人 割合 地図」「在留外国人 ヒートマップ」の入口・トピッククラスタのハブ）。
+    {
+      url: absoluteUrl("/map/foreign-ratio"),
+      lastModified: siteLatest,
+      changeFrequency: "monthly",
+      priority: 0.9,
+    },
     // ランキング一覧 + 各ランキング（比較系クエリの入口）。中身は全データ由来なのでサイト最新。
     {
       url: absoluteUrl("/ranking"),

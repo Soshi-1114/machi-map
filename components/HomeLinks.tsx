@@ -27,6 +27,13 @@ export default function HomeLinks({ popular }: { popular: PopularMuni[] }) {
       </section>
 
       <section className="home-links-block">
+        <h2 className="home-links-h">地図で見る</h2>
+        <ul className="home-chip-row">
+          <li><Link href="/map/foreign-ratio" className="home-chip">外国人住民の割合マップ</Link></li>
+        </ul>
+      </section>
+
+      <section className="home-links-block">
         <h2 className="home-links-h">ランキングで比較</h2>
         <ul className="home-chip-row">
           {RANKINGS.map((r) => (
