@@ -106,7 +106,7 @@
     "amenities": {
       "stations": 83,
       "preschools": 588,
-      "medicalFacilities": 2751,
+      "medicalFacilities": 2753,
       "source": "国土数値情報（reinfolib XKT015/007/010）",
       "asOf": "令和5年度"
     },
@@ -415,7 +415,7 @@
     },
     "amenities": {
       "stations": 12,
-      "preschools": 24,
+      "preschools": 23,
       "medicalFacilities": 85,
       "source": "国土数値情報（reinfolib XKT015/007/010）",
       "asOf": "令和5年度"
@@ -1283,7 +1283,7 @@
     },
     "amenities": {
       "stations": 3,
-      "preschools": 38,
+      "preschools": 37,
       "medicalFacilities": 84,
       "source": "国土数値情報（reinfolib XKT015/007/010）",
       "asOf": "令和5年度"
@@ -1966,7 +1966,7 @@
     "amenities": {
       "stations": 0,
       "preschools": 36,
-      "medicalFacilities": 63,
+      "medicalFacilities": 64,
       "source": "国土数値情報（reinfolib XKT015/007/010）",
       "asOf": "令和5年度"
     },
@@ -2027,7 +2027,7 @@
     },
     "amenities": {
       "stations": 3,
-      "preschools": 20,
+      "preschools": 21,
       "medicalFacilities": 22,
       "source": "国土数値情報（reinfolib XKT015/007/010）",
       "asOf": "令和5年度"
@@ -2213,7 +2213,7 @@
     },
     "amenities": {
       "stations": 7,
-      "preschools": 28,
+      "preschools": 27,
       "medicalFacilities": 50,
       "source": "国土数値情報（reinfolib XKT015/007/010）",
       "asOf": "令和5年度"

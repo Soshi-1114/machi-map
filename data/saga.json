@@ -168,7 +168,7 @@
     "amenities": {
       "stations": 8,
       "preschools": 46,
-      "medicalFacilities": 111,
+      "medicalFacilities": 110,
       "source": "国土数値情報（reinfolib XKT015/007/010）",
       "asOf": "令和5年度"
     },

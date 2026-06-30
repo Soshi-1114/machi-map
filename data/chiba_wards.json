@@ -46,7 +46,7 @@
     "displayName": "千葉市中央区",
     "amenities": {
       "stations": 24,
-      "preschools": 69,
+      "preschools": 68,
       "medicalFacilities": 377,
       "source": "国土数値情報（reinfolib XKT015/007/010）",
       "asOf": "令和5年度"
@@ -230,9 +230,9 @@
       "tsunamiDepth": "",
       "stormSurgeLevel": 6,
       "stormSurgeDepth": "5m以上10m未満",
-      "liquefactionLevel": 2,
-      "liquefactionLabel": "液状化しやすい",
-      "note": "浸水想定 最大5〜10m（都川） / 土砂災害特別警戒区域（急傾斜地） / 高潮浸水想定 最大5m以上10m未満 / 液状化: 液状化しやすい",
+      "liquefactionLevel": 3,
+      "liquefactionLabel": "やや液状化しやすい",
+      "note": "浸水想定 最大5〜10m（都川） / 土砂災害特別警戒区域（急傾斜地） / 高潮浸水想定 最大5m以上10m未満 / 液状化: やや液状化しやすい",
       "source": "国土数値情報（reinfolib XKT025/026/027/028/029）",
       "asOf": "2024"
     },
@@ -306,7 +306,7 @@
     "displayName": "千葉市緑区",
     "amenities": {
       "stations": 5,
-      "preschools": 47,
+      "preschools": 48,
       "medicalFacilities": 172,
       "source": "国土数値情報（reinfolib XKT015/007/010）",
       "asOf": "令和5年度"

@@ -43,8 +43,8 @@
     },
     "amenities": {
       "stations": 287,
-      "preschools": 1450,
-      "medicalFacilities": 5876,
+      "preschools": 1449,
+      "medicalFacilities": 5875,
       "source": "国土数値情報（reinfolib XKT015/007/010）",
       "asOf": "令和5年度"
     },
@@ -106,7 +106,7 @@
     "amenities": {
       "stations": 45,
       "preschools": 508,
-      "medicalFacilities": 1263,
+      "medicalFacilities": 1264,
       "source": "国土数値情報（reinfolib XKT015/007/010）",
       "asOf": "令和5年度"
     },
@@ -230,7 +230,7 @@
     "amenities": {
       "stations": 13,
       "preschools": 280,
-      "medicalFacilities": 683,
+      "medicalFacilities": 682,
       "source": "国土数値情報（reinfolib XKT015/007/010）",
       "asOf": "令和5年度"
     },
@@ -277,7 +277,7 @@
     "hazard": {
       "hasFloodRisk": true,
       "hasLandslideRisk": true,
-      "floodLevel": 4,
+      "floodLevel": 5,
       "landslideLevel": 2,
       "tsunamiLevel": 0,
       "tsunamiDepth": "",
@@ -285,7 +285,7 @@
       "stormSurgeDepth": "",
       "liquefactionLevel": 1,
       "liquefactionLabel": "非常に液状化しやすい",
-      "note": "浸水想定 最大5〜10m（余野川） / 土砂災害特別警戒区域（急傾斜地） / 液状化: 非常に液状化しやすい",
+      "note": "浸水想定 最大10〜20m（兵庫県） / 土砂災害特別警戒区域（急傾斜地） / 液状化: 非常に液状化しやすい",
       "source": "国土数値情報（reinfolib XKT025/026/027/028/029）",
       "asOf": "2024"
     },
@@ -354,7 +354,7 @@
     "amenities": {
       "stations": 17,
       "preschools": 246,
-      "medicalFacilities": 570,
+      "medicalFacilities": 569,
       "source": "国土数値情報（reinfolib XKT015/007/010）",
       "asOf": "令和5年度"
     },
@@ -663,7 +663,7 @@
     },
     "amenities": {
       "stations": 13,
-      "preschools": 36,
+      "preschools": 37,
       "medicalFacilities": 529,
       "source": "国土数値情報（reinfolib XKT015/007/010）",
       "asOf": "令和5年度"
@@ -838,12 +838,12 @@
       "floodLevel": 4,
       "landslideLevel": 2,
       "tsunamiLevel": 1,
-      "tsunamiDepth": "0.3～1.0m",
+      "tsunamiDepth": "0.01～0.3m",
       "stormSurgeLevel": 7,
       "stormSurgeDepth": "10m以上20m未満",
       "liquefactionLevel": 1,
       "liquefactionLabel": "非常に液状化しやすい",
-      "note": "浸水想定 最大5〜10m（樫井川・田尻川） / 土砂災害特別警戒区域（急傾斜地） / 津波浸水想定 最大0.3～1.0m / 高潮浸水想定 最大10m以上20m未満 / 液状化: 非常に液状化しやすい",
+      "note": "浸水想定 最大5〜10m（樫井川・田尻川） / 土砂災害特別警戒区域（急傾斜地） / 津波浸水想定 最大0.01～0.3m / 高潮浸水想定 最大10m以上20m未満 / 液状化: 非常に液状化しやすい",
       "source": "国土数値情報（reinfolib XKT025/026/027/028/029）",
       "asOf": "2024"
     },
@@ -912,7 +912,7 @@
     "amenities": {
       "stations": 6,
       "preschools": 48,
-      "medicalFacilities": 153,
+      "medicalFacilities": 154,
       "source": "国土数値情報（reinfolib XKT015/007/010）",
       "asOf": "令和5年度"
     },
@@ -1097,7 +1097,7 @@
     },
     "amenities": {
       "stations": 4,
-      "preschools": 37,
+      "preschools": 36,
       "medicalFacilities": 153,
       "source": "国土数値情報（reinfolib XKT015/007/010）",
       "asOf": "令和5年度"
@@ -1159,7 +1159,7 @@
     },
     "amenities": {
       "stations": 3,
-      "preschools": 64,
+      "preschools": 65,
       "medicalFacilities": 145,
       "source": "国土数値情報（reinfolib XKT015/007/010）",
       "asOf": "令和5年度"
@@ -1222,7 +1222,7 @@
     "amenities": {
       "stations": 4,
       "preschools": 84,
-      "medicalFacilities": 233,
+      "medicalFacilities": 236,
       "source": "国土数値情報（reinfolib XKT015/007/010）",
       "asOf": "令和5年度"
     },
@@ -1331,7 +1331,7 @@
     "hazard": {
       "hasFloodRisk": true,
       "hasLandslideRisk": true,
-      "floodLevel": 4,
+      "floodLevel": 5,
       "landslideLevel": 2,
       "tsunamiLevel": 0,
       "tsunamiDepth": "",
@@ -1339,7 +1339,7 @@
       "stormSurgeDepth": "",
       "liquefactionLevel": 2,
       "liquefactionLabel": "液状化しやすい",
-      "note": "浸水想定 最大5〜10m（大和川） / 土砂災害特別警戒区域（土石流・急傾斜地） / 液状化: 液状化しやすい",
+      "note": "浸水想定 最大10〜20m（大和川） / 土砂災害特別警戒区域（土石流・急傾斜地） / 液状化: 液状化しやすい",
       "source": "国土数値情報（reinfolib XKT025/026/027/028/029）",
       "asOf": "2024"
     },
@@ -1408,7 +1408,7 @@
     "amenities": {
       "stations": 6,
       "preschools": 37,
-      "medicalFacilities": 121,
+      "medicalFacilities": 120,
       "source": "国土数値情報（reinfolib XKT015/007/010）",
       "asOf": "令和5年度"
     },

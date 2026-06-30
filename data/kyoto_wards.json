@@ -105,14 +105,14 @@
       "stormSurgeDepth": "",
       "liquefactionLevel": 3,
       "liquefactionLabel": "やや液状化しやすい",
-      "note": "浸水想定 最大3〜5m（天神川・鴨川） / 液状化: やや液状化しやすい",
+      "note": "浸水想定 最大3〜5m（天神川） / 液状化: やや液状化しやすい",
       "source": "国土数値情報（reinfolib XKT025/026/027/028/029）",
       "asOf": "2024"
     },
     "amenities": {
       "stations": 2,
       "preschools": 36,
-      "medicalFacilities": 151,
+      "medicalFacilities": 153,
       "source": "国土数値情報（reinfolib XKT015/007/010）",
       "asOf": "令和5年度"
     },
@@ -242,7 +242,7 @@
     "amenities": {
       "stations": 10,
       "preschools": 134,
-      "medicalFacilities": 369,
+      "medicalFacilities": 367,
       "source": "国土数値情報（reinfolib XKT015/007/010）",
       "asOf": "令和5年度"
     },
@@ -370,8 +370,8 @@
       "asOf": "2024"
     },
     "amenities": {
-      "stations": 14,
-      "preschools": 39,
+      "stations": 12,
+      "preschools": 38,
       "medicalFacilities": 261,
       "source": "国土数値情報（reinfolib XKT015/007/010）",
       "asOf": "令和5年度"
@@ -435,7 +435,7 @@
       "asOf": "2024"
     },
     "amenities": {
-      "stations": 6,
+      "stations": 8,
       "preschools": 42,
       "medicalFacilities": 138,
       "source": "国土数値情報（reinfolib XKT015/007/010）",
@@ -567,7 +567,7 @@
     "amenities": {
       "stations": 25,
       "preschools": 110,
-      "medicalFacilities": 370,
+      "medicalFacilities": 366,
       "source": "国土数値情報（reinfolib XKT015/007/010）",
       "asOf": "令和5年度"
     },
@@ -697,7 +697,7 @@
     "amenities": {
       "stations": 8,
       "preschools": 77,
-      "medicalFacilities": 191,
+      "medicalFacilities": 190,
       "source": "国土数値情報（reinfolib XKT015/007/010）",
       "asOf": "令和5年度"
     },

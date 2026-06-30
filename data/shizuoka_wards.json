@@ -47,7 +47,7 @@
     "amenities": {
       "stations": 12,
       "preschools": 117,
-      "medicalFacilities": 410,
+      "medicalFacilities": 409,
       "source": "国土数値情報（reinfolib XKT015/007/010）",
       "asOf": "令和5年度"
     },
@@ -164,13 +164,13 @@
       "hasLandslideRisk": true,
       "floodLevel": 5,
       "landslideLevel": 2,
-      "tsunamiLevel": 6,
-      "tsunamiDepth": "5m以上 ～ 10m未満",
+      "tsunamiLevel": 7,
+      "tsunamiDepth": "10m以上 ～ 20m未満",
       "stormSurgeLevel": 0,
       "stormSurgeDepth": "",
       "liquefactionLevel": 1,
       "liquefactionLabel": "非常に液状化しやすい",
-      "note": "浸水想定 最大10〜20m（興津川） / 土砂災害特別警戒区域（急傾斜地） / 津波浸水想定 最大5m以上 ～ 10m未満 / 液状化: 非常に液状化しやすい",
+      "note": "浸水想定 最大10〜20m（興津川） / 土砂災害特別警戒区域（急傾斜地） / 津波浸水想定 最大10m以上 ～ 20m未満 / 液状化: 非常に液状化しやすい",
       "source": "国土数値情報（reinfolib XKT025/026/027/028/029）",
       "asOf": "2024"
     },
@@ -292,7 +292,7 @@
     "hazard": {
       "hasFloodRisk": true,
       "hasLandslideRisk": true,
-      "floodLevel": 6,
+      "floodLevel": 5,
       "landslideLevel": 2,
       "tsunamiLevel": 4,
       "tsunamiDepth": "2m以上 ～ 3m未満",
@@ -300,7 +300,7 @@
       "stormSurgeDepth": "",
       "liquefactionLevel": 1,
       "liquefactionLabel": "非常に液状化しやすい",
-      "note": "浸水想定 最大20m〜（釣橋川・天竜川） / 土砂災害特別警戒区域（急傾斜地） / 津波浸水想定 最大2m以上 ～ 3m未満 / 液状化: 非常に液状化しやすい",
+      "note": "浸水想定 最大10〜20m（釣橋川・天竜川） / 土砂災害特別警戒区域（急傾斜地） / 津波浸水想定 最大2m以上 ～ 3m未満 / 液状化: 非常に液状化しやすい",
       "source": "国土数値情報（reinfolib XKT025/026/027/028/029）",
       "asOf": "2024"
     },

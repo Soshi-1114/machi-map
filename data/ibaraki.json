@@ -230,7 +230,7 @@
     "amenities": {
       "stations": 1,
       "preschools": 56,
-      "medicalFacilities": 157,
+      "medicalFacilities": 156,
       "source": "国土数値情報（reinfolib XKT015/007/010）",
       "asOf": "令和5年度"
     },
@@ -292,7 +292,7 @@
     "amenities": {
       "stations": 2,
       "preschools": 25,
-      "medicalFacilities": 98,
+      "medicalFacilities": 99,
       "source": "国土数値情報（reinfolib XKT015/007/010）",
       "asOf": "令和5年度"
     },
@@ -1594,7 +1594,7 @@
     "amenities": {
       "stations": 0,
       "preschools": 13,
-      "medicalFacilities": 39,
+      "medicalFacilities": 38,
       "source": "国土数値情報（reinfolib XKT015/007/010）",
       "asOf": "令和5年度"
     },
@@ -1711,7 +1711,7 @@
       "stormSurgeDepth": "",
       "liquefactionLevel": 1,
       "liquefactionLabel": "非常に液状化しやすい",
-      "note": "浸水想定 最大5〜10m（利根川） / 土砂災害警戒区域（急傾斜地） / 津波浸水想定 最大5.0m以上 ～ 10.0m未満 / 液状化: 非常に液状化しやすい",
+      "note": "浸水想定 最大5〜10m（霞ヶ浦・利根川） / 土砂災害警戒区域（急傾斜地） / 津波浸水想定 最大5.0m以上 ～ 10.0m未満 / 液状化: 非常に液状化しやすい",
       "source": "国土数値情報（reinfolib XKT025/026/027/028/029）",
       "asOf": "2024"
     },

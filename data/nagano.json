@@ -781,7 +781,7 @@
       "stormSurgeDepth": "",
       "liquefactionLevel": 1,
       "liquefactionLabel": "非常に液状化しやすい",
-      "note": "浸水想定 最大20m〜（長沢川・信濃川・千曲川） / 土砂災害特別警戒区域（土石流） / 液状化: 非常に液状化しやすい",
+      "note": "浸水想定 最大20m〜（信濃川・千曲川） / 土砂災害特別警戒区域（土石流） / 液状化: 非常に液状化しやすい",
       "source": "国土数値情報（reinfolib XKT025/026/029）",
       "asOf": "2024"
     },
@@ -3375,9 +3375,9 @@
       "isEstimated": false
     },
     "hazard": {
-      "hasFloodRisk": true,
+      "hasFloodRisk": false,
       "hasLandslideRisk": true,
-      "floodLevel": 2,
+      "floodLevel": 0,
       "landslideLevel": 2,
       "tsunamiLevel": -1,
       "tsunamiDepth": "",
@@ -3385,7 +3385,7 @@
       "stormSurgeDepth": "",
       "liquefactionLevel": 3,
       "liquefactionLabel": "やや液状化しやすい",
-      "note": "浸水想定 最大0.5〜3m（木曽川） / 土砂災害特別警戒区域（土石流） / 液状化: やや液状化しやすい",
+      "note": "土砂災害特別警戒区域（土石流） / 液状化: やや液状化しやすい",
       "source": "国土数値情報（reinfolib XKT025/026/029）",
       "asOf": "2024"
     },
@@ -4563,7 +4563,7 @@
       "stormSurgeDepth": "",
       "liquefactionLevel": 2,
       "liquefactionLabel": "液状化しやすい",
-      "note": "浸水想定 最大10〜20m（関川） / 土砂災害特別警戒区域（急傾斜地・土石流） / 液状化: 液状化しやすい",
+      "note": "浸水想定 最大10〜20m（関川） / 土砂災害特別警戒区域（土石流） / 液状化: 液状化しやすい",
       "source": "国土数値情報（reinfolib XKT025/026/029）",
       "asOf": "2024"
     },
