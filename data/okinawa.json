@@ -43,7 +43,7 @@
     },
     "amenities": {
       "stations": 16,
-      "preschools": 274,
+      "preschools": 273,
       "medicalFacilities": 484,
       "source": "国土数値情報（reinfolib XKT015/007/010）",
       "asOf": "令和5年度"
@@ -229,8 +229,8 @@
     },
     "amenities": {
       "stations": 3,
-      "preschools": 105,
-      "medicalFacilities": 145,
+      "preschools": 106,
+      "medicalFacilities": 146,
       "source": "国土数値情報（reinfolib XKT015/007/010）",
       "asOf": "令和5年度"
     },
@@ -477,7 +477,7 @@
     },
     "amenities": {
       "stations": 0,
-      "preschools": 71,
+      "preschools": 70,
       "medicalFacilities": 65,
       "source": "国土数値情報（reinfolib XKT015/007/010）",
       "asOf": "令和5年度"
@@ -1271,13 +1271,13 @@
       "hasLandslideRisk": true,
       "floodLevel": 4,
       "landslideLevel": 2,
-      "tsunamiLevel": 7,
-      "tsunamiDepth": "10m以上 ～ 20m未満",
+      "tsunamiLevel": 6,
+      "tsunamiDepth": "5m以上 ～ 10m未満",
       "stormSurgeLevel": 0,
       "stormSurgeDepth": "",
       "liquefactionLevel": 1,
       "liquefactionLabel": "非常に液状化しやすい",
-      "note": "浸水想定 最大5〜10m（比謝川） / 土砂災害特別警戒区域（急傾斜地） / 津波浸水想定 最大10m以上 ～ 20m未満 / 液状化: 非常に液状化しやすい",
+      "note": "浸水想定 最大5〜10m（比謝川） / 土砂災害特別警戒区域（急傾斜地） / 津波浸水想定 最大5m以上 ～ 10m未満 / 液状化: 非常に液状化しやすい",
       "source": "国土数値情報（reinfolib XKT025/026/027/028/029）",
       "asOf": "2024"
     },

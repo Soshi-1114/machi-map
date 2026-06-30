@@ -657,7 +657,7 @@
       "stormSurgeDepth": "",
       "liquefactionLevel": 3,
       "liquefactionLabel": "やや液状化しやすい",
-      "note": "浸水想定 最大5〜10m（手取川・高橋川） / 液状化: やや液状化しやすい",
+      "note": "浸水想定 最大5〜10m（手取川・高橋川・十人川） / 液状化: やや液状化しやすい",
       "source": "国土数値情報（reinfolib XKT025/026/027/028/029）",
       "asOf": "2024"
     },

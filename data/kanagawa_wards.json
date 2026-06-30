@@ -112,7 +112,7 @@
     "amenities": {
       "stations": 17,
       "preschools": 15,
-      "medicalFacilities": 350,
+      "medicalFacilities": 348,
       "source": "国土数値情報（reinfolib XKT015/007/010）",
       "asOf": "令和5年度"
     },
@@ -372,7 +372,7 @@
     "amenities": {
       "stations": 7,
       "preschools": 17,
-      "medicalFacilities": 245,
+      "medicalFacilities": 244,
       "source": "国土数値情報（reinfolib XKT015/007/010）",
       "asOf": "令和5年度"
     },
@@ -567,7 +567,7 @@
     "amenities": {
       "stations": 20,
       "preschools": 29,
-      "medicalFacilities": 534,
+      "medicalFacilities": 536,
       "source": "国土数値情報（reinfolib XKT015/007/010）",
       "asOf": "令和5年度"
     },
@@ -632,7 +632,7 @@
     "amenities": {
       "stations": 4,
       "preschools": 30,
-      "medicalFacilities": 327,
+      "medicalFacilities": 328,
       "source": "国土数値情報（reinfolib XKT015/007/010）",
       "asOf": "令和5年度"
     },
@@ -955,7 +955,7 @@
     "parentCode": "14100",
     "displayName": "横浜市栄区",
     "amenities": {
-      "stations": 2,
+      "stations": 1,
       "preschools": 13,
       "medicalFacilities": 127,
       "source": "国土数値情報（reinfolib XKT015/007/010）",
@@ -1087,7 +1087,7 @@
     "amenities": {
       "stations": 10,
       "preschools": 30,
-      "medicalFacilities": 505,
+      "medicalFacilities": 506,
       "source": "国土数値情報（reinfolib XKT015/007/010）",
       "asOf": "令和5年度"
     },
@@ -1282,7 +1282,7 @@
     "amenities": {
       "stations": 5,
       "preschools": 99,
-      "medicalFacilities": 220,
+      "medicalFacilities": 219,
       "source": "国土数値情報（reinfolib XKT015/007/010）",
       "asOf": "令和5年度"
     },
@@ -1477,7 +1477,7 @@
     "amenities": {
       "stations": 9,
       "preschools": 103,
-      "medicalFacilities": 240,
+      "medicalFacilities": 241,
       "source": "国土数値情報（reinfolib XKT015/007/010）",
       "asOf": "令和5年度"
     },
@@ -1542,7 +1542,7 @@
     "amenities": {
       "stations": 3,
       "preschools": 102,
-      "medicalFacilities": 230,
+      "medicalFacilities": 228,
       "source": "国土数値情報（reinfolib XKT015/007/010）",
       "asOf": "令和5年度"
     },
